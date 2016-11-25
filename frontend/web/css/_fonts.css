@@ -1,0 +1,131 @@
+@font-face {
+	font-family: "RobotoRegular";
+	src: url("fonts/RobotoRegular/RobotoRegular.eot");
+	src: url("fonts/RobotoRegular/RobotoRegular.eot?#iefix") format("embedded-opentype"),
+			 url("fonts/RobotoRegular/RobotoRegular.woff") format("woff"),
+			 url("fonts/RobotoRegular/RobotoRegular.ttf") format("truetype");
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+  font-family: "RobotoCondensed-Bold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("fonts/RobotoCondensed/RobotoCondensedBold/RobotoCondensedBold.eot?#iefix") format("embedded-opentype"), 
+  			url("fonts/RobotoCondensed/RobotoCondensedBold/RobotoCondensedBold.woff") format("woff"), 
+  			url("fonts/RobotoCondensed/RobotoCondensedBold/RobotoCondensedBold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: "RobotoCondensed-Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: url("fonts/RobotoCondensed/RobotoCondensedRegular/RobotoCondensedRegular.eot?#iefix") format("embedded-opentype"), 
+  			url("fonts/RobotoCondensed/RobotoCondensedRegular/RobotoCondensedRegular.woff") format("woff"), 
+  			url("fonts/RobotoCondensed/RobotoCondensedRegular/RobotoCondensedRegular.ttf") format("truetype"); }
+
+
+@font-face {
+  font-family: "RobotoCondensed-Light";
+  font-style: normal;
+  font-weight: normal;
+  src: url("fonts/RobotoCondensed/RobotoCondensedLight/RobotoCondensedLight.eot?#iefix") format("embedded-opentype"), 
+  			url("fonts/RobotoCondensed/RobotoCondensedLight/RobotoCondensedLight.woff") format("woff"), 
+  			url("fonts/RobotoCondensed/RobotoCondensedLight/RobotoCondensedLight.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('fonts/glyphicons-halflings-regular.eot');
+  src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
+  url('fonts/glyphicons-halflings-regular.woff') format('woff'), 
+  url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
+  url('fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+
+@font-face {
+    font-family: 'teleska_is';
+    src: url('fonts/teleska_font/teleska_what_is-font-webfont.eot');
+    src: url('fonts/teleska_font/teleska_what_is-font-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/teleska_font/teleska_what_is-font-webfont.woff2') format('woff2'),
+         url('fonts/teleska_font/teleska_what_is-font-webfont.woff') format('woff'),
+         url('fonts/teleska_font/teleska_what_is-font-webfont.ttf') format('truetype'),
+         url('fonts/teleska_font/teleska_what_is-font-webfont.svg#teleska_is') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+.tel-font {
+  font-family: 'teleska_is';
+  font-size: 70px;
+  display: inline-block;
+  font-style: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.tel-font.tf_a::before {
+  content: 'a';
+}
+.tel-font.tf_a1::before {
+  content: 'A';
+}
+.tel-font.tf_b::before {
+  content: 'b';
+}
+.tel-font.tf_b1::before {
+  content: 'B';
+}
+.tel-font.tf_c::before {
+  content: 'c';
+}
+.tel-font.tf_c1::before {
+  content: 'C';
+}
+.tel-font.tf_d::before {
+  content: 'd';
+}
+.tel-font.tf_d1::before {
+  content: 'D';
+}
+.tel-font.tf_e::before {
+  content: 'e';
+}
+.tel-font.tf_e1::before {
+  content: 'E';
+}
+.tel-font.tf_f::before {
+  content: 'f';
+}
+.tel-font.tf_f1::before {
+  content: 'F';
+}
+.tel-font.tf_g::before {
+  content: 'g';
+}
+.tel-font.tf_g1::before {
+  content: 'G';
+}
+.tel-font.tf_h::before {
+  content: 'h';
+}
+.tel-font.tf_h1::before {
+  content: 'H';
+}
+.tel-font.tf_i::before {
+  content: 'i';
+}
+.tel-font.tf_i1::before {
+  content: 'I';
+}
+.tel-font.tf_j::before {
+  content: 'j';
+}
+.tel-font.tf_j1::before {
+  content: 'J';
+}
+.tel-font.tf_k::before {
+  content: 'k';
+}
+.tel-font.tf_k1::before {
+  content: 'K';
+}

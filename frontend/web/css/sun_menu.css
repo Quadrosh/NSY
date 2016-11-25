@@ -1,0 +1,27 @@
+/*sun menu*/
+
+.sunmenu svg {
+    height: 100vh;
+    float: left;
+
+}
+.centerfirst {
+    /*color: rgba(0,0,0,0.2);*/
+    /*fill: rgba(0,0,0,0.4);*/
+    /*fill: rgba(255,193,7,0.6);*/
+    /*text-decoration: underline;*/
+    /*text-shadow: 2px 2px 3px rgba(255,255,255,0.1);*/
+    text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.9), 0px 0px 2px rgba(0, 0, 0, 0.5), 0px 1px 10px rgba(255, 255, 255, 0.2),0px -1px 10px rgba(255, 255, 255, 0.2), 1px 0px 10px rgba(255, 255, 255, 0.2), -1px 0px 10px rgba(255, 255, 255, 0.2);
+
+}
+/*#sun_menu {
+  height: 100%;
+}
+*/
+.sunbeam {
+    cursor: pointer;
+    /*  position:absolute;*/
+}
+.menu_center_1 {
+    cursor: default;
+}

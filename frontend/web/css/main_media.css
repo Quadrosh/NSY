@@ -1,0 +1,493 @@
+/*==========  Desktop First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+	.countdown-show4 .countdown-section {
+		width: 24.5%;
+	}
+	.phone_top {
+		right: 50px;
+
+	}
+	.home .navbar-brand img {
+		/*position: fixed;*/
+		/*left: 35px;*/
+	}
+	.sidebar {
+		right: 26px;
+		line-height: 0.5;
+		top: 115px;
+		font-size: 16px;
+	}
+	.nav-pills .active a:after {
+		width: 40px;
+		height: 40px;
+		right: 17px;
+		top: -23px;
+	}
+	.main_message h1 {
+
+		font-size: 36px;
+	}
+	.main_message p {
+		font-size: 24px;
+	}
+	.training .submit p {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+	.head_text h1 {
+		font-size: 36px;
+	}
+	i.glyphicon.glyphicon-flash {
+		top: -38px;
+	}
+	i.glyphicon.glyphicon-home {
+		top: -39px;
+	}
+	i.glyphicon.glyphicon-cog {
+		top: -38px;
+		left: -9px;
+	}
+	i.glyphicon.glyphicon-user {
+		left: -9px;
+	}
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+
+	.main_message h3 {
+		margin-top: 0px;
+	}
+	.main_message h1 {
+		margin-bottom: 5px;
+		font-size: 30px;
+	}
+	.main_message p {
+		font-size: 18px;
+	}
+
+
+	.home .phone_top {
+		right: 35px;
+		margin-top: 0;
+		top: 38px;
+
+	}
+	.home .navbar-brand img {
+		position: fixed;
+		left: 30px;
+	}
+	.sidebar {
+		right: 11px;
+		top: 115px;
+		line-height: 0.5;
+		font-size: 14px;
+	}
+	.training .submit p {
+		margin-left: 50px;
+		margin-right: 50px;
+	}
+	.teleska .head_text {
+		margin-left:70px;
+		margin-right: 70px;
+	}
+	.head_text h1 {
+		font-size: 28px;
+		line-height: 65px;
+		margin: 0;
+	}
+	.contents {
+		padding-left: 70px;
+		padding-right: 70px;
+
+	}
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+
+
+	.main_message h1 {
+		font-size: 24px;
+	}
+	.countdown-show4 .countdown-section {
+		width: 15%;
+
+	}
+	.countdown-row{
+		margin-left: 20%;
+	}
+	.countdown {
+		bottom: 0.5%;
+	}
+	.why_we li {
+		font-size: 18px;
+		margin-right: 40px;
+	}
+	.head_text h1 {
+		font-size: 24px;
+	}
+
+
+	/*Disable Animation on Mobile Devices*/
+	.animated {
+		/*CSS transitions*/
+		-o-transition-property: none !important;
+		-moz-transition-property: none !important;
+		-ms-transition-property: none !important;
+		-webkit-transition-property: none !important;
+		transition-property: none !important;
+		/*CSS transforms*/
+		-o-transform: none !important;
+		-moz-transform: none !important;
+		-ms-transform: none !important;
+		-webkit-transform: none !important;
+		transform: none !important;
+		/*CSS animations*/
+		-webkit-animation: none !important;
+		-moz-animation: none !important;
+		-o-animation: none !important;
+		-ms-animation: none !important;
+		animation: none !important;
+	}
+	.btn_cntd,
+	.btn_cntd:hover,
+	.glyphicon-arrow-right,
+	.glyphicon-arrow-up,
+	.glyphicon-arrow-right:hover,
+	.glyphicon-arrow-up:hover,
+	.sidebar a,
+	.sidebar a:hover,
+	.sidebar a:focus     {
+		-webkit-animation: none ;
+		animation: none ;
+	}
+	.main-container .alltrain_head,
+	.main-container .alltrain_head p  {
+		text-align: center;
+	}
+
+
+}
+
+/* Custom */
+@media only screen and (max-width : 640px) {
+	.countdown {
+		display: none;
+	}
+	.home .phone_top {
+
+		font-size: 18px;
+		margin-top: 0;
+		top: 20px;
+		right: 20px;
+	}
+	.training .phone_top,
+	.phone_top {
+		text-align: center;
+		font-size: 30px;
+		float: none;
+		right: 0;
+	}
+	.home .navbar-brand img,
+	.home .navbar-brand svg {
+		width: 80px;
+		position: fixed;
+		top: 10px;
+		left: 17px;
+	}
+	.sidebar {
+		top: 70px;
+		right: -5px;
+		font-size: 14px;
+		line-height: 1;
+	}
+	.nav > li > a {
+		padding: 0px 14px;
+		margin-bottom: 0;
+	}
+	.nav-pills i  {
+		display: block;
+		/*top: -37px;*/
+		/*right: 10px;*/
+
+	}
+	.training .submit p {
+		margin-left: 30px;
+		margin-right: 30px;
+	}
+	.why_we h1 {
+		margin: 20px 30px;
+	}
+	.head_text h1 {
+		font-size: 24px;
+		line-height: 1.3;
+	}
+	.training .submit {
+		padding-top: 0;
+	}
+	i.glyphicon.glyphicon-home {
+		left: -11px;
+		top: -40px;
+	}
+	i.glyphicon.glyphicon-cog {
+		top: -39px;
+		left: -10px;
+	}
+	i.glyphicon.glyphicon-user {
+		left: -10px;
+	}
+
+	.main_message  {
+
+		max-width: 100%;
+	}
+
+
+}
+
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+	.method_avatar img {
+		margin-left: 0px;
+	}
+
+	.phone_top,
+	.home .phone_top {
+		position: relative;
+		font-size: 20px;
+		left: auto;
+		right: auto;
+		text-align: center;
+		float: none;
+	}
+
+	.navbar-brand {
+		position: relative;
+	}
+
+	.navbar-brand img {
+		position: relative;
+		width: 100%;
+		margin: auto;
+		left: auto;
+	}
+
+	.nav-pills i {
+		display: inline-block;
+		top: 0px;
+		right: 0;
+	}
+
+	.nav > li > a,
+	.nav-pills > li.active > a {
+		color: #FFC107;
+		float: right;
+		margin-right: 22%;
+
+	}
+
+	.sidebar {
+		font-size: 20px;
+		top: 110px;
+		right: 0;
+		left: 0;
+		width: 80%;
+		margin: auto;
+		line-height: 1.9;
+		background-color: rgba(0, 0, 0, .6);
+
+	}
+
+	.training .sidebar,
+	.about_us .sidebar,
+	.method .sidebar,
+	.article .sidebar {
+		position: relative;
+		top: 0;
+	}
+
+	.article .sidebar ul, ol {
+		margin-top: 25px;
+	}
+
+	.nav-stacked > li + li {
+		/*margin-top: -30px;*/
+	}
+
+	.nav > li {
+		text-align: center;
+	}
+
+	.nav-pills .active a:after {
+		right: 50%;
+		margin-right: -70px;
+		top: 2px;
+	}
+
+	.sidebar :nth-child(2) a:after {
+		margin-right: -72px;
+
+	}
+
+	.sidebar :nth-child(3) a:after {
+		margin-right: -82px;
+
+	}
+
+	.sidebar :nth-child(4) a:after {
+		margin-right: -58px;
+
+	}
+
+	section {
+		min-width: 320px;
+	}
+
+	.main_message {
+		top: 300px;
+		max-width: 100%;
+	}
+
+	.action_line h1 {
+		font-size: 24px;
+	}
+
+	.training .submit {
+
+		max-height: 1000px;
+		min-width: 360px;
+	}
+
+	.training .submit p {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
+	.teleska .head_text {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+
+	i.glyphicon.glyphicon-flash {
+		top: 0px;
+	}
+
+	i.glyphicon.glyphicon-home {
+		left: -1px;
+		top: 0px;
+	}
+
+	i.glyphicon.glyphicon-cog {
+		top: 1px;
+		left: -1px;
+	}
+
+	i.glyphicon.glyphicon-user {
+		left: 1px;
+	}
+
+	.socials {
+		margin-left: 30%;
+	}
+
+	.tophomelink {
+		top: 56px;
+		position: fixed;
+		left: 50%;
+		margin-left: -50px;
+		width: 100px;
+		z-index: 9000;
+
+	}
+
+	.home .centershort {
+		top: 200px;
+		margin-top: 0px;
+	}
+
+	.team_img img {
+		width: 140px;
+	}
+}
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+}
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+	.sidebar {
+		right: 4%;
+		margin-right: -13px;
+		line-height: 0.5;
+		top: 150px;
+	}
+	.menu_icon {
+		font-size: 36px;
+		top: -20px;
+
+	}
+	.menu_icon i  {
+		display: block;
+		top: -50px;
+		right: 10px;
+	}
+
+	i.glyphicon.glyphicon-home {
+		right: 11px;
+	}
+	i.glyphicon.glyphicon-cog {
+		top: -49px;
+		right: 11px;
+	}
+	.home .phone_top {
+		right: 5%;
+		top: 53px;
+		margin-top: 0;
+
+	}
+	.home .navbar-brand img {
+		position: fixed;
+		left: 5%;
+		top: 40px;
+	}
+	.main_message h1 {
+
+		font-size: 36px;
+	}
+	.main_message p {
+		font-size: 24px;
+	}
+	.main_message {
+		top: 40%;
+	}
+	i.glyphicon.glyphicon-user {
+		left: -11px;
+		top: -53px;
+	}
+}
