@@ -18,6 +18,7 @@ use frontend\models\ContactForm;
  */
 class SiteController extends FrontController
 {
+    public $sunMenuItem;
     /**
      * @inheritdoc
      */
@@ -72,7 +73,9 @@ class SiteController extends FrontController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $this->sunMenuItem = 1;
+        $sunitem =  $this->sunMenuItem;
+        return $this->render('index', ['sunitem'=> $sunitem] );
     }
 
     /**

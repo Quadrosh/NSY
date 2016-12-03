@@ -17,6 +17,10 @@ return [
             'csrfParam' => '_csrf-backend',
             'cookieValidationKey' => 'UoacjIvhEGnvFxFpgJqb'
         ],
+        'assetManager' => [
+            // подключаем symlincs
+            'linkAssets' => true,
+        ],
         'user' => [
             'identityClass' => 'common\models\Admin',
             'enableAutoLogin' => true,

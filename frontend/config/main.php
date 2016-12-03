@@ -25,6 +25,16 @@ return [
                 'httpOnly' => true
             ],
         ],
+//        'assetManager' => [
+//            'bundles' => [
+//                'yii\web\JqueryAsset' => [
+//                    'sourcePath' => null,   // do not publish the bundle
+//                    'js' => [
+//                        '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js',
+//                    ]
+//                ],
+//            ],
+//        ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
@@ -46,8 +56,11 @@ return [
 
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
             'rules' => [
+                'motivator'=>'motivator/list',
+                'motivator/<pagename:[0-9a-z\-\_]+>' => 'motivator/show',
             ],
         ],
 

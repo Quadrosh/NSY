@@ -95,7 +95,9 @@ body {
   z-index: 0;
 
 }
-
+.home #start_loader {
+    background-color: #538FBD;
+}
 body input:focus:required:invalid,
 body textarea:focus:required:invalid {
   color: red;

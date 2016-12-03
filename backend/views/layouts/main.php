@@ -28,7 +28,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Backend',
+        'brandLabel' => 'NS admin',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,8 +36,17 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Gii', 'url' => ['index.php/gii']],
+        [
+            'label' => 'Мотиваторы',
+            'items' => [
+                ['label' => 'Мотиваторы', 'url' => ['/motivator/index']],
+                ['label' => 'Фразы', 'url' => ['/mline/index']],
+            ],
+        ],
         ['label' => 'Категории', 'url' => ['/category/index']],
         ['label' => 'Статьи', 'url' => ['/article/index']],
+
 
     ];
     if (Yii::$app->user->isGuest) {

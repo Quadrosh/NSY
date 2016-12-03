@@ -1,4 +1,4 @@
-		<a class="menu-brand" href="happiness.html"><img src="img/NS-logo3.png" alt="Наше счастье"></a>
+		<a class="menu-brand" href="happiness.html"><img src="/img/NS-logo3.png" alt="Наше счастье"></a>
         <ul class="menu-section-list">
           <li><a href="index.html" >Главная</a></li>
           <li><a href="training.html" >Тренинги</a></li>

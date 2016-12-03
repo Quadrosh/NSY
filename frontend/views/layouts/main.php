@@ -35,8 +35,7 @@ IeAsset::register($this);
 <!--    <meta name="keywords" content="техники счастья, практики достижения душевного равновесия, методы достижения счастья в жизни" />-->
     <title><?= Html::encode($this->title) ?></title>
 
-    <!-- Bootstrap v3.3.6 full -->
-<!--    --><?php //include 'bootstrap_full.php'; ?>
+
     <?php $this->head() ?>
 
 
@@ -54,6 +53,7 @@ IeAsset::register($this);
 
 <body class="home">
 <?php $this->beginBody() ?>
+<div id="start_loader"></div>
 
 <div class="overlay"></div>
 

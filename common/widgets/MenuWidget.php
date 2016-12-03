@@ -11,7 +11,8 @@ class MenuWidget extends Widget
     public $formfactor;
     public $data;
     public $tree;
-    public $menuHtml;
+    public $menuFinal;
+    public $sunitem;
 
     public function init()
     {
@@ -24,9 +25,19 @@ class MenuWidget extends Widget
     public function run()
     {
         $this->data = SunMenu::find()->indexBy('id')->asArray()->all();
-        $this->tree = $this->getTree();
-        $this->menuHtml = $this->getMenuSVG($this->tree);
-        return $this->menuHtml;
+        if ($this->formfactor = 'sun') {
+            $this->tree = $this->getBranch();
+            $this->menuFinal = $this->getMenuSVG($this->tree);
+            return $this->menuFinal;
+        }
+        if ($this->formfactor = 'html') {
+            $this->tree = $this->getTree();
+            $this->menuFinal = $this->getMenuHtml($this->tree);
+            return $this->menuFinal;
+        }
+
+
+
     }
     protected function getTree()
     {
@@ -40,16 +51,49 @@ class MenuWidget extends Widget
         }
         return $tree;
     }
-    protected function getMenuHtml($tree)
+    protected function getBranch()
     {
-        $str = '';
-        foreach ($tree as $item ) {
-            $str .=$this->itemToTemplate($item);
+        $branch = [];
+
+        foreach ($this->data as $id => &$value) {
+            if ($this->sunitem == $value['id']) {
+                $parent = $value['parent_id'];
+                $branch['current'] = &$value;
+
+                foreach ($this->data as $id2 => &$value2) {
+                    //parent
+                    if ($parent == $value2['id']) {
+                       $branch['parent'] = &$value2;
+                        //grandparent
+                        if ($branch['parent']['parent_id']!= 0){
+                            foreach ($this->data as $id2g => &$value2g) {
+                                if ($branch['parent']['parent_id'] == $value2g['id']) {
+                                    $branch['grandparent'] = &$value2g;
+                                }
+                            }
+                        }
+                    }
+                    //childs
+                    if ($value2['parent_id'] == $this->sunitem) {
+                        $branch['childs'][$value2['id']] = &$value2;
+                        //haschild
+                        foreach ($this->data as $id3) {
+                            if ($id3['parent_id'] == $value2['id']) {
+                                $branch['childs'][$value2['id']]['haschild'][$id3['name']] = $id3['id'];
+
+                            }
+                        }
+                    }
+                }
+            }
         }
-        return $str;
+        return $branch;
+//       debug($branch);
     }
+
     protected function getMenuSVG($tree)
     {
+        $sunitem = $this->sunitem;
         $beamlocation = [];
         $beamlocation[1] = 'M-50,248l355.5-249';
         $beamlocation[2] = 'M-50,248L333.2,44.3';
@@ -70,10 +114,19 @@ class MenuWidget extends Widget
         $centerlocation[2] = 'M0,133.5c44.1,19.3,74.8,63.3,74.8,114.5c0,51.2-30.8,95.2-74.8,114.5';
         $centerlocation[3] = 'M0,160.9c29.9,17.3,50,49.6,50,86.6c0,37-20.1,69.3-50,86.6';
 
-        $svg = include __DIR__ . '/menu_formfactor/svg_construct.php';
+        include __DIR__ . '/menu_formfactor/svg_construct.php';
 
 
-        return $svg;
+//        return $svg;
+    }
+
+        protected function getMenuHtml($tree)
+    {
+        $str = '';
+        foreach ($tree as $item ) {
+            $str .=$this->itemToTemplate($item);
+        }
+        return $str;
     }
     protected function itemToTemplate($item)
     {

@@ -187,7 +187,7 @@ body,
 }
 #motivator_acceptthelife {
   background-color: #333;
-  background-image: url(img/m_acceptthelife.jpg);
+  /*background-image: url(/img/m_acceptthelife.jpg);*/
   background-size: cover;
   background-position: center;
 }
@@ -529,6 +529,7 @@ body {
     width: 100%;
     position: relative;
     overflow: hidden;
+    text-align: center;
 }
 .avatar {
     border-radius: 50%;
@@ -636,6 +637,7 @@ h4, h1 {
   text-transform: uppercase;
   font-family: "RobotoCondensed-Regular", sans-serif;
   font-weight: lighter;
+  font-size:16px;
   cursor: default;
   
 }
@@ -865,8 +867,15 @@ article h #a6a6a6 */
 .qbtn:focus {
 outline: none;
 }
+
+.mt10 {
+  margin-top: 10px;
+}
 .mt12 {
-  margin-top: 12px;
+    margin-top: 12px;
+}
+.mt15 {
+    margin-top: 15px;
 }
 .mt22 {
   margin-top: 22px;
@@ -1489,25 +1498,40 @@ outline: none;
   float: right;
 }
 
-.btn {
-  border: 1px solid #FFC107;
-  padding: 2px 8px;
-  border-radius: 5px;
-  width: 40px;
-  color: #fff;
-  background-color: #FFC107;
+/*.btn {*/
+  /*border: 1px solid #FFC107;*/
+  /*padding: 2px 8px;*/
+  /*border-radius: 5px;*/
+  /*width: 40px;*/
+  /*color: #fff;*/
+  /*background-color: #FFC107;*/
+/*}*/
+/*.btn:hover {*/
+  /*background-color: #fff;*/
+  /*color: #FFC107;*/
+/*}*/
+
+.btn-success {
+    border: 1px solid #FFC107;
+    padding: 2px 8px;
+    border-radius: 5px;
+    width: 40px;
+    color: #fff;
+    background-color: #FFC107;
 }
-.btn:hover {
-  background-color: #fff;
-  color: #FFC107;
+.btn-success:hover {
+    border: 1px solid #FFC107;
+    background-color: #fff;
+    color: #FFC107;
 }
+
 a:hover,
 a:visited {
   text-decoration: none;
 }
 .vertical {
   position: absolute;
-  bottom: 30px;
+  bottom: 45px;
   right: 5%;
   margin-right: -53px;
   -webkit-transform: rotate(270deg); 
