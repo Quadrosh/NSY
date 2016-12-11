@@ -90,9 +90,36 @@ IeAsset::register($this);
     </section>
 </nav>
 
+<div id="content-wrapper">
+    <main id="panel" class="panel">
+        <div id="logosunIcon">
+            <svg version="1.1"
+                 id="menu"
+                 xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 x="0px" y="0px"
+                 viewBox="0 0 50 50"
+                 style="enable-background:new 0 0 50 50;"
+                 xml:space="preserve">
+            <style type="text/css">
+                .sunglif0{fill:none;stroke:#FCC116;stroke-width:4;stroke-linecap:round;stroke-miterlimit:10;}
+            </style>
+                <g id="sunglif_1_">
+                    <line id="XMLID_32_" class="sunglif0" x1="20.1" y1="25" x2="40.1" y2="25"/>
+                    <line id="XMLID_31_" class="sunglif0" x1="18.1" y1="17.4" x2="35.4" y2="7.4"/>
+                    <line id="XMLID_29_" class="sunglif0" x1="18.1" y1="32.6" x2="35.4" y2="42.6"/>
+                    <path id="XMLID_28_" class="sunglif0" d="M9.9,33.7c3-1.7,5-5,5-8.7s-2-6.9-5-8.7"/>
+                </g>
+        </svg>
+        </div>
 
-<?= $content; ?>
+        <?= \common\widgets\MenuWidget::widget(['formfactor'=>'sun','sunitem'=> Yii::$app->view->params['sunitem'] ]); ?>
 
+        <?= $content; ?>
+    </main>
+</div>
+<div id="menubackfilter" class="menufilter backfilterOff">
+</div>
 
 
 <?php $this->endBody() ?>

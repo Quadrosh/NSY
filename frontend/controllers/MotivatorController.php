@@ -7,6 +7,7 @@ namespace frontend\controllers;
 use common\models\Motivator;
 use frontend\models\Page;
 use yii\BaseYii;
+use yii\helpers;
 use Yii;
 
 class MotivatorController extends FrontController
@@ -19,6 +20,8 @@ class MotivatorController extends FrontController
         $metapage = Page::findOne($pageID);
         $this->sunMenuItem = 2;
         $sunitem =  $this->sunMenuItem;
+        $this->view->params['sunitem'] = $sunitem;
+
         $this->layout = 'motivator';
         $this->view->params['meta'] = $metapage;
 
@@ -55,20 +58,19 @@ class MotivatorController extends FrontController
     public function actionShow()
     {
         $this->layout = 'motivator';
-        $metapage = Page::findOne(2);
-        $this->view->params['meta'] = $metapage;
-
-
-        $this->sunMenuItem = 2;
+        $this->sunMenuItem = 1;
         $sunitem =  $this->sunMenuItem;
+        $this->view->params['sunitem'] = $sunitem;
+
         $pagename = Yii::$app->request->get('pagename');
         $motivator = Motivator::find()->where(['hrurl'=>$pagename])->one();
         $quotes = $motivator->mLines;
-//        debug($motivator);
+        helpers\ArrayHelper::multisort($quotes,['block_num','quote_num'],[SORT_ASC,SORT_ASC]);
+        $this->view->params['meta']['title'] = $motivator->title;
+        $this->view->params['meta']['description'] = $motivator->description;
+        $this->view->params['meta']['keywords'] = $motivator->keywords;
         $this->view->params['motivator'] = $motivator;
         $this->view->params['quotes'] = $quotes;
-
-
 
         return $this->render('view', ['motivator'=> $motivator, 'quotes'=>$quotes]);
     }

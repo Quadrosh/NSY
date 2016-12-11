@@ -10,6 +10,10 @@
     width: 100%;
     z-index: 9999;
 }
+.sunmenu {
+    position: fixed;
+    z-index:8;
+}
 
 .sunmenu svg {
     height: 100vh;
@@ -37,6 +41,7 @@
     cursor: pointer;
     text-transform: uppercase;
     /*  position:absolute;*/
+    /*text-shadow: 0px 2px 2px rgba(255, 255, 255, 1);*/
 }
 .menu_center_1 {
     cursor: default;

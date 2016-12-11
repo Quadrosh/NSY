@@ -20,9 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
 //            ['class' => 'yii\grid\SerialColumn'],
-
+            ['class' => 'yii\grid\ActionColumn'],
             'id',
-//            'list_section',
+           'pagehead',
             [
                 'attribute'=>'list_section',
                 'value'=> function($data)
@@ -40,7 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'list_num',
-//             'position',
             [
                 'attribute'=>'position',
                 'value'=> function($data)
@@ -54,9 +53,15 @@ $this->params['breadcrumbs'][] = $this->title;
              'title',
              'description:ntext',
              'keywords:ntext',
-            // 'pagehead',
 
-            // 'cat_id',
+            [
+                'attribute'=> 'cat_id',
+                'value' => function($data)
+                {
+                    $theData = \backend\models\Category::find()->where(['id'=>$data['cat_id']])->one();
+                    return $theData['name'];
+                },
+            ],
             // 'section_name',
             // 'section_color',
             // 'background',

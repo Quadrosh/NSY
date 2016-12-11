@@ -15,6 +15,7 @@ class MotivatorAsset extends AssetBundle
 //        'css/site.css',
         'css/_fonts.css',
         'css/motivator.css',
+        'css/sun_menu.css',
 
 
     ];
@@ -24,6 +25,8 @@ class MotivatorAsset extends AssetBundle
         'libs/scrollmagic/scrollmagic.min.js',
         'libs/scrollmagic/animation.gsap.min.js',
         'libs/gsap/tweenmax.min.js',
+//        'js/sunmenu.js',
+        'js/sunmenuhiding.js',
         'js/motivator.js',
     ];
     public $depends = [

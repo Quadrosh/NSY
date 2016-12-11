@@ -5,9 +5,7 @@ use yii\helpers\Url;
 
 
 
-<div id="content-wrapper">
 
-    <main id="panel" class="panel">
 
 
         <section id="motivators" class="manifestor white">
@@ -199,22 +197,11 @@ use yii\helpers\Url;
 
 
 
-        <!-- 	</div> -->
-
-
-
-
-    </main>
 
 
 
 
 
 
-
-
-</div>
-<div id="menubackfilter" class="menufilter backfilterOff">
-</div>
 <a id="sendtopage"  class="vizibleOff" href="motivator_evolution_1.html"></a>
 

@@ -1,6 +1,6 @@
 		<a class="menu-brand" href="happiness.html"><img src="/img/NS-logo3.png" alt="Наше счастье"></a>
         <ul class="menu-section-list">
-          <li><a href="index.html" >Главная</a></li>
+          <li><a href="http://nsy.dev" >Главная</a></li>
           <li><a href="training.html" >Тренинги</a></li>
           <li><a href="method.html"  >Методики</a></li>
           <li><a href="about_us.html">О нас</a></li>

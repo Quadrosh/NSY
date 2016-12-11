@@ -36,7 +36,7 @@ class CategoryController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Category::find(),
+            'query' => Category::find()->with('category'),
         ]);
 
         return $this->render('index', [
@@ -66,6 +66,7 @@ class CategoryController extends Controller
         $model = new Category();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success',"Создана новая категория - {$model->name}");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -85,6 +86,7 @@ class CategoryController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success',"Обновлена категория {$model->name}");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

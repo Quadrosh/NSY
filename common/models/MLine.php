@@ -36,7 +36,7 @@ class MLine extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['block_num', 'quote_num', 'text', 'line_style', 'mbox_style', 'motivator_id'], 'required'],
+            [['block_num', 'quote_num', 'text', 'line_style',  'motivator_id'], 'required'],
             [['block_num', 'quote_num', 'motivator_id'], 'integer'],
             [['text', 'line_style', 'mbox_style'], 'string'],
         ];

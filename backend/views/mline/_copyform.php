@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 
 <div class="mline-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['action'=>['/mline/create'],'method'=>'post', ]); ?>
     <div class="row">
         <div class="col-xs-4 col-sm-2">
             <?= $form->field($model, 'motivator_id')->textInput(['value' => Yii::$app->request->get('motivid')]) ?>

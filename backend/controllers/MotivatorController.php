@@ -6,6 +6,7 @@ use Yii;
 use common\models\Motivator;
 use yii\data\ActiveDataProvider;
 use common\models\MLine;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -63,6 +64,7 @@ class MotivatorController extends Controller
         $this->layout = 'motivator';
         $motivator = Motivator::find()->where(['id'=>$id])->one();
         $quotes = $motivator->mLines;
+         ArrayHelper::multisort($quotes,['block_num','quote_num'],[SORT_ASC,SORT_ASC]);
         $this->view->params['motivator'] = $motivator;
         $this->view->params['quotes'] = $quotes;
         return $this->render('view', [

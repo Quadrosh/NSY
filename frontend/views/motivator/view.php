@@ -1,72 +1,76 @@
 <?php
 use yii\helpers\Html;
+//debug($motivator->imagelink);
 ?>
 
-<div id="content-wrapper">
-
-    <main id="panel" class="panel">
 
 
-        <section id="<?= $motivator->section_name; ?>" style=" background-image: url(<?= \yii\helpers\Url::to('/img/'. $motivator->background); ?>);"
-                 class="manifestor <?= $motivator->section_color; ?>">
-            <h1 id="pagename" class=" bigname" ><?= $motivator->pagehead; ?></h1>
-            <div class=" container mt120 mb140">
-                <div  class="m_textbox">
-                    <div class="row">
+
+<section id="<?= $motivator->section_name; ?>"
+    <?php if (!empty($motivator->background)) : ?>
+        style=" background-image: url(<?= \yii\helpers\Url::to('/img/'. $motivator->background); ?>);"
+    <?php endif; ?>
+         class="manifestor <?= $motivator->section_color; ?>">
+    <h1 id="pagename" class=" bigname" ><?= $motivator->pagehead; ?></h1>
+    <div class=" container mt120 mb140">
+        <div  class="m_textbox">
+            <div class="row">
 <?php $b =0; $i = 0; $bootSm=0;  foreach ($quotes as $quote) : ?>
 
 
-<? //первый ?>
-    <?php   if ($b == 0 && $i==0 ) : ?>
-         <div id="box<?= $quote['block_num'] ?>" class="m_box anishow <?= $quote['mbox_style']; ?>">
-             <p >
-             <span id="<?= 'q'.$quote['block_num'].'_'.$quote['quote_num']; ?>" class="anishow <?= $quote['line_style']; ?>"><?= $quote['text']; ?></span>
-    <?php $b = $quote['block_num']; $i = $quote['quote_num']; ?>
-    <?php endif; ?>
-
-<? //new quote same block ?>
-    <?php   if ($quote['block_num'] == $b && $quote['quote_num']> $i) : ?>
-             <span id="<?= 'q'.$quote['block_num'].'_'.$quote['quote_num']; ?>" class="anishow <?= $quote['line_style']; ?>"><?= $quote['text']; ?></span>
-    <?php $i = $quote['quote_num']?>
-    <?php endif; ?>
-
-<? //new block ?>
-    <?php   if ($quote['block_num'] > $b && $quote['quote_num']== 1) : ?>
-             </p>
-         </div>
-    <?php if ($bootSm == 12 ) : // bootstrap row iterator ?>
+<?php   if ($b == 0 && $i==0 ) : //первый ?>
+<div id="box<?= $quote['block_num'] ?>" class="m_box anishow <?= $quote['mbox_style']; ?>">
+<p >
+<span id="<?= 'q'.$quote['block_num'].'_'.$quote['quote_num']; ?>" class="anishow <?= $quote['line_style']; ?>"><?= $quote['text']; ?></span>
+<?php $b = $quote['block_num']; $i = $quote['quote_num']; ?>
+<?php endif; // END первый ?>
+<?php   if ($quote['block_num'] == $b && $quote['quote_num']> $i) : //new quote same block ?>
+    <span id="<?= 'q'.$quote['block_num'].'_'.$quote['quote_num']; ?>" class="anishow <?= $quote['line_style']; ?>"><?= $quote['text']; ?></span>
+    <?php $i = $quote['quote_num']; ?>
+<?php endif; // END new quote same block ?>
+<?php   if ($quote['block_num'] > $b && $quote['quote_num']== 1) : //new block  ?>
+</p>
 </div>
-<div class="row">
-    <?php $bootSm = 0 ?>
-    <?php endif; ?>
-         <div id="box<?= $quote['block_num'] ?>" class="m_box anishow <?= $quote['mbox_style']; ?>">
-             <p >
-             <span id="<?= 'q'.$quote['block_num'].'_'.$quote['quote_num']; ?>" class="anishow <?= $quote['line_style']; ?>"><?= $quote['text']; ?></span>        <?php $b = $quote['block_num']; $i = $quote['quote_num']; ?>
-    <?php endif; ?>
+<?php  // bootstrap row iterator
+if ($bootSm == 12 ) {
+echo "</div><div class=\"row\">";
+$bootSm = 0;
+} ?>
+
+<div id="box<?= $quote['block_num'] ?>" class="m_box anishow <?= $quote['mbox_style']; ?>">
+<p >
+<span id="<?= 'q'.$quote['block_num'].'_'.$quote['quote_num']; ?>" class="anishow <?= $quote['line_style']; ?>"><?= $quote['text']; ?></span>
+<?php $b = $quote['block_num']; $i = $quote['quote_num']; ?>
+<?php endif; ?>
 
 <?php
 // iterator for bootstrap row
- $sm = explode(' ',$quote['mbox_style']);
- foreach ($sm as $item=>$value) {
-     if (ltrim($value,'col-sm-') == '4') {
-         $boxSm = 4;
-         $bootSm += $boxSm;
-     }
-     if (ltrim($value,'col-sm-') == '8') {
-         $boxSm = 8;
-         $bootSm += $boxSm;
-     }
-     if (ltrim($value,'col-sm-') == '12') {
-         $bootSm = 12;
-     }
- }
- ?>
+$sm = explode(' ',$quote['mbox_style']);
+//debug($sm);
+foreach ($sm as $item=>$value) {
+    if (ltrim($value,'col-sm-') == '4') {
+        $boxSm = 4;
+        $bootSm += $boxSm;
+    }
+    if (ltrim($value,'col-sm-') == '6') {
+        $boxSm = 6;
+        $bootSm += $boxSm;
+    }
+    if (ltrim($value,'col-sm-') == '8') {
+        $boxSm = 8;
+        $bootSm += $boxSm;
+    }
+    if (ltrim($value,'col-sm-') == '12') {
+        $bootSm = 12;
+    }
+}
+?>
 <?php endforeach; ?>
                 </p>
             </div>
                     </div>
                 </div>
-                <a href="motivators.html" id="gomotivators"  >
+                <a href="/motivator" id="gomotivators"  >
                     <svg
                         version="1.1" id="arrow_up"
                         xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +99,25 @@ use yii\helpers\Html;
 
                         <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
                         <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
-                        <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,gplus,twitter,linkedin,lj,surfingbird,viber,whatsapp"></div>
+                        <?php if (empty($motivator->imagelink)): ?>
+                        <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki, gplus,twitter,linkedin,lj,surfingbird,viber,whatsapp,telegram"></div>
+                        <?php endif; ?>
+                        <?php if (!empty($motivator->imagelink)): ?>
+<div class="ya-share2"
+     data-services="vkontakte,facebook,odnoklassniki,pinterest,moimir,gplus,twitter,linkedin,lj,surfingbird,viber,whatsapp,telegram"
+     data-image="<?= 'http:'. \yii\helpers\Url::to('@imgfronturl/'. $motivator->imagelink) ?>"
+>
+
+</div>
+
+
+
+
+
+                        <?php endif; ?>
+
+
+
                         <h4 class="mt15"> Поделиться </h4>
                     </div>
 
@@ -142,7 +164,7 @@ use yii\helpers\Html;
 
                     </div>
                     <div class="col-xs-4 mt22">
-                        <a href="motivator_evolution_1.html" id="gonextpage" class="qbtn" >
+                        <a href="<?= $motivator->promolink ?>" id="gonextpage" class="qbtn" >
                             <svg
                                 version="1.1" id="arrow"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +182,7 @@ use yii\helpers\Html;
 </g>
 								</svg>
                         </a>
-                        <h4 class="mt10"> Смотреть мотиватор </h4>
+                        <h4 class="mt10"> <?= $motivator->promoname ?> </h4>
                     </div>
 
 
@@ -174,22 +196,14 @@ use yii\helpers\Html;
 
 
 
-        <!-- 	</div> -->
 
+<a id="sendtopage"  class="vizibleOff" href="<?= $motivator->sendtopage ?>"></a>
 
+<?php if (!empty($motivator->imagelink)) : ?>
+    <?= \yii\helpers\Html::img('/img/'.$motivator->imagelink,['alt'=>$motivator->imagelink_alt, 'class'=>'nodis']) ?>
+<?php endif; ?>
 
-
-    </main>
-
-
-
-
-
-
-
-
-</div>
-<div id="menubackfilter" class="menufilter backfilterOff">
-</div>
-<a id="sendtopage"  class="vizibleOff" href="motivator_evolution_1.html"></a>
+<?php if (!empty($motivator->imagelink2)) : ?>
+    <?= \yii\helpers\Html::img('/img/'.$motivator->imagelink2,['alt'=>$motivator->imagelink2_alt, 'class'=>'nodis']) ?>
+<?php endif; ?>
 

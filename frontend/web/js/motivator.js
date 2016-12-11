@@ -253,7 +253,8 @@ window.onload = function() {
         .to("#q4_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q4_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
 
-        .to("#box5", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#box5", 0.5, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#q5_1", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut})
 
         .to("#box6", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
         .to("#q6_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
@@ -301,7 +302,8 @@ window.onload = function() {
         .to("#q4_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q4_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
        
-        .to("#box5", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#box5", 0.5, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#q5_1", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut})
 
         .to("#box6", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q6_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
@@ -319,7 +321,8 @@ window.onload = function() {
         .to("#q9_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q9_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
 
-        .to("#box10", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#box10", 0.5, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#q10_1", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut})
 
         .to("#box11", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q11_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
@@ -341,11 +344,11 @@ window.onload = function() {
      
         .to("#box1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q1_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
-        .to("#q1_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+        .to("#q1_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
 
         .to("#box2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q2_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
-        .to("#q2_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+        .to("#q2_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
 
         .to("#box3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q3_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
@@ -371,14 +374,16 @@ window.onload = function() {
         .to("#q7_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q7_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
 
-        .to("#box8", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
-        .to("#q8_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
-        .to("#q8_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
-        .to("#q8_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
-       
         .to("#box9", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q9_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q9_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+        .to("#q9_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+
+        .to("#box8", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#q8_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+        .to("#q8_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+
+
 
         .to("#box10", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q10_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
@@ -600,7 +605,7 @@ window.onload = function() {
         .to("#box7", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q7_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q7_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
-        .to("#q7_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#q7_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
 
 
         .to("#box8", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
@@ -838,45 +843,45 @@ window.onload = function() {
         .to("#q1_4", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
        
 
-        .to("#box2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#box2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
         .to("#q2_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q2_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q2_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q2_4", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
         .to("#q2_5", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
        
-        .to("#box3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#box3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
         .to("#q3_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q3_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
         .to("#q3_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
  
  
-        .to("#box4", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#box4", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
         .to("#q4_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q4_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
        
-        .to("#box5", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#box5", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
         .to("#q5_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         
-        .to("#box6", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+        .to("#box6", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
         .to("#q6_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q6_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
 
        
-        .to("#box7", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#box7", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
         .to("#q7_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q7_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q7_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
 
 
-        .to("#box8", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#box8", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
         .to("#q8_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q8_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q8_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
 
 
        
-        .to("#box9", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
+        .to("#box9", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
         .to("#q9_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
         .to("#q9_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
         .to("#q9_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")

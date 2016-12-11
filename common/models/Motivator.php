@@ -27,9 +27,10 @@ class Motivator extends ActiveRecord
     public function rules()
     {
         return [
-            [[ 'id', 'list_section', 'list_name',  'cat_id', 'position', 'list_num','title', 'description', 'keywords'], 'required'],
+            [[ 'id', 'hrurl','list_section', 'list_name',  'cat_id', 'position', 'list_num','title', 'pagehead','description', 'keywords'], 'required'],
+            [['hrurl'],'unique'],
             [['description','keywords'], 'string'],
-            [['list_name', 'hrurl', 'title','description','keywords','pagehead','section_name','section_color','background','imagelink','imagelink_alt','sendtopage','promolink','promoname'], 'string', 'max' => 255],
+            [['list_name', 'hrurl', 'title','description','keywords','pagehead','section_name','section_color','background','imagelink','imagelink_alt','imagelink2','imagelink2_alt','sendtopage','promolink','promoname'], 'string', 'max' => 255],
         ];
     }
 
@@ -53,8 +54,10 @@ class Motivator extends ActiveRecord
             'section_name' => 'Section ID',
             'section_color' => 'Section Color Key',
             'background' => 'Background Image',
-            'imagelink' => 'Ссылка на картинку (поделиться)',
+            'imagelink' => 'Ссыль на картинку',
             'imagelink_alt' => 'ImageLink Alt',
+            'imagelink2' => 'Ссыль на картинку2',
+            'imagelink2_alt' => 'ImageLink Alt2',
             'sendtopage' => 'SendToPage',
             'promolink' => 'PromoLink',
             'promoname' => 'PromoName',

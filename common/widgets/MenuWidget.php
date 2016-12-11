@@ -4,6 +4,7 @@
 namespace common\widgets;
 use frontend\models\SunMenu;
 use yii\base\Widget;
+use frontend\models\Category;
 
 
 class MenuWidget extends Widget
@@ -13,6 +14,7 @@ class MenuWidget extends Widget
     public $tree;
     public $menuFinal;
     public $sunitem;
+    public $model;
 
     public function init()
     {
@@ -24,15 +26,25 @@ class MenuWidget extends Widget
     }
     public function run()
     {
-        $this->data = SunMenu::find()->indexBy('id')->asArray()->all();
-        if ($this->formfactor = 'sun') {
+
+        if ($this->formfactor == 'sun.php') {
+            $this->data = SunMenu::find()->indexBy('id')->asArray()->all();
             $this->tree = $this->getBranch();
             $this->menuFinal = $this->getMenuSVG($this->tree);
             return $this->menuFinal;
         }
-        if ($this->formfactor = 'html') {
+        if ($this->formfactor == 'html.php') {
+            $this->data = SunMenu::find()->indexBy('id')->asArray()->all();
             $this->tree = $this->getTree();
             $this->menuFinal = $this->getMenuHtml($this->tree);
+            return $this->menuFinal;
+        }
+        if ($this->formfactor == 'catselect.php') {
+            $this->data = Category::find()->indexBy('id')->asArray()->all();
+            $this->tree = $this->getTree();
+            $this->menuFinal = $this->getMenuHtml($this->tree);
+//            debug($this->model);
+//            die;
             return $this->menuFinal;
         }
 
@@ -88,7 +100,6 @@ class MenuWidget extends Widget
             }
         }
         return $branch;
-//       debug($branch);
     }
 
     protected function getMenuSVG($tree)
@@ -120,15 +131,15 @@ class MenuWidget extends Widget
 //        return $svg;
     }
 
-        protected function getMenuHtml($tree)
+        protected function getMenuHtml($tree, $tab='')
     {
         $str = '';
         foreach ($tree as $item ) {
-            $str .=$this->itemToTemplate($item);
+            $str .=$this->itemToTemplate($item, $tab);
         }
         return $str;
     }
-    protected function itemToTemplate($item)
+    protected function itemToTemplate($item, $tab)
     {
         ob_start();
         include __DIR__ . '/menu_formfactor/'. $this->formfactor;

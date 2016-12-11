@@ -16,25 +16,37 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    <div class="row">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+                'id',
 //            'parent_id',
-            [
-                'attribute'=> 'parent_id',
-                'value' => function ($data)
-                {
-                    return $data->category['name'] ? $data->category['name'] : 'Корень';
-                },
-            ],
-            'name',
-            'keywords',
-            'description',
+                [
+                    'attribute'=> 'parent_id',
+                    // обращаемся к виртуальному своиству полученному через геттер категории
+                    'value' => function ($data)
+                    {
+                        return $data->category['name'] ? $data->category['name'] : 'Корень';
+                    },
+                ],
+                'name',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                [
+                    'attribute'=>'keywords',
+                    'contentOptions'=>['class'=>'col-sm-4'],
+                ],
+
+                [
+                    'attribute'=>'description',
+                    'contentOptions'=>['class'=>'col-sm-4'],
+                ],
+
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); ?>
+    </div>
+
 </div>
