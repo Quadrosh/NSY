@@ -2,6 +2,8 @@
 
 namespace frontend\models;
 
+use common\models\LiveOutEx;
+use common\models\Motivator;
 use Yii;
 
 /**
@@ -27,16 +29,25 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Motivator::className(),['cat_id' => 'id']);
     }
-    public function getLiveOuts()
-    {
-        return $this->hasMany(LiveOut::className(),['ex_cat_id' => 'id']);
-    }
+//    public function getLiveOuts()
+//    {
+//        return $this->hasMany(LiveOutEx::className(),['ex_cat_id' => 'id']);
+//    }
 
+    /**
+     * получаем родителя
+     */
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id'=>'parent_id']);
     }
-
+    /**
+     * получаем проживания
+     */
+    public function getXex()
+    {
+        return $this->hasMany(LiveOutEx::className(),['ex_cat_id'=>'id']);
+    }
     /**
      * @inheritdoc
      */

@@ -38,6 +38,13 @@ AppAsset::register($this);
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'Gii', 'url' => ['index.php/gii']],
         [
+            'label' => 'Проживание',
+            'items' => [
+                ['label' => 'Упражнение', 'url' => ['/liveout/index']],
+                ['label' => 'Шаги', 'url' => ['/liveoutstep/index']],
+            ],
+        ],
+        [
             'label' => 'Мотиваторы',
             'items' => [
                 ['label' => 'Мотиваторы', 'url' => ['/motivator/index']],

@@ -25,12 +25,32 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+    <?php
+    //адаптация в человечий язык секции меню для view
+    function getSection ($data)
+    {
+        if ($data == 1) {
+            return 'By Category';
+        }
+        if ($data == 2) {
+            return 'Professional';
+        }
+        if ($data == 3) {
+            return 'City';
+        }
 
+    }
+    ?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
-            'list_section',
+//            'list_section',
+            [
+                'attribute'=>'list_section',
+                'value'=> getSection($model->list_section),
+                'format'=> 'html',
+            ],
 
             'list_num',
             'list_name',

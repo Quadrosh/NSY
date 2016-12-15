@@ -10,7 +10,7 @@ use common\models\AdminLoginForm;
 /**
  * Site controller
  */
-class SiteController extends BackController
+class SiteController extends Controller
 {
     /**
      * @inheritdoc

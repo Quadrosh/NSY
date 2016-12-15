@@ -16,10 +16,7 @@ class Motivator extends ActiveRecord
     {
         return $this->hasOne(Category::className(),['id'=>'cat_id']);
     }
-    public function getMBoxes()
-    {
-        return $this->hasMany(MBox::className(),['motivator_id'=>'id']);
-    }
+
     public function getMLines()
     {
         return $this->hasMany(MLine::className(),['motivator_id'=>'id']);

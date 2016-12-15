@@ -2,6 +2,8 @@
 
 namespace backend\models;
 
+use common\models\LiveOutEx;
+use common\models\XExercise;
 use Yii;
 
 /**
@@ -23,14 +25,20 @@ class Category extends \yii\db\ActiveRecord
         return 'category';
     }
 
+    /**
+     * Получаем родительскую категорию
+     */
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id'=>'parent_id']);
     }
 
-    /**
-     * @inheritdoc
-     */
+    public function getXex()
+    {
+        return $this->hasMany(LiveOutEx::className(),['ex_cat_id'=>'id']);
+    }
+
+
     public function rules()
     {
         return [
