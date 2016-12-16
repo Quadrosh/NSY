@@ -15,22 +15,30 @@ class LiveOutAsset extends AssetBundle
         'css/_fonts.css',
 //        'css/main.css',
 //        'css/main_media.css',
-        'css/live_out.css',
 
-      //  'libs/bootstrap/css/bootstrap.min.css',
+        'css/live_out.css',
+//        'css/motivator.css',
+        'css/sun_menu.css',
+
+
 
 
     ];
     public $js = [
         'libs/modernizr/modernizr.js',
      //   'libs/jquery/jquery-1.11.2.min.js',
-        'libs/parallax/jquery.parallax.js',
-        'libs/waypoints/waypoints.min.js',
-        'libs/animate/animate-css.js',
-        'libs/stellar/jquery.stellar.min.js',
-        'libs/bootstrap/js/bootstrap.min.js',
-        'js/common.js',
+//        'libs/parallax/jquery.parallax.js',
+//        'libs/waypoints/waypoints.min.js',
+//        'libs/animate/animate-css.js',
+//        'libs/stellar/jquery.stellar.min.js',
+//        'libs/bootstrap/js/bootstrap.min.js',
         'libs/gsap/tweenmax.min.js',
+        'js/sunmenuhiding.js',
+
+//        'js/common.js',
+        'js/live_out.js',
+//        'js/motivator.js',
+
 
 
     ];

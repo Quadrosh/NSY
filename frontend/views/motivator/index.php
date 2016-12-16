@@ -165,7 +165,7 @@ use yii\helpers\Url;
 
                     </div>
                     <div class="col-xs-4 mt22">
-                        <a href="motivator_evolution_1.html" id="gonextpage" class="qbtn" >
+                        <a href="<?= Yii::$app->view->params['meta']['promolink'] ?>" id="gonextpage" class="qbtn" >
                             <svg
                                 version="1.1" id="arrow"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -183,7 +183,7 @@ use yii\helpers\Url;
 </g>
 								</svg>
                         </a>
-                        <h4 class="mt12"> Смотреть мотиватор </h4>
+                        <h4 class="mt12"><?= Yii::$app->view->params['meta']['promoname'] ?></h4>
                     </div>
 
 
@@ -203,5 +203,5 @@ use yii\helpers\Url;
 
 
 
-<a id="sendtopage"  class="vizibleOff" href="motivator_evolution_1.html"></a>
+<a id="sendtopage"  class="vizibleOff" href="/<?= Yii::$app->view->params['meta']['sendtopage'] ?>"></a>
 

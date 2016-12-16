@@ -18,7 +18,7 @@ class MotivatorController extends FrontController
     {
         $pageID = 2;
         $metapage = Page::findOne($pageID);
-        $this->sunMenuItem = 2;
+        $this->sunMenuItem = 1;
         $sunitem =  $this->sunMenuItem;
         $this->view->params['sunitem'] = $sunitem;
 

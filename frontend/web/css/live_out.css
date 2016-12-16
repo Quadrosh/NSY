@@ -1427,6 +1427,77 @@ to { text-shadow: 0px 3px 5px rgba(0,0,0,.5); }
   cursor: default;
 }
 
+
+
+
+
+.btn-success {
+    border: 1px solid #FFC107;
+    padding: 2px 8px;
+    border-radius: 5px;
+    width: 40px;
+    color: #fff;
+    background-color: #FFC107;
+}
+#motivators .m_table .btn-success:hover,
+#motivators .m_table .btn-success:focus,
+#motivators .m_table .btn-success.focus,
+#motivators .m_table .btn-success:active,
+#motivators .m_table .btn-success.active {
+    border: 1px solid #FFC107;
+    background-color: #fff;
+    color: #FFC107;
+}
+
+
+a:hover,
+a:visited {
+    text-decoration: none;
+}
+.vertical {
+    position: absolute;
+    bottom: 45px;
+    right: 5%;
+    margin-right: -53px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+#gomotivators {
+    position: absolute;
+    bottom: -20px;
+    right: 5%;
+    margin-right: -63px;
+}
+.m_box  .text_left {
+    text-align: left;
+}
+.m_box  .text_right {
+    text-align: right;
+}
+
+.ya-share2__list_direction_horizontal > .ya-share2__item {
+    margin-bottom: 4px !important;
+}
+.sharing h4 {
+    margin-top: 18px;
+}
+
+#logosunIcon {
+    position: fixed;
+    width: 50px;
+    z-index: 10;
+    top: 50%;
+    margin-top: -25px;
+    cursor: pointer;
+}
+
+
+
+
+
 @media only screen and (max-width : 840px) {
 
   .m_table_name {
