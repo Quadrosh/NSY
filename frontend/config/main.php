@@ -61,6 +61,9 @@ return [
             'rules' => [
                 'motivator'=>'motivator/list',
                 'motivator/<pagename:[0-9a-z\-\_]+>' => 'motivator/show',
+                'liveout/warn/<id:\d+>' => 'liveout/warn',
+                'liveout/step/<id:\d+>/<stepnum:\d+>' => 'liveout/step',
+                'liveout/thnx/<id:\d+>' => 'liveout/thnx',
             ],
         ],
 

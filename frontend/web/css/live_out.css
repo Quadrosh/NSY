@@ -1484,7 +1484,10 @@ a:visited {
 .sharing h4 {
     margin-top: 18px;
 }
-
+#thanksden .step_txt{
+    margin-top:1em;
+    margin-bottom:1em;
+}
 #logosunIcon {
     position: fixed;
     width: 50px;

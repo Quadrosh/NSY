@@ -47,6 +47,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+//                'liveout/warn?<id:\d+>' => 'liveout/warn',
             ],
         ],
 

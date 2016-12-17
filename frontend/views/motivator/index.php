@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
         <section id="motivators" class="manifestor white">
             <h2 id="pagename"  ><?= Yii::$app->view->params['meta']['pagehead'] ?></h2>
-            <p><?= Yii::$app->view->params['meta']['pagedescription'] ?></p>
+            <p><?= nl2br(Yii::$app->view->params['meta']['pagedescription']) ?></p>
             <div class=" container mt120 mb100">
 
                 <div class="m_table">
@@ -83,28 +83,6 @@ use yii\helpers\Url;
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
-
-<!--                    <div class="m_table_row">-->
-<!--                        <div class="m_table_name">Воронеж</div>-->
-<!--                        <div class="m_table_button">-->
-<!--                            <a href="voroneg.html" class="btn-success fl">Я</a>-->
-<!---->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="m_table_row">-->
-<!--                        <div class="m_table_name">Москва</div>-->
-<!--                        <div class="m_table_button">-->
-<!--                            <a href="moscow.html" class="btn-success fl">Я</a>-->
-<!---->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="m_table_row">-->
-<!--                        <div class="m_table_name">Тула</div>-->
-<!--                        <div class="m_table_button">-->
-<!--                            <a href="tula.html" class="btn-success fl">Я</a>-->
-<!---->
-<!--                        </div>-->
-<!--                    </div>-->
 
                 </div>
             </div>

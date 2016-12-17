@@ -52,7 +52,7 @@ IeAsset::register($this);
 
 </head>
 
-<body class="home">
+<body class="<?= Yii::$app->view->params['bodyclass'] ?>">
 <?php $this->beginBody() ?>
 <div id="start_loader"></div>
 

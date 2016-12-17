@@ -4,7 +4,7 @@
 
 <section id="motivators" class="manifestor white">
     <h2 id="pagename"  ><?= Yii::$app->view->params['meta']['pagehead'] ?></h2>
-    <p><?= Yii::$app->view->params['meta']['pagedescription'] ?></p>
+    <p><?= nl2br(Yii::$app->view->params['meta']['pagedescription']) ?></p>
     <div class=" container mt120 mb100">
 
         <div class="m_table">
@@ -25,24 +25,39 @@
                                 }?></span></div>
 
                         <div class="m_table_button">
-                            <a href="lo-<?php
-                            // куда шлем (в зависимости от доступа)
-                            if (true == $liveout['private']) {
-                                echo 'au-9';
-                            } else {
-                                echo 'ex-2';
-                            }
-                            ?>-<?= $liveout['id']; ?>-x" class="btn fr <?php
-                            if (true == $liveout['private']) {
-                                echo 'unactive';
-                            }
-                            ?>"><?php
-                                if (true == $liveout['private']) {
-                                    echo 'прожить';
-                                } else {
-                                    echo 'прожить';
+<!--                            <a href="lo---><?php
+//                            if (true == $liveout['private']) {
+//                                echo 'au-9';
+//                            } else {
+//                                echo 'ex-2';
+//                            }
+//                            ?><!-----><?//= $liveout['id']; ?><!---x" class="btn fr --><?php
+//                            if (true == $liveout['private']) {
+//                                echo 'unactive';
+//                            }
+//                            ?><!--">--><?php
+//                                if (true == $liveout['private']) {
+//                                    echo 'прожить';
+//                                } else {
+//                                    echo 'прожить';
+//                                }
+//                                ?><!--</a>-->
+
+                            <?php
+                            $isActiveButton = function($data)
+                            {
+                                if (true == $data) {
+                                    return 'unactive';
                                 }
-                                ?></a>
+                            };
+                            $private = $isActiveButton($liveout['private']);
+
+                            ?>
+
+                            <?= \yii\helpers\Html::a('Прожить', ['liveout/warn', 'id'=>$liveout['id']],
+                                ['class' => "btn fr $private",]) ?>
+
+
                         </div>
                     </div>
                 <?php endforeach; ?>

@@ -49,6 +49,7 @@
         <path id="center_2_path" fill="none" d="<?= $centerlocation[2] ?>"/>
         <text ><textPath id="center_2_text" xlink:href="#center_2_path" startOffset="-50%">
                 <tspan  class="suncenter" style="fill:#F9C11B; font-family:'Helvetica-Bold'; font-size:16px;"><?= $tree['parent'] ['name']; ?></tspan></textPath>
+
         </text>
     </a>
 <?php endif; ?>
