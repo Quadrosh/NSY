@@ -18,7 +18,7 @@ $(document).ready(function() {
             ;
         }
     );
-
+    var backgroundFilter = $('#menubackfilter');
     var nsLogoSunIcon = $('#logosunIcon'), isClosed = true;
     nsLogoSunIcon.click(function(){
         sunMenu();
@@ -27,6 +27,8 @@ $(document).ready(function() {
         if (isClosed == true) {
             nsLogoSunIcon.removeClass('is-closed');
             nsLogoSunIcon.addClass('is-open');
+            backgroundFilter.addClass('backfilterOn');
+            backgroundFilter.removeClass('backfilterOff');
             isClosed = false;
             var tl = new TimelineMax();
             tl.set(".sunmenu",{css:{autoAlpha:1}})
@@ -50,60 +52,25 @@ $(document).ready(function() {
                 .fromTo("#beam_13_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
                 .fromTo(".sunbeam",0.4,{css:{autoAlpha:0}},{css:{autoAlpha:1},ease:Power4.easeIn},'start')
             ;
+            backgroundFilter.click(function () {
+                nsLogoSunIcon.addClass('is-closed');
+                nsLogoSunIcon.removeClass('is-open');
+                backgroundFilter.addClass('backfilterOff');
+                backgroundFilter.removeClass('backfilterOn');
+                var tl = new TimelineMax();
+                tl.fromTo(".sunmenu",0.8,{css:{autoAlpha:1}},{css:{autoAlpha:0}});
+                isClosed = true;
+            });
         } else {
             nsLogoSunIcon.addClass('is-closed');
             nsLogoSunIcon.removeClass('is-open');
+            backgroundFilter.addClass('backfilterOff');
+            backgroundFilter.removeClass('backfilterOn');
             var tl = new TimelineMax();
               tl.fromTo(".sunmenu",0.8,{css:{autoAlpha:1}},{css:{autoAlpha:0}});
             isClosed = true;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-    //$('#logosunIcon').on('click', function() {
-    //    if(nsLogoSunMenu.status == false) {
-    //        var tl = new TimelineMax();
-    //        tl.set(".sunmenu",{css:{autoAlpha:1}})
-    //            .set(".sunbeam",{css:{autoAlpha:0}})
-    //            .fromTo("#center_3_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut})
-    //            .fromTo("#center_2_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0.6472%'},ease:Power1.easeOut})
-    //            .fromTo("#center_1_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'1.123%'},ease:Power1.easeOut})
-    //
-    //            .fromTo("#beam_1_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_2_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_3_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_4_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_5_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_6_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_7_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_8_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_9_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_10_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_11_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_12_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo("#beam_13_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-    //            .fromTo(".sunbeam",0.4,{css:{autoAlpha:0}},{css:{autoAlpha:1},ease:Power4.easeIn},'start')
-    //        ;
-    //        nsLogoSunMenu.status == true;
-    //    } else {
-    //        var tl = new TimelineMax();
-    //        tl.set(".sunmenu",{css:{autoAlpha:0}})
-    //
-    //        ;
-    //        nsLogoSunMenu.status == false;
-    //    }
-    //    }
-    //
-    //);
 
 
 

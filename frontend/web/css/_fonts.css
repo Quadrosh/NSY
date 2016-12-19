@@ -9,6 +9,16 @@
 }
 
 @font-face {
+    font-family: "HelveticaBold";
+    src: url("fonts/HelveticaBold/HelveticaBold.eot");
+    src: url("fonts/HelveticaBold/HelveticaBold.eot?#iefix") format("embedded-opentype"),
+    url("fonts/HelveticaBold/HelveticaBold.woff") format("woff"),
+    url("fonts/HelveticaBold/HelveticaBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
   font-family: "RobotoCondensed-Bold";
   font-style: normal;
   font-weight: normal;
@@ -40,6 +50,17 @@
   url('fonts/glyphicons-halflings-regular.woff') format('woff'), 
   url('fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
   url('fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+}
+@font-face {
+    font-family: 'TeleskaSun';
+    src: url('fonts/teleska_sun/teleska_sun.eot');
+    src: url('fonts/teleska_sun/teleska_sun.eot?#iefix') format('embedded-opentype'),
+         url('fonts/teleska_sun/teleska_sun.woff2') format('woff2'),
+         url('fonts/teleska_sun/teleska_sun.woff') format('woff'),
+         url('fonts/teleska_sun/teleska_sun.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
 }
 
 @font-face {
@@ -129,3 +150,4 @@
 .tel-font.tf_k1::before {
   content: 'K';
 }
+

@@ -59,36 +59,28 @@ IeAsset::register($this);
 <div class="overlay"></div>
 <div id="loader"></div>
 
-<div id="hamburger_anim" class="hamburglar ">
-    <div class="burger-icon">
-        <div id="burger-container" class="burger-container">
-            <span id="menutopline" class="burger-bun-top"></span>
-            <span id="menumiddleline" class="burger-filling"></span>
-            <span id="menubottomline" class="burger-bun-bot"></span>
-        </div>
-    </div>
-    <div class="burger-ring">
-        <svg class="svg-ring">
-            <path class="path" fill="none" stroke="#FFC107" stroke-miterlimit="10" stroke-width="4" d="M 34 2 C 16.3 2 2 16.3 2 34 s 14.3 32 32 32 s 32 -14.3 32 -32 S 51.7 2 34 2" />
-        </svg>
-    </div>
-    <svg width="0" height="0">
-        <mask id="mask">
-            <path xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#FFC107" stroke-miterlimit="10" stroke-width="4" d="M 34 2 c 11.6 0 21.8 6.2 27.4 15.5 c 2.9 4.8 5 16.5 -9.4 16.5 h -4" />
-        </mask>
-    </svg>
-    <div class="path-burger">
-        <div id="menubuttonhover" class="animate-path">
-            <div class="path-rotation"></div>
-        </div>
-    </div>
+
+<div class="loginIconWrap">
+
+    <?php
+    if (Yii::$app->user->isGuest) {
+        echo Html::a('', ['/site/login'], ['class' => 'glyphicon glyphicon-log-in', 'id'=>'loginIcon']);
+    } else {
+        echo Yii::$app->user->identity->username;
+        echo Html::beginForm(['/site/logout'], 'post')
+            . Html::submitButton(
+                'Выход',
+                ['class' => 'nslogout']
+            )
+            . Html::endForm() ;
+    }
+    ?>
+
+
 
 </div>
-<nav id="menu" class="menu menuclose">
-    <section class="menu-section">
-        <?php include __DIR__ ."/fun_menu.php"; ?>
-    </section>
-</nav>
+
+
 
 <div id="content-wrapper">
     <main id="panel" class="panel">
@@ -114,7 +106,7 @@ IeAsset::register($this);
         </div>
 
         <?= \common\widgets\MenuWidget::widget(['formfactor'=>'sun','sunitem'=> Yii::$app->view->params['sunitem'] ]); ?>
-
+        <?= Alert::widget() ?>
         <?= $content; ?>
     </main>
 </div>

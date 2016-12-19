@@ -1374,7 +1374,7 @@ transform: rotate(270deg);
 .reglink {
   display: block;
   position: relative;
-  margin-top: -10px;
+  margin-top: 10px;
   float: right;
   text-transform: uppercase;
   font-family: "RobotoCondensed-Regular", sans-serif;
@@ -1488,6 +1488,9 @@ a:visited {
     margin-top:1em;
     margin-bottom:1em;
 }
+
+
+/*Logosun*/
 #logosunIcon {
     position: fixed;
     width: 50px;
@@ -1496,10 +1499,61 @@ a:visited {
     margin-top: -25px;
     cursor: pointer;
 }
+/*Login*/
+.loginIconWrap {
+    position: fixed;
+    width: 50px;
+    z-index:10;
+    top: 30px;
+    right:20px;
+    color: #FCC116;
+    cursor: pointer;
+    font-size:28px;
+}
+#loginIcon {
+    color: #FCC116;
+}
+.regbox {
+    text-align: left;
+}
+.site-login p, .site-login label,
+.site-request-password-reset p, .site-request-password-reset label,
+.site-reset-password p, .site-reset-password label,
+.site-signup p, .site-signup label  {
+    color: white;
+}
+.regbox .has-error label, .regbox .has-error .help-block-error {
+    text-shadow: 0 0 10px #fff,0 0 5px #fff ,0 1px 3px #fff, 0 -1px 3px #fff;
+    color: #FF5722;
+}
+.regbox a:link,
+.regbox a:visited,
+.regbox a:hover,
+.regbox a:focus
+{
+    color:#FCC116;
+}
+.regbox .form-submit {
+    width:100%;
+    text-align: center;
+}
 
+.nslogout {
+    font-size:11px;
+    border: none !important;
+    text-transform: uppercase;
+    background-color: transparent;
+    padding: 0px;
+}
 
-
-
+.alert {
+    z-index: 1000;
+    position: fixed;
+    top: 15px;
+    width: 300px;
+    left: 50%;
+    margin-left: -150px;
+}
 
 @media only screen and (max-width : 840px) {
 

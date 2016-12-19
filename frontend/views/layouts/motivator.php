@@ -114,7 +114,7 @@ IeAsset::register($this);
         </div>
 
         <?= \common\widgets\MenuWidget::widget(['formfactor'=>'sun','sunitem'=> Yii::$app->view->params['sunitem'] ]); ?>
-
+        <?= Alert::widget() ?>
         <?= $content; ?>
     </main>
 </div>

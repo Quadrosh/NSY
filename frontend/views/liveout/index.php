@@ -25,23 +25,6 @@
                                 }?></span></div>
 
                         <div class="m_table_button">
-<!--                            <a href="lo---><?php
-//                            if (true == $liveout['private']) {
-//                                echo 'au-9';
-//                            } else {
-//                                echo 'ex-2';
-//                            }
-//                            ?><!-----><?//= $liveout['id']; ?><!---x" class="btn fr --><?php
-//                            if (true == $liveout['private']) {
-//                                echo 'unactive';
-//                            }
-//                            ?><!--">--><?php
-//                                if (true == $liveout['private']) {
-//                                    echo 'прожить';
-//                                } else {
-//                                    echo 'прожить';
-//                                }
-//                                ?><!--</a>-->
 
                             <?php
                             $isActiveButton = function($data)

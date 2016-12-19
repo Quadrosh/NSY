@@ -17,7 +17,7 @@ class LiveoutController extends FrontController
         $sunitem =  1;
         $this->view->params['sunitem'] = $sunitem;
 
-        $liveouts = LiveOutEx::find()->asArray()->all();
+        $liveouts = LiveOutEx::find()->asArray()->where(['>','view_order', 0])->orderBy('view_order')->all();
         $this->view->params['liveouts'] = $liveouts;
 
         $this->view->params['meta'] = $metapage;

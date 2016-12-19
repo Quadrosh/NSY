@@ -85,6 +85,12 @@ class SiteController extends FrontController
      */
     public function actionLogin()
     {
+        $this->layout = 'login';
+        $this->view->params['sunitem'] = 1;
+        $this->view->params['meta']['title'] = 'Наше Счастье - Авторизация';
+        $this->view->params['meta']['description'] = 'Вход зарегистрированного пользователя';
+        $this->view->params['meta']['keywords'] = 'регистрация, авторизация';
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -151,6 +157,11 @@ class SiteController extends FrontController
      */
     public function actionSignup()
     {
+        $this->layout = 'login';
+        $this->view->params['sunitem'] = 1;
+        $this->view->params['meta']['title'] = 'Наше Счастье - Регистрация';
+        $this->view->params['meta']['description'] = 'Регистрация нового пользователя';
+        $this->view->params['meta']['keywords'] = 'регистрация, авторизация';
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
@@ -172,14 +183,19 @@ class SiteController extends FrontController
      */
     public function actionRequestPasswordReset()
     {
+        $this->layout = 'login';
+        $this->view->params['sunitem'] = 1;
+        $this->view->params['meta']['title'] = 'Наше Счастье - Сброс пароля';
+        $this->view->params['meta']['description'] = 'Сброс пароля';
+        $this->view->params['meta']['keywords'] = 'Сброс пароля, авторизация';
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+                Yii::$app->session->setFlash('success', 'Проверьте свой email.');
 
                 return $this->goHome();
             } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
+                Yii::$app->session->setFlash('error', 'Извините, мы не можем сбросить пароль для данного email адреса.');
             }
         }
 
@@ -197,6 +213,11 @@ class SiteController extends FrontController
      */
     public function actionResetPassword($token)
     {
+        $this->layout = 'login';
+        $this->view->params['sunitem'] = 1;
+        $this->view->params['meta']['title'] = 'Наше Счастье - изменение пароля';
+        $this->view->params['meta']['description'] = 'Изменение пароля';
+        $this->view->params['meta']['keywords'] = ' пароль, авторизация';
         try {
             $model = new ResetPasswordForm($token);
         } catch (InvalidParamException $e) {
@@ -204,7 +225,7 @@ class SiteController extends FrontController
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password was saved.');
+            Yii::$app->session->setFlash('success', 'Пароль был изменен.');
 
             return $this->goHome();
         }

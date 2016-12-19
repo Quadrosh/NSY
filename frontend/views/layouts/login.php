@@ -12,17 +12,18 @@ use frontend\assets\LiveOutAsset;
 use frontend\assets\IeAsset;
 use common\widgets\Alert;
 
-//LiveOutAsset::register($this);
-CenterAsset::register($this);
+
+LiveOutAsset::register($this);
+
 IeAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 
-<!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html lang="<?= Yii::$app->language ?>"> <!--<![endif]-->
+    <!DOCTYPE html>
+    <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+    <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+    <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+    <!--[if (gte IE 9)|!(IE)]><!--><html lang="<?= Yii::$app->language ?>"> <!--<![endif]-->
 
 <head>
 
@@ -30,11 +31,11 @@ IeAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
 
-<!--    <title>Наше Счастье</title>-->
-<!--    <meta name="description" content="В поисках счастья - знания, техники, практики.">-->
-<!--    <meta name="keywords" content="техники счастья, практики достижения душевного равновесия, методы достижения счастья в жизни" />-->
-    <title><?= Html::encode($this->title) ?></title>
 
+
+    <title><?= Yii::$app->view->params['meta']['title'] ?></title>
+    <meta name="description" content="<?= Yii::$app->view->params['meta']['description'] ?>">
+    <meta name="keywords" content="<?= Yii::$app->view->params['meta']['keywords'] ?>">
 
     <?php $this->head() ?>
 
@@ -51,14 +52,53 @@ IeAsset::register($this);
 
 </head>
 
-<body class="home">
+<body class="exercise">
 <?php $this->beginBody() ?>
 <div id="start_loader"></div>
 
 <div class="overlay"></div>
+<div id="loader"></div>
 
-<?= $content; ?>
-<?= Alert::widget() ?>
+
+<div class="loginIconWrap">
+
+
+
+
+</div>
+
+
+
+<div id="content-wrapper">
+    <main id="panel" class="panel">
+        <div id="logosunIcon">
+            <svg version="1.1"
+                 id="menu"
+                 xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 x="0px" y="0px"
+                 viewBox="0 0 50 50"
+                 style="enable-background:new 0 0 50 50;"
+                 xml:space="preserve">
+            <style type="text/css">
+                .sunglif0{fill:none;stroke:#FCC116;stroke-width:4;stroke-linecap:round;stroke-miterlimit:10;}
+            </style>
+                <g id="sunglif_1_">
+                    <line id="XMLID_32_" class="sunglif0" x1="20.1" y1="25" x2="40.1" y2="25"/>
+                    <line id="XMLID_31_" class="sunglif0" x1="18.1" y1="17.4" x2="35.4" y2="7.4"/>
+                    <line id="XMLID_29_" class="sunglif0" x1="18.1" y1="32.6" x2="35.4" y2="42.6"/>
+                    <path id="XMLID_28_" class="sunglif0" d="M9.9,33.7c3-1.7,5-5,5-8.7s-2-6.9-5-8.7"/>
+                </g>
+        </svg>
+        </div>
+
+        <?= \common\widgets\MenuWidget::widget(['formfactor'=>'sun','sunitem'=> Yii::$app->view->params['sunitem'] ]); ?>
+        <?= Alert::widget() ?>
+        <?= $content; ?>
+    </main>
+</div>
+<div id="menubackfilter" class="menufilter backfilterOff">
+</div>
 
 
 <?php $this->endBody() ?>
@@ -108,5 +148,3 @@ IeAsset::register($this);
 </body>
 </html>
 <?php $this->endPage() ?>
-
-

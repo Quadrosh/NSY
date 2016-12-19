@@ -17,6 +17,20 @@ return [
             'csrfParam' => '_csrf-backend',
             'cookieValidationKey' => 'UoacjIvhEGnvFxFpgJqb'
         ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            // 'useFileTransport'  true = send all mails to a file
+            // 'useFileTransport'  false + configure a transport =  mailer send real emails.
+            'useFileTransport' => false,
+//            'transport' => [
+//                'class' => 'Swift_SmtpTransport',
+//                'host' => 'smtp.list.ru',
+//                'username' => 'quadrosh@list.ru',
+//                'password' => 'cxzaqwe3edc',
+//                'port' => '465',
+//                'encryption' => 'ssl',
+//            ],
+        ],
         'assetManager' => [
             // подключаем symlincs
             'linkAssets' => true,

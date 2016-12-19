@@ -167,9 +167,10 @@ var trigger = $('#hamburger_anim'), isClosed = true;
     }
 
     else{   //behaviour and events for pointing device like mouse
-        
 
-        $('#logosun').mousedown(function() {
+
+        $('#logosun').mousedown(function(event) {
+            event.preventDefault();
             var tlmain = new TimelineLite({onComplete:sendtopage});
             tlmain.to("#logosun", 3, {directionalRotation:"1590_cw", scale:4, transformOrigin:"50% 54%", ease:Power1.easeIn});
             $('#logosun').bind('mouseup mouseleave', function() {           

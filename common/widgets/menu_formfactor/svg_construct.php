@@ -9,7 +9,8 @@
          style="enable-background:new 0 0 504.2 496.1;"
          xml:space="preserve" >
 
-
+<rect width="100%" height="100%"
+      fill="rgba(0,0,0,0.8)"  />
 <?php if (!empty($tree['childs'])) : //смещение от количества элементов меню (max 13) ?>
 <?php if (count($tree['childs'])<=13) $beamiter=1; ?>
 <?php if (count($tree['childs'])<11) $beamiter=2; ?>
@@ -19,12 +20,13 @@
 
 <?php  foreach ($tree['childs'] as $item) : ?>
 <a  class="menu_beam_<?= $item['num_order'] ?>" title="mam" xlink:href="/<?=  $item ['link'] ?>">
-<defs><path id="beam_<?= $item['num_order'] ?>_defs"/></defs>
+<defs>
+    <path id="beam_<?= $item['num_order'] ?>_defs"/>
+</defs>
 <path id="beam_<?= $item['num_order'] ?>_path" fill="none" d="<?= $beamlocation[$beamiter] ?>"/>
-<text ><textPath id="beam_<?= $item['num_order'] ?>_text" xlink:href="#beam_<?= $item['num_order'] ?>_path" startOffset="0">
-<tspan  class="sunbeam" style="fill:#FAC119; font-family:'Roboto-Regular'; font-size:18px;"><?=  $item ['name']; ?>
+<text ><textPath id="beam_<?= $item['num_order'] ?>_text"  xlink:href="#beam_<?= $item['num_order'] ?>_path" startOffset="0"><tspan  class="sunbeam"  font-family="RobotoRegular" fill="#FAC119" font-size="18px" ><?=  $item ['name']; ?>
 <?php if(isset($item['haschild'])) : ?>
-<tspan class="subchild" baseline-shift="-1" stroke-miterlimit="5" style="fill:#FAC119; font-family:'Roboto-Regular'; font-size:24px;"> <)</tspan>
+<tspan class="subchild" baseline-shift="-1" stroke-miterlimit="5" fill="#FAC119" font-size="32px" font-family="TeleskaSun" > X</tspan>
 <?php endif; ?>
 </tspan></textPath>
 </text></a>
@@ -38,7 +40,7 @@
         <defs><path id="center_3_defs"/></defs>
         <path id="center_3_path" fill="none" d="<?= $centerlocation[3] ?>"/>
         <text ><textPath id="center_3_text" xlink:href="#center_3_path" startOffset="-50%">
-                <tspan  class="suncenter" style="fill:#F9C11B; font-family:'Helvetica-Bold'; font-size:14px;"><?= $tree['grandparent'] ['name']; ?></tspan></textPath>
+                <tspan  class="suncenter" fill="#F9C11B" font-family="HelveticaBold" font-size="14px"><?= $tree['grandparent'] ['name']; ?></tspan></textPath>
         </text>
     </a>
 <?php endif; ?>
@@ -48,7 +50,7 @@
         <defs><path id="center_2_defs"/></defs>
         <path id="center_2_path" fill="none" d="<?= $centerlocation[2] ?>"/>
         <text ><textPath id="center_2_text" xlink:href="#center_2_path" startOffset="-50%">
-                <tspan  class="suncenter" style="fill:#F9C11B; font-family:'Helvetica-Bold'; font-size:16px;"><?= $tree['parent'] ['name']; ?></tspan></textPath>
+                <tspan  class="suncenter" fill="#F9C11B" font-family="HelveticaBold" font-size="16px"><?= $tree['parent'] ['name']; ?></tspan></textPath>
 
         </text>
     </a>
@@ -59,7 +61,7 @@
     <defs><path id="center_1_defs"/></defs>
     <path id="center_1_path" fill="none" d="<?=  $centerlocation[1] ?>"/>
     <text ><textPath id="center_1_text" xlink:href="#center_1_path" startOffset="-50%">
-            <tspan class="centerfirst"  fill-opacity="1" style="fill:#F9C11B; font-family:'Helvetica-Bold'; font-size:23px;"><?= $tree['current'] ['name']; ?></tspan></textPath>
+            <tspan class="centerfirst"  fill-opacity="1" fill="#F9C11B" font-family="HelveticaBold" font-size="23px"><?= $tree['current'] ['name']; ?></tspan></textPath>
     </text>
 </a>
 

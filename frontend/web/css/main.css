@@ -2079,7 +2079,14 @@ to { box-shadow: 0 5px 7px rgba(0, 0, 0, 0.6); color: #0F63A4; }
 }
 
 
-
+.alert {
+  z-index: 1000;
+  position: fixed;
+  top: 15px;
+  width: 300px;
+  left: 50%;
+  margin-left: -150px;
+}
 
 
 
