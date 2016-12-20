@@ -1507,8 +1507,11 @@ a:visited {
     top: 30px;
     right:20px;
     color: #FCC116;
-    cursor: pointer;
+    cursor: default;
     font-size:28px;
+}
+.loginIconWrap a{
+    cursor: pointer;
 }
 #loginIcon {
     color: #FCC116;

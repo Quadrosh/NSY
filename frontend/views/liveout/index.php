@@ -27,19 +27,24 @@
                         <div class="m_table_button">
 
                             <?php
-                            $isActiveButton = function($data)
+                            $isActiveButton = function($data1, $data2)
                             {
-                                if (true == $data) {
-                                    return 'unactive';
+                                if (true == $data1  ) {
+                                    if (true == $data2) {
+                                        return 'unactive';
+                                    }
                                 }
                             };
-                            $private = $isActiveButton($liveout['private']);
+                            $private = $isActiveButton($liveout['private'], Yii::$app->user->isGuest);
 
                             ?>
-
+                            <?php if ($private != 'unactive') : ?>
                             <?= \yii\helpers\Html::a('Прожить', ['liveout/warn', 'id'=>$liveout['id']],
                                 ['class' => "btn fr $private",]) ?>
-
+                            <?php elseif ($private == 'unactive') : ?>
+                            <?= \yii\helpers\Html::a('Прожить', ['liveout/restricted'],
+                            ['class' => "btn fr $private",]) ?>
+                            <?php endif; ?>
 
                         </div>
                     </div>

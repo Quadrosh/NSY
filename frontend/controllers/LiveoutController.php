@@ -81,6 +81,28 @@ class LiveoutController extends FrontController
         return $this->render('thnx', ['liveout'=> $liveout]);
     }
 
+    public function actionWhyItWorks()
+    {
+        $this->layout = 'liveout';
+        $this->view->params['sunitem'] = 1;
+        $this->view->params['bodyclass'] = 'what_is';
+        $this->view->params['meta']['title'] = 'Проживание - почему это работает';
+        $this->view->params['meta']['description'] = 'Почему работают упражнения проживание, принцип действия';
+        $this->view->params['meta']['keywords'] = 'Проживание, переживание, психологические упражнения';
+        return $this->render('whyitworks');
+    }
+
+    public function actionRestricted()
+    {
+        $this->layout = 'liveout';
+        $this->view->params['sunitem'] = 1;
+        $this->view->params['bodyclass'] = 'what_is';
+        $this->view->params['meta']['title'] = 'Ограничение';
+        $this->view->params['meta']['description'] = 'Наше Счастье - Ограничение';
+        $this->view->params['meta']['keywords'] = 'Ограничение';
+        return $this->render('restricted');
+    }
+
 
 
 }
