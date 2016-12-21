@@ -32,7 +32,7 @@ class CenterAsset extends AssetBundle
         'libs/stellar/jquery.stellar.min.js',
         'libs/bootstrap/js/bootstrap.min.js',
         'libs/gsap/tweenmax.min.js',
-        'js/sunmenu.js',
+        'js/sunmenuhiding.js',
         'js/common.js',
 
 

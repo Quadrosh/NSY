@@ -6,68 +6,68 @@ $(document).ready(function() {
 
 
 
-    var trigger = $('#hamburger_anim'), isClosed = true;
-    trigger.click(function () {
-        burgerClock();
-    });
-    function burgerClock() {
-        if (isClosed == true) {
-            trigger.removeClass('is-closed');
-            trigger.addClass('is-open');
-            isClosed = false;
-            $("#menu").addClass('menuopen');
-            $("#menu").removeClass('menuclose');
-
-            $("#menubackfilter").addClass('backfilterOn');
-            $("#menubackfilter").removeClass('backfilterOff');
-            var tl_burgerOn = new TimelineLite();
-            tl_burgerOn.to("#menutopline", 0.2, {directionalRotation:"20_cw",smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgerstep1")
-                .to("#menumiddleline", 0.2, {css:{scaleX:0.5, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgerstep1")
-                .to("#menubottomline", 0.2, {directionalRotation:"-20_ccw", smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgerstep1")
-                .to("#menutopline", 0.4, {directionalRotation:"-45_ccw", y:12, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "burgerstep2")
-                .to("#menumiddleline", 0.4, {css:{scaleX:0 , autoAlpha:0, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgerstep2")
-                .to("#menubottomline", 0.4, {directionalRotation:"45_cw", y:"-=12", smoothOrigin:"50% 50%", ease:Linear.easeNone}, "burgerstep2")
-            ;
-
-            $("#menubackfilter").click(function () {
-                trigger.removeClass('is-open');
-                trigger.addClass('is-closed');
-                isClosed = true;
-                $("#menu").addClass('menuclose');
-                $("#menu").removeClass('menuopen');
-                $("#menubackfilter").addClass('backfilterOff');
-                $("#menubackfilter").removeClass('backfilterOn');
-                var tl_burgerOff = new TimelineLite();
-                tl_burgerOff.to("#menutopline", 0.4, {directionalRotation:"20_cw", y:0, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "burgeroffstep1")
-                    .to("#menumiddleline", 0.4, {css:{scaleX:0.5, autoAlpha:1, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgeroffstep1")
-                    .to("#menubottomline", 0.4, {directionalRotation:"-20_ccw", y:0, smoothOrigin:"50% 50%", ease:Linear.easeNone}, "burgeroffstep1")
-                    .to("#menutopline", 0.2, {directionalRotation: 0 , y:0, smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgeroffstep2")
-                    .to("#menumiddleline", 0.2, {css:{scaleX:1, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgeroffstep2")
-                    .to("#menubottomline", 0.2, {directionalRotation: 0 , y:0, smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgeroffstep2")
-                ;
-            });
-
-        } else {
-            trigger.removeClass('is-open');
-            trigger.addClass('is-closed');
-            isClosed = true;
-            $("#menu").addClass('menuclose');
-            $("#menu").removeClass('menuopen');
-
-            $("#menubackfilter").addClass('backfilterOff');
-            $("#menubackfilter").removeClass('backfilterOn');
-
-            var tl_burgerOff = new TimelineLite();
-            tl_burgerOff.to("#menutopline", 0.4, {directionalRotation:"20_cw", y:0, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "burgeroffstep1")
-                .to("#menumiddleline", 0.4, {css:{scaleX:0.5, autoAlpha:1, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgeroffstep1")
-                .to("#menubottomline", 0.4, {directionalRotation:"-20_ccw", y:0, smoothOrigin:"50% 50%", ease:Linear.easeNone}, "burgeroffstep1")
-                .to("#menutopline", 0.2, {directionalRotation: 0 , y:0, smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgeroffstep2")
-                .to("#menumiddleline", 0.2, {css:{scaleX:1, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgeroffstep2")
-                .to("#menubottomline", 0.2, {directionalRotation: 0 , y:0, smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgeroffstep2")
-            ;
-
-        }
-    }
+    //var trigger = $('#hamburger_anim'), isClosed = true;
+    //trigger.click(function () {
+    //    burgerClock();
+    //});
+    //function burgerClock() {
+    //    if (isClosed == true) {
+    //        trigger.removeClass('is-closed');
+    //        trigger.addClass('is-open');
+    //        isClosed = false;
+    //        $("#menu").addClass('menuopen');
+    //        $("#menu").removeClass('menuclose');
+    //
+    //        $("#menubackfilter").addClass('backfilterOn');
+    //        $("#menubackfilter").removeClass('backfilterOff');
+    //        var tl_burgerOn = new TimelineLite();
+    //        tl_burgerOn.to("#menutopline", 0.2, {directionalRotation:"20_cw",smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgerstep1")
+    //            .to("#menumiddleline", 0.2, {css:{scaleX:0.5, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgerstep1")
+    //            .to("#menubottomline", 0.2, {directionalRotation:"-20_ccw", smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgerstep1")
+    //            .to("#menutopline", 0.4, {directionalRotation:"-45_ccw", y:12, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "burgerstep2")
+    //            .to("#menumiddleline", 0.4, {css:{scaleX:0 , autoAlpha:0, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgerstep2")
+    //            .to("#menubottomline", 0.4, {directionalRotation:"45_cw", y:"-=12", smoothOrigin:"50% 50%", ease:Linear.easeNone}, "burgerstep2")
+    //        ;
+    //
+    //        $("#menubackfilter").click(function () {
+    //            trigger.removeClass('is-open');
+    //            trigger.addClass('is-closed');
+    //            isClosed = true;
+    //            $("#menu").addClass('menuclose');
+    //            $("#menu").removeClass('menuopen');
+    //            $("#menubackfilter").addClass('backfilterOff');
+    //            $("#menubackfilter").removeClass('backfilterOn');
+    //            var tl_burgerOff = new TimelineLite();
+    //            tl_burgerOff.to("#menutopline", 0.4, {directionalRotation:"20_cw", y:0, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "burgeroffstep1")
+    //                .to("#menumiddleline", 0.4, {css:{scaleX:0.5, autoAlpha:1, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgeroffstep1")
+    //                .to("#menubottomline", 0.4, {directionalRotation:"-20_ccw", y:0, smoothOrigin:"50% 50%", ease:Linear.easeNone}, "burgeroffstep1")
+    //                .to("#menutopline", 0.2, {directionalRotation: 0 , y:0, smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgeroffstep2")
+    //                .to("#menumiddleline", 0.2, {css:{scaleX:1, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgeroffstep2")
+    //                .to("#menubottomline", 0.2, {directionalRotation: 0 , y:0, smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgeroffstep2")
+    //            ;
+    //        });
+    //
+    //    } else {
+    //        trigger.removeClass('is-open');
+    //        trigger.addClass('is-closed');
+    //        isClosed = true;
+    //        $("#menu").addClass('menuclose');
+    //        $("#menu").removeClass('menuopen');
+    //
+    //        $("#menubackfilter").addClass('backfilterOff');
+    //        $("#menubackfilter").removeClass('backfilterOn');
+    //
+    //        var tl_burgerOff = new TimelineLite();
+    //        tl_burgerOff.to("#menutopline", 0.4, {directionalRotation:"20_cw", y:0, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "burgeroffstep1")
+    //            .to("#menumiddleline", 0.4, {css:{scaleX:0.5, autoAlpha:1, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgeroffstep1")
+    //            .to("#menubottomline", 0.4, {directionalRotation:"-20_ccw", y:0, smoothOrigin:"50% 50%", ease:Linear.easeNone}, "burgeroffstep1")
+    //            .to("#menutopline", 0.2, {directionalRotation: 0 , y:0, smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgeroffstep2")
+    //            .to("#menumiddleline", 0.2, {css:{scaleX:1, transformOrigin:"100% 50%"},  ease:Linear.easeNone}, "burgeroffstep2")
+    //            .to("#menubottomline", 0.2, {directionalRotation: 0 , y:0, smoothOrigin:"100% 50%",  ease:Linear.easeNone}, "burgeroffstep2")
+    //        ;
+    //
+    //    }
+    //}
 
 	$('.homelink').hover(
         function(){

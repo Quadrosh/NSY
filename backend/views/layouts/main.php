@@ -38,6 +38,13 @@ AppAsset::register($this);
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'Gii', 'url' => ['index.php/gii']],
         [
+            'label' => 'Счастье',
+            'items' => [
+                ['label' => 'Страница', 'url' => ['/happypage/index']],
+                ['label' => 'Секция', 'url' => ['/happysection/index']],
+            ],
+        ],
+        [
             'label' => 'Проживание',
             'items' => [
                 ['label' => 'Упражнение', 'url' => ['/liveout/index']],
@@ -86,9 +93,9 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Наше Счастье <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right">Круто же)</p>
     </div>
 </footer>
 

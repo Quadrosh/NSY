@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=> 'Категория',
                 'value' => function($data)
                 {
-                    $theData = \backend\models\Category::find()->where(['id'=>$data['ex_cat_id']])->one();
+                    $theData = \common\models\Category::find()->where(['id'=>$data['ex_cat_id']])->one();
                     return $theData['name'];
                 },
             ],

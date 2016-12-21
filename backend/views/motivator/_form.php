@@ -46,7 +46,7 @@ use yii\widgets\ActiveForm;
 
 <div class="row">
     <div class="col-xs-4">
-        <?= $form->field($model, 'cat_id')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\models\Category::find()->all(), 'id','name')) ?>
+        <?= $form->field($model, 'cat_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Category::find()->all(), 'id','name')) ?>
 
     </div>
     <div class="col-xs-4">

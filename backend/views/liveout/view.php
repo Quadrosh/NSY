@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'ex_cat_id',
             [
                 'attribute'=> 'ex_cat_id',
-                'value' => \backend\models\Category::find()->where(['id'=>$model['ex_cat_id']])->one()->name,
+                'value' => \common\models\Category::find()->where(['id'=>$model['ex_cat_id']])->one()->name,
             ],
             'warn:ntext',
             'thanx:ntext',

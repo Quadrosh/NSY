@@ -1,9 +1,8 @@
 <?php
 
-namespace frontend\models;
+namespace common\models;
 
-use common\models\LiveOutEx;
-use common\models\Motivator;
+
 use Yii;
 
 /**

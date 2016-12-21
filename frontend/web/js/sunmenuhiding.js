@@ -1,77 +1,105 @@
 $(window).load(function() {
-    var hideSunMenuOnLoadTl = new TimelineMax();
-    hideSunMenuOnLoadTl.set(".sunmenu",{css:{autoAlpha:0}});
+    var menuIcon = document.getElementById("logosunIcon");
+    if (menuIcon) {
+        var hideSunMenuOnLoadTl = new TimelineMax();
+        hideSunMenuOnLoadTl.set(".sunmenu",{css:{autoAlpha:0}});
+    }
 
     $("#start_loader").delay(400).fadeOut("slow");
 });
 $(document).ready(function() {
 
-    $('#logosunIcon').hover(
-        function(){
-            var tl = new TimelineLite();
-            tl.to("#logosunIcon", 0.4, {x:10,transformOrigin:"10% 50%"}, "logohoverOn")
-            ;
-        },
-        function(){
-            var tl = new TimelineLite();
-            tl.to("#logosunIcon", 0.6, {x:0,transformOrigin:"10% 50%"}, "logohoverOff")
-            ;
-        }
-    );
-    var backgroundFilter = $('#menubackfilter');
-    var nsLogoSunIcon = $('#logosunIcon'), isClosed = true;
-    nsLogoSunIcon.click(function(){
-        sunMenu();
-    });
-    function sunMenu(){
-        if (isClosed == true) {
-            nsLogoSunIcon.removeClass('is-closed');
-            nsLogoSunIcon.addClass('is-open');
-            backgroundFilter.addClass('backfilterOn');
-            backgroundFilter.removeClass('backfilterOff');
-            isClosed = false;
-            var tl = new TimelineMax();
-            tl.set(".sunmenu",{css:{autoAlpha:1}})
-                .set(".sunbeam",{css:{autoAlpha:0}})
-                .fromTo("#center_3_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut})
-                .fromTo("#center_2_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0.6472%'},ease:Power1.easeOut})
-                .fromTo("#center_1_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'1.123%'},ease:Power1.easeOut})
+    var menuIcon = document.getElementById("logosunIcon");
+    if (menuIcon) {
+        $('#logosunIcon').hover(
+            function(){
+                var tl = new TimelineLite();
+                tl.to("#logosunIcon", 0.4, {x:10,transformOrigin:"10% 50%"}, "logohoverOn")
+                ;
+            },
+            function(){
+                var tl = new TimelineLite();
+                tl.to("#logosunIcon", 0.6, {x:0,transformOrigin:"10% 50%"}, "logohoverOff")
+                ;
+            }
+        );
+        var backgroundFilter = $('#menubackfilter');
+        var nsLogoSunIcon = $('#logosunIcon'), isClosed = true;
+        nsLogoSunIcon.click(function(){
+            sunMenu();
+        });
+        function sunMenu(){
+            if (isClosed == true) {
+                nsLogoSunIcon.removeClass('is-closed');
+                nsLogoSunIcon.addClass('is-open');
+                backgroundFilter.addClass('backfilterOn');
+                backgroundFilter.removeClass('backfilterOff');
+                isClosed = false;
+                var tl = new TimelineMax();
+                tl.set(".sunmenu",{css:{autoAlpha:1}})
+                    .set(".sunbeam",{css:{autoAlpha:0}})
+                    .fromTo("#center_3_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut})
+                    .fromTo("#center_2_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0.6472%'},ease:Power1.easeOut})
+                    .fromTo("#center_1_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'1.123%'},ease:Power1.easeOut})
 
-                .fromTo("#beam_1_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_2_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_3_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_4_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_5_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_6_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_7_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_8_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_9_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_10_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_11_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_12_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo("#beam_13_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-                .fromTo(".sunbeam",0.4,{css:{autoAlpha:0}},{css:{autoAlpha:1},ease:Power4.easeIn},'start')
-            ;
-            backgroundFilter.click(function () {
+                    .fromTo("#beam_1_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_2_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_3_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_4_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_5_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_6_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_7_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_8_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_9_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_10_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_11_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_12_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo("#beam_13_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                    .fromTo(".sunbeam",0.4,{css:{autoAlpha:0}},{css:{autoAlpha:1},ease:Power4.easeIn},'start')
+                ;
+                backgroundFilter.click(function () {
+                    nsLogoSunIcon.addClass('is-closed');
+                    nsLogoSunIcon.removeClass('is-open');
+                    backgroundFilter.addClass('backfilterOff');
+                    backgroundFilter.removeClass('backfilterOn');
+                    var tl = new TimelineMax();
+                    tl.fromTo(".sunmenu",0.8,{css:{autoAlpha:1}},{css:{autoAlpha:0}});
+                    isClosed = true;
+                });
+            } else {
                 nsLogoSunIcon.addClass('is-closed');
                 nsLogoSunIcon.removeClass('is-open');
                 backgroundFilter.addClass('backfilterOff');
                 backgroundFilter.removeClass('backfilterOn');
                 var tl = new TimelineMax();
-                tl.fromTo(".sunmenu",0.8,{css:{autoAlpha:1}},{css:{autoAlpha:0}});
+                  tl.fromTo(".sunmenu",0.8,{css:{autoAlpha:1}},{css:{autoAlpha:0}});
                 isClosed = true;
-            });
-        } else {
-            nsLogoSunIcon.addClass('is-closed');
-            nsLogoSunIcon.removeClass('is-open');
-            backgroundFilter.addClass('backfilterOff');
-            backgroundFilter.removeClass('backfilterOn');
-            var tl = new TimelineMax();
-              tl.fromTo(".sunmenu",0.8,{css:{autoAlpha:1}},{css:{autoAlpha:0}});
-            isClosed = true;
+            }
         }
-    }
+    } else {
 
+        var tlLogoSun = new TimelineMax();
+        tlLogoSun.set(".sunbeam",{css:{autoAlpha:0}})
+            .fromTo("#center_3_text",0.4,{attr:{startOffset:'-50%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut})
+            .fromTo("#center_2_text",0.4,{attr:{startOffset:'-50%'}},{attr:{startOffset:'0.6472%'},ease:Power1.easeOut})
+            .fromTo("#center_1_text",0.4,{attr:{startOffset:'-50%'}},{attr:{startOffset:'1.123%'},ease:Power1.easeOut})
+
+            .fromTo("#beam_1_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_2_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_3_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_4_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_5_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_6_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_7_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_8_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_9_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_10_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_11_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_12_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo("#beam_13_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+            .fromTo(".sunbeam",0.4,{css:{autoAlpha:0}},{css:{autoAlpha:1},ease:Power4.easeIn},'start')
+        ;
+    }
 
 
 

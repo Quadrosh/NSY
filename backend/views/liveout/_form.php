@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'ex_level')->dropDownList(['1'=>'Сложный','2'=>'Средний','3'=>'Простой']) ?>
     </div>
     <div class="col-xs-2">
-        <?= $form->field($model, 'ex_cat_id')->dropDownList(\yii\helpers\ArrayHelper::map(\backend\models\Category::find()->all(), 'id','name')) ?>
+        <?= $form->field($model, 'ex_cat_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Category::find()->all(), 'id','name')) ?>
     </div>
     <div class="col-xs-2">
         <?= $form->field($model, 'ex_duration')->textInput() ?>

@@ -3,47 +3,24 @@ $(window).load(function() {
 });
 $(document).ready(function() {
 
-    $('#logosunIcon').hover(
-        function(){
-            var tl = new TimelineLite();
-            tl.to("#logosunIcon", 1, {scale:1.5,transformOrigin:"10% 50%"}, "logohoverOn")
-            ;
-        },
-        function(){
-            var tl = new TimelineLite();
-            tl.to("#logosunIcon", 1, {scale:1,transformOrigin:"10% 50%"}, "logohoverOff")
-            ;
-        }
-    );
-
-    $('#logosunIcon').on('click', function() {
-            //var tl = new TimelineLite();
-            //tl.to("#logosunIcon", 1, {scale:4,transformOrigin:"10% 50%"}, "logohoverOn")
-
-        //var tl = new TimelineMax();
-        //tl.set(".sunbeam",{css:{autoAlpha:0}})
-        //    .fromTo("#center_3_text",0.4,{attr:{startOffset:'-50%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut})
-        //    .fromTo("#center_2_text",0.4,{attr:{startOffset:'-50%'}},{attr:{startOffset:'0.6472%'},ease:Power1.easeOut})
-        //    .fromTo("#center_1_text",0.4,{attr:{startOffset:'-50%'}},{attr:{startOffset:'1.123%'},ease:Power1.easeOut})
-        //
-        //    .fromTo("#beam_1_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_2_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_3_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_4_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_5_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_6_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_7_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_8_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_9_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_10_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_11_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_12_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo("#beam_13_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
-        //    .fromTo(".sunbeam",0.4,{css:{autoAlpha:0}},{css:{autoAlpha:1},ease:Power4.easeIn},'start')
-        //;
-
-        }
-    );
+    //$('#logosunIcon').hover(
+    //    function(){
+    //        var tl = new TimelineLite();
+    //        tl.to("#logosunIcon", 0.4, {x:10,transformOrigin:"10% 50%"}, "logohoverOn")
+    //        ;
+    //    },
+    //    function(){
+    //        var tl = new TimelineLite();
+    //        tl.to("#logosunIcon", 0.6, {x:0,transformOrigin:"10% 50%"}, "logohoverOff")
+    //        ;
+    //    }
+    //);
+    //
+    //$('#logosunIcon').on('click', function() {
+    //
+    //
+    //    }
+    //);
 
     var tl = new TimelineMax();
         tl.set(".sunbeam",{css:{autoAlpha:0}})

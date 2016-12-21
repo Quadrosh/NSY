@@ -13,6 +13,7 @@ use Yii;
 class MotivatorController extends FrontController
 {
     public $sunMenuItem;
+    public $layout = 'motivator';
 
     public function actionList()
     {
@@ -21,8 +22,6 @@ class MotivatorController extends FrontController
         $this->sunMenuItem = 1;
         $sunitem =  $this->sunMenuItem;
         $this->view->params['sunitem'] = $sunitem;
-
-        $this->layout = 'motivator';
         $this->view->params['meta'] = $metapage;
 
         $catMotivatorsData = Motivator::find()->asArray()->where(['list_section'=>'1'])->all();
@@ -57,7 +56,6 @@ class MotivatorController extends FrontController
     }
     public function actionShow()
     {
-        $this->layout = 'motivator';
         $this->sunMenuItem = 1;
         $sunitem =  $this->sunMenuItem;
         $this->view->params['sunitem'] = $sunitem;

@@ -8,12 +8,12 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\CenterAsset;
-use frontend\assets\MotivatorAsset;
+use frontend\assets\LiveOutAsset;
 use frontend\assets\IeAsset;
 use common\widgets\Alert;
 
 
-MotivatorAsset::register($this);
+CenterAsset::register($this);
 
 IeAsset::register($this);
 ?>
@@ -52,7 +52,7 @@ IeAsset::register($this);
 
 </head>
 
-<body class="home">
+<body class="<?= Yii::$app->view->params['bodyclass'] ?>">
 <?php $this->beginBody() ?>
 <div id="start_loader"></div>
 
@@ -61,8 +61,11 @@ IeAsset::register($this);
 
 
 
+
+
 <div id="content-wrapper">
     <main id="panel" class="panel">
+<?php if (Yii::$app->view->params['meta']['id'] !=1 ) : ?>
         <div id="logosunIcon">
             <svg version="1.1"
                  id="menu"
@@ -83,7 +86,7 @@ IeAsset::register($this);
                 </g>
         </svg>
         </div>
-
+<?php endif; ?>
         <?= \common\widgets\MenuWidget::widget(['formfactor'=>'sun','sunitem'=> Yii::$app->view->params['sunitem'] ]); ?>
         <?= Alert::widget() ?>
         <?= $content; ?>

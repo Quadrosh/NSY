@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute'=> 'cat_id',
-                'value' => \backend\models\Category::find()->where(['id'=>$model['cat_id']])->one()->name,
+                'value' => \common\models\Category::find()->where(['id'=>$model['cat_id']])->one()->name,
             ],
             'hrurl:url',
             'title',

@@ -8,9 +8,9 @@ use yii\helpers\ArrayHelper;
 
 class LiveoutController extends FrontController
 {
+    public $layout = 'liveout';
     public function actionIndex()
     {
-        $this->layout = 'liveout';
         $this->view->params['bodyclass'] = 'listofall';
         $pageID = 3;
         $metapage = Page::findOne($pageID);
@@ -25,7 +25,6 @@ class LiveoutController extends FrontController
     }
     public function actionWarn($id)
     {
-        $this->layout = 'liveout';
 
         $sunitem =  1;
         $this->view->params['sunitem'] = $sunitem;
@@ -40,7 +39,6 @@ class LiveoutController extends FrontController
 
     public function actionStep($id, $stepnum)
     {
-        $this->layout = 'liveout';
         $sunitem =  1;
         $this->view->params['sunitem'] = $sunitem;
         $this->view->params['bodyclass'] = 'exercise';
@@ -68,10 +66,8 @@ class LiveoutController extends FrontController
 
     public function actionThnx($id)
     {
-        $this->layout = 'liveout';
 
-        $sunitem =  1;
-        $this->view->params['sunitem'] = $sunitem;
+        $this->view->params['sunitem'] = 1;
         $this->view->params['bodyclass'] = 'thank_you';
 
         $liveout = LiveOutEx::find()->where(['id'=>$id])->one();
@@ -83,7 +79,6 @@ class LiveoutController extends FrontController
 
     public function actionWhyItWorks()
     {
-        $this->layout = 'liveout';
         $this->view->params['sunitem'] = 1;
         $this->view->params['bodyclass'] = 'what_is';
         $this->view->params['meta']['title'] = 'Проживание - почему это работает';
@@ -94,7 +89,6 @@ class LiveoutController extends FrontController
 
     public function actionRestricted()
     {
-        $this->layout = 'liveout';
         $this->view->params['sunitem'] = 1;
         $this->view->params['bodyclass'] = 'what_is';
         $this->view->params['meta']['title'] = 'Ограничение';

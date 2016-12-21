@@ -563,55 +563,7 @@ body {
 .vizibleOff {
   display: none;
 }
-.menufilter {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(96,125,139,.8);
-  position: fixed;
-  top: 0px;
-}
-.backfilterOff {
-  height: 0px;
-  animation: backfilter_off 0.8s linear normal;
-  animation-fill-mode:forwards;
-}
 
-
-@keyframes backfilter_off {
-  0% {
-    background-color: rgba(0,0,0,0.4);
-    height: 100%;
-  }
-    90% {
-    background-color: transparent;
-    height: 100%;
-  }
-  100% {
-    background-color: transparent;
-    height: 0px;
-  }
-
-}
-.backfilterOn {
-  display: block;
-  animation: backfilter_on 0.4s linear normal;
-  animation-fill-mode:forwards;
-  z-index: 2;
-}
-
-
-@keyframes backfilter_on {
-  0% {
-    background-color: transparent;
-    height: 100%;
-
-  }
-  100% {
-
-    background-color: rgba(0,0,0,0.4);
-    height: 100%;
-  }
-}
 
 /* TEXT */
 h4, h1 {
@@ -1491,14 +1443,14 @@ a:visited {
 
 
 /*Logosun*/
-#logosunIcon {
-    position: fixed;
-    width: 50px;
-    z-index: 10;
-    top: 50%;
-    margin-top: -25px;
-    cursor: pointer;
-}
+/*#logosunIcon {*/
+    /*position: fixed;*/
+    /*width: 50px;*/
+    /*z-index: 10;*/
+    /*top: 50%;*/
+    /*margin-top: -25px;*/
+    /*cursor: pointer;*/
+/*}*/
 /*Login*/
 .loginIconWrap {
     position: fixed;

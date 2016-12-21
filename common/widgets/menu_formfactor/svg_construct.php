@@ -46,7 +46,7 @@
 <?php endif; ?>
 
 <?php if (!empty($tree['parent'])) : ?>
-    <a class="menu_center_2" xlink:href="<?= $tree['parent']['link']; ?>">
+    <a class="menu_center_2" xlink:href="/<?= $tree['parent']['link']; ?>">
         <defs><path id="center_2_defs"/></defs>
         <path id="center_2_path" fill="none" d="<?= $centerlocation[2] ?>"/>
         <text ><textPath id="center_2_text" xlink:href="#center_2_path" startOffset="-50%">
@@ -57,7 +57,7 @@
 <?php endif; ?>
 
 
-<a class="menu_center_1"  xlink:href="<?php echo '/'. $tree['current']['link']; ?>">
+<a class="menu_center_1"  xlink:href="/<?= $tree['current']['link']; ?>">
     <defs><path id="center_1_defs"/></defs>
     <path id="center_1_path" fill="none" d="<?=  $centerlocation[1] ?>"/>
     <text ><textPath id="center_1_text" xlink:href="#center_1_path" startOffset="-50%">
@@ -67,5 +67,5 @@
 
 
 
-
+</svg>
 </div>
