@@ -38,10 +38,14 @@ AppAsset::register($this);
         ['label' => 'Home', 'url' => ['/site/index']],
         ['label' => 'Gii', 'url' => ['index.php/gii']],
         [
-            'label' => 'Счастье',
+            'label' => 'Мастера',
             'items' => [
-                ['label' => 'Страница', 'url' => ['/happypage/index']],
-                ['label' => 'Секция', 'url' => ['/happysection/index']],
+                ['label' => 'Masters', 'url' => ['/masters/index']],
+                ['label' => 'Master Numbers', 'url' => ['/masternumbers/index']],
+                ['label' => 'Master Sessions', 'url' => ['/mastersessions/index']],
+                ['label' => 'Master Professions', 'url' => ['/professions/index']],
+                ['label' => 'Тренинги', 'url' => ['/training/index']],
+                ['label' => 'Training Why', 'url' => ['/trainingwhy/index']],
             ],
         ],
         [
@@ -59,7 +63,17 @@ AppAsset::register($this);
             ],
         ],
         ['label' => 'Категории', 'url' => ['/category/index']],
-        ['label' => 'Статьи', 'url' => ['/article/index']],
+//        ['label' => 'Статьи', 'url' => ['/article/index']],
+        [
+            'label' => 'Библиотека',
+            'items' => [
+                ['label' => 'Article page', 'url' => ['/article/index']],
+                ['label' => 'Article section', 'url' => ['/articlesection/index']],
+                ['label' => 'Happiness page', 'url' => ['/happypage/index']],
+                ['label' => 'Happiness section', 'url' => ['/happysection/index']],
+                ['label' => 'Index Pages', 'url' => ['/page/index']],
+            ],
+        ],
 
 
     ];

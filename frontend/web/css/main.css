@@ -541,7 +541,9 @@ to {  box-shadow: 0px 1px 2px rgba(0,0,0,.6); border-color: #fff; }
   margin-bottom: 10px;
 }
 
-
+.d_greyblue {
+    background-color: #607D8B;
+}
 .training header {  
   background-image: url(img/space_bgr.jpg);
 
@@ -793,7 +795,8 @@ to {  box-shadow: 0px 1px 2px rgba(0,0,0,.6); border-color: #fff; }
   z-index: 2;
 }
 .white {
-  background-color: #eee;
+  /*background-color: #eee;*/
+    background-color: #ffffff;
   color: #333;
 }
 .teleska .white {
@@ -1134,13 +1137,17 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255,192,53, 0.6);
 }
 
 .method_central {
-    background-image: url("img/method.svg");
+    background-image: url("/img/method.svg");
     background-repeat: no-repeat;
     background-position: center top;
     background-size: contain;
     min-height: 300px;
     z-index: 0;
-    background-color: #eeeeee;
+    /*background-color: #eeeeee;*/
+}
+.method_central p {
+    font-size:16px;
+    text-shadow: 0 2px 5px #ffffff,0 1px 2px #ffffff, 0 0 10px #ffffff, 0 0 7px #ffffff;
 }
 #main_trainings {
   background-image: url("img/trainings.svg");
@@ -1159,7 +1166,8 @@ box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(255,192,53, 0.6);
   color: #607d8b;
 }
 .method p,
-.article p {
+.article p,
+.happiness p {
   font-size: 16px;
 }
 .method footer p {
@@ -1210,7 +1218,7 @@ to {  box-shadow: 0px 3px 5px rgba(0,0,0,.5); }
     padding-bottom: 20px;
 }
 .body_oriented_therapy_head {
-    background-image: url("img/m_body_psychotherapy.jpg");
+    background-image: url("/img/m_body_psychotherapy.jpg");
     background-repeat: no-repeat;
     background-position: center top;
     -webkit-background-size: cover;
@@ -1219,7 +1227,7 @@ to {  box-shadow: 0px 3px 5px rgba(0,0,0,.5); }
     background-color: #eeeeee;
 }  
 .head_hapiness {
-    background-image: url("img/h_hapiness.jpg");
+    background-image: url("/img/h_hapiness.jpg");
     background-repeat: no-repeat;
     background-position: center top;
     -webkit-background-size: cover;
@@ -1228,7 +1236,7 @@ to {  box-shadow: 0px 3px 5px rgba(0,0,0,.5); }
     background-color: #eeeeee;
 }
 .head_psychotraining {
-    background-image: url("img/h_psychotraining.jpg");
+    background-image: url("/img/h_psychotraining.jpg");
     background-repeat: no-repeat;
     background-position: center top;
     -webkit-background-size: cover;
@@ -1241,6 +1249,11 @@ to {  box-shadow: 0px 3px 5px rgba(0,0,0,.5); }
 .method header,
 .article header {
     min-height: 300px;
+}
+.article header {
+    -webkit-background-size:cover;
+    background-size:cover;
+    background-repeat:no-repeat;
 }
 .method_name {
   margin-top: 20px;
@@ -1260,9 +1273,14 @@ to {  box-shadow: 0px 3px 5px rgba(0,0,0,.5); }
   opacity: 0.9;
 }
 
-.method .method_txt {
+.method .method_txt,
+.small_txt p {
   font-size: 12px;
   line-height: 1.2;
+}
+.article .small_txt h3 {
+    font-size:18px;
+    color: #333;
 }
 .method h3 {
   opacity: 0.3;
@@ -1297,7 +1315,16 @@ font-size: 18px;
 }
 .method h4, .h4, h5, .h5, h6, .h6 {
   margin-bottom: 5px;
-}   
+}
+.happiness .white  h1 {
+    background-color: transparent;
+    text-align: center;
+    color: #607D8B;
+    font-size: 3em;
+}
+.happiness .white  h3 {
+    color: #607D8B;
+}
 .bottom_buttons {
   margin-top: 40px;
 }
@@ -1332,6 +1359,15 @@ font-size: 18px;
   margin-bottom: 8%;
   opacity: 0.3;
 }
+.article_img img {
+    width: 100%;
+    margin-left: 0px;
+    /*margin-top: 8%;*/
+    margin-bottom: 8%;
+    opacity: 0.8;
+}
+
+
 .happy_discr_ns_logo img {
   width: 56%;
   margin-left: 22%;
@@ -1358,7 +1394,13 @@ font-size: 18px;
   text-decoration: none;
 }
 .happy_text {
-  padding-top: 30px;
+  /*padding-top: 30px;*/
+  padding-right: 5%;
+  padding-bottom: 30px;
+  padding-left: 5%;
+}
+.happy_head {
+  /*padding-top: 30px;*/
   padding-right: 5%;
   padding-bottom: 30px;
   padding-left: 5%;
@@ -1426,6 +1468,15 @@ font-size: 18px;
   font-family: "RobotoCondensed-Light", sans-serif;
   font-size: 16px;
   opacity: 0.3;
+    text-align: center;
+}
+.happiness .phil_name {
+    display: block;
+    margin-top: -10px;
+    font-family: "RobotoCondensed-Light", sans-serif;
+    font-size: 16px;
+    opacity: 0.3;
+    text-align: center;
 }
 
 /* Magnific Popup CSS */
@@ -1792,7 +1843,7 @@ img.mfp-img {
 }    
 
 .article .btn-default{
-  padding: 1px 5px;
+  padding: 5px 5px;
   border: 1px solid #607d8b ;
   font-family: "RobotoCondensed-Regular";
   font-weight: normal;
@@ -1804,7 +1855,6 @@ to { box-shadow:none;}
 from { box-shadow: 0px 3px 5px rgba(0,0,0,.5); }
 }
 .article .btn-default:hover{
-  padding: 1px 5px;
   border: 1px solid #607d8b;
   font-family: "RobotoCondensed-Regular";
   font-weight: normal;

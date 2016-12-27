@@ -35,8 +35,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'image',
             'image_alt',
             // 'text:ntext',
-            // 'extra:ntext',
-            // 'arrange',
+             'extra:ntext',
+             'arrange',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

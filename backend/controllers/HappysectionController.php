@@ -37,7 +37,11 @@ class HappysectionController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Happysection::find(),
+            'pagination'=> [
+                'pageSize' => 100,
+            ],
         ]);
+
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -66,7 +70,7 @@ class HappysectionController extends Controller
         $model = new Happysection();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

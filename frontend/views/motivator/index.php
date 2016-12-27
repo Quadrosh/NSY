@@ -2,12 +2,6 @@
 use yii\helpers\Url;
 ?>
 
-
-
-
-
-
-
         <section id="motivators" class="manifestor white">
             <h2 id="pagename"  ><?= Yii::$app->view->params['meta']['pagehead'] ?></h2>
             <p><?= nl2br(Yii::$app->view->params['meta']['pagedescription']) ?></p>

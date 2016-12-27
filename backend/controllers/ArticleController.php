@@ -3,15 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Article;
+use common\models\Articles;
 use yii\data\ActiveDataProvider;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ArticleController implements the CRUD actions for Article model.
+ * ArticleController implements the CRUD actions for Articles model.
  */
-class ArticleController extends BackController
+class ArticleController extends Controller
 {
     /**
      * @inheritdoc
@@ -29,13 +30,13 @@ class ArticleController extends BackController
     }
 
     /**
-     * Lists all Article models.
+     * Lists all Articles models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Article::find(),
+            'query' => Articles::find(),
         ]);
 
         return $this->render('index', [
@@ -44,7 +45,7 @@ class ArticleController extends BackController
     }
 
     /**
-     * Displays a single Article model.
+     * Displays a single Articles model.
      * @param integer $id
      * @return mixed
      */
@@ -56,13 +57,13 @@ class ArticleController extends BackController
     }
 
     /**
-     * Creates a new Article model.
+     * Creates a new Articles model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Article();
+        $model = new Articles();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -74,7 +75,7 @@ class ArticleController extends BackController
     }
 
     /**
-     * Updates an existing Article model.
+     * Updates an existing Articles model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -93,7 +94,7 @@ class ArticleController extends BackController
     }
 
     /**
-     * Deletes an existing Article model.
+     * Deletes an existing Articles model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -106,15 +107,15 @@ class ArticleController extends BackController
     }
 
     /**
-     * Finds the Article model based on its primary key value.
+     * Finds the Articles model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Article the loaded model
+     * @return Articles the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Article::findOne($id)) !== null) {
+        if (($model = Articles::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

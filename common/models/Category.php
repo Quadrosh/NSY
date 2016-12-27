@@ -16,9 +16,7 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+
     public static function tableName()
     {
         return 'category';
@@ -26,12 +24,13 @@ class Category extends \yii\db\ActiveRecord
 
     public function getMotivators()
     {
-        return $this->hasMany(Motivator::className(),['cat_id' => 'id']);
+        return $this->hasMany(Motivator::className(), ['cat_id' => 'id']);
     }
-//    public function getLiveOuts()
-//    {
-//        return $this->hasMany(LiveOutEx::className(),['ex_cat_id' => 'id']);
-//    }
+
+    public function getArticles()
+    {
+        return $this->hasMany(Articles::className(), ['cat_id' => 'id']);
+    }
 
     /**
      * получаем родителя

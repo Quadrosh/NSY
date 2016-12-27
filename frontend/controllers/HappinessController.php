@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Happypage;
+use common\models\Happysection;
 
 class HappinessController extends FrontController
 {
@@ -19,76 +20,155 @@ class HappinessController extends FrontController
     }
     public function actionOrigin()
     {
-        $this->view->params['bodyclass'] = 'article';
+        $this->view->params['bodyclass'] = 'happiness';
         $pageID = 2;
         $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
         $this->view->params['sunitem'] = 4;
         $this->view->params['meta'] = $metapage;
-        return $this->render('origin');
+        return $this->render('section', ['sections'=> $sections]);
+    }
+    public function actionMeaning()
+    {
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 3;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 4;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('section', ['sections'=> $sections]);
     }
     public function actionBiochemistry()
     {
-        $happypage = Happypage::find()->asArray()->where(['>','view_order', 0])->orderBy('view_order')->all();
-        return $this->render('biochemistry');
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 4;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 4;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('section', ['sections'=> $sections]);
     }
-
-    public function actionMovies()
-    {
-        return $this->render('movies');
-    }
-
-    public function actionEconomy()
-    {
-        return $this->render('economy');
-    }
-
-    public function actionHoliday()
-    {
-        return $this->render('holiday');
-    }
-
-
-
     public function actionKinds()
     {
-        return $this->render('kinds');
+        $this->view->params['bodyclass'] = 'trueblack';
+        $pageID = 5;
+        $metapage = Happypage::findOne($pageID);
+        $this->view->params['sunitem'] = 12;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('index');
     }
-
-    public function actionMeaning()
+    public function actionBody()
     {
-        return $this->render('meaning');
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 6;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 12;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('kinds', ['sections'=> $sections]);
     }
-
-    public function actionMedicine()
+    public function actionSoul()
     {
-        return $this->render('medicine');
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 7;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 12;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('kinds', ['sections'=> $sections]);
     }
-
-    public function actionMuseum()
+    public function actionLife()
     {
-        return $this->render('museum');
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 8;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 12;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('kinds', ['sections'=> $sections]);
     }
-
-    public function actionMusic()
-    {
-        return $this->render('music');
-    }
-
-
-
-    public function actionPhilosophy()
-    {
-        return $this->render('philisophy');
-    }
-
     public function actionQuotes()
     {
-        return $this->render('quotes');
-    }
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 9;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 4;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('quotes', ['sections'=> $sections]);
 
+    }
+    public function actionMedicine()
+    {
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 10;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 4;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('kinds', ['sections'=> $sections]);
+    }
+    public function actionPhilosophy()
+    {
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 11;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 4;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('philisophy', ['sections'=> $sections]);
+    }
+    public function actionEconomy()
+    {
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 12;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 4;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('section', ['sections'=> $sections]);
+    }
     public function actionSymbols()
     {
-        return $this->render('symbols');
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 13;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 4;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('section', ['sections'=> $sections]);
+    }
+    public function actionHoliday()
+    {
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 14;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 4;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('section', ['sections'=> $sections]);
+
+    }
+    public function actionMuseum()
+    {
+        $this->view->params['bodyclass'] = 'happiness';
+        $pageID = 15;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 4;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('section', ['sections'=> $sections]);
+    }
+    public function actionAll()
+    {
+        $this->layout = 'happinessold';
+        $this->view->params['bodyclass'] = 'article';
+        $pageID = 16;
+        $metapage = Happypage::findOne($pageID);
+        $sections = $metapage->sections;
+        $this->view->params['sunitem'] = 1;
+        $this->view->params['meta'] = $metapage;
+        return $this->render('all', ['sections'=> $sections]);
     }
 
 }

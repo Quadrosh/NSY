@@ -80,6 +80,7 @@ return [
                 'liveout/warn/<id:\d+>' => 'liveout/warn',
                 'liveout/step/<id:\d+>/<stepnum:\d+>' => 'liveout/step',
                 'liveout/thnx/<id:\d+>' => 'liveout/thnx',
+                'library/<hrurl:[0-9a-z\-\_]+>' => 'library/article',
             ],
         ],
 
