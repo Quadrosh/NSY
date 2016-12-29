@@ -62,7 +62,7 @@ AppAsset::register($this);
                 ['label' => 'Фразы', 'url' => ['/mline/index']],
             ],
         ],
-        ['label' => 'Категории', 'url' => ['/category/index']],
+        ['label' => 'feedback', 'url' => ['/feedback/index']],
 //        ['label' => 'Статьи', 'url' => ['/article/index']],
         [
             'label' => 'Библиотека',
@@ -72,6 +72,7 @@ AppAsset::register($this);
                 ['label' => 'Happiness page', 'url' => ['/happypage/index']],
                 ['label' => 'Happiness section', 'url' => ['/happysection/index']],
                 ['label' => 'Index Pages', 'url' => ['/page/index']],
+                ['label' => 'Категории', 'url' => ['/category/index']],
             ],
         ],
 

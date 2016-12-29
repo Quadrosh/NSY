@@ -3,9 +3,9 @@
 namespace common\models;
 
 use Yii;
-use yii\base\Model;
 
 /**
+ * This is the model class for table "feedback".
  *
  * @property integer $id
  * @property integer $user_id
@@ -15,30 +15,33 @@ use yii\base\Model;
  * @property string $date
  * @property integer $done
  */
-class FeedbackForm extends Model
+class Feedback extends \yii\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'feedback';
+    }
 
-//    public static function tableName()
-//    {
-//        return 'feedback';
-//    }
-    public $contacts;
-    public $text;
-    public $user_id;
-    public $to_master_id;
-    public $done;
-
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
             [['user_id', 'to_master_id', 'done'], 'integer'],
             [['text'], 'required'],
             [['text'], 'string'],
+            [['date'], 'safe'],
             [['contacts'], 'string', 'max' => 255],
         ];
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
@@ -50,5 +53,20 @@ class FeedbackForm extends Model
             'date' => 'Date',
             'done' => 'Done',
         ];
+    }
+    /**
+     * Sends an email to the specified email address using the information collected by this model.
+     *
+     * @param string $email the target email address
+     * @return bool whether the email was sent
+     */
+    public function sendEmail($email,$subject)
+    {
+        return Yii::$app->mailer->compose()
+            ->setTo($email)
+            ->setFrom('sender@nashe-schastye.ru')
+            ->setSubject($subject)
+            ->setTextBody($this->text)
+            ->send();
     }
 }

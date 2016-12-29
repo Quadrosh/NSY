@@ -1,6 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Feedback;
+use common\models\FeedbackForm;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -138,6 +140,24 @@ class SiteController extends FrontController
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * Feedback
+     */
+    public function actionFeedback()
+    {
+        $model = new Feedback();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success','В табле');
+            if ($model->sendEmail('quadrosh@gmail.com','сообщение от Наше Счастье')) {
+                Yii::$app->session->setFlash('success', 'Сообщение отправлено. Мы свяжемся с Вами в ближайшее время.');
+            } else {
+                Yii::$app->session->setFlash('error', 'Во время отправки произошла ошибка, попробуйте еще раз.');
+            }
+        }
+            return $this->render('feedbackForm',['model'=>$model]);
+
     }
 
     /**
