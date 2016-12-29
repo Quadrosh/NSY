@@ -81,6 +81,7 @@ return [
                 'liveout/step/<id:\d+>/<stepnum:\d+>' => 'liveout/step',
                 'liveout/thnx/<id:\d+>' => 'liveout/thnx',
                 'library/<hrurl:[0-9a-z\-\_]+>' => 'library/article',
+                'master/<hrurl:[0-9a-z\-\_]+>' => 'master/page',
             ],
         ],
 

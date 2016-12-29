@@ -16,11 +16,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'hrurl')->textInput() ?>
+
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'description')->textarea(['rows' => 2]) ?>
+
+    <?= $form->field($model, 'keywords')->textarea(['rows' => 1]) ?>
+
     <?= $form->field($model, 'lead_text')->textarea(['rows' => 1]) ?>
 
     <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'page_description')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'imagelink')->textInput(['maxlength' => true]) ?>
 

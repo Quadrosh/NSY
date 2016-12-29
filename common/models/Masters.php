@@ -44,9 +44,10 @@ class Masters extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'last_name', 'image', 'description'], 'required'],
-            [['lead_text', 'description'], 'string'],
-            [['name', 'last_name', 'image', 'imagelink', 'imagelink_alt', 'sendtopage', 'promolink', 'promoname'], 'string', 'max' => 255],
+            [['name', 'hrurl','last_name', 'image', 'description'], 'required'],
+            [['lead_text', 'description','page_description','keywords'], 'string'],
+            [['hrurl'],'unique'],
+            [['name', 'hrurl','title','last_name', 'image', 'imagelink', 'imagelink_alt', 'sendtopage', 'promolink', 'promoname'], 'string', 'max' => 255],
         ];
     }
 
@@ -58,6 +59,7 @@ class Masters extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'hrurl' => 'hrurl',
             'last_name' => 'Last Name',
             'lead_text' => 'Lead Text',
             'image' => 'Image',

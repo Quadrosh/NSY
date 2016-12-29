@@ -12,7 +12,6 @@ class LibraryController extends FrontController
     public $layout = 'happiness';
     public function actionIndex()
     {
-//        $this->layout = 'motivator';
         $this->view->params['bodyclass'] = 'library';
         $pageID = 4;
         $metapage = Pages::findOne($pageID);
@@ -38,7 +37,6 @@ class LibraryController extends FrontController
         $this->view->params['meta']['description'] = $article->description;
         $this->view->params['meta']['keywords'] = $article->keywords;
 
-//        $this->view->params['meta'] = $article;
         $this->view->params['article'] = $article;
         $this->view->params['sections'] = $sections;
 
