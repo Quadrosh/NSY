@@ -10,6 +10,8 @@ use Yii;
  * @property integer $id
  * @property integer $user_id
  * @property integer $to_master_id
+ * @property string $phone
+ * @property string $email
  * @property string $contacts
  * @property string $text
  * @property string $date
@@ -32,10 +34,12 @@ class Feedback extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'to_master_id', 'done'], 'integer'],
-            [['text'], 'required'],
+            [['phone','city', 'email', 'text'], 'required'],
             [['text'], 'string'],
             [['date'], 'safe'],
-            [['contacts'], 'string', 'max' => 255],
+            [['phone','name','city', 'email', 'contacts'], 'string', 'max' => 255],
+
+            ['email','email'],
         ];
     }
 
@@ -47,9 +51,13 @@ class Feedback extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'to_master_id' => 'To Master ID',
-            'contacts' => 'Contacts',
-            'text' => 'Text',
+            'name' => 'Имя',
+            'city' => 'Город/Регион',
+            'to_master_id' => 'Мастеру',
+            'phone' => 'Контактный телефон',
+            'email' => 'e-mail',
+            'contacts' => 'Дополнительная контактная информация',
+            'text' => 'Комментарий',
             'date' => 'Date',
             'done' => 'Done',
         ];
@@ -66,7 +74,17 @@ class Feedback extends \yii\db\ActiveRecord
             ->setTo($email)
             ->setFrom('sender@nashe-schastye.ru')
             ->setSubject($subject)
-            ->setTextBody($this->text)
+            ->setTextBody($subject." Имя: ".$this->name ." Город: ".$this->city ." Телефон: ".$this->phone ." Email: ".$this->email ." Контакты: ".$this->contacts ." Текст: ".$this->text)
+            ->setHtmlBody(
+                $subject .
+                " <br/> Имя: ".$this->name .
+                " <br/> Город: ".$this->city .
+                " <br/> Телефон: ".$this->phone .
+                " <br/> Email: ".$this->email .
+                " <br/> доп. контакты: " . $this->contacts .
+                " <br/> Комментарий: <br/> " .
+                nl2br($this->text)
+            )
             ->send();
     }
 }

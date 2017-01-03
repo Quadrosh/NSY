@@ -62,7 +62,7 @@ AppAsset::register($this);
                 ['label' => 'Фразы', 'url' => ['/mline/index']],
             ],
         ],
-        ['label' => 'feedback', 'url' => ['/feedback/index']],
+        ['label' => 'Заявки', 'url' => ['/feedback/index']],
 //        ['label' => 'Статьи', 'url' => ['/article/index']],
         [
             'label' => 'Библиотека',

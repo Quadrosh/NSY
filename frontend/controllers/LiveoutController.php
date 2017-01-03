@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\LiveOutEx;
 use frontend\models\Page;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 class LiveoutController extends FrontController
 {
@@ -21,6 +22,7 @@ class LiveoutController extends FrontController
         $this->view->params['liveouts'] = $liveouts;
 
         $this->view->params['meta'] = $metapage;
+        Url::remember();
         return $this->render('index');
     }
     public function actionWarn($id)

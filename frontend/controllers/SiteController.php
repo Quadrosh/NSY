@@ -5,6 +5,7 @@ use common\models\Feedback;
 use common\models\FeedbackForm;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -99,7 +100,7 @@ class SiteController extends FrontController
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(Url::previous());
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -116,7 +117,7 @@ class SiteController extends FrontController
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->goBack((!empty(Yii::$app->request->referrer) ? Yii::$app->request->referrer : null));
     }
 
     /**
@@ -147,16 +148,32 @@ class SiteController extends FrontController
      */
     public function actionFeedback()
     {
-        $model = new Feedback();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success','В табле');
-            if ($model->sendEmail('quadrosh@gmail.com','сообщение от Наше Счастье')) {
-                Yii::$app->session->setFlash('success', 'Сообщение отправлено. Мы свяжемся с Вами в ближайшее время.');
+        $master = Yii::$app->request->get('to');
+        $session2mail = Yii::$app->request->get('session');
+        $masterEmail = function($hrurl){
+            if ($hrurl == 'ml') {
+                return 'nashe-schastye@yandex.ru';  //nashe-schastye@yandex.ru
+            }
+            if ($hrurl == 'ishe') {
+                return 'quadrosh@gmail.com';
+            }
+        };
+
+        $this->layout = 'login';
+        $this->view->params['sunitem'] = 1;
+        $this->view->params['meta']['title'] = 'Наше Счастье - Обратная связь';
+        $this->view->params['meta']['description'] = 'Связаться с нами';
+        $this->view->params['meta']['keywords'] = 'обратная связь';
+        $feedback = new Feedback();
+
+        if ($feedback->load(Yii::$app->request->post()) && $feedback->save()) {
+            if ($feedback->sendEmail($masterEmail($master),'заявка Наше Счастье, '.$session2mail)) {
+                Yii::$app->session->setFlash('success', 'Сообщение отправлено. <br> Мы свяжемся с Вами в ближайшее время.');
             } else {
                 Yii::$app->session->setFlash('error', 'Во время отправки произошла ошибка, попробуйте еще раз.');
             }
         }
-            return $this->render('feedbackForm',['model'=>$model]);
+            return $this->render('feedbackForm',['model'=>$feedback]);
 
     }
 

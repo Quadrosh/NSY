@@ -1477,6 +1477,9 @@ a:visited {
 .site-signup p, .site-signup label  {
     color: white;
 }
+.regbox .has-success label, .regbox .has-success .help-block-success {
+    color: #05AF66;
+}
 .regbox .has-error label, .regbox .has-error .help-block-error {
     text-shadow: 0 0 10px #fff,0 0 5px #fff ,0 1px 3px #fff, 0 -1px 3px #fff;
     color: #FF5722;
@@ -1509,6 +1512,23 @@ a:visited {
     left: 50%;
     margin-left: -150px;
 }
+
+
+.alert-success {
+    color: #fff;
+    background-color: rgba(116, 153, 137, 0.2);
+}
+
+.close:hover, .close:focus {
+    color: #fff;
+    opacity: .9;
+
+}
+
+
+
+
+
 
 @media only screen and (max-width : 840px) {
 

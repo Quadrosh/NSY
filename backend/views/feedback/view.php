@@ -30,7 +30,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'user_id',
-            'to_master_id',
+            'name',
+            'city',
+//            'to_master_id',
+            [
+                'attribute'=> 'to_master_id',
+                'value' => \common\models\Masters::find()->where(['id'=>$model['to_master_id']])->one()->last_name,
+            ],
+            'phone',
+            'email:email',
             'contacts',
             'text:ntext',
             'date',

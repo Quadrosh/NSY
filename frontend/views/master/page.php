@@ -52,16 +52,16 @@ use yii\helpers\Url;
                         </div>
                         <div class="col-sm-4">
 <?php if ($i != $count) : ?>
-    <?= Html::a($session['cta_name'], Url::to($session['cta_link'], true),['class' => 'btn btn-default method_more']); ?>
+    <?= Html::a($session['cta_name'], [$session['cta_link'], 'to'=>$master['hrurl'], 'session'=>$session['name']],['class' => 'btn btn-default method_more']); ?>
 <?php endif; ?>
 <?php if ($i == $count &&  $i % 2 == 0) : ?>
-    <?= Html::a($session['cta_name'], Url::to($session['cta_link'], true),['class' => 'btn btn-default method_more']); ?>
+    <?= Html::a($session['cta_name'], [$session['cta_link'], 'to'=>$master['hrurl'], 'session'=>$session['name']],['class' => 'btn btn-default method_more']); ?>
 <?php endif; ?>
                         </div>
                     </div>
                     <p><?= $session['discription'] ?></p>
 <?php if ($i == $count &&  $i % 2 != 0) : ?>
-    <?= Html::a($session['cta_name'], Url::to($session['cta_link'], true),['class' => 'btn btn-default method_more']); ?>
+    <?= Html::a($session['cta_name'], [$session['cta_link'], 'to'=>$master['hrurl'], 'session'=>$session['name']],['class' => 'btn btn-default method_more']); ?>
 <?php endif; ?>
                 </div>
             </div>
