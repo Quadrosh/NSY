@@ -37,7 +37,12 @@ class MasterController extends \yii\web\Controller
         $sessions = $master->sessions;
         Url::remember();
 
-        return $this->render('page',['master'=> $master, 'numbers'=> $numbers, 'professions'=> $professions, 'sessions'=> $sessions]);
+        return $this->render('page',[
+            'master'=> $master,
+            'numbers'=> $numbers,
+            'professions'=> $professions,
+            'sessions'=> $sessions
+        ]);
     }
 
 }

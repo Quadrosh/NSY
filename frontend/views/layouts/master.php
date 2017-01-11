@@ -66,26 +66,15 @@ IeAsset::register($this);
 <div id="content-wrapper">
     <main id="panel" class="panel">
 
-
         <div id="logosunIcon">
-            <svg version="1.1"
-                 id="menu"
-                 xmlns="http://www.w3.org/2000/svg"
-                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                 x="0px" y="0px"
-                 viewBox="0 0 50 50"
-                 style="enable-background:new 0 0 50 50;"
-                 xml:space="preserve">
-            <style type="text/css">
-                .sunglif0{fill:none;stroke:#FCC116;stroke-width:4;stroke-linecap:round;stroke-miterlimit:10;}
-            </style>
-                <g id="sunglif_1_">
-                    <line id="XMLID_32_" class="sunglif0" x1="20.1" y1="25" x2="40.1" y2="25"/>
-                    <line id="XMLID_31_" class="sunglif0" x1="18.1" y1="17.4" x2="35.4" y2="7.4"/>
-                    <line id="XMLID_29_" class="sunglif0" x1="18.1" y1="32.6" x2="35.4" y2="42.6"/>
-                    <path id="XMLID_28_" class="sunglif0" d="M9.9,33.7c3-1.7,5-5,5-8.7s-2-6.9-5-8.7"/>
-                </g>
-        </svg>
+            <div class="burger-icon">
+                <div class="burger-container">
+                    <span id="burgerTop"></span>
+                    <span id="burgerFilling"></span>
+                    <span id="burgerBot"></span>
+                    <span id="menuname">МЕНЮ</span>
+                </div>
+            </div>
         </div>
 
         <?= \common\widgets\MenuWidget::widget(['formfactor'=>'sun','sunitem'=> Yii::$app->view->params['sunitem'] ]); ?>
@@ -97,7 +86,16 @@ IeAsset::register($this);
                     <div class="col-xs-4 mt22">
                         <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
                         <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
-                        <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,gplus,twitter,linkedin,lj,surfingbird,viber,whatsapp"></div>
+<?php if (empty(Yii::$app->view->params['meta']['imagelink'])): ?>
+                            <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki, gplus,twitter,linkedin,lj,surfingbird,viber,whatsapp,telegram"></div>
+<?php endif; ?>
+<?php if (!empty(Yii::$app->view->params['meta']['imagelink'])): ?>
+                            <div class="ya-share2"
+                                 data-services="vkontakte,facebook,odnoklassniki,pinterest,moimir,gplus,twitter,linkedin,lj,surfingbird,viber,whatsapp,telegram"
+                                 data-image="<?= 'http:'. \yii\helpers\Url::to('@imgfronturl/'. Yii::$app->view->params['meta']['imagelink']) ?>"
+                            >
+                            </div>
+<?php endif; ?>
                         <h4> Поделиться </h4>
                     </div>
 
@@ -171,7 +169,9 @@ IeAsset::register($this);
 <div id="menubackfilter" class="menufilter backfilterOff">
 </div>
 <a id="sendtopage"  class="vizibleOff" href="/<?= Yii::$app->view->params['meta']['promolink'] ?>"></a>
-
+<?php if (!empty(Yii::$app->view->params['meta']['imagelink'])) : ?>
+    <?= \yii\helpers\Html::img('/img/'.Yii::$app->view->params['meta']['imagelink'],['alt'=>Yii::$app->view->params['meta']['imagelink_alt'], 'class'=>'nodis']) ?>
+<?php endif; ?>
 
 <?php $this->endBody() ?>
 

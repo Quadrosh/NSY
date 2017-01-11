@@ -132,61 +132,7 @@ var trigger = $('#hamburger_anim'), isClosed = true;
 
 
 
-    if ('ontouchstart' in window ) {    //behaviour and events for touch device
-        // $('#garagelink').on('touchstart',function(){
-        //     setTimeout(function(){
-        //        window.location.href='index.html';
-        //    },1000);
-        // });
 
-        $('#logosun').on('touchstart',function(event){
-            event.preventDefault();
-            var tlmain = new TimelineLite({onComplete:sendtopage});
-            tlmain.to("#logosun", 3, {directionalRotation:"1590_cw", scale:4, transformOrigin:"50% 54%", ease:Power1.easeIn});
-            $('#logosun').bind('mouseup mouseleave', function() {           
-                tlmain.time(0)      
-                tlmain.stop()          
-            });
-
-            $('#logosun').on('touchend',function(){
-                tlmain.time(0)      
-                tlmain.stop() 
-            });
-            $('#motorcycle').on('touchleave',function(){
-                tlmain.time(0)      
-                tlmain.stop() 
-            });
-
-            var gotoUrl = $("#sendtopage").attr('href');
-            function sendtopage() {
-                $(location).attr("href", gotoUrl);
-            };
-
-        });   
-
-    }
-
-    else{   //behaviour and events for pointing device like mouse
-
-
-        $('#logosun').mousedown(function(event) {
-            event.preventDefault();
-            var tlmain = new TimelineLite({onComplete:sendtopage});
-            tlmain.to("#logosun", 3, {directionalRotation:"1590_cw", scale:4, transformOrigin:"50% 54%", ease:Power1.easeIn});
-            $('#logosun').bind('mouseup mouseleave', function() {           
-                tlmain.time(0)      
-                tlmain.stop()          
-            });
-
-            var gotoUrl = $("#sendtopage").attr('href');
-            function sendtopage() {
-                $(location).attr("href", gotoUrl);
-            };
-
-        });
-
-
-    };
 
 
 

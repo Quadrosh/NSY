@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Motivator */
@@ -68,8 +69,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             'keywords:ntext',
             'pagehead',
-
-
             'section_name',
             'section_color',
             'background',
@@ -82,7 +81,35 @@ $this->params['breadcrumbs'][] = $this->title;
             'promoname',
         ],
     ]) ?>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 col-sm-3">
+                    <h4>Image Upload</h4>
+                    <?php $form = ActiveForm::begin([
+                        'method' => 'post',
+                        'action' => ['/motivator/upload'],
+                        'options' => ['enctype' => 'multipart/form-data'],
+                    ]); ?>
+                    <?= $form->field($uploadmodel, 'toModelProperty')->dropDownList([
+                        'background'=>'Background Image',
+                        'imagelink'=>'Imagelink',
+                        'imagelink2'=>'Imagelink 2',
+                    ])->label(false) ?>
+                    <?= $form->field($uploadmodel, 'imageFile')->fileInput()->label(false) ?>
+                    <?= $form->field($uploadmodel, 'toModelId')->hiddenInput(['value'=>$model->id])->label(false) ?>
 
+
+                    <?= Html::submitButton('Upload', ['class' => 'btn btn-danger']) ?>
+                    <?php ActiveForm::end() ?>
+                </div>
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+        </div>
+
+    </section>
     <section id="<?= $motivator->section_name; ?>"
         <?php if (isset($motivator->background)) : ?>
         style=" background-image: url(<?= \yii\helpers\Url::to('/img/'. $motivator->background); ?>);"
@@ -153,7 +180,8 @@ foreach ($sm as $item=>$value) {
 
     <?php $quotes = $model->mLines; //вызываем объекты связи виртуальным свойством - геттером ?>
 
-    <table class="table table-striped table-bordered"><thead>
+    <table class="table table-striped table-bordered">
+        <thead>
         <tr>
             <th>M id</th>
             <th>ID </th>

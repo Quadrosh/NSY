@@ -3,24 +3,7 @@ $(window).load(function() {
 });
 $(document).ready(function() {
 
-    //$('#logosunIcon').hover(
-    //    function(){
-    //        var tl = new TimelineLite();
-    //        tl.to("#logosunIcon", 0.4, {x:10,transformOrigin:"10% 50%"}, "logohoverOn")
-    //        ;
-    //    },
-    //    function(){
-    //        var tl = new TimelineLite();
-    //        tl.to("#logosunIcon", 0.6, {x:0,transformOrigin:"10% 50%"}, "logohoverOff")
-    //        ;
-    //    }
-    //);
-    //
-    //$('#logosunIcon').on('click', function() {
-    //
-    //
-    //    }
-    //);
+
 
     var tl = new TimelineMax();
         tl.set(".sunbeam",{css:{autoAlpha:0}})
@@ -410,11 +393,11 @@ $(document).ready(function() {
     // $('.menu_center_1').hover(
     //         function(){
     //           var tl = new TimelineMax();
-    //           tl.to("#center_1_text",0.3,{attr:{startOffset:'5%'},ease:Power1.easeInOut});  
+    //           tl.to("#center_1_text",0.3,{attr:{startOffset:'5%'},ease:Power1.easeInOut});
     //         },
     //         function(){
     //           var tl = new TimelineMax();
-    //           tl.to("#center_1_text",0.3,{attr:{startOffset:'1.123%'},ease:Power1.easeInOut});  
+    //           tl.to("#center_1_text",0.3,{attr:{startOffset:'1.123%'},ease:Power1.easeInOut});
     // });
     var center2 = document.getElementById("center_2_text");
     if  (center2) {

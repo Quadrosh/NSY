@@ -12,7 +12,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
-        <div class="col-sm-4"><?= $form->field($model, 'page_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Articles::find()->all(), 'id','pagehead')) ?></div>
+        <div class="col-sm-4">
+            <?= $form->field($model, 'page_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Articles::find()->all(), 'id','pagehead'),[ 'options'=>[Yii::$app->request->get('id')=>["Selected"=>true]]]) ?>
+        </div>
         <div class="col-sm-2"><?= $form->field($model, 'num')->textInput() ?></div>
         <div class="col-sm-3"><?= $form->field($model, 'arrange')->dropDownList(['center'=>'текст в центре', 'left'=>'<-- текст слева', 'right'=>'текст справа -->']) ?></div>
         <div class="col-sm-3"><?= $form->field($model, 'stylekey')->textInput(['maxlength' => true]) ?></div>

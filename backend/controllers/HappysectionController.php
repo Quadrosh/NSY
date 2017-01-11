@@ -2,12 +2,15 @@
 
 namespace backend\controllers;
 
+use common\models\UploadForm;
 use Yii;
 use common\models\Happysection;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * HappysectionController implements the CRUD actions for Happysection model.
@@ -55,9 +58,29 @@ class HappysectionController extends Controller
      */
     public function actionView($id)
     {
+        Url::remember();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+    /**
+     * Upload images for  model with autofill corresponding model property
+     */
+    public function actionUpload()
+    {
+        $uploadmodel = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            $uploadmodel->imageFile = UploadedFile::getInstance($uploadmodel, 'imageFile');
+            $data=Yii::$app->request->post('UploadForm');
+            $toModelProperty = $data['toModelProperty'];
+            $model = Happysection::find()->where(['id'=>$data['toModelId']])->one();
+            if ($uploadmodel->upload()) {
+                $model->$toModelProperty = $uploadmodel->imageFile->baseName . '.' . $uploadmodel->imageFile->extension;
+                $model->save();
+                Yii::$app->session->setFlash('success', 'Файл загружен успешно');
+                return $this->redirect(Url::previous());
+            }
+        }
     }
 
     /**
@@ -70,7 +93,7 @@ class HappysectionController extends Controller
         $model = new Happysection();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Url::previous());
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -89,7 +112,7 @@ class HappysectionController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(Url::previous());
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -107,7 +130,7 @@ class HappysectionController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Url::previous());
     }
 
     /**

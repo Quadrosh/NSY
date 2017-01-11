@@ -29,7 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'user_id',
+//            'user_id',
+            [
+                'attribute'=> 'user_id',
+                'value' => \common\models\User::find()->where(['id'=>$model['user_id']])->one()->username,
+            ],
             'name',
             'city',
 //            'to_master_id',
@@ -42,7 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'contacts',
             'text:ntext',
             'date',
-            'done',
+//            'done',
+            [
+                'attribute'=>'done',
+                'value'=> $model->done ? '<span class="text-success">Обработано</span>' : '<span class="text-danger">В работе</span>',
+                'format'=> 'html',
+            ],
         ],
     ]) ?>
 

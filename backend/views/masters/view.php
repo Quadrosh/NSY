@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\Models\Masters */
 
@@ -48,3 +48,31 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-3">
+                <h4>Image Upload</h4>
+                <?php $form = ActiveForm::begin([
+                    'method' => 'post',
+                    'action' => ['/masters/upload'],
+                    'options' => ['enctype' => 'multipart/form-data'],
+                ]); ?>
+                <?= $form->field($uploadmodel, 'toModelProperty')->dropDownList([
+                    'image'=>'Image',
+                    'imagelink'=>'Imagelink',
+                ])->label(false) ?>
+                <?= $form->field($uploadmodel, 'imageFile')->fileInput()->label(false) ?>
+                <?= $form->field($uploadmodel, 'toModelId')->hiddenInput(['value'=>$model->id])->label(false) ?>
+
+
+                <?= Html::submitButton('Upload', ['class' => 'btn btn-success']) ?>
+                <?php ActiveForm::end() ?>
+            </div>
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+
+</section>

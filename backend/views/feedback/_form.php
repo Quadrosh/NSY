@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'to_master_id')->textInput() ?>
+    <?= $form->field($model, 'to_master_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Masters::find()->all(), 'id','last_name')) ?>
 
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
 
@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'date')->textInput() ?>
 
-    <?= $form->field($model, 'done')->textInput() ?>
+    <?= $form->field($model, 'done')->dropDownList([ '0'=>'в работе', '1'=>'обработано']) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

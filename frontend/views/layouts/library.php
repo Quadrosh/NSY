@@ -97,7 +97,16 @@ IeAsset::register($this);
                     <div class="col-xs-4 mt22">
                         <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
                         <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
-                        <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,gplus,twitter,linkedin,lj,surfingbird,viber,whatsapp"></div>
+                        <?php if (empty(Yii::$app->view->params['meta']['imagelink'])): ?>
+                            <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki, gplus,twitter,linkedin,lj,surfingbird,viber,whatsapp,telegram"></div>
+                        <?php endif; ?>
+                        <?php if (!empty(Yii::$app->view->params['meta']['imagelink'])): ?>
+                            <div class="ya-share2"
+                                 data-services="vkontakte,facebook,odnoklassniki,pinterest,moimir,gplus,twitter,linkedin,lj,surfingbird,viber,whatsapp,telegram"
+                                 data-image="<?= 'http:'. \yii\helpers\Url::to('@imgfronturl/'. Yii::$app->view->params['meta']['imagelink']) ?>"
+                            >
+                            </div>
+                        <?php endif; ?>
                         <h4> Поделиться </h4>
                     </div>
 
@@ -162,7 +171,7 @@ IeAsset::register($this);
                         </a>
                         <h4 class="mt12"><?= Yii::$app->view->params['article']['promoname'] ?></h4>
                     </div>
-                </div> <!-- row -->
+                </div>
             </div>
         </section>
 
@@ -171,7 +180,9 @@ IeAsset::register($this);
 <div id="menubackfilter" class="menufilter backfilterOff">
 </div>
 <a id="sendtopage"  class="vizibleOff" href="/<?= Yii::$app->view->params['article']['promolink'] ?>"></a>
-
+<?php if (!empty(Yii::$app->view->params['meta']['imagelink'])) : ?>
+    <?= \yii\helpers\Html::img('/img/'.Yii::$app->view->params['meta']['imagelink'],['alt'=>Yii::$app->view->params['meta']['imagelink_alt'], 'class'=>'nodis']) ?>
+<?php endif; ?>
 
 <?php $this->endBody() ?>
 

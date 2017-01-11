@@ -10,21 +10,36 @@ $(window).load(function() {
 $(document).ready(function() {
 
     var menuIcon = document.getElementById("logosunIcon");
+    var backgroundFilter = $('#menubackfilter');
+    var nsLogoSunIcon = $('#logosunIcon'), isClosed = true;
     if (menuIcon) {
+
         $('#logosunIcon').hover(
             function(){
-                var tl = new TimelineLite();
-                tl.to("#logosunIcon", 0.4, {x:10,transformOrigin:"10% 50%"}, "logohoverOn")
-                ;
+                if(!nsLogoSunIcon.hasClass('is-open')){
+                    var tl = new TimelineLite();
+                    tl.to("#burgerTop", 0.4, {directionalRotation:"-15_ccw", y:0, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "logohoverOn")
+                        .to("#burgerBot", 0.4, {directionalRotation:"15_cw", y:0, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "logohoverOn")
+                        .to("#menuname", 0.4, {autoAlpha:0, ease:Linear.easeNone}, "logohoverOn")
+                    ;
+                }
+
             },
             function(){
-                var tl = new TimelineLite();
-                tl.to("#logosunIcon", 0.6, {x:0,transformOrigin:"10% 50%"}, "logohoverOff")
-                ;
+                if(!nsLogoSunIcon.hasClass('is-open')){
+                    var tl = new TimelineLite();
+                    tl.to("#burgerTop", 0.6, {directionalRotation:"0_cw", y:0, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "logohoverOff")
+                        .to("#burgerBot", 0.6, {directionalRotation:"0_ccw", y:0, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "logohoverOff")
+                        .to("#menuname", 0.8, {autoAlpha:1, ease:Linear.easeNone}, "logohoverOff")
+                    ;
+                }
+
             }
         );
-        var backgroundFilter = $('#menubackfilter');
-        var nsLogoSunIcon = $('#logosunIcon'), isClosed = true;
+
+
+
+
         nsLogoSunIcon.click(function(){
             sunMenu();
         });
@@ -38,7 +53,7 @@ $(document).ready(function() {
                 var tl = new TimelineMax();
                 tl.set(".sunmenu",{css:{autoAlpha:1}})
                     .set(".sunbeam",{css:{autoAlpha:0}})
-                    .fromTo("#center_3_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut})
+                    .fromTo("#center_3_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut},'load')
                     .fromTo("#center_2_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0.6472%'},ease:Power1.easeOut})
                     .fromTo("#center_1_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'1.123%'},ease:Power1.easeOut})
 
@@ -56,6 +71,10 @@ $(document).ready(function() {
                     .fromTo("#beam_12_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
                     .fromTo("#beam_13_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
                     .fromTo(".sunbeam",0.4,{css:{autoAlpha:0}},{css:{autoAlpha:1},ease:Power4.easeIn},'start')
+                    .to("#burgerTop", 0.4, {directionalRotation:"-45_ccw", y:12, smoothOrigin:"50% 50%",  ease:Linear.easeNone},'load')
+                    .to("#burgerFilling", 0.4, {css:{scaleX:0 , autoAlpha:0, transformOrigin:"50% 50%"},  ease:Linear.easeNone},'load')
+                    .to("#burgerBot", 0.4, {directionalRotation:"45_cw", y:"-=12", smoothOrigin:"50% 50%", ease:Linear.easeNone},'load')
+                    .to("#menuname", 0.4, {autoAlpha:0},'load')
                 ;
                 backgroundFilter.click(function () {
                     nsLogoSunIcon.addClass('is-closed');
@@ -63,7 +82,11 @@ $(document).ready(function() {
                     backgroundFilter.addClass('backfilterOff');
                     backgroundFilter.removeClass('backfilterOn');
                     var tl = new TimelineMax();
-                    tl.fromTo(".sunmenu",0.8,{css:{autoAlpha:1}},{css:{autoAlpha:0}});
+                    tl.fromTo(".sunmenu",0.8,{css:{autoAlpha:1}},{css:{autoAlpha:0}}, "off")
+                        .to("#burgerTop", 0.8, {directionalRotation:"0_cw", y:0, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "off")
+                        .to("#burgerFilling", 0.8, {css:{scaleX:1 , autoAlpha:1, transformOrigin:"50% 50%"},  ease:Linear.easeNone}, "off")
+                        .to("#burgerBot", 0.8, {directionalRotation:"0_ccw", y:0, smoothOrigin:"50% 50%", ease:Linear.easeNone}, "off")
+                        .to("#menuname", 0.8, {autoAlpha:1}, "off");
                     isClosed = true;
                 });
             } else {
@@ -72,7 +95,11 @@ $(document).ready(function() {
                 backgroundFilter.addClass('backfilterOff');
                 backgroundFilter.removeClass('backfilterOn');
                 var tl = new TimelineMax();
-                  tl.fromTo(".sunmenu",0.8,{css:{autoAlpha:1}},{css:{autoAlpha:0}});
+                  tl.fromTo(".sunmenu",0.8,{css:{autoAlpha:1}},{css:{autoAlpha:0}}, "off")
+                      .to("#burgerTop", 0.8, {directionalRotation:"0_cw", y:0, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "off")
+                      .to("#burgerFilling", 0.8, {css:{scaleX:1 , autoAlpha:1, transformOrigin:"50% 50%"},  ease:Linear.easeNone}, "off")
+                      .to("#burgerBot", 0.8, {directionalRotation:"0_ccw", y:0, smoothOrigin:"50% 50%", ease:Linear.easeNone}, "off")
+                      .to("#menuname", 0.8, {autoAlpha:1}, "off");
                 isClosed = true;
             }
         }
@@ -649,7 +676,7 @@ var trigger = $('#hamburger_anim'), isClosed = true;
             ;
     });
 
-        $('#menubuttonhover').hover(
+    $('#menubuttonhover').hover(
         function(){
           var tl = new TimelineLite();
             tl.set("#burger-container", {perspective:100})
@@ -702,11 +729,7 @@ var trigger = $('#hamburger_anim'), isClosed = true;
 
 
     if ('ontouchstart' in window ) {    //behaviour and events for touch device
-        // $('#garagelink').on('touchstart',function(){
-        //     setTimeout(function(){
-        //        window.location.href='index.html';
-        //    },1000);
-        // });
+
 
         $('#logosun').on('touchstart',function(event){
             event.preventDefault();
@@ -721,10 +744,7 @@ var trigger = $('#hamburger_anim'), isClosed = true;
                 tlmain.time(0)      
                 tlmain.stop() 
             });
-            $('#motorcycle').on('touchleave',function(){
-                tlmain.time(0)      
-                tlmain.stop() 
-            });
+
 
             var gotoUrl = $("#sendtopage").attr('href');
             function sendtopage() {
@@ -733,9 +753,7 @@ var trigger = $('#hamburger_anim'), isClosed = true;
 
         });   
 
-    }
-
-    else{   //behaviour and events for pointing device like mouse
+    } else {   //behaviour and events for pointing device like mouse
         
 
         $('#logosun').mousedown(function() {

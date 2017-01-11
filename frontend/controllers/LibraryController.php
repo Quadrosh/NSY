@@ -36,6 +36,9 @@ class LibraryController extends FrontController
         $this->view->params['meta']['title'] = $article->title;
         $this->view->params['meta']['description'] = $article->description;
         $this->view->params['meta']['keywords'] = $article->keywords;
+        $this->view->params['meta']['imagelink'] = $article->imagelink;
+        $this->view->params['meta']['imagelink_alt'] = $article->imagelink_alt;
+
 
         $this->view->params['article'] = $article;
         $this->view->params['sections'] = $sections;

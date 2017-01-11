@@ -24,6 +24,7 @@ class MotivatorController extends FrontController
         $this->view->params['sunitem'] = $sunitem;
         $this->view->params['meta'] = $metapage;
 
+
         $catMotivatorsData = Motivator::find()->asArray()->where(['list_section'=>'1'])->all();
         $catMotivators = $this->getList($catMotivatorsData);
         $this->view->params['catMotivators'] = $catMotivators;
@@ -67,10 +68,19 @@ class MotivatorController extends FrontController
         $this->view->params['meta']['title'] = $motivator->title;
         $this->view->params['meta']['description'] = $motivator->description;
         $this->view->params['meta']['keywords'] = $motivator->keywords;
-        $this->view->params['motivator'] = $motivator;
+        $this->view->params['meta']['promolink'] = $motivator->promolink;
+        $this->view->params['meta']['promoname'] = $motivator->promoname;
+        $this->view->params['meta']['sendtopage'] = $motivator->sendtopage;
+        $this->view->params['meta']['imagelink'] = $motivator->imagelink;
+        $this->view->params['meta']['imagelink_alt'] = $motivator->imagelink_alt;
+        $this->view->params['meta']['imagelink2'] = $motivator->imagelink2;
+        $this->view->params['meta']['imagelink2_alt'] = $motivator->imagelink2_alt;
         $this->view->params['quotes'] = $quotes;
 
-        return $this->render('view', ['motivator'=> $motivator, 'quotes'=>$quotes]);
+        return $this->render('view', [
+            'motivator'=> $motivator,
+            'quotes'=>$quotes
+        ]);
     }
 
 }

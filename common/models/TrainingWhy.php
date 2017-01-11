@@ -28,8 +28,9 @@ class TrainingWhy extends \yii\db\ActiveRecord
     {
         return [
             [['training_id', 'text'], 'required'],
-            [['training_id'], 'integer'],
-            [['text'], 'string'],
+            [['training_id', 'order_num'], 'integer'],
+            [['text', 'direction'], 'string'],
+            [[ 'direction'], 'string', 'max' => 100],
         ];
     }
 
@@ -41,6 +42,7 @@ class TrainingWhy extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'training_id' => 'Training ID',
+            'order_num' => 'List Order №',
             'text' => 'Text',
         ];
     }

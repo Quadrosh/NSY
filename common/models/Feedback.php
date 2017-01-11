@@ -56,7 +56,7 @@ class Feedback extends \yii\db\ActiveRecord
             'to_master_id' => 'Мастеру',
             'phone' => 'Контактный телефон',
             'email' => 'e-mail',
-            'contacts' => 'Дополнительная контактная информация',
+            'contacts' => 'Дополнительная информация',
             'text' => 'Комментарий',
             'date' => 'Date',
             'done' => 'Done',
@@ -81,7 +81,7 @@ class Feedback extends \yii\db\ActiveRecord
                 " <br/> Город: ".$this->city .
                 " <br/> Телефон: ".$this->phone .
                 " <br/> Email: ".$this->email .
-                " <br/> доп. контакты: " . $this->contacts .
+                " <br/> доп. инфо: " . $this->contacts .
                 " <br/> Комментарий: <br/> " .
                 nl2br($this->text)
             )

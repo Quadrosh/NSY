@@ -22,7 +22,16 @@ $this->params['breadcrumbs'][] = $this->title;
 //            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'user_id',
+//            'user_id',
+            [
+                'attribute'=> 'user_id',
+                'value' => function($data)
+                {
+                    $theData = \common\models\User::find()->where(['id'=>$data['user_id']])->one();
+                    return $theData['username'];
+                },
+            ],
+
 //            'to_master_id',
             [
                 'attribute'=> 'to_master_id',
@@ -36,10 +45,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'city',
 //            'phone',
 //            'email:email',
-            // 'contacts',
-             'text:ntext',
+             'contacts',
+//             'text:ntext',
             // 'date',
-            // 'done',
+//             'done',
+            [
+                'attribute'=>'done',
+                'value'=> function($data)
+                {
+                    return $data->done ? '<span   class="text-success">Обработано</span>' : '<span   class="text-danger">В работе</span>';
+                },
+                'format'=> 'html',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

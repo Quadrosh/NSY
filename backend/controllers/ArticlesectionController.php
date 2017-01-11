@@ -2,12 +2,15 @@
 
 namespace backend\controllers;
 
+use common\models\UploadForm;
 use Yii;
 use common\models\Articlesection;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ArticlesectionController implements the CRUD actions for Articlesection model.
@@ -54,11 +57,31 @@ class ArticlesectionController extends Controller
      */
     public function actionView($id)
     {
+        Url::remember();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
     }
 
+    /**
+     * Upload images for  model with autofill corresponding model property
+     */
+    public function actionUpload()
+    {
+        $uploadmodel = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            $uploadmodel->imageFile = UploadedFile::getInstance($uploadmodel, 'imageFile');
+            $data=Yii::$app->request->post('UploadForm');
+            $toModelProperty = $data['toModelProperty'];
+            $model = Articlesection::find()->where(['id'=>$data['toModelId']])->one();
+            if ($uploadmodel->upload()) {
+                $model->$toModelProperty = $uploadmodel->imageFile->baseName . '.' . $uploadmodel->imageFile->extension;
+                $model->save();
+                Yii::$app->session->setFlash('success', 'Файл загружен успешно');
+                return $this->redirect(Url::previous());
+            }
+        }
+    }
     /**
      * Creates a new Articlesection model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -69,7 +92,7 @@ class ArticlesectionController extends Controller
         $model = new Articlesection();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Url::previous());
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -88,7 +111,7 @@ class ArticlesectionController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(Url::previous());
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -106,7 +129,7 @@ class ArticlesectionController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Url::previous());
     }
 
     /**

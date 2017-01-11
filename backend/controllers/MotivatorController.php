@@ -2,14 +2,17 @@
 
 namespace backend\controllers;
 
+use common\models\UploadForm;
 use Yii;
 use common\models\Motivator;
 use yii\data\ActiveDataProvider;
 use common\models\MLine;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * MotivatorController implements the CRUD actions for Motivator model.
@@ -61,17 +64,41 @@ class MotivatorController extends Controller
      */
     public function actionView($id)
     {
+        Url::remember();
         $this->layout = 'motivator';
         $motivator = Motivator::find()->where(['id'=>$id])->one();
         $quotes = $motivator->mLines;
          ArrayHelper::multisort($quotes,['block_num','quote_num'],[SORT_ASC,SORT_ASC]);
         $this->view->params['motivator'] = $motivator;
         $this->view->params['quotes'] = $quotes;
+        $uploadmodel = new UploadForm();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'motivator'=> $motivator,
-            'quotes'=>$quotes
+            'quotes'=>$quotes,
+            'uploadmodel' => $uploadmodel,
         ]);
+    }
+
+    /**
+     * Upload images for Training model with autofill corresponding model property
+     */
+    public function actionUpload()
+    {
+        $uploadmodel = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            $uploadmodel->imageFile = UploadedFile::getInstance($uploadmodel, 'imageFile');
+            $data=Yii::$app->request->post('UploadForm');
+            $toModelProperty = $data['toModelProperty'];
+            $model = Motivator::find()->where(['id'=>$data['toModelId']])->one();
+            if ($uploadmodel->upload()) {
+                $model->$toModelProperty = $uploadmodel->imageFile->baseName . '.' . $uploadmodel->imageFile->extension;
+                $model->save();
+                Yii::$app->session->setFlash('success', 'Файл загружен успешно');
+                return $this->redirect(Url::previous());
+            }
+        }
     }
 
     /**

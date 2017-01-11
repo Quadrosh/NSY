@@ -66,7 +66,6 @@ IeAsset::register($this);
 <div id="content-wrapper">
     <main id="panel" class="panel">
 
-<?php if (in_array(Yii::$app->view->params['meta']['id'], [1,5]) == false ) : ?>
         <div id="logosunIcon">
             <div class="burger-icon">
                 <div class="burger-container">
@@ -77,17 +76,14 @@ IeAsset::register($this);
                 </div>
             </div>
         </div>
-<?php endif; ?>
+
         <?= \common\widgets\MenuWidget::widget(['formfactor'=>'sun','sunitem'=> Yii::$app->view->params['sunitem'] ]); ?>
         <?= Alert::widget() ?>
         <?= $content; ?>
-<?php if (in_array(Yii::$app->view->params['meta']['id'], [1,5]) == false ) : ?>
         <section class=" white">
             <div class="container text-center">
                 <div class="row mb30">
-
                     <div class="col-xs-4 mt22">
-
                         <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
                         <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
                         <?php if (empty(Yii::$app->view->params['meta']['imagelink'])): ?>
@@ -104,8 +100,8 @@ IeAsset::register($this);
                     </div>
 
                     <div class="col-xs-4">
-                        <svg
-                            version="1.1" id="logosun"
+                        <svg id="logosun"
+                            version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink"
                             x="0px" y="0px"
@@ -144,9 +140,9 @@ IeAsset::register($this);
 							</svg>
                     </div>
                     <div class="col-xs-4 mt12">
-                        <a href="/<?= Yii::$app->view->params['meta']['promolink'] ?>" id="gonextpage" class="qbtn" >
-                            <svg
-                                version="1.1" id="arrow"
+                        <a href="/<?= Yii::$app->view->params['meta']['promolink'] ?>?to=<?=  Yii::$app->view->params['master']['hrurl'] ?>&training=<?=  Yii::$app->view->params['trainingdate'] ?>" id="gonextpage" class="qbtn" >
+                            <svg id="arrow"
+                                version="1.1"
                                 xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink"
                                 x="0px" y="0px"
@@ -167,14 +163,14 @@ IeAsset::register($this);
                 </div> <!-- row -->
             </div>
         </section>
-<?php endif; ?>
+
     </main>
 </div>
 <div id="menubackfilter" class="menufilter backfilterOff">
 </div>
-<a id="sendtopage"  class="vizibleOff" href="/<?= Yii::$app->view->params['meta']['sendtopage'] ?>"></a>
+<a id="sendtopage"  class="vizibleOff" href="/<?= Yii::$app->view->params['meta']['promolink'] ?>"></a>
 <?php if (!empty(Yii::$app->view->params['meta']['imagelink'])) : ?>
-    <?= \yii\helpers\Html::img('/img/'.Yii::$app->view->params['meta']['imagelink'],['alt'=>Yii::$app->view->params['meta']['imagelink_alt'], 'class'=>'nodis']) ?>
+<?= \yii\helpers\Html::img('/img/'.Yii::$app->view->params['meta']['imagelink'],['alt'=>Yii::$app->view->params['meta']['imagelink_alt'], 'class'=>'nodis']) ?>
 <?php endif; ?>
 
 <?php $this->endBody() ?>

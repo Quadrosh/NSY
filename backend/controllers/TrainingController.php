@@ -2,12 +2,16 @@
 
 namespace backend\controllers;
 
+use common\models\TrainingWhy;
 use Yii;
 use common\models\Trainings;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\UploadForm;
+use yii\web\UploadedFile;
 
 /**
  * TrainingController implements the CRUD actions for Trainings model.
@@ -38,7 +42,7 @@ class TrainingController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => Trainings::find(),
         ]);
-
+        Url::remember();
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
@@ -51,11 +55,40 @@ class TrainingController extends Controller
      */
     public function actionView($id)
     {
+        Url::remember();
+        $training = $this->findModel($id);
+        $reasons = TrainingWhy::find()->where(['training_id'=>$id,'direction'=>'why'])->orderBy(['order_num'=>SORT_ASC])->all();
+        $methods = TrainingWhy::find()->where(['training_id'=>$id,'direction'=>'youllsee'])->orderBy(['order_num'=>SORT_ASC])->all();
+        $ifyous = TrainingWhy::find()->where(['training_id'=>$id,'direction'=>'ifyou'])->orderBy(['order_num'=>SORT_ASC])->all();
+        $uploadmodel = new UploadForm();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $training,
+            'reasons'=>$reasons,
+            'methods'=>$methods,
+            'ifyous'=>$ifyous,
+            'uploadmodel'=>$uploadmodel,
         ]);
     }
 
+    /**
+     * Upload images for Training model with autofill corresponding model property
+     */
+    public function actionUpload()
+    {
+        $uploadmodel = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            $uploadmodel->imageFile = UploadedFile::getInstance($uploadmodel, 'imageFile');
+            $data=Yii::$app->request->post('UploadForm');
+            $toModelProperty = $data['toModelProperty'];
+            $model = Trainings::find()->where(['id'=>$data['toModelId']])->one();
+            if ($uploadmodel->upload()) {
+                $model->$toModelProperty = $uploadmodel->imageFile->baseName . '.' . $uploadmodel->imageFile->extension;
+                $model->save();
+                Yii::$app->session->setFlash('success', 'Файл загружен успешно');
+                return $this->redirect(Url::previous());
+            }
+        }
+    }
     /**
      * Creates a new Trainings model.
      * If creation is successful, the browser will be redirected to the 'view' page.

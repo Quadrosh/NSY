@@ -46,18 +46,23 @@ class Trainings extends \yii\db\ActiveRecord
         return 'trainings';
     }
 
+    public function getMaster()
+    {
+        return $this->hasOne(Masters::className(),['id' => 'master_id']);
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['master_id', 't_when', 'city', 't_where', 'full_price', 'currency', 'discount', 'title', 'description', 'keywords', 'pagehead', 'pagedescription', 'topimage', 'big_text', 'small_text', 'order_text', 'action_1_name', 'action_1_go', 'action_1_link', 'action_2_name', 'action_2_go', 'action_2_link', 'imagelink_alt', 'sendtopage', 'promolink', 'promoname'], 'required'],
+            [['master_id', 't_when', 'city',  'full_price', 'currency',  'title', 'description', 'keywords', 'pagehead', 'pagedescription', 'topimage', 'order_text', 'action_1_name', 'action_1_go', 'date', 'action_1_link'], 'required'],
             [['master_id', 'full_price', 'discount'], 'integer'],
-            [['t_when'], 'safe'],
-            [['description', 'keywords', 'pagedescription', 'big_text', 'small_text', 'order_text'], 'string'],
-            [['city', 't_where', 'title', 'pagehead', 'topimage', 'action_1_name', 'action_1_go', 'action_1_link', 'action_2_name', 'action_2_go', 'action_2_link', 'imagelink', 'imagelink_alt', 'sendtopage', 'promolink', 'promoname'], 'string', 'max' => 255],
-            [['currency'], 'string', 'max' => 100],
+            [['date'], 'safe'],
+            [['description', 'keywords', 'pagedescription', 'big_text', 'small_text', 'order_text', 'map','text1','text2','text3'], 'string'],
+            [['city', 'order_backimage', 'action_2_backimage', 't_where', 'title', 'pagehead', 'topimage', 'action_1_name', 'action_1_go', 'action_1_link', 'action_2_name', 'action_2_go', 'action_2_link', 'imagelink', 'date', 'imagelink_alt', 'sendtopage', 'promolink', 'promoname','action_1_backimage'], 'string', 'max' => 255],
+            [['currency','view'], 'string', 'max' => 100],
         ];
     }
 
@@ -68,33 +73,42 @@ class Trainings extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'master_id' => 'Master ID',
-            't_when' => 'T When',
-            'city' => 'City',
-            't_where' => 'T Where',
+            'master_id' => 'Мастер',
+            'date' => 'Дата начала',
+            't_when' => 'Дата в формате: 30-31 месяц 2017',
+            'city' => 'Город',
+            't_where' => 'Адрес',
             'full_price' => 'Full Price',
             'currency' => 'Currency',
-            'discount' => 'Discount',
+            'discount' => 'Discount %',
             'title' => 'Title',
             'description' => 'Description',
             'keywords' => 'Keywords',
-            'pagehead' => 'Pagehead',
-            'pagedescription' => 'Pagedescription',
+            'pagehead' => 'Название тренинга',
+            'pagedescription' => 'Краткое описание',
             'topimage' => 'Topimage',
             'big_text' => 'Big Text',
             'small_text' => 'Small Text',
             'order_text' => 'Order Text',
+            'order_backimage' => 'Order Back Image',
             'action_1_name' => 'Action 1 Name',
             'action_1_go' => 'Action 1 Go',
             'action_1_link' => 'Action 1 Link',
             'action_2_name' => 'Action 2 Name',
             'action_2_go' => 'Action 2 Go',
             'action_2_link' => 'Action 2 Link',
+            'action_2_backimage' => 'Action 2 Back Image',
+            'action_1_backimage' => 'Action 1 Back Image',
             'imagelink' => 'Imagelink',
             'imagelink_alt' => 'Imagelink Alt',
             'sendtopage' => 'Sendtopage',
             'promolink' => 'Promolink',
             'promoname' => 'Promoname',
+            'view' => 'View',
+            'map' => 'Map',
+            'text1' => 'text1',
+            'text2' => 'text2',
+            'text3' => 'text3',
         ];
     }
 }

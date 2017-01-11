@@ -2,12 +2,16 @@
 
 namespace backend\controllers;
 
+use common\models\Articlesection;
+use common\models\UploadForm;
 use Yii;
 use common\models\Articles;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ArticleController implements the CRUD actions for Articles model.
@@ -51,11 +55,36 @@ class ArticleController extends Controller
      */
     public function actionView($id)
     {
+        Url::remember();
+        $uploadmodel = new UploadForm();
+        $sections = Articlesection::find()->where(['page_id'=>$id])->orderBy(['num'=>SORT_ASC])->all();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'uploadmodel' => $uploadmodel,
+            'sections' => $sections,
         ]);
     }
 
+    /**
+     * Upload images for  model with autofill corresponding model property
+     */
+    public function actionUpload()
+    {
+        $uploadmodel = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            $uploadmodel->imageFile = UploadedFile::getInstance($uploadmodel, 'imageFile');
+            $data=Yii::$app->request->post('UploadForm');
+            $toModelProperty = $data['toModelProperty'];
+            $model = Articles::find()->where(['id'=>$data['toModelId']])->one();
+            if ($uploadmodel->upload()) {
+                $model->$toModelProperty = $uploadmodel->imageFile->baseName . '.' . $uploadmodel->imageFile->extension;
+                $model->save();
+                Yii::$app->session->setFlash('success', 'Файл загружен успешно');
+                return $this->redirect(Url::previous());
+            }
+        }
+    }
     /**
      * Creates a new Articles model.
      * If creation is successful, the browser will be redirected to the 'view' page.

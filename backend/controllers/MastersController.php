@@ -2,12 +2,15 @@
 
 namespace backend\controllers;
 
+use common\models\UploadForm;
 use Yii;
 use common\Models\Masters;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * MastersController implements the CRUD actions for Masters model.
@@ -51,11 +54,32 @@ class MastersController extends Controller
      */
     public function actionView($id)
     {
+        Url::remember();
+        $uploadmodel = new UploadForm();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'uploadmodel' => $uploadmodel,
         ]);
     }
-
+    /**
+     * Upload images for Training model with autofill corresponding model property
+     */
+    public function actionUpload()
+    {
+        $uploadmodel = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            $uploadmodel->imageFile = UploadedFile::getInstance($uploadmodel, 'imageFile');
+            $data=Yii::$app->request->post('UploadForm');
+            $toModelProperty = $data['toModelProperty'];
+            $model = Masters::find()->where(['id'=>$data['toModelId']])->one();
+            if ($uploadmodel->upload()) {
+                $model->$toModelProperty = $uploadmodel->imageFile->baseName . '.' . $uploadmodel->imageFile->extension;
+                $model->save();
+                Yii::$app->session->setFlash('success', 'Файл загружен успешно');
+                return $this->redirect(Url::previous());
+            }
+        }
+    }
     /**
      * Creates a new Masters model.
      * If creation is successful, the browser will be redirected to the 'view' page.

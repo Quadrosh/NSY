@@ -19,13 +19,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+//            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'master_id',
+//            'master_id',
+            [
+                'attribute'=> 'master_id',
+                'value' => function($data)
+                {
+                    $theData = \common\models\Masters::find()->where(['id'=>$data['master_id']])->one();
+                    return $theData['last_name'];
+                },
+            ],
             't_when',
             'city',
-            't_where',
+            'pagehead',
+//            't_where',
             // 'full_price',
             // 'currency',
             // 'discount',

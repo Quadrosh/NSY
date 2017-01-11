@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Pages */
@@ -43,3 +44,25 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-3">
+                <h4>Imagelink Upload</h4>
+                <?php $form = ActiveForm::begin([
+                    'method' => 'post',
+                    'action' => ['/page/upload'],
+                    'options' => ['enctype' => 'multipart/form-data'],
+                ]); ?>
+                <?= $form->field($uploadmodel, 'toModelProperty')->hiddenInput(['value'=>'imagelink'])->label(false) ?>
+                <?= $form->field($uploadmodel, 'imageFile')->fileInput()->label(false) ?>
+                <?= $form->field($uploadmodel, 'toModelId')->hiddenInput(['value'=>$model->id])->label(false) ?>
+
+
+                <?= Html::submitButton('Upload', ['class' => 'btn btn-success']) ?>
+                <?php ActiveForm::end() ?>
+            </div>
+        </div>
+    </div>
+
+</section>

@@ -100,7 +100,9 @@ a.desc:after {
     padding: 15px;
     border: none;
 }
-
+.happy_image img {
+    width: 100%;
+}
 @media(max-width:767px) {
     .nav li > form > button.logout {
         display:block;
