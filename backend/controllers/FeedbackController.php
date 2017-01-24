@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * FeedbackController implements the CRUD actions for Feedback model.
  */
-class FeedbackController extends Controller
+class FeedbackController extends BackController
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all Feedback models.

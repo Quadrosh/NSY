@@ -16,22 +16,22 @@ use yii\web\UploadedFile;
 /**
  * TrainingController implements the CRUD actions for Trainings model.
  */
-class TrainingController extends Controller
+class TrainingController extends BackController
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all Trainings models.
@@ -71,7 +71,7 @@ class TrainingController extends Controller
     }
 
     /**
-     * Upload images for Training model with autofill corresponding model property
+     * Upload images for  model with autofill corresponding model property
      */
     public function actionUpload()
     {
@@ -85,8 +85,8 @@ class TrainingController extends Controller
                 $model->$toModelProperty = $uploadmodel->imageFile->baseName . '.' . $uploadmodel->imageFile->extension;
                 $model->save();
                 Yii::$app->session->setFlash('success', 'Файл загружен успешно');
-                return $this->redirect(Url::previous());
             }
+            return $this->redirect(Url::previous());
         }
     }
     /**

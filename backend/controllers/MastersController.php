@@ -15,22 +15,22 @@ use yii\web\UploadedFile;
 /**
  * MastersController implements the CRUD actions for Masters model.
  */
-class MastersController extends Controller
+class MastersController extends BackController
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all Masters models.
@@ -76,8 +76,8 @@ class MastersController extends Controller
                 $model->$toModelProperty = $uploadmodel->imageFile->baseName . '.' . $uploadmodel->imageFile->extension;
                 $model->save();
                 Yii::$app->session->setFlash('success', 'Файл загружен успешно');
-                return $this->redirect(Url::previous());
             }
+            return $this->redirect(Url::previous());
         }
     }
     /**

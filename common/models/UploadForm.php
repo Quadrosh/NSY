@@ -2,8 +2,12 @@
 
 namespace common\models;
 
+use backend\controllers\ImagefileController;
+use yii\base\Action;
 use yii\base\Model;
 use yii\web\UploadedFile;
+use Yii;
+use common\models\Imagefiles;
 
 class UploadForm extends Model
 {
@@ -21,13 +25,31 @@ class UploadForm extends Model
         ];
     }
 
-    public function upload()
+    public function upload($add1=false,$add2=false)
     {
-        if ($this->validate()) {
-            $this->imageFile->saveAs('img/' . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+        $imagefile = new Imagefiles();
+        $imagefile->addNew($this->imageFile->baseName .'.' . $this->imageFile->extension);
+
+        if ($this->validate() && $imagefile->addNew($this->imageFile->baseName .'.' . $this->imageFile->extension)) {
+            $this->imageFile->saveAs('img/' . $add1 . $this->imageFile->baseName . $add2 .'.' . $this->imageFile->extension);
             return true;
         } else {
             return false;
         }
     }
+
+    public function change($filename)
+    {
+        if ($this->validate()) {
+            $this->imageFile->saveAs('img/' .  $filename);
+            return true;
+        } else {
+        return false;
+        }
+    }
+
+
+
+
+
 }

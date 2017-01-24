@@ -17,22 +17,22 @@ use yii\web\UploadedFile;
 /**
  * MotivatorController implements the CRUD actions for Motivator model.
  */
-class MotivatorController extends Controller
+class MotivatorController extends BackController
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all Motivator models.
@@ -96,8 +96,8 @@ class MotivatorController extends Controller
                 $model->$toModelProperty = $uploadmodel->imageFile->baseName . '.' . $uploadmodel->imageFile->extension;
                 $model->save();
                 Yii::$app->session->setFlash('success', 'Файл загружен успешно');
-                return $this->redirect(Url::previous());
             }
+            return $this->redirect(Url::previous());
         }
     }
 

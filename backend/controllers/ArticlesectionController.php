@@ -15,22 +15,22 @@ use yii\web\UploadedFile;
 /**
  * ArticlesectionController implements the CRUD actions for Articlesection model.
  */
-class ArticlesectionController extends Controller
+class ArticlesectionController extends BackController
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all Articlesection models.
@@ -74,12 +74,14 @@ class ArticlesectionController extends Controller
             $data=Yii::$app->request->post('UploadForm');
             $toModelProperty = $data['toModelProperty'];
             $model = Articlesection::find()->where(['id'=>$data['toModelId']])->one();
+
+
             if ($uploadmodel->upload()) {
                 $model->$toModelProperty = $uploadmodel->imageFile->baseName . '.' . $uploadmodel->imageFile->extension;
                 $model->save();
                 Yii::$app->session->setFlash('success', 'Файл загружен успешно');
-                return $this->redirect(Url::previous());
             }
+            return $this->redirect(Url::previous());
         }
     }
     /**

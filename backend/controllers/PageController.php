@@ -15,22 +15,22 @@ use yii\web\UploadedFile;
 /**
  * PageController implements the CRUD actions for Pages model.
  */
-class PageController extends Controller
+class PageController extends BackController
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all Pages models.
@@ -77,8 +77,8 @@ class PageController extends Controller
                 $model->$toModelProperty = $uploadmodel->imageFile->baseName . '.' . $uploadmodel->imageFile->extension;
                 $model->save();
                 Yii::$app->session->setFlash('success', 'Файл загружен успешно');
-                return $this->redirect(Url::previous());
             }
+            return $this->redirect(Url::previous());
         }
     }
     /**

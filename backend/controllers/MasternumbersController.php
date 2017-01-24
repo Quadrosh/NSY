@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * MasternumbersController implements the CRUD actions for MasterNumbers model.
  */
-class MasternumbersController extends Controller
+class MasternumbersController extends BackController
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all MasterNumbers models.

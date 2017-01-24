@@ -13,22 +13,22 @@ use yii\filters\VerbFilter;
 /**
  * LiveoutstepController implements the CRUD actions for XSteps model.
  */
-class LiveoutstepController extends Controller
+class LiveoutstepController extends BackController
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all LiveOutSteps models.

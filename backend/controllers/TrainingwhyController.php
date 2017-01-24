@@ -13,22 +13,22 @@ use yii\filters\VerbFilter;
 /**
  * TrainingwhyController implements the CRUD actions for TrainingWhy model.
  */
-class TrainingwhyController extends Controller
+class TrainingwhyController extends BackController
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all TrainingWhy models.

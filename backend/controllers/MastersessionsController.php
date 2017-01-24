@@ -12,22 +12,22 @@ use yii\filters\VerbFilter;
 /**
  * MastersessionsController implements the CRUD actions for MasterSessions model.
  */
-class MastersessionsController extends Controller
+class MastersessionsController extends BackController
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all MasterSessions models.

@@ -73,6 +73,9 @@ AppAsset::register($this);
                 ['label' => 'Happiness section', 'url' => ['/happysection/index']],
                 ['label' => 'Index Pages', 'url' => ['/page/index']],
                 ['label' => 'Категории', 'url' => ['/category/index']],
+                ['label' => 'Quotepad', 'url' => ['/quotepad/index']],
+                ['label' => 'Quotepad Images', 'url' => ['/quotepadimg/index']],
+                ['label' => 'Картинки', 'url' => ['/imagefile/index']],
             ],
         ],
 

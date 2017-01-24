@@ -103,6 +103,12 @@ a.desc:after {
 .happy_image img {
     width: 100%;
 }
+.img {
+    width: 100%;
+}
+.img100 {
+    width: 100px;
+}
 @media(max-width:767px) {
     .nav li > form > button.logout {
         display:block;
