@@ -4,28 +4,24 @@ use yii\helpers\Html;
 ?>
 <section id="<?= $quotepad->view ?>"	class="quotescreen <?= $quotepad->background_color ?>">
     <div class="container ">
-        <div class="row mt120">
-            <div class="col-sm-6 maxwidthleft">
+        <div class="row ">
+            <div class="col-xs-6 maxwidthleft">
                 <div id="textbox" class="textbox">
-                    <p id="text" class="quotemain mt30 "><?= $quotepad->text ?> </p>
-                    <p id="text1" class="quoteitem text-left anishow"><?= $quotepad->text1 ?> </p>
-                    <p id="text2" class="quoteitem text-right anishow"><?= $quotepad->text2 ?> </p>
-                    <p id="text3" class="quoteitem text-left anishow"><?= $quotepad->text3 ?> </p>
-                    <p id="text4" class="quoteitem text-right anishow"><?= $quotepad->text4 ?> </p>
+                    <p id="text" class="quotemain mt30 mb50 "><?= $quotepad->text ?> </p>
 
                     <div id="avatar_box" class="row">
                         <div class="col-sm-3 hidden-xs">
                             <?= Html::img('/img/'.$quotepad->author_avatar,['class'=>'avatar', 'alt'=>$quotepad->author_avatar_alt,'id'=>'avatar_img']) ?>
                         </div>
                         <div id="avatar_info" class="col-xs-12 col-sm-9 ">
-                            <p  class="q_author mt30"> <?= $quotepad->author ?> <br> <?= $quotepad->whois ?> <br> 19-20вв</p>
+                            <p  class="q_author mt15"> <?= $quotepad->author ?> <br> <?= $quotepad->whois ?> <br> 19-20вв</p>
                         </div>
                     </div>
 
                 </div>
 
             </div>
-            <div class="col-sm-6 maxwidthright">
+            <div class="col-xs-6 maxwidthright">
                 <div  id="anywrap" class="animationwrap">
                     <svg class="quoteSvgPic" id="richcar"
                          version="1.1"

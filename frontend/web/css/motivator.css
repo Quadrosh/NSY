@@ -1496,15 +1496,24 @@ outline: none;
     width: 40px;
     color: #fff;
     background-color: #FFC107;
+    -webkit-animation: success_hover_off 0.5s ;
+    animation: success_hover_off 0.5s ;
 }
 #motivators .m_table .btn-success:hover,
 #motivators .m_table .btn-success:focus,
 #motivators .m_table .btn-success.focus,
 #motivators .m_table .btn-success:active,
 #motivators .m_table .btn-success.active {
+
+    color: #ffffff;
     border: 1px solid #FFC107;
-    background-color: #fff;
-    color: #FFC107;
+    padding: 2px 8px;
+    border-radius: 5px;
+    background-color: #FFC107;
+    text-transform: uppercase;
+    box-shadow: 0 5px 7px rgba(0, 0, 0, 0.6);
+    -webkit-animation: success_hover_on 0.5s ;
+    animation: success_hover_on 0.5s ;
 }
 
 
@@ -1512,6 +1521,23 @@ a:hover,
 a:visited {
   text-decoration: none;
 }
+/*hover @keyframes*/
+
+@keyframes success_hover_on {
+    from { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);   }
+    to { box-shadow: 0 5px 7px rgba(0, 0, 0, 0.6);  }
+}
+@keyframes success_hover_off {
+    to { box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);   }
+    from { box-shadow: 0 5px 7px rgba(0, 0, 0, 0.6);  }
+
+}
+
+
+
+
+
+
 .vertical {
   position: absolute;
   bottom: 45px;
@@ -1523,6 +1549,10 @@ a:visited {
 -o-transform: rotate(270deg);
 transform: rotate(270deg);
 }
+
+
+
+
 #gomotivators {
     position: absolute;
   bottom: -20px;
@@ -1542,27 +1572,35 @@ transform: rotate(270deg);
 .sharing h4 {
     margin-top: 18px;
 }
+.gotoquotepad{
+    color:#FFC107;
+}
+.gotoquotepad:hover{
+    color:#0F63A4;
+    cursor: pointer;
+}
 
-/*#logosunIcon {*/
-    /*position: fixed;*/
-    /*width: 50px;*/
-    /*z-index: 10;*/
-    /*top: 50%;*/
-    /*margin-top: -25px;*/
-    /*cursor: pointer;*/
-/*}*/
-/*.logosun_link svg{*/
-    /*position: relative;*/
-    /*width:100px;*/
-/*}*/
+
+
+
+
 
 /* media */
+@media only screen and (max-width : 980px) {
 
+    .m_table_name {
+        font-size: 22px;
+    }
+
+
+}
 @media only screen and (max-width : 840px) {
 
   .m_table_name {
     font-size: 16px;
   }
+
+
 }
 
 @media only screen and (max-width : 767px) {

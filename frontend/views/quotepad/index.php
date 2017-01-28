@@ -21,7 +21,7 @@
 
                     <div class="m_table_button">
                             <?= \yii\helpers\Html::a('смотреть', ['quotepad/view', 'id'=>$quotepad['id']],
-                                ['class' => "btn fr ",]) ?>
+                                ['class' => "btn fr gotoquotepad",]) ?>
 
                     </div>
                 </div>

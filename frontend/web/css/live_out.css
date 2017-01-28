@@ -1139,6 +1139,9 @@ from { box-shadow: 0 5px 7px rgba(0, 0, 0, 0.6);  }
     -webkit-animation: nxt_hover_on 0.5s ;
   animation: nxt_hover_on 0.5s ;
 }
+.listofall .m_table_button .btn:hover {
+    color: #0F63A4;
+}
 
 #live_out .nxt, #live_out .nxt:hover:active  {
 	margin-top: 50px;

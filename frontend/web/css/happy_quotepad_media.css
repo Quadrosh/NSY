@@ -19,6 +19,10 @@
 	.position1 {
 	  top: 85px;
 	}
+	.quoteSvgPic {
+        top:10vw;
+    }
+
 
 }
 
@@ -95,6 +99,9 @@
 		padding-right: 2px;
 		padding-left: 1px;
 	}
+    .quoteSvgPic {
+        top:20vw;
+    }
 
 
 
@@ -114,10 +121,16 @@
 	    font-size: 12px;
 	    text-align: left;
 	}
+    .quoteSvgPic {
+        top:40vw;
+    }
 
 }
 /* Custom, iPhone Retina */
 @media only screen and (max-width : 320px) {
+    .textbox{
+        padding: 0;
+    }
 }	
 /*==========  Mobile First Method  ==========*/
 

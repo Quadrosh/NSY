@@ -4,8 +4,8 @@ use yii\helpers\Html;
 ?>
 <section id="<?= $quotepad->view ?>"	class="quotescreen <?= $quotepad->background_color ?>">
     <div class="container ">
-        <div class="row mt120">
-            <div class="col-sm-6 maxwidthleft">
+        <div class="row ">
+            <div class="col-xs-6 maxwidthleft">
                 <div id="donkeywrap" class="animationwrap">
                     <svg id="donkey" class="quotepic position1"
                          version="1.1"
@@ -315,7 +315,7 @@ use yii\helpers\Html;
                 </div>
 
             </div>
-            <div class="col-sm-6 maxwidthright">
+            <div class="col-xs-6 maxwidthright">
                 <div id="textbox" class="textbox ">
                     <p id="text" class="quotemain mt30 "><?= $quotepad->text ?> </p>
                     <p id="text1" class="quoteitem text-left anishow"><?= $quotepad->text1 ?> </p>

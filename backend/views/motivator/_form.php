@@ -45,31 +45,35 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'keywords')->textarea(['rows' => 1]) ?>
 
 <div class="row">
-    <div class="col-xs-4">
+    <div class="col-xs-3">
         <?= $form->field($model, 'cat_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Category::find()->all(), 'id','name')) ?>
 
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-3">
+        <?= $form->field($model, 'sendtopage')->textInput(['maxlength' => true]) ?>
+    </div>
+    <div class="col-xs-3">
         <?= $form->field($model, 'promolink')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-3">
         <?= $form->field($model, 'promoname')->textInput(['maxlength' => true]) ?>
     </div>
+
+
     <div class="col-xs-3">
         <?= $form->field($model, 'imagelink')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-xs-2">
+    <div class="col-xs-3">
         <?= $form->field($model, 'imagelink_alt')->textInput(['maxlength' => true]) ?>
     </div>
     <div class="col-xs-3">
         <?= $form->field($model, 'imagelink2')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-xs-2">
+    <div class="col-xs-3">
         <?= $form->field($model, 'imagelink2_alt')->textInput(['maxlength' => true]) ?>
     </div>
-    <div class="col-xs-2">
-        <?= $form->field($model, 'sendtopage')->textInput(['maxlength' => true]) ?>
-    </div>
+
+
     <div class="col-xs-4">
         <?= $form->field($model, 'section_name')->textInput(['maxlength' => true]) ?>
     </div>

@@ -428,7 +428,7 @@ body {
   color: #fff;
 }
 .blue #avatar_info{
-  color: #333;
+  color: #ffffff;
 }
 .q_author {
     font-size: 16px;
@@ -438,6 +438,12 @@ body {
     width: 100%;
     height: auto;
     position: absolute;
+    /*left: 0px;*/
+}
+.quotepic_relative {
+    width: 100%;
+    height: auto;
+    position: relative;
     /*left: 0px;*/
 }
 
@@ -682,7 +688,8 @@ outline: none;
   left:0;
 }
 .quotescreen .right {
-  left:110%;
+  left:100%;
+  /*left:110%;*/
 }
 .absolute {
   position: absolute;
@@ -703,6 +710,7 @@ outline: none;
 }
 .quoteSvgPic{
     position: absolute;
+    top:0;
     left:0;
     width: 100%;
 }

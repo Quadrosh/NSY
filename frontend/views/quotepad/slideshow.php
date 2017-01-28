@@ -25,7 +25,7 @@ use yii\helpers\Html;
                 </div>
 
 
-            <div class="col-xs-4 col-sm-6">
+            <div class="col-xs-6 col-sm-6">
 <?php $iter = 1; foreach ($quotepadImages as $quotepadImage) : ?>
 <?= Html::img('/img/'.$quotepadImage->name,['class'=>'quotepic '.$quotepadImage->style_key, 'id'=>'q_img'.$iter, 'alt'=>$quotepadImage->alt]) ?>
 
