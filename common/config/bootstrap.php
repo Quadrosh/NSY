@@ -5,4 +5,4 @@ Yii::setAlias('@backend', dirname(dirname(__DIR__)) . '/backend');
 Yii::setAlias('@console', dirname(dirname(__DIR__)) . '/console');
 
 Yii::setAlias('@imgfront', dirname(dirname(__DIR__)) . '/frontend/web/img');
-Yii::setAlias('@imgfronturl', '//nsy.dev/img');
+Yii::setAlias('@imgfronturl', '//nashe-schastye.ru/img');
