@@ -1476,34 +1476,31 @@ outline: none;
   float: right;
 }
 
-/*.btn {*/
-  /*border: 1px solid #FFC107;*/
-  /*padding: 2px 8px;*/
-  /*border-radius: 5px;*/
-  /*width: 40px;*/
-  /*color: #fff;*/
-  /*background-color: #FFC107;*/
-/*}*/
-/*.btn:hover {*/
-  /*background-color: #fff;*/
-  /*color: #FFC107;*/
-/*}*/
 
-.btn-success {
+
+#motivators .m_table .btn-success,
+#motivators .m_table .btn-success:focus,
+#motivators .m_table .btn-success:active,
+#motivators .m_table .btn-success:hover:active   {
     border: 1px solid #FFC107;
     padding: 2px 8px;
     border-radius: 5px;
-    width: 40px;
+    /*width: auto;*/
     color: #fff;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.6);
     background-color: #FFC107;
     -webkit-animation: success_hover_off 0.5s ;
     animation: success_hover_off 0.5s ;
 }
-#motivators .m_table .btn-success:hover,
-#motivators .m_table .btn-success:focus,
-#motivators .m_table .btn-success.focus,
-#motivators .m_table .btn-success:active,
-#motivators .m_table .btn-success.active {
+#motivators .m_table .w40 {
+    width: 40px;
+}
+#motivators .m_table .btn-success:hover
+/*#motivators .m_table .btn-success:focus,*/
+/*#motivators .m_table .btn-success.focus,*/
+/*#motivators .m_table .btn-success:active,*/
+/*#motivators .m_table .btn-success.active */
+{
 
     color: #ffffff;
     border: 1px solid #FFC107;
@@ -1518,10 +1515,12 @@ outline: none;
 
 
 a:hover,
-a:visited {
+a:visited,
+#motivators .m_table a:focus,
+#motivators .m_table a:visited {
   text-decoration: none;
 }
-/*hover @keyframes*/
+
 
 @keyframes success_hover_on {
     from { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);   }

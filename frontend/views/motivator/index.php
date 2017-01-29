@@ -20,10 +20,10 @@ use yii\helpers\Url;
                                 <div class="m_table_button">
                                 <?php if (isset($catMotivator['i'])) : ?>
 
-                                    <a href="<?= 'motivator/'. $catMotivator['i'] ;  ?>" class="btn-success fl">Я</a>
+                                    <a href="<?= 'motivator/'. $catMotivator['i'] ;  ?>" class="btn-success w40 fl">Я</a>
                                 <?php endif; ?>
                                 <?php if (isset($catMotivator['you'])) : ?>
-                                    <a href="<?= 'motivator/'.  $catMotivator['you'];  ?>" class="btn-success fr">ТЫ</a>
+                                    <a href="<?= 'motivator/'.  $catMotivator['you'];  ?>" class="btn-success w40 fr">ТЫ</a>
                                 <?php endif; ?>
                                 </div>
                             </div>
