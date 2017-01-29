@@ -1,7 +1,6 @@
 <?php
 /* @var $this yii\web\View */
 ?>
-<h1>quotepad/index</h1>
 
 <section id="motivators" class="manifestor white">
     <h2 id="pagename"  ><?= Yii::$app->view->params['meta']['pagehead'] ?></h2>
@@ -21,7 +20,8 @@
 
                     <div class="m_table_button">
                             <?= \yii\helpers\Html::a('смотреть', ['quotepad/view', 'id'=>$quotepad['id']],
-                                ['class' => "btn fr gotoquotepad",]) ?>
+//                                ['class' => "btn fr gotoquotepad",])
+                                ['class' => "btn-success fr gotoquotepad",]) ?>
 
                     </div>
                 </div>

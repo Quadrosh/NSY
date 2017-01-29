@@ -325,3 +325,6 @@
 .nodis {
     display: none;
 }
+.panel {
+    margin-bottom: 0;
+}

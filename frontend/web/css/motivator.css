@@ -1572,8 +1572,11 @@ transform: rotate(270deg);
 .sharing h4 {
     margin-top: 18px;
 }
-.gotoquotepad{
-    color:#FFC107;
+.gotoquotepad,
+.gotoquotepad:active {
+    color:#fff;
+    box-shadow: none;
+    width:auto;
 }
 .gotoquotepad:hover{
     color:#0F63A4;

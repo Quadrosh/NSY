@@ -1,0 +1,79 @@
+RewriteEngine on
+# If a directory or a file exists, use the request directly
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+
+        RedirectPermanent /x-list  /liveout
+        RedirectPermanent /whatis-live-out  /liveout/why-it-works
+        RedirectPermanent /recruitment_i  /motivator/recruitment-i
+        RedirectPermanent /recruitment  /motivator/recruitment
+        RedirectPermanent /motivators.html  /motivator
+        RedirectPermanent /motivator_evolution_1i.html  /motivator/evolution-i
+        RedirectPermanent /motivator_evolution_1.html  /motivator/evolution
+        RedirectPermanent /motivator_happylife_1i.html  /motivator/happy-life-i
+        RedirectPermanent /motivator_happylife_1.html  /motivator/happy-life
+        RedirectPermanent /motivator_changes_1i.html  /motivator/thirst-of-changes-i
+        RedirectPermanent /motivator_changes_1.html  /motivator/thirst-of-changes
+        RedirectPermanent /motivator_challenges_1i.html  /motivator/challenges-i
+        RedirectPermanent /motivator_challenges_1.html  /motivator/challenges
+        RedirectPermanent /motivator_survivethefailure_1i.html  /motivator/survive-the-failure-i
+        RedirectPermanent /motivator_survivethefailure_1.html  /motivator/survive-the-failure
+        RedirectPermanent /motivator_selfrespect_1i.html  /motivator/self-respect-i
+        RedirectPermanent /motivator_selfrespect_1.html  /motivator/self-respect
+        RedirectPermanent /motivator_communication_1i.html  /motivator/communication-i
+        RedirectPermanent /motivator_communication_1.html  /motivator/communication
+        RedirectPermanent /geleznaya_doroga_i.html  /motivator/geleznaya-doroga-i
+        RedirectPermanent /geleznaya_doroga.html  /motivator/geleznaya-doroga
+        RedirectPermanent /aviator_i.html  /motivator/aviator-i
+        RedirectPermanent /aviator.html  /motivator/aviator
+        RedirectPermanent /sport_i.html  /motivator/sport-i
+        RedirectPermanent /sport.html  /motivator/sport
+        RedirectPermanent /stroitel_i.html  /motivator/stroitel-i
+        RedirectPermanent /stroitel.html  /motivator/stroitel
+        RedirectPermanent /motivator_travel_i  /motivator/traveller-i
+        RedirectPermanent /motivator_travel  /motivator/traveller
+        RedirectPermanent /motivator_translator_i  /motivator/translator-i
+        RedirectPermanent /motivator_translator  /motivator/translator
+        RedirectPermanent /motivator_teacher_i  /motivator/teacher-i
+        RedirectPermanent /motivator_teacher  /motivator/teacher
+        RedirectPermanent /motivator_hr_i  /motivator/hr-i
+        RedirectPermanent /motivator_hr  /motivator/hr
+        RedirectPermanent /motivator_acceptthelife_i  /motivator/accept-the-life-i
+        RedirectPermanent /motivator_acceptthelife  /motivator/accept-the-life
+        RedirectPermanent /motivator_cook_i  /motivator/cook-i
+        RedirectPermanent /motivator_cook  /motivator/cook
+        RedirectPermanent /motivator_mechanic_i  /motivator/mechanic-i
+        RedirectPermanent /motivator_mechanic  /motivator/mechanic
+        RedirectPermanent /motivator_sailor_i  /motivator/sailor-i
+        RedirectPermanent /motivator_sailor  /motivator/sailor
+        RedirectPermanent /motivator_accountant_i  /motivator/accountant-i
+        RedirectPermanent /motivator_accountant  /motivator/accountant
+        RedirectPermanent /motivator_selfknowledge_i  /motivator/selfknowledge-i
+        RedirectPermanent /motivator_selfknowledge  /motivator/selfknowledge
+        RedirectPermanent /moscow.html  /motivator/moscow
+        RedirectPermanent /voroneg.html  /motivator/voroneg
+        RedirectPermanent /tula.html  /motivator/tula
+        RedirectPermanent /happy_quotepad_1.html  /quotepad/view?id=7
+        RedirectPermanent /happy_quotepad_2.html  /quotepad/view?id=8
+        RedirectPermanent /happy_quotepad_3.html  /quotepad/view?id=9
+
+
+
+        # Otherwise forward the request to frontend/web/index.php
+        RewriteRule ^(.*)$ index.php
+
+
+        #RewriteRule ^x-([^-]+)-([^-]+)-([^-]+)-([^-]+)$  exercise.php?ex=$1&kind=$2&warn=$3&tx=$4 [L]
+        #RewriteRule ^xstep-([^-]+)-([^-]+)-([^-]+)-([^-]+)$  exercise.php?ex=$1&kind=$2&step=$3&tx=$4 [L]
+        #RewriteRule ^xthnx-([^-]+)-([^-]+)-([^-]+)$  exercise.php?ex=$1&kind=$2&tx=$3 [L]
+        #RewriteRule ^lo-([^-]+)-([^-]+)-([^-]+)-([^-]+)$  live_out.php?cont=$1&act=$2&id=$3&step=$4 [L]
+
+
+
+
+
+
+
+
+
+

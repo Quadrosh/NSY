@@ -28,13 +28,6 @@ window.onload = function() {
 
 
 
-    //var tl1 = new TimelineMax();
-    //var elements1 = $(".quotepic");
-    //$.each(elements1, function() {
-    //    tl1.fromTo("#textbox1", 4, {x: "40%"}, {x: "0%", ease:Power1.easeInOut})
-    //        .from($(this), 3, {autoAlpha:0, left:300, ease:Back.easeOut})
-    //        .to("#textbox1", 6,  {x: "40%", ease:Power1.easeInOut});
-    //});
 
     if (document.getElementById('slideshow')) {
         var items = document.querySelectorAll('.quotepic'), length = items.length;
@@ -70,18 +63,15 @@ window.onload = function() {
             .to("#carrot_x5F_green", 1, {rotation:"-=20", x: "-=20", ease:Linear.easeNone}, "carrotstep3")
             .to("#carrot", 1, {rotation:"0", x: "-=50%", ease:Linear.easeNone}, "carrotstep4")
             .to("#rope", 1, {rotation:"+=29",  ease:Linear.easeNone}, "carrotstep4")
-            .to("#carrot_x5F_green", 1, {rotation:"0", x: "-=20", ease:Linear.easeNone}, "carrotstep4");
+            .to("#carrot_x5F_green", 1, {rotation:"0", x: "-=20", ease:Linear.easeNone}, "carrotstep4")
+            ;
 
 
         var durationRun = 0.2;
-        var q2RunMainTl = new TimelineMax();
-        var q2RunTl = new TimelineMax({ repeat: -1});
-
-        q2RunMainTl.fromTo("#textbox", durationRun * 10, {x: "-=54%"}, {x: "0%", ease:Power1.easeOut})
-            .fromTo("#donkey", durationRun * 12, {x:"-=0%" ,autoAlpha:0}, {x: "-=54%",autoAlpha:1, ease: Linear.easeNone})
 
 
-        q2RunTl.set("#leg1", {css:{rotation:0, y: 0, x: 0, transformOrigin:"80% 7%"}})
+        var q2RunTl = new TimelineMax({paused: true, repeat: -1})
+            .set("#leg1", {css:{rotation:0, y: 0, x: 0, transformOrigin:"80% 7%"}})
             .set("#leg2", {css:{rotation:0, y: 0, x: 0, transformOrigin:"17% 11%"}})
             .set("#leg2-down_x5F_knee", {css:{rotation:0, y: 0, x: 0, transformOrigin:"10% 25%"}})
             .set("#leg2-down_x5F_boot", {css:{rotation:0, y: 0, x: 0, transformOrigin:"-290% -20%"}})
@@ -235,6 +225,12 @@ window.onload = function() {
             .to("#leg1-down_x5F_knee", durationRun, {css:{rotation:0, y: 0, x: 0}, ease:Linear.easeNone}, "step8")
             .to("#leg1-down_x5F_boot", durationRun, {css:{rotation:0, y: 0, x: 0}, ease:Linear.easeNone}, "step8")
         ;
+        var q2RunMainTl = new TimelineMax()
+            .set("#textbox",  {x: "-=54%"})
+            .to("#textbox", durationRun * 20,  {x: "+=54%", ease:Power1.easeInOut},"6")
+            .add(q2RunTl.play(),"startrun")
+            .fromTo("#donkey", durationRun * 12, {x:"-=0%" ,autoAlpha:0}, {x: "-=54%",autoAlpha:1, ease: Power1.easeInOut},"startrun")
+        ;
     }
 
 
@@ -246,7 +242,6 @@ window.onload = function() {
         var q3ReachCarTl = new TimelineMax({paused: true})
 
             .set("#richcar", {y: 0, x: 0, transformOrigin:"50% 50%"})
-
             .set("#richsmoke2", {css:{rotation:0, y: 0, x: 0, transformOrigin:"50% 50%"}})
             .set("#richsmoke1", {css:{rotation:0, y: 0, x: 0, transformOrigin:"50% 50%"}})
             .set("#richwheelback", {css:{rotation:0, y: 0, x: 0, transformOrigin:"50% 50%"}})
