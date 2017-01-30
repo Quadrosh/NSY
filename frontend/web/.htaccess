@@ -57,6 +57,8 @@ RewriteEngine on
         RedirectPermanent /happy_quotepad_2.html  /quotepad/view?id=8
         RedirectPermanent /happy_quotepad_3.html  /quotepad/view?id=9
 
+        RedirectPermanent /happiness.html  /happiness/all
+
 
 
         # Otherwise forward the request to frontend/web/index.php
