@@ -1,27 +1,15 @@
 
 
 <header class="main_head head_hapiness">
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-xs-12">
 
-                    <a class="navbar-brand" href="happiness.html"><?= \yii\helpers\Html::img('/img/'.'NS-logo3.png',['alt'=>'Наше счастье']) ?></a>
-                </div>
-                <div class="col-md-6 col-xs-12">
-                </div>
-            </div>
-
-        </div>
-    </nav>
 
 
 
 
     <div class="row">
-        <div class="col-md-2"></div>
-        <!-- main content col-md-pull-2 -->
-        <div class="col-md-8 banner contents">
+
+
+        <div class="col-md-8 col-md-offset-2 banner contents mt50">
             <h2>Счастье</h2>
             <a class="toplink" href="#wherefrom">Происхождение слова</a>
             <a class="toplink" href="#happymeaning">Значение слова</a>
