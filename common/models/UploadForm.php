@@ -45,7 +45,8 @@ class UploadForm extends Model
     {
         if ($this->validate()) {
 //            if ($this->imageFile->saveAs(dirname(dirname(__DIR__)).'/backend/web/img_tmp/' .  $filename)) {
-            if ($this->imageFile->saveAs($filename)) {
+//            debug(Yii::$app->basePath); die;
+            if ($this->imageFile->saveAs(Yii::$app->basePath . '/web/img/' . $filename)) {
                 return true;
             } else {
                 return false;
