@@ -31,20 +31,24 @@ class UploadForm extends Model
         $imagefile->addNew($this->imageFile->baseName .'.' . $this->imageFile->extension);
 
         if ($this->validate() && $imagefile->addNew($this->imageFile->baseName .'.' . $this->imageFile->extension)) {
-            $this->imageFile->saveAs('img/' . $add1 . $this->imageFile->baseName . $add2 .'.' . $this->imageFile->extension);
-            return true;
-        } else {
-            return false;
+            if ($this->imageFile->saveAs('img/' . $add1 . $this->imageFile->baseName . $add2 .'.' . $this->imageFile->extension)) {
+//                Yii::$app->session->setFlash('success', $this->imageFile->baseName .'.' . $this->imageFile->extension . 'загружен');
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
     public function change($filename)
     {
         if ($this->validate()) {
-            $this->imageFile->saveAs('img/' .  $filename);
-            return true;
-        } else {
-        return false;
+            if ($this->imageFile->saveAs('img/' .  $filename)) {
+//                Yii::$app->session->setFlash('success', $filename .'обновлен');
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 

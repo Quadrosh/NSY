@@ -83,6 +83,8 @@ class ImagefileController extends BackController
             if ($uploadmodel->change($model->name)) {
 
                 Yii::$app->session->setFlash('success', 'Файл обновлен успешно');
+            } else {
+                Yii::$app->session->setFlash('error', 'Что то пошло не так');
             }
             return $this->redirect(Url::previous());
         }
