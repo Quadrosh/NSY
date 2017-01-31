@@ -31,8 +31,8 @@ class UploadForm extends Model
         $imagefile->addNew($this->imageFile->baseName .'.' . $this->imageFile->extension);
 
         if ($this->validate() && $imagefile->addNew($this->imageFile->baseName .'.' . $this->imageFile->extension)) {
-            if ($this->imageFile->saveAs('img/' . $add1 . $this->imageFile->baseName . $add2 .'.' . $this->imageFile->extension)) {
-//                Yii::$app->session->setFlash('success', $this->imageFile->baseName .'.' . $this->imageFile->extension . 'загружен');
+//            if ($this->imageFile->saveAs('img/' . $add1 . $this->imageFile->baseName . $add2 .'.' . $this->imageFile->extension)) {
+            if ($this->imageFile->saveAs(dirname(dirname(__DIR__)).'/backend/web/img/' . $add1 . $this->imageFile->baseName . $add2 .'.' . $this->imageFile->extension)) {
                 return true;
             } else {
                 return false;
@@ -43,8 +43,7 @@ class UploadForm extends Model
     public function change($filename)
     {
         if ($this->validate()) {
-            if ($this->imageFile->saveAs('img/' .  $filename)) {
-//                Yii::$app->session->setFlash('success', $filename .'обновлен');
+            if ($this->imageFile->saveAs(dirname(dirname(__DIR__)).'/backend/web/img/' .  $filename)) {
                 return true;
             } else {
                 return false;
