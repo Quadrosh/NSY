@@ -31,9 +31,7 @@ class UploadForm extends Model
         $imagefile->addNew($this->imageFile->baseName .'.' . $this->imageFile->extension);
 
         if ($this->validate() && $imagefile->addNew($this->imageFile->baseName .'.' . $this->imageFile->extension)) {
-//            if ($this->imageFile->saveAs('img/' . $add1 . $this->imageFile->baseName . $add2 .'.' . $this->imageFile->extension)) {
-
-            if ($this->imageFile->saveAs(dirname(dirname(__DIR__)).'/backend/web/img/' . $add1 . $this->imageFile->baseName . $add2 .'.' . $this->imageFile->extension)) {
+            if ($this->imageFile->saveAs('img/' . $add1 . $this->imageFile->baseName . $add2 .'.' . $this->imageFile->extension)) {
                 return true;
             } else {
                 return false;
@@ -44,8 +42,6 @@ class UploadForm extends Model
     public function change($filename)
     {
         if ($this->validate()) {
-//            if ($this->imageFile->saveAs(dirname(dirname(__DIR__)).'/backend/web/img_tmp/' .  $filename)) {
-//            debug(Yii::$app->basePath); die;
             if ($this->imageFile->saveAs(Yii::$app->basePath . '/web/img/' . $filename)) {
                 return true;
             } else {
