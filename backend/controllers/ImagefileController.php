@@ -9,6 +9,8 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\UploadForm;
+use yii\web\UploadedFile;
 
 /**
  * ImagefileController implements the CRUD actions for Imagefiles model.
@@ -62,9 +64,28 @@ class ImagefileController extends BackController
     public function actionView($id)
     {
         Url::remember();
+        $uploadmodel = new UploadForm();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'uploadmodel' => $uploadmodel,
         ]);
+    }
+    /**
+     * Change existing image file for QuotepadImg model with same file name
+     */
+    public function actionChange()
+    {
+        $uploadmodel = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            $uploadmodel->imageFile = UploadedFile::getInstance($uploadmodel, 'imageFile');
+            $data=Yii::$app->request->post('UploadForm');
+            $model = Imagefiles::find()->where(['id'=>$data['toModelId']])->one();
+            if ($uploadmodel->change($model->name)) {
+
+                Yii::$app->session->setFlash('success', 'Файл обновлен успешно');
+            }
+            return $this->redirect(Url::previous());
+        }
     }
 
     /**

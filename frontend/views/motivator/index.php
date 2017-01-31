@@ -44,10 +44,10 @@ use yii\helpers\Url;
                                 <div class="m_table_name"><?= $proMotivator['list_name'] ?></div>
                                 <div class="m_table_button">
                                     <?php if (isset($proMotivator['i'])) : ?>
-                                        <a href="<?= 'motivator/'. $proMotivator['i'] ?>" class="btn-success fl">Я</a>
+                                        <a href="<?= 'motivator/'. $proMotivator['i'] ?>" class="btn-success w40 fl">Я</a>
                                     <?php endif; ?>
                                     <?php if (isset($proMotivator['you'])) : ?>
-                                        <a href="<?= 'motivator/'. $proMotivator['you'] ?>" class="btn-success fr">ТЫ</a>
+                                        <a href="<?= 'motivator/'. $proMotivator['you'] ?>" class="btn-success w40 fr">ТЫ</a>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -68,10 +68,10 @@ use yii\helpers\Url;
                                 <div class="m_table_name"><?= $cityMotivator['list_name'] ?></div>
                                 <div class="m_table_button">
                                     <?php if (isset($cityMotivator['i'])) : ?>
-                                        <a href="<?= 'motivator/'. $cityMotivator['i'] ?>" class="btn-success fl">Я</a>
+                                        <a href="<?= 'motivator/'. $cityMotivator['i'] ?>" class="btn-success w40 fl">Я</a>
                                     <?php endif; ?>
                                     <?php if (isset($cityMotivator['you'])) : ?>
-                                        <a href="<?= 'motivator/'. $cityMotivator['you'] ?>" class="btn-success fr">ТЫ</a>
+                                        <a href="<?= 'motivator/'. $cityMotivator['you'] ?>" class="btn-success w40 fr">ТЫ</a>
                                     <?php endif; ?>
                                 </div>
                             </div>

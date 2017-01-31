@@ -63,7 +63,7 @@ class QuotepadimgController extends BackController
         ]);
     }
     /**
-     * Upload images for QuotepadImg model with autofill corresponding model property
+     * Change existing image file for QuotepadImg model with same file name
      */
     public function actionChange()
     {
@@ -72,14 +72,6 @@ class QuotepadimgController extends BackController
             $uploadmodel->imageFile = UploadedFile::getInstance($uploadmodel, 'imageFile');
             $data=Yii::$app->request->post('UploadForm');
             $model = QuotepadImg::find()->where(['id'=>$data['toModelId']])->one();
-
-
-
-
-//            $uploadmodel->imageFile->baseName = substr($model->name, 0, strpos($model->name, '.'));
-//var_dump($uploadmodel->imageFile->baseName); die;
-
-
             if ($uploadmodel->change($model->name)) {
 
                 Yii::$app->session->setFlash('success', 'Файл обновлен успешно');

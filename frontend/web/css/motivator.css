@@ -530,6 +530,9 @@ body {
     position: relative;
     overflow: hidden;
     text-align: center;
+
+    background-size: cover;
+    background-position: center;
 }
 .avatar {
     border-radius: 50%;
