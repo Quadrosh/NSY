@@ -43,7 +43,7 @@ class UploadForm extends Model
     public function change($filename)
     {
         if ($this->validate()) {
-            if ($this->imageFile->saveAs(dirname(dirname(__DIR__)).'/backend/web/img/' .  $filename)) {
+            if ($this->imageFile->saveAs(dirname(dirname(__DIR__)).'/backend/web/img_tmp/' .  $filename)) {
                 return true;
             } else {
                 return false;
