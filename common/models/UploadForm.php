@@ -32,6 +32,7 @@ class UploadForm extends Model
 
         if ($this->validate() && $imagefile->addNew($this->imageFile->baseName .'.' . $this->imageFile->extension)) {
 //            if ($this->imageFile->saveAs('img/' . $add1 . $this->imageFile->baseName . $add2 .'.' . $this->imageFile->extension)) {
+
             if ($this->imageFile->saveAs(dirname(dirname(__DIR__)).'/backend/web/img/' . $add1 . $this->imageFile->baseName . $add2 .'.' . $this->imageFile->extension)) {
                 return true;
             } else {
@@ -43,6 +44,7 @@ class UploadForm extends Model
     public function change($filename)
     {
         if ($this->validate()) {
+            debug($this->imageFile); die;
             if ($this->imageFile->saveAs(dirname(dirname(__DIR__)).'/backend/web/img_tmp/' .  $filename)) {
                 return true;
             } else {
