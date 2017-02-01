@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use common\models\UploadForm;
 use Yii;
-use common\Models\Masters;
+use common\models\Masters;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\web\Controller;
