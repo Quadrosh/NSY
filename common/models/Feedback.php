@@ -33,7 +33,7 @@ class Feedback extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'to_master_id', 'done'], 'integer'],
+            [[ 'to_master_id', 'done'], 'integer'],
             [['phone','city', 'email', 'text'], 'required'],
             [['text'], 'string'],
             [['date'], 'safe'],
