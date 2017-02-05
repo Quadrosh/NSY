@@ -38,6 +38,7 @@ class PageController extends BackController
      */
     public function actionIndex()
     {
+        Url::remember();
         $dataProvider = new ActiveDataProvider([
             'query' => Pages::find(),
         ]);

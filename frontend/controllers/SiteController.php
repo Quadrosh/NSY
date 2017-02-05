@@ -188,7 +188,7 @@ class SiteController extends FrontController
     }
 
     /**
-     * Signs user up.
+     * Регистрация нового пользователя
      *
      * @return mixed
      */
