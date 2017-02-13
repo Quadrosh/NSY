@@ -1769,7 +1769,7 @@ if (document.getElementById('motivator_tula')) {
 
             .to("#box4", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
             .to("#q4_1", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut})
-            .to("#q4_2", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+            .to("#q4_2", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=1")
 
             .to("#box5", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
             .to("#q5_1", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut})
@@ -1804,7 +1804,7 @@ if (document.getElementById('motivator_tula')) {
             .to("#box11", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
             .to("#q11_1", 3, {autoAlpha:1, y: 0, ease:Power1.easeOut})
             .to("#q11_2", 5, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
-        
+
 
 
         ;
