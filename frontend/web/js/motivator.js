@@ -1680,6 +1680,72 @@ if (document.getElementById('motivator_tula')) {
         ;
     };
 
+    if (document.getElementById('motivator_youAreMyWoman')) {
+
+        var show_text = new TimelineMax()
+        show_text.set(".anishow", {css:{autoAlpha:0, transformOrigin:"50% 50%"}})
+            .fromTo("#pagename", 3, {autoAlpha:1, scale:2.0}, {autoAlpha:1, scale:1, ease:Power1.easeOut})
+
+            .to("#box1", 0.5, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q1_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+
+
+            .to("#box2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+            .to("#q2_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q2_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+
+            .to("#box3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+            .to("#q3_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q3_2", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+            .to("#q3_3", 2, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+
+            .to("#box4", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
+            .to("#q4_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q4_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+
+            .to("#box5", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+            .to("#q5_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q5_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+
+
+            .to("#box6", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
+            .to("#q6_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q6_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+
+
+            .to("#box7", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
+            .to("#q7_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q7_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+
+
+            .to("#box8", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+            .to("#q8_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q8_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+            .to("#q8_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+
+            .to("#box9", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
+            .to("#q9_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q9_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+            .to("#q9_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+
+            .to("#box10", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
+            .to("#q10_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q10_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+
+            .to("#box11", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
+            .to("#q11_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q11_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+            .to("#q11_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+
+            .to("#box12", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
+            .to("#q12_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
+            .to("#q12_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=4")
+
+
+        ;
+    };
+
+
 
 
 
