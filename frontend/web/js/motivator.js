@@ -1701,16 +1701,16 @@ if (document.getElementById('motivator_tula')) {
 
             .to("#box4", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
             .to("#q4_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
-            .to("#q4_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+            .to("#q4_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
 
-            .to("#box5", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+            .to("#box5", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
             .to("#q5_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
             .to("#q5_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
 
 
             .to("#box6", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
             .to("#q6_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
-            .to("#q6_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+            .to("#q6_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
 
 
             .to("#box7", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
@@ -1718,9 +1718,9 @@ if (document.getElementById('motivator_tula')) {
             .to("#q7_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
 
 
-            .to("#box8", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+            .to("#box8", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
             .to("#q8_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
-            .to("#q8_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+            .to("#q8_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=4")
             .to("#q8_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
 
             .to("#box9", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
@@ -1734,8 +1734,8 @@ if (document.getElementById('motivator_tula')) {
 
             .to("#box11", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
             .to("#q11_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
-            .to("#q11_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
-            .to("#q11_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=2")
+            .to("#q11_2", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
+            .to("#q11_3", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=3")
 
             .to("#box12", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut}, "+=5")
             .to("#q12_1", 1, {autoAlpha:1, y: 0, ease:Power1.easeOut})
