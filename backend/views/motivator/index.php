@@ -27,6 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'list_section',
                 'value'=> function($data)
                 {
+                    if ($data->list_section == 0) {
+                        return 'Draft';
+                    }
                     if ($data->list_section == 1) {
                         return 'Cat';
                     }

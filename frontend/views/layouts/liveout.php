@@ -14,7 +14,6 @@ use common\widgets\Alert;
 
 
 LiveOutAsset::register($this);
-
 IeAsset::register($this);
 ?>
 <?php $this->beginPage() ?>

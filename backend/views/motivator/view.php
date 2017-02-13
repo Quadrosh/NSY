@@ -30,6 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
     //адаптация в человечий язык секции меню для view
     function getSection ($data)
     {
+        if ($data == 0) {
+            return 'Unpublished';
+        }
         if ($data == 1) {
             return 'By Category';
         }
