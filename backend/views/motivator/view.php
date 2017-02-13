@@ -184,7 +184,7 @@ foreach ($sm as $item=>$value) {
 
     </section>
 
-    <?php $quotes = $model->mLines; //вызываем объекты связи виртуальным свойством - геттером ?>
+    <?php //$quotes = $model->mLines; //вызываем объекты связи виртуальным свойством - геттером ?>
 
     <table class="table table-striped table-bordered">
         <thead>
