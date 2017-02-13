@@ -21,8 +21,9 @@ use yii\widgets\ActiveForm;
         <div class="col-xs-4 col-sm-1">
             <?= $form->field($model, 'quote_num')->textInput() ?>
         </div>
-        <div class="col-sm-4 col-xs-12"> <?= $form->field($model, 'mbox_style')->textarea(['rows' => 1]) ?></div>
         <div class="col-sm-4 col-xs-12"><?= $form->field($model, 'line_style')->textarea(['rows' => 1]) ?></div>
+        <div class="col-sm-4 col-xs-12"> <?= $form->field($model, 'mbox_style')->textarea(['rows' => 1]) ?></div>
+        
 
     </div>
 
