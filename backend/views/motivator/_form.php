@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'id')->textInput( ) ?>
     </div>
     <div class="col-xs-2">
-        <?= $form->field($model, 'list_section')->dropDownList(['0'=>'UNPUBLISHED', '1'=>'CATEGORY','2'=>'PROFESSIONAL','3'=>'CITY']) ?>
+        <?= $form->field($model, 'list_section')->dropDownList(['0'=>'UNPUBLISHED', '1'=>'CATEGORY','2'=>'PROFESSIONAL','3'=>'CITY','4'=>'4YOU']) ?>
     </div>
     <div class="col-xs-2">
         <?= $form->field($model, 'list_num')->textInput(['maxlength' => true]) ?>

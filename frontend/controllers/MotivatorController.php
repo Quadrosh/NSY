@@ -37,6 +37,10 @@ class MotivatorController extends FrontController
         $cityMotivators = $this->getList($cityMotivatorsData);
         $this->view->params['cityMotivators'] = $cityMotivators;
 
+        $youMotivatorsData = Motivator::find()->where(['list_section'=>'4'])->all();
+        $youMotivators = $this->getList($youMotivatorsData);
+        $this->view->params['youMotivators'] = $youMotivators;
+
         return $this->render('index', ['sunitem'=> $sunitem]);
 
     }

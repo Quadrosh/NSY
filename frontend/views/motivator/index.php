@@ -77,6 +77,28 @@ use yii\helpers\Url;
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
+                    <?php if (isset(Yii::$app->view->params['youMotivators'])) : ?>
+                        <div class="m_table_row">
+                            <div class="m_table_name m_table_head">Для тебя</div>
+                            <div class="m_table_button m_table_head"></div>
+
+                        </div>
+
+                    
+                        <?php foreach (Yii::$app->view->params['youMotivators'] as $youMotivator) : ?>
+                            <div class="m_table_row">
+                                <div class="m_table_name"><?= $youMotivator['list_name'] ?></div>
+                                <div class="m_table_button">
+                                    <?php if (isset($youMotivator['i'])) : ?>
+                                        <a href="<?= 'motivator/'. $youMotivator['i'] ?>" class="btn-success w40 fl">Я</a>
+                                    <?php endif; ?>
+                                    <?php if (isset($youMotivator['you'])) : ?>
+                                        <a href="<?= 'motivator/'. $youMotivator['you'] ?>" class="btn-success w40 fr">ТЫ</a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
 
                 </div>
             </div>
