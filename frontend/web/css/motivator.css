@@ -2063,8 +2063,20 @@ transform: rotate(270deg);
   .xbt {
   border-top: 1px solid #000;
   }
+  .grey .xbt {
+      border-top: 1px solid #fff;
+  }
+  .white .xbt {
+        border-top: 1px solid #FFC107;
+  }
   .xbb {
   border-bottom: 1px solid #000;
+  }
+  .grey .xbb {
+        border-bottom: 1px solid #fff;
+  }
+  .white .xbb {
+        border-bottom: 1px solid #FFC107;
   }
   .xlh {
     line-height: 1em;

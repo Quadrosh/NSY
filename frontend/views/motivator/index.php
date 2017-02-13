@@ -84,7 +84,7 @@ use yii\helpers\Url;
 
                         </div>
 
-                    
+
                         <?php foreach (Yii::$app->view->params['youMotivators'] as $youMotivator) : ?>
                             <div class="m_table_row">
                                 <div class="m_table_name"><?= $youMotivator['list_name'] ?></div>
