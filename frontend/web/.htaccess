@@ -3,6 +3,7 @@ RewriteEngine on
         RewriteCond %{REQUEST_FILENAME} !-f
         RewriteCond %{REQUEST_FILENAME} !-d
 
+        RedirectPermanent /links.html  /library/links
         RedirectPermanent /x-list  /liveout
         RedirectPermanent /whatis-live-out  /liveout/why-it-works
         RedirectPermanent /recruitment_i  /motivator/recruitment-i
