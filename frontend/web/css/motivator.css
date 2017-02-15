@@ -345,7 +345,7 @@ body {
 /*  overflow-y: scroll;*/
   overflow-y: hidden;
   overflow-x: hidden;
-  width: 100%
+  width: 100%;
   height: 100%;
   margin: auto;
 }
@@ -360,8 +360,10 @@ body {
 
 
   .hamburglar {
-  transform: scale (1);
-  margin: 20px auto;
+  /*transform: scale (1);*/
+  /*margin: 20px auto;*/
+      margin-top: 20px;
+      margin-bottom: 20px;
   position: fixed;
   right: 20px;
   float: right;
@@ -370,7 +372,7 @@ body {
   height: 68px;
   background: transparent;
   -webkit-touch-callout: none;
-  user-select: none;
+  /*user-select: none;*/
   cursor: pointer;
   top: 0;
   z-index: 1001;
@@ -418,11 +420,11 @@ body {
 
 
 
-.path {
-  stroke-dasharray: 240;
-  stroke-dashoffset: 240;
-  stroke-linejoin: round;
-}
+/*.path {*/
+  /*stroke-dasharray: 240;*/
+  /*stroke-dashoffset: 240;*/
+  /*stroke-linejoin: round;*/
+/*}*/
 
 /*// All good burgers need filling!*/
 
