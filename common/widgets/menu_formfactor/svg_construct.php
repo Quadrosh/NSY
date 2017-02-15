@@ -19,7 +19,7 @@
 <?php if (count($tree['childs'])<3) $beamiter=5; ?>
 
 <?php  foreach ($tree['childs'] as $item) : ?>
-<a  class="menu_beam_<?= $item['num_order'] ?>" title="mam" xlink:href="/<?=  $item ['link'] ?>">
+<a  class="menu_beam_<?= $item['num_order'] ?>"  xlink:href="/<?=  $item ['link'] ?>">
 <defs>
     <path id="beam_<?= $item['num_order'] ?>_defs"/>
 </defs>

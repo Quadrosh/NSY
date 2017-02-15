@@ -1,12 +1,12 @@
-$(window).load(function() {
-    $("#start_loader").delay(400).fadeOut("slow");
-});
+//$(window).load(function() {
+//    $("#start_loader").delay(400).fadeOut("slow");
+//});
 $(document).ready(function() {
 
 
 
-    var tl = new TimelineMax();
-        tl.set(".sunbeam",{css:{autoAlpha:0}})
+    var startTl = new TimelineMax();
+    startTl.set(".sunbeam",{css:{autoAlpha:0}})
         .fromTo("#center_3_text",0.4,{attr:{startOffset:'-50%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut})
         .fromTo("#center_2_text",0.4,{attr:{startOffset:'-50%'}},{attr:{startOffset:'0.6472%'},ease:Power1.easeOut})
         .fromTo("#center_1_text",0.4,{attr:{startOffset:'-50%'}},{attr:{startOffset:'1.123%'},ease:Power1.easeOut})
