@@ -96,14 +96,15 @@
     display: none;
 }
 
-.menufilter {
+.menufilter , #menubackfilter {
     width: 100%;
     height: 100%;
     background-color: rgba(96,125,139,.8);
     position: fixed;
     top: 0px;
 }
-.backfilterOff {
+.backfilterOff,
+#menubackfilter .backfilterOff{
     height: 0px;
     animation: backfilter_off 0.8s linear normal;
     animation-fill-mode:forwards;
@@ -125,7 +126,8 @@
     }
 
 }
-.backfilterOn {
+.backfilterOn,
+#menubackfilter .backfilterOn{
     display: block;
     animation: backfilter_on 0.4s linear normal;
     animation-fill-mode:forwards;

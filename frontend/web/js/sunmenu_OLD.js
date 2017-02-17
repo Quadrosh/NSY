@@ -199,7 +199,7 @@ $(document).ready(function() {
         }, 900);
         SVGAnimatedString.prototype.toString = function () { return this.baseVal; }
     });
-
+	
 
 
     // hover beams
@@ -443,7 +443,7 @@ $(document).ready(function() {
 
 
 
-    // ////////////center click
+    // center click
 
     $('.menu_center_2').on('click', function(e) {
         e.preventDefault();
