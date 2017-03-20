@@ -1,16 +1,65 @@
 window.addEventListener('load', function(){
     var menuIcon = document.getElementById("logosunIcon");
 
-
     $("#start_loader").delay(400).fadeOut("slow");
 
 
-    //var backgroundFilter = $('#menubackfilter');
-    //var nsLogoSunIcon = $('#logosunIcon'), isClosed = true;
-
     var backgroundFilter = document.getElementById('menubackfilter');
-    //var nsLogoSunIcon = document.getElementById('logosunIcon');
-    menuIcon.menuClosed = true;
+
+    if (!menuIcon) {
+        sunMenuOnEmptyPage();
+
+    } else {
+        menuIcon.menuClosed = true;
+    }
+
+    function sunMenuOnEmptyPage(){
+
+            var sun2openTl = new TimelineMax();
+
+            sun2openTl.set(".sunmenu",{css:{autoAlpha:1}})
+                .set(".sunbeam",{css:{autoAlpha:0}})
+                .fromTo("#center_3_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut},'load')
+                .fromTo("#center_2_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0.6472%'},ease:Power1.easeOut})
+                .fromTo("#center_1_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'1.123%'},ease:Power1.easeOut})
+
+                .fromTo("#beam_1_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_2_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_3_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_4_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_5_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_6_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_7_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_8_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_9_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_10_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_11_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_12_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo("#beam_13_text",0.4,{attr:{startOffset:'0%'}},{attr:{startOffset:'44.177%'},ease:Power1.easeOut},'start')
+                .fromTo(".sunbeam",0.4,{css:{autoAlpha:0}},{css:{autoAlpha:1},ease:Power4.easeIn},'start')
+                .to("#burgerTop", 0.4, {directionalRotation:"-45_ccw", y:12, smoothOrigin:"50% 50%",  ease:Linear.easeNone},'load')
+                .to("#burgerFilling", 0.4, {css:{scaleX:0 , autoAlpha:0, transformOrigin:"50% 50%"},  ease:Linear.easeNone},'load')
+                .to("#burgerBot", 0.4, {directionalRotation:"45_cw", y:"-=12", smoothOrigin:"50% 50%", ease:Linear.easeNone},'load')
+                .to("#menuname", 0.4, {autoAlpha:0},'load')
+            ;
+
+
+            //backgroundFilter.addEventListener('click', function(){
+            //
+            //    //menuIcon.className = 'is-closed';
+            //    //backgroundFilter.className = 'backfilterOff';
+            //
+            //
+            //    //var tl = new TimelineMax();
+            //    //tl.fromTo(".sunmenu",0.8,{css:{autoAlpha:1}},{css:{autoAlpha:0}}, "off")
+            //    //    .to("#burgerTop", 0.8, {directionalRotation:"0_short", y:0, smoothOrigin:"50% 50%",  ease:Linear.easeNone}, "off")
+            //    //    .to("#burgerFilling", 0.8, {css:{scaleX:1 , autoAlpha:1, transformOrigin:"50% 50%"},  ease:Linear.easeNone}, "off")
+            //    //    .to("#burgerBot", 0.8, {directionalRotation:"0_short", y:0, smoothOrigin:"50% 50%", ease:Linear.easeNone}, "off")
+            //    //    .to("#menuname", 0.8, {autoAlpha:1}, "off");
+            //    //menuIcon.menuClosed = true;
+            //});
+
+    }
 
     function menuIconHover() {
         if (menuIcon.menuClosed == true) {

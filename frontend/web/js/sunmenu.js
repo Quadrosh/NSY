@@ -1,7 +1,9 @@
-$(window).load(function() {
+window.addEventListener('load', function(){
+    var menuIcon = document.getElementById("logosunIcon");
+
+
     $("#start_loader").delay(400).fadeOut("slow");
-});
-$(document).ready(function() {
+
 
 
 

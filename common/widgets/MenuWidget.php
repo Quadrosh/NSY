@@ -4,7 +4,7 @@
 namespace common\widgets;
 use frontend\models\SunMenu;
 use yii\base\Widget;
-use frontend\models\Category;
+use common\models\Category;
 
 
 class MenuWidget extends Widget
@@ -43,8 +43,6 @@ class MenuWidget extends Widget
             $this->data = Category::find()->indexBy('id')->asArray()->all();
             $this->tree = $this->getTree();
             $this->menuFinal = $this->getMenuHtml($this->tree);
-//            debug($this->model);
-//            die;
             return $this->menuFinal;
         }
 

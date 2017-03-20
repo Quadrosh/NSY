@@ -62,10 +62,6 @@ IeAsset::register($this);
 
 
 <div class="loginIconWrap">
-
-
-
-
 </div>
 
 

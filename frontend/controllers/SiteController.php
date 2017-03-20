@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use common\models\Feedback;
 use common\models\FeedbackForm;
+use common\models\Pages;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\helpers\Url;
@@ -77,8 +78,15 @@ class SiteController extends FrontController
     public function actionIndex()
     {
         $this->sunMenuItem = 1;
+        $pageID = 1;
+        $metapage = Pages::findOne($pageID);
+        $this->view->params['meta'] = $metapage;
+        $this->view->params['sunitem'] =  $this->sunMenuItem ;
+        $this->layout = 'main';
         $sunitem =  $this->sunMenuItem;
-        return $this->render('index', ['sunitem'=> $sunitem] );
+        return $this->render('index', [
+            'sunitem'=> $sunitem,
+        ] );
     }
 
     /**
