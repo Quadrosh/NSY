@@ -10,15 +10,13 @@ $(window).load(function() {
     var backgroundFilter = document.getElementById('menubackfilter');
 
     if (!menuIcon) {
-        alert('hello');
         sunMenuOnEmptyPage();
-
     } else {
         menuIcon.menuClosed = true;
     }
 
     function sunMenuOnEmptyPage(){
-
+        alert('hello sun');
             var sun2openTl = new TimelineMax();
 
             sun2openTl.set(".sunmenu",{css:{autoAlpha:1}})
