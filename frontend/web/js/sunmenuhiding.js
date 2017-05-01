@@ -19,7 +19,7 @@ $(window).load(function() {
             var sun2openTl = new TimelineMax();
 
             sun2openTl.set(".sunmenu",{css:{autoAlpha:1}})
-                .set(".sunbeam",{css:{autoAlpha:1}})
+                .set(".sunbeam",{css:{autoAlpha:0}})
                 .fromTo("#center_3_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut},'load')
                 .fromTo("#center_2_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0.6472%'},ease:Power1.easeOut})
                 .fromTo("#center_1_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'1.123%'},ease:Power1.easeOut})
@@ -43,7 +43,7 @@ $(window).load(function() {
                 .to("#burgerBot", 0.4, {directionalRotation:"45_cw", y:"-=12", smoothOrigin:"50% 50%", ease:Linear.easeNone},'load')
                 .to("#menuname", 0.4, {autoAlpha:0},'load')
             ;
-
+                alert("hello");
 
             //backgroundFilter.addEventListener('click', function(){
             //
