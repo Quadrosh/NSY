@@ -1,11 +1,11 @@
 $(window).load(function() {
     $("#start_loader").delay(400).fadeOut("slow");
-//});
-//window.addEventListener('load', function(){
+});
+window.addEventListener('load', function(){
     var menuIcon = document.getElementById("logosunIcon");
 
     var windowWidth = window.innerWidth;
-    var windowHeight = window.outerHeight;
+    var windowHeight = window.innerHeight;
     var sunMenuSVG = document.getElementById('sunMenu');
     var sunMenuPosition = function(width, height, svg){
         if (width>=height) {
