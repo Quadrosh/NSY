@@ -10,13 +10,17 @@
     width: 100%;
     z-index: 9999;
 }
+#sunmenudiv {
+    height: 100%;
+}
 .sunmenu {
     position: fixed;
     z-index:8;
 }
 
 .sunmenu svg {
-    height: 100vh;
+    /*height: 100vh;*/
+    height: 100%;
     float: left;
 
 }
