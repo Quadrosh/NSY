@@ -4,8 +4,15 @@ $(window).load(function() {
 //window.addEventListener('load', function(){
     var menuIcon = document.getElementById("logosunIcon");
 
-
-
+    var windowWidth = window.innerWidth;
+    var windowHeight = window.outerHeight;
+    var sunMenuSVG = document.getElementById('sunMenu');
+    var sunMenuPosition = function(width, height, svg){
+        svg.style.width = width;
+        svg.style.height = height;
+    };
+    sunMenuPosition(windowWidth,windowHeight,sunMenuSVG);
+    
 
     var backgroundFilter = document.getElementById('menubackfilter');
 
