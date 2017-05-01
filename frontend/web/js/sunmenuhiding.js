@@ -18,7 +18,7 @@ $(window).load(function() {
     function sunMenuOnEmptyPage(){
             var sun2openTl = new TimelineMax();
 
-            sun2openTl.set(".sunmenu",{css:{autoAlpha:1}})
+            sun2openTl.set("#sunmenudiv",{css:{autoAlpha:1}})
                 .set(".sunbeam",{css:{autoAlpha:0}})
                 .fromTo("#center_3_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut},'load')
                 .fromTo("#center_2_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0.6472%'},ease:Power1.easeOut})
