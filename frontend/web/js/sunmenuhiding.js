@@ -16,11 +16,10 @@ $(window).load(function() {
     }
 
     function sunMenuOnEmptyPage(){
-        alert('hello sun');
             var sun2openTl = new TimelineMax();
 
             sun2openTl.set(".sunmenu",{css:{autoAlpha:1}})
-                .set(".sunbeam",{css:{autoAlpha:0}})
+                .set(".sunbeam",{css:{autoAlpha:1}})
                 .fromTo("#center_3_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0%'},ease:Power3.easeOut},'load')
                 .fromTo("#center_2_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'0.6472%'},ease:Power1.easeOut})
                 .fromTo("#center_1_text",0.4,{attr:{startOffset:'-70%'}},{attr:{startOffset:'1.123%'},ease:Power1.easeOut})
