@@ -11,9 +11,11 @@ window.addEventListener('load', function(){
         if (width>=height) {
             svg.style.width = height;
             svg.style.height = height;
+            svg.setAttribute("style",'width:'+height+';height:'+height);
         } else {
             svg.style.width = width;
             svg.style.height = height;
+            svg.setAttribute("style",'width:'+width+';height:'+height);
         }
         svg.style.top=0;
     };
