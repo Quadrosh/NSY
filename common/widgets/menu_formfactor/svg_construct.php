@@ -1,5 +1,6 @@
 
 <div class="sunmenu">
+    <h1>Наше счастье</h1>
     <svg version="1.1"
          id="sun_menu"
          xmlns="http://www.w3.org/2000/svg"

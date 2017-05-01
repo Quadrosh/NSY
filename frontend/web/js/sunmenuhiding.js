@@ -43,7 +43,7 @@ $(window).load(function() {
                 .to("#burgerBot", 0.4, {directionalRotation:"45_cw", y:"-=12", smoothOrigin:"50% 50%", ease:Linear.easeNone},'load')
                 .to("#menuname", 0.4, {autoAlpha:0},'load')
             ;
-             
+
 
 
     }
