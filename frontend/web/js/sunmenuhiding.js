@@ -10,6 +10,7 @@ $(window).load(function() {
     var backgroundFilter = document.getElementById('menubackfilter');
 
     if (!menuIcon) {
+        alert('hello');
         sunMenuOnEmptyPage();
 
     } else {
