@@ -13,7 +13,7 @@ $(window).load(function() {
             svg.style.height = height;
         } else {
             svg.style.width = width;
-            svg.style.height = width;
+            svg.style.height = height;
         }
         svg.style.top=0;
     };
