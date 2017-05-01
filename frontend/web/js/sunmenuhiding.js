@@ -8,11 +8,17 @@ $(window).load(function() {
     var windowHeight = window.outerHeight;
     var sunMenuSVG = document.getElementById('sunMenu');
     var sunMenuPosition = function(width, height, svg){
-        svg.style.width = width;
-        svg.style.height = height;
+        if (width>=height) {
+            svg.style.width = height;
+            svg.style.height = height;
+        } else {
+            svg.style.width = width;
+            svg.style.height = width;
+        }
+        svg.style.top=0;
     };
     sunMenuPosition(windowWidth,windowHeight,sunMenuSVG);
-    
+
 
     var backgroundFilter = document.getElementById('menubackfilter');
 
