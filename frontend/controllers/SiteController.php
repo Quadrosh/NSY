@@ -77,12 +77,12 @@ class SiteController extends FrontController
      */
     public function actionIndex()
     {
+        $this->layout = 'home';
         $this->sunMenuItem = 1;
         $pageID = 1;
         $metapage = Pages::findOne($pageID);
         $this->view->params['meta'] = $metapage;
         $this->view->params['sunitem'] =  $this->sunMenuItem ;
-        $this->layout = 'main';
         $sunitem =  $this->sunMenuItem;
         return $this->render('index', [
             'sunitem'=> $sunitem,

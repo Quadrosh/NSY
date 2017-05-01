@@ -1,7 +1,10 @@
+$(window).load(function() {
+    $("#start_loader").delay(400).fadeOut("slow");
+});
 window.addEventListener('load', function(){
     var menuIcon = document.getElementById("logosunIcon");
 
-    $("#start_loader").delay(400).fadeOut("slow");
+
 
 
     var backgroundFilter = document.getElementById('menubackfilter');
