@@ -102,6 +102,7 @@
     background-color: rgba(96,125,139,.8);
     position: fixed;
     top: 0px;
+    display: none;
 }
 .backfilterOff,
 #menubackfilter .backfilterOff{
@@ -128,7 +129,7 @@
 }
 .backfilterOn,
 #menubackfilter .backfilterOn{
-    display: block;
+    display: block !important;
     animation: backfilter_on 0.4s linear normal;
     animation-fill-mode:forwards;
     z-index: 5;
