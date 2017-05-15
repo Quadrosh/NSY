@@ -50,6 +50,7 @@ IeAsset::register($this);
     <link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-touch-icon-114x114.png">
     <link rel="apple-touch-icon" sizes="256x256" href="/img/favicon/apple-touch-icon-256x256.png">
 
+    <?php include_once("analyticstracking.php") ?>
 </head>
 
 <body class="<?= Yii::$app->view->params['bodyclass'] ?>">
@@ -138,16 +139,7 @@ IeAsset::register($this);
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/33071018" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-72083602-1', 'auto');
-    ga('send', 'pageview');
-
-</script>
 
 
 </body>
