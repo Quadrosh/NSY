@@ -6,12 +6,12 @@ use yii\helpers\Html;
 
 
 
-<section id="<?= $motivator->section_name; ?>"
+<section id="<?= $motivator->section_name; ?>" itemscope itemtype="http://schema.org/CreativeWork"
     <?php if (!empty($motivator->background)) : ?>
         style=" background-image: url(<?= \yii\helpers\Url::to('/img/'. $motivator->background); ?>);"
     <?php endif; ?>
          class="manifestor <?= $motivator->section_color; ?>">
-    <h1 id="pagename" class=" bigname" ><?= $motivator->pagehead; ?></h1>
+    <h1 itemprop="name" id="pagename" class=" bigname" ><?= $motivator->pagehead; ?></h1>
     <div class=" container mt120 mb140">
         <div  class="m_textbox">
             <div class="row">
