@@ -94,7 +94,7 @@ class PopularController extends Controller
                 $link = 'motivator/'.$hrurl;
                 $object = Motivator::find()->where(['hrurl'=>$hrurl])->one();
                 $image = $object['background'];
-                $name = $object['list_name'];
+                $name = $object['pagehead'];
             }
             $pages[$visit['str_url']]['type'] = $type ;
             $pages[$visit['str_url']]['link'] = $link ;
