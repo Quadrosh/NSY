@@ -7,6 +7,16 @@ $params = array_merge(
 );
 
 return [
+    'timeZone'=>'Europe/Moscow',
+//    'modules'=>[
+//      'statistics' => [
+//          'class' => 'common\modules\statistics\StatModule',
+//          'layout' => 'clean',
+//      ]
+//    ],
+//    'aliases'=>[
+//      '@moduleStat'=>'@common/modules/statistics',
+//    ],
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -40,6 +50,9 @@ return [
                 'name' => '_identity-frontend',
                 'httpOnly' => true
             ],
+        ],
+        'assetManager'=>[
+            'linkAssets'=>true,  //не дублировать ресурсы в web/assets, а делать символические ссылки
         ],
 //        'assetManager' => [
 //            'bundles' => [
@@ -82,6 +95,7 @@ return [
                 'liveout/thnx/<id:\d+>' => 'liveout/thnx',
                 'library/<hrurl:[0-9a-z\-\_]+>' => 'library/article',
                 'master/<hrurl:[0-9a-z\-\_]+>' => 'master/page',
+//                'statistics/' => 'statistics/stat/index', //модуль статистики
 //                'send/<to:[0-9a-z\-\_]+>' => 'send/to',
 //                'send/<training:[0-9a-z\-\_]+>' => 'send/training',
 //                'send/<to:[0-9a-z\-\_]+>/<session:[0-9a-z\-\_]+>' => 'send/to',

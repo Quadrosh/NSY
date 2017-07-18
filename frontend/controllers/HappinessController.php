@@ -26,6 +26,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 4;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('section', ['sections'=> $sections]);
     }
     public function actionMeaning()
@@ -36,6 +39,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 4;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('section', ['sections'=> $sections]);
     }
     public function actionBiochemistry()
@@ -46,6 +52,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 4;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('section', ['sections'=> $sections]);
     }
     public function actionKinds()
@@ -65,6 +74,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 12;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('kinds', ['sections'=> $sections]);
     }
     public function actionSoul()
@@ -75,6 +87,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 12;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('kinds', ['sections'=> $sections]);
     }
     public function actionLife()
@@ -85,6 +100,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 12;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('kinds', ['sections'=> $sections]);
     }
     public function actionQuotes()
@@ -95,6 +113,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 4;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('quotes', ['sections'=> $sections]);
 
     }
@@ -106,6 +127,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 4;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('kinds', ['sections'=> $sections]);
     }
     public function actionPhilosophy()
@@ -116,6 +140,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 4;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('philisophy', ['sections'=> $sections]);
     }
     public function actionEconomy()
@@ -126,6 +153,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 4;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('section', ['sections'=> $sections]);
     }
     public function actionSymbols()
@@ -136,6 +166,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 4;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('section', ['sections'=> $sections]);
     }
     public function actionHoliday()
@@ -146,6 +179,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 4;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('section', ['sections'=> $sections]);
 
     }
@@ -157,6 +193,9 @@ class HappinessController extends FrontController
         $sections = $metapage->sections;
         $this->view->params['sunitem'] = 4;
         $this->view->params['meta'] = $metapage;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('section', ['sections'=> $sections]);
     }
     public function actionAll()

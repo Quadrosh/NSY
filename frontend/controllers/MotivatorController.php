@@ -81,6 +81,10 @@ class MotivatorController extends FrontController
         $this->view->params['meta']['imagelink2_alt'] = $motivator->imagelink2_alt;
         $this->view->params['quotes'] = $quotes;
 
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
+
         return $this->render('view', [
             'motivator'=> $motivator,
             'quotes'=>$quotes

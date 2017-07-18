@@ -43,6 +43,12 @@ AppAsset::register($this);
     $menuItems = [
 //        ['label' => 'Home', 'url' => ['/site/index']],
 //        ['label' => 'Gii', 'url' => ['index.php/gii']],
+        ['label' => 'Статистика',
+            'items' => [
+                ['label' => 'Статистика', 'url' => ['/statistics']],
+                ['label' => 'Popular items', 'url' => ['/popular']],
+                ],
+        ],
         ['label' => 'User', 'url' => ['/user/index']],
         [
             'label' => 'Мастера',

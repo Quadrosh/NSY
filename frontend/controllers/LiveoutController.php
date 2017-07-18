@@ -36,6 +36,9 @@ class LiveoutController extends FrontController
         $this->view->params['meta']['title'] = 'Проживание - ' . $liveout->ex_name;
         $this->view->params['meta']['description'] = 'Упражнение - '. $liveout->ex_description ;
         $this->view->params['meta']['keywords'] = $liveout->ex_description;
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
         return $this->render('warn', ['liveout'=> $liveout]);
     }
 
@@ -76,6 +79,7 @@ class LiveoutController extends FrontController
         $this->view->params['meta']['title'] = 'Проживание - ' . $liveout->ex_name;
         $this->view->params['meta']['description'] = 'Упражнение - '. $liveout->ex_description ;
         $this->view->params['meta']['keywords'] = $liveout->ex_description;
+
         return $this->render('thnx', ['liveout'=> $liveout]);
     }
 

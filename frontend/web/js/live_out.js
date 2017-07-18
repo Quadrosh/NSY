@@ -174,34 +174,25 @@ var trigger = $('#hamburger_anim'), isClosed = true;
 
 window.onload = function() {
 
-    
+
     if (document.getElementById('warningden')) {
-        
-        var show_text = new TimelineMax()
+
+        var show_text = new TimelineMax();
         show_text.set("#contain_all", {perspective:500})
         .set(".anyhide", {autoAlpha:0})
-        .fromTo("#warningden", 5, {autoAlpha:0, scale:1}, {autoAlpha:1, scale:1, ease:Power3.easeIn}, "startcircle")       
-        .to(".anyhide", 3, {autoAlpha:1, ease:Power1.easeIn})
-        .fromTo("#onebutton", 3, {autoAlpha:0}, {autoAlpha:1, scale:1, ease:Power4.easeIn})
+        .fromTo("#warningden", 5, {autoAlpha:0, scale:1}, {autoAlpha:1, scale:1, ease:Power3.easeIn}, "startcircle")
+        .to(".anyhide", 3, {autoAlpha:1, ease:Power1.easeIn}, "goNext")
+        .fromTo("#onebutton", 3, {autoAlpha:0}, {autoAlpha:1, scale:1, ease:Power4.easeIn}, "goNext")
         ;
     };
     if (document.getElementById('stepden')) {
-        
-        var show_text = new TimelineMax()
+
+        var show_text = new TimelineMax();
         show_text.set("#contain_all", {perspective:500})
 
-        .fromTo("#onebutton", 10, {autoAlpha:0}, {autoAlpha:1, scale:1, ease:Power4.easeIn})
+        .fromTo("#onebutton", 4, {autoAlpha:0}, {autoAlpha:1, scale:1, ease:Power4.easeIn})
         ;
     };
-
-
-    
-   
-
-
-
-
-
 
 
 

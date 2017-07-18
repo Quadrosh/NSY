@@ -32,6 +32,11 @@ class QuotepadController extends \yii\web\Controller
         $this->sunMenuItem = 1;
         $this->view->params['sunitem'] = $this->sunMenuItem;
         $this->view->params['meta'] = $quotepad;
+
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
+
         return $this->render($quotepad->view, [
             'quotepad'=> $quotepad,
             'quotepadImages'=> $quotepadImgs,

@@ -36,36 +36,36 @@ a:visited {
 	font-variant: normal;
 	font-weight: normal;
 	line-height: normal;
-	margin: 0 px auto;
-	width: 1000 px;
+	margin: 0px auto;
+	width: 1000px;
 	color: #444;
 }
 .header{
-	margin: 0 px auto;
-	height: 30 px;
-	border: 1 px solid #990000;
+	margin: 0px auto;
+	height: 30px;
+	border: 1px solid #990000;
 }
 .main{
-	min-height: 300 px;
-	border: 1 px solid #009900;
+	min-height: 300px;
+	border: 1px solid #009900;
 }
 .content{
-	width: 680 px;
+	width: 680px;
 	float: left;
-	min-height: 200 px;
-	border: 1 px solid #999900;
+	min-height: 200px;
+	border: 1px solid #999900;
 }
 .sidebar{
-	width: 300 px;
+	width: 300px;
 	float: right;
-	min-height: 200 px;
-	border: 1 px solid #009999;
+	min-height: 200px;
+	border: 1px solid #009999;
 }
 .footer{
 	clear: both;
-	margin: 10 px auto;
-	height: 50 px;
-	border: 1 px solid #000099;
+	margin: 10px auto;
+	height: 50px;
+	border: 1px solid #000099;
 }
 
 
@@ -183,14 +183,14 @@ body,
 }
 .architect1, #architect1, #motivator_builder {
   background-color: #333;
-  background-image: url(img/m_architecture.jpg);
+  background-image: url(/img/m_architecture.jpg);
   background-size: cover;
   background-position: center;
 
 }
  #motivator_voroneg {
   background-color: #333;
-  background-image: url(img/m_voroneg.jpg);
+  background-image: url(/img/m_voroneg.jpg);
   background-size: cover;
   background-position: center;
 
@@ -319,7 +319,7 @@ body {
 /*  overflow-y: scroll;*/
   overflow-y: hidden;
   overflow-x: hidden;
-  width: 100%
+  width: 100%;
   height: 100%;
   margin: auto;
 }
@@ -334,7 +334,7 @@ body {
 
 
   .hamburglar {
-  transform: scale (1);
+  /*transform: scale (1);*/
   margin: 20px auto;
   position: fixed;
   right: 20px;
@@ -591,6 +591,7 @@ h4, h1 {
 	font-family: "RobotoRegular", sans-serif;
   	font-size: 2em;
   	font-weight: bold;
+    color: #084C81;
 
 }
 .exercise .manifestor h3 {
@@ -609,14 +610,14 @@ h4, h1 {
 
 }
 .warning .manifestor h2 {
-	font-family: "RobotoCondensed-Bold";
+	font-family: "RobotoCondensed-Bold", sans-serif;
   font-size: 3em;
   color: #fff;
 
 }
 .thank_you .manifestor h2 {
 	margin-top: 120px;
-	font-family: "RobotoCondensed-Bold";
+	font-family: "RobotoCondensed-Bold", sans-serif;
   font-size: 3em;
   color: #fff;
 

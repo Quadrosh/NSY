@@ -43,6 +43,10 @@ class LibraryController extends FrontController
         $this->view->params['article'] = $article;
         $this->view->params['sections'] = $sections;
 
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
+
         return $this->render('article', ['article'=> $article, 'sections'=>$sections]);
 
     }

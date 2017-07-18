@@ -12,7 +12,15 @@ return [
     'language' => 'ru-RU',
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules'=>[
+        'statistics' => [
+            'class' => 'common\modules\statistics\StatModule',
+//            'layout' => 'clean',
+        ]
+    ],
+    'aliases'=>[
+        '@moduleStat'=>'@common/modules/statistics',
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -63,6 +71,8 @@ return [
             'showScriptName' => false,
             'rules' => [
 //                'liveout/warn?<id:\d+>' => 'liveout/warn',
+                'statistics/' => 'statistics/stat/index', //модуль статистики
+
             ],
         ],
 

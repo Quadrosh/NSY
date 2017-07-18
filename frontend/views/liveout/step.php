@@ -11,10 +11,10 @@
             <h3> шаг - <?= $currentstep['step_number'] ?> из <?= $laststep ?> </h3>
 
 
-            <div class= "message_border" id="warningden" >
+            <div class= "message_border" id="stepden" >
                 <div class= "messagebox clearfix"  >
 
-                    <p class="warn_txt"><?= nl2br($currentstep['step_text']); ?></p>
+                    <p class="step_txt"><?= nl2br($currentstep['step_text']); ?></p>
                 </div>
             </div>
 

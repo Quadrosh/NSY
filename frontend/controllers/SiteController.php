@@ -3,7 +3,11 @@ namespace frontend\controllers;
 
 use common\models\Feedback;
 use common\models\FeedbackForm;
+use common\models\Happypage;
+use common\models\LiveOutEx;
+use common\models\Motivator;
 use common\models\Pages;
+use common\models\Popular;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\helpers\Url;
@@ -77,15 +81,25 @@ class SiteController extends FrontController
      */
     public function actionIndex()
     {
-        $this->layout = 'home';
+        $this->layout = 'home_new';
         $this->sunMenuItem = 1;
         $pageID = 1;
         $metapage = Pages::findOne($pageID);
         $this->view->params['meta'] = $metapage;
         $this->view->params['sunitem'] =  $this->sunMenuItem ;
         $sunitem =  $this->sunMenuItem;
-        return $this->render('index', [
+        $populars = Popular::find()->orderBy('count desc')->all();
+
+
+//        debug($pages); die;
+
+        $this->on(\yii\web\Controller::EVENT_AFTER_ACTION, function($event){
+            \common\modules\statistics\CountNs::init();
+        });
+
+        return $this->render('home', [
             'sunitem'=> $sunitem,
+            'pages'=> $populars,
         ] );
     }
 

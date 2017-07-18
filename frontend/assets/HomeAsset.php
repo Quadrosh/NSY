@@ -14,9 +14,12 @@ class HomeAsset extends AssetBundle
     public $css = [
         'css/_fonts.css',
 //        'css/live_out.css',
-        'css/main.css',
+//        'css/main.css',
+        'css/home.css',
 //        'css/main_media.css',
         'css/sun_menu.css',
+        'libs/slick/slick.css',
+//        'libs/slick/slick-theme.css',
 
 
       //  'libs/bootstrap/css/bootstrap.min.css',
@@ -31,8 +34,10 @@ class HomeAsset extends AssetBundle
 //        'libs/animate/animate-css.js',
 //        'libs/stellar/jquery.stellar.min.js',
 //        'libs/bootstrap/js/bootstrap.min.js',
-        'libs/gsap/tweenmax.min.js',
-        'js/sunmenuhiding.js',
+//        'libs/gsap/tweenmax.min.js',
+//        'js/sunmenuhiding.js',
+        'libs/slick/slick.min.js',
+        'js/home.js',
 //        'js/common.js',
 
 
