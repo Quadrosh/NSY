@@ -13,7 +13,7 @@ $(document).ready(function() {
         nextArrow:'.slickNext',
         responsive: [
             {
-                breakpoint: 768,
+                breakpoint: 769,
                 settings: {
                     slidesToShow: 1
                 }
