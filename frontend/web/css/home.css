@@ -279,6 +279,7 @@ h2 {
     text-decoration: none;
     background-color: transparent;
     color: #fff;
+    text-shadow: 2px 2px 5px #ffc107, 0px 5px 10px #ffc107;
 }
 .nav > li > a{
     color: #0F63A4;
