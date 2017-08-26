@@ -55,7 +55,6 @@ class SendController extends FrontController
                 ]);
             }
         } else {
-            Yii::$app->session->setFlash('error', 'Во время сохранения произошла ошибка, попробуйте еще раз.');
             return $this->render('to',[
                 'model' => $feedback,
                 'session' => $session2mail,
