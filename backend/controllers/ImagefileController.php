@@ -149,14 +149,14 @@ class ImagefileController extends BackController
                 Yii::$app->session->setFlash('error', 'неполучается удалить запись');
             }
         } else {
-            if (\Cloudinary\Uploader::destroy($model->name)) {
+            if (\Cloudinary\Uploader::destroy($model->cloudname)) {
                 if(!$model->delete()) {
                     Yii::$app->session->setFlash('error', 'неполучается удалить запись из базы');
                 }
             } else {
                 Yii::$app->session->setFlash('error', 'неполучается удалить запись из облака');
             }
-            
+
         }
 
 
