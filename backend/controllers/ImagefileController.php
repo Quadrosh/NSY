@@ -39,6 +39,7 @@ class ImagefileController extends BackController
     public function actionIndex()
     {
         Url::remember();
+        $uploadmodel = new UploadForm();
         $dataProvider = new ActiveDataProvider([
             'query' => Imagefiles::find(),
             'pagination'=> [
@@ -53,6 +54,7 @@ class ImagefileController extends BackController
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'uploadmodel' => $uploadmodel,
         ]);
     }
 
@@ -135,7 +137,16 @@ class ImagefileController extends BackController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if(file_exists(Yii::$app->basePath.'/web/img/'.$model->name)){
+            if(!unlink(Yii::$app->basePath.'/web/img/'.$model->name)) {
+                Yii::$app->session->setFlash('error', 'неполучается удалить файл');
+            }
+        }
+
+        if(!$model->delete()) {
+            Yii::$app->session->setFlash('error', 'неполучается удалить запись');
+        }
 
         return $this->redirect(['index']);
     }
@@ -153,6 +164,20 @@ class ImagefileController extends BackController
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    /**
+     * Upload images
+     */
+    public function actionUpload()
+    {
+        $uploadModel = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
+            if ($uploadModel->upload()) {
+                Yii::$app->session->setFlash('success', 'Файл загружен успешно');
+            }
+            return $this->redirect(Url::previous());
         }
     }
 }

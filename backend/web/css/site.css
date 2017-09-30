@@ -126,3 +126,29 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+.adminTableImg {
+    height: 70px;
+}
+.imagefiles-view img {
+    max-width: 100%;
+}
+.adminArticleImg{
+    height: 200px;
+}
+.rRound {
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+.lRound,
+.lRound select,
+.input-group .lRound .form-control{
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+.navbar-inverse {
+    background-color: #FFE907;
+    border-bottom: 1px #FFC107 solid;
+    /*border: none;*/
+    /*background-color: #FFC107;*/
+    /*border-color: #080808;*/
+}
