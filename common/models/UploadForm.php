@@ -38,6 +38,17 @@ class UploadForm extends Model
         }
     }
 
+    public function uploadtmp()
+    {
+        if ($this->validate()) {
+            if ($this->imageFile->saveAs('img/tmp-' . $this->imageFile->baseName . '.' . $this->imageFile->extension)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     public function change($filename)
     {
         if ($this->validate()) {

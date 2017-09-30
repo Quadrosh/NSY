@@ -28,6 +28,7 @@ class Imagefiles extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 524],
+            [['cloudname'], 'string', 'max' => 255],
             [['name'], 'unique',  'message' => 'Файл "{value}" уже существует, измени имя загружаемого файла или назначь существующий'],
         ];
     }
@@ -40,6 +41,7 @@ class Imagefiles extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'cloudname' => 'Cloudname',
         ];
     }
 

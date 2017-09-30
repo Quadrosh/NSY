@@ -180,4 +180,26 @@ class ImagefileController extends BackController
             return $this->redirect(Url::previous());
         }
     }
+    public function actionCloud()
+    {
+        $uploadmodel = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            $uploadmodel->imageFile = UploadedFile::getInstance($uploadmodel, 'imageFile');
+            $fileName = $uploadmodel->imageFile->baseName.'.'.$uploadmodel->imageFile->extension;
+            if ($uploadmodel->uploadtmp()) {
+                $cloud = \Cloudinary\Uploader::upload(Yii::getAlias('@webroot/img/tmp-'. $fileName));
+                $imageListItem = new Imagefiles();
+                $imageListItem['name'] = $fileName;
+                $imageListItem['cloudname'] = $cloud['public_id'];
+                if($imageListItem->save()){
+                    unlink(Yii::getAlias('@webroot/img/tmp-' . $fileName));
+                    Yii::$app->session->setFlash('success', 'Файл загружен успешно');
+                    return $this->redirect(Url::previous());
+                } else {
+                    Yii::$app->session->setFlash('error', 'Ошибка сохранения');
+                }
+            }
+        }
+
+    }
 }

@@ -55,20 +55,20 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=> 'Image',
                 'value' => function($data){
-                    return '<img class="adminTableImg" src="/img/'.$data['name'].'" alt="">';
-//                    if (!$data['cloudname']) {
-//                        return '<img class="adminTableImg" src="/img/'.$data['name'].'" alt="">';
-//                    } else {
-//                        return cl_image_tag($data['cloudname'], [
-//                            "alt" => $data['name'] ,
-////                            "width" => 70,
-//                            "height" => 70,
-////        "gravity" => "south_east",
-////                            "gravity" => "face",
-////        "crop" => "thumb",
-//                            "crop" => "fill"
-//                        ]);
-//                    }
+//                    return '<img class="adminTableImg" src="/img/'.$data['name'].'" alt="">';
+                    if (!$data['cloudname']) {
+                        return '<img class="adminTableImg" src="/img/'.$data['name'].'" alt="">';
+                    } else {
+                        return cl_image_tag($data['cloudname'], [
+                            "alt" => $data['name'] ,
+//                            "width" => 70,
+                            "height" => 70,
+//        "gravity" => "south_east",
+//                            "gravity" => "face",
+//        "crop" => "thumb",
+                            "crop" => "fill"
+                        ]);
+                    }
 
                 },
                 'format'=> 'html',
