@@ -138,15 +138,27 @@ class ImagefileController extends BackController
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        if(file_exists(Yii::$app->basePath.'/web/img/'.$model->name)){
-            if(!unlink(Yii::$app->basePath.'/web/img/'.$model->name)) {
-                Yii::$app->session->setFlash('error', 'неполучается удалить файл');
+        if(!$model['cloudname']){
+            if(file_exists(Yii::$app->basePath.'/web/img/'.$model->name)){
+                if(!unlink(Yii::$app->basePath.'/web/img/'.$model->name)) {
+                    Yii::$app->session->setFlash('error', 'неполучается удалить файл');
+                }
             }
+
+            if(!$model->delete()) {
+                Yii::$app->session->setFlash('error', 'неполучается удалить запись');
+            }
+        } else {
+            if (\Cloudinary\Uploader::destroy($model->name)) {
+                if(!$model->delete()) {
+                    Yii::$app->session->setFlash('error', 'неполучается удалить запись из базы');
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'неполучается удалить запись из облака');
+            }
+            
         }
 
-        if(!$model->delete()) {
-            Yii::$app->session->setFlash('error', 'неполучается удалить запись');
-        }
 
         return $this->redirect(['index']);
     }
