@@ -17,15 +17,22 @@ class BotController extends \yii\web\Controller
 
 
         $post = Yii::$app->request->post();
+//        var_dump($post); die;
+
         $get = Yii::$app->request->get();
         $feedback['phone'] = '-';
         $feedback['city'] = '-';
         $feedback['email'] = 'email@email.com';
 
+//        $vdPost = var_dump($post);
 
-        $feedback['text'] = var_dump($post).var_dump($get);
+        $feedback['text'] = 'POST - '.json_encode($post) .'; GET - '.json_encode($get);
+
+//        $feedback['text'] = strval() . strval(var_dump($get));
+//        $feedback['text'] = 'dfa';
         $feedback->save();
 
+        echo $feedback['text'];
         return 'ok';
 
 //        [['phone','city', 'email', 'text'], 'required'],
