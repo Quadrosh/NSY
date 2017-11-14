@@ -47,6 +47,13 @@ class BotController extends \yii\web\Controller
 //        ]);
     }
 
+    public function beforeAction($action)
+    {
+        if (in_array($action->id, ['dialog'])) {
+        $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
 
     public function actionDialogClean()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
     {
@@ -85,31 +92,35 @@ class BotController extends \yii\web\Controller
         return 'ok';
     }
 
+
+    public function actionSend()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
+    {
+
+    }
+
 //   https://nashe-schastye.ru/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
 //   https://api.telegram.org/bot475062491:AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ/setWebhook?url=https://nashe-schastye.ru/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
 
 
-//    public function actionPage()
-//    {
-//
-//        $this->view->params['sunitem'] = 1;
-//        $this->view->params['bodyclass'] = 'library';
-//        $pagename = \Yii::$app->request->get('hrurl');
-//        $master = Masters::find()->where(['hrurl'=>$pagename])->one();
-//
-//        $this->view->params['meta'] = $master ;
-//
-//        $professions = $master->professions;
-//        $numbers = $master->numbers;
-//        $sessions = $master->sessions;
-//        Url::remember();
-//
-//        return $this->render('page',[
-//            'master'=> $master,
-//            'numbers'=> $numbers,
-//            'professions'=> $professions,
-//            'sessions'=> $sessions
-//        ]);
-//    }
+//curl --tlsv1 -v -k -X POST -H "Content-Type: application/json" -H "Cache-Control: no-cache"  -d '{
+//"update_id":10000,
+//"message":{
+//  "date":1441645532,
+//  "chat":{
+//     "last_name":"Test Lastname",
+//     "id":1111111,
+//     "first_name":"Test",
+//     "username":"Test"
+//  },
+//  "message_id":1365,
+//  "from":{
+//     "last_name":"Test Lastname",
+//     "id":1111111,
+//     "first_name":"Test",
+//     "username":"Test"
+//  },
+//  "text":"/start"
+//}
+//}' "https://YOUR.BOT.URL:YOURPORT/"
 
 }
