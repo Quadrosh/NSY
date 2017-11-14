@@ -48,6 +48,7 @@ class BotController extends \yii\web\Controller
             fwrite($fh, $updateArray."nn");
             fclose($fh);
         }
+        return 'ok';
     }
 
 //   https://nashe-schastye.ru/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
