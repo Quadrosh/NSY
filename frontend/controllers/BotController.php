@@ -2,19 +2,40 @@
 
 namespace frontend\controllers;
 
+use common\models\Feedback;
 use common\models\Masters;
 use common\models\Pages;
 use yii\helpers\Url;
+use Yii;
 
 class BotController extends \yii\web\Controller
 {
-//    public function actionDialog()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
-//    {
-//        echo 'here';
-//    }
-
-
     public function actionDialog()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
+    {
+        $feedback = new Feedback();
+
+
+
+        $post = Yii::$app->request->post();
+        $get = Yii::$app->request->get();
+
+        $feedback->text = var_dump($post).var_dump($get);
+        $feedback->save();
+
+        return 'ok';
+
+
+
+
+
+//        \Yii::$app->telegram->sendMessage([
+//            'chat_id' => $chat_id,
+//            'text' => 'test',
+//        ]);
+    }
+
+
+    public function actionDialogClean()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
     {
         define('_MY_BOT_TOKEN', '475062491:AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ');
         define('_TELEGRAM_API_URL', 'https://api.telegram.org/bot'._MY_BOT_TOKEN.'/');
