@@ -89,6 +89,15 @@ class BotController extends \yii\web\Controller
             fwrite($fh, $updateArray."nn");
             fclose($fh);
         }
+
+
+        $feedback = new Feedback();
+        $feedback['phone'] = '-';
+        $feedback['city'] = '-';
+        $feedback['email'] = 'email@email.com';
+        $feedback['text'] = $content;
+        $feedback->save();
+
         return 'ok';
     }
 
