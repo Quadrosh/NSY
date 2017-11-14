@@ -5,28 +5,46 @@ namespace frontend\controllers;
 use common\models\Feedback;
 use common\models\Masters;
 use common\models\Pages;
+use yii\filters\ContentNegotiator;
 use yii\helpers\Url;
 use Yii;
+use yii\web\Response;
+
 
 class BotController extends \yii\web\Controller
 {
-    public function actionDialog_()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
-    {
-        $feedback = new Feedback();
+    public function behaviors() {
+        return [
+            'contentNegotiator' => [
+                'class'   => ContentNegotiator::className(),
+                'formats' => [
+                    'application/json' => Response::FORMAT_JSON,
+                ],
+            ],
+//            'rateLimiter'       => [
+//                'class' => RateLimiter::className(),
+//            ],
+//            'authenticator' => [
+//                'class' => \app\components\auth\QueryParamAuth::className(),
+////                'except' => [ 'create' ],
+//            ],
+        ];
+    }
 
+    public function actionDialog()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
+    {
 
 
         $post = Yii::$app->request->post();
-//        var_dump($post); die;
-
         $get = Yii::$app->request->get();
+        $input = file_get_contents("php://input");
+
+        $feedback = new Feedback();
         $feedback['phone'] = '-';
         $feedback['city'] = '-';
         $feedback['email'] = 'email@email.com';
 
-//        $vdPost = var_dump($post);
-
-        $feedback['text'] = 'POST - '.json_encode($post) .'; GET - '.json_encode($get);
+        $feedback['text'] = 'POST - '.json_encode($post) .'; GET - '.json_encode($get).'; Input - '.$input;
 
 //        $feedback['text'] = strval() . strval(var_dump($get));
 //        $feedback['text'] = 'dfa';
@@ -55,7 +73,7 @@ class BotController extends \yii\web\Controller
         return parent::beforeAction($action);
     }
 
-    public function actionDialog()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
+    public function actionDialog_()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
     {
         define('_MY_BOT_TOKEN', '475062491:AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ');
         define('_TELEGRAM_API_URL', 'https://api.telegram.org/bot'._MY_BOT_TOKEN.'/');
