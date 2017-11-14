@@ -24,6 +24,10 @@ return [
     'name' => 'Наше Счастье',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'telegram' => [
+            'class' => 'aki\telegram\Telegram',
+            'botToken' => '475062491:AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ',
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'cookieValidationKey' => 'DgaujypcSnGWPqwdtwTo'
@@ -88,6 +92,7 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                '475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ'=>'bot/dialog',
                 'motivator'=>'motivator/list',
                 'motivator/<pagename:[0-9a-z\-\_]+>' => 'motivator/show',
                 'liveout/warn/<id:\d+>' => 'liveout/warn',
