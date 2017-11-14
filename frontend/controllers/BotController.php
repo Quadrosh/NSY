@@ -10,7 +10,7 @@ use Yii;
 
 class BotController extends \yii\web\Controller
 {
-    public function actionDialog()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
+    public function actionDialog_()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
     {
         $feedback = new Feedback();
 
@@ -55,7 +55,7 @@ class BotController extends \yii\web\Controller
         return parent::beforeAction($action);
     }
 
-    public function actionDialogClean()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
+    public function actionDialog()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
     {
         define('_MY_BOT_TOKEN', '475062491:AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ');
         define('_TELEGRAM_API_URL', 'https://api.telegram.org/bot'._MY_BOT_TOKEN.'/');
