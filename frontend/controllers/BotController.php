@@ -65,6 +65,13 @@ class BotController extends \yii\web\Controller
         $update = json_decode($content, true);
         $chatID = $update["message"]["chat"]["id"];
 
+        $feedback = new Feedback();
+        $feedback['phone'] = '-';
+        $feedback['city'] = '-';
+        $feedback['email'] = 'email@email.com';
+        $feedback['text'] = $content;
+        $feedback->save();
+
 // compose reply
         $reply =  sendMessage();
 
@@ -91,12 +98,7 @@ class BotController extends \yii\web\Controller
         }
 
 
-        $feedback = new Feedback();
-        $feedback['phone'] = '-';
-        $feedback['city'] = '-';
-        $feedback['email'] = 'email@email.com';
-        $feedback['text'] = $content;
-        $feedback->save();
+
 
         return 'ok';
     }
