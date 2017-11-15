@@ -73,6 +73,7 @@ class BotController extends \yii\web\Controller
                 $quoteText .= $quote['text'];
                 $quoteText .= '\n';
             }
+            $motivatorQuotes = urlencode($quoteText);
 
             Yii::$app->telegram->sendMessage([
                 'chat_id' => $chatId,
@@ -81,10 +82,8 @@ class BotController extends \yii\web\Controller
 
             Yii::$app->telegram->sendMessage([
                 'chat_id' => $chatId,
-                'text' => $quoteText,
+                'text' => $motivatorQuotes,
             ]);
-
-
 
         }
 
@@ -102,53 +101,7 @@ class BotController extends \yii\web\Controller
         return parent::beforeAction($action);
     }
 
-    public function actionDialog_()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
-    {
-        define('_MY_BOT_TOKEN', '475062491:AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ');
-        define('_TELEGRAM_API_URL', 'https://api.telegram.org/bot'._MY_BOT_TOKEN.'/');
 
-// read incoming info and grab the chatID
-        $content = file_get_contents("php://input");
-        $update = json_decode($content, true);
-        $chatID = $update["message"]["chat"]["id"];
-
-        $feedback = new Feedback();
-        $feedback['phone'] = '-';
-        $feedback['city'] = '-';
-        $feedback['email'] = 'email@email.com';
-        $feedback['text'] = $content;
-        $feedback->save();
-
-// compose reply
-        $reply =  sendMessage();
-
-// send reply
-        $sendto =_TELEGRAM_API_URL."sendmessage?chat_id=".$chatID."&text=".$reply;
-        file_get_contents($sendto);
-
-        function sendMessage(){
-            $message = "I am a motivator bot.";
-            return $message;
-        }
-
-// Create a debug log.txt to check the response/repy from Telegram in JSON format.
-// You can disable it by commenting checkJSON.
-        checkJSON($chatID,$update);
-        function checkJSON($chatID,$update){
-
-            $myFile = "bot_log.txt";
-            $updateArray = print_r($update,TRUE);
-            $fh = fopen($myFile, 'a') or die("can't open file");
-            fwrite($fh, $chatID ."nn");
-            fwrite($fh, $updateArray."nn");
-            fclose($fh);
-        }
-
-
-
-
-        return 'ok';
-    }
 
 
     public function actionSend()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
