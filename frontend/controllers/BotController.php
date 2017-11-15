@@ -49,25 +49,36 @@ class BotController extends \yii\web\Controller
         $fromFirstName = $from['first_name'];
         $fromLastName = $from['last_name'];
         $fromUserName = $from['username'];
-        $fromType = $from['type'];
+        $fromLanguageCode = $from['language_code'];
+        $chat = Yii::$app->request->post('chat');
+        $chatId = $chat['id'];
+        $chatType = $chat['type'];
         $date = $message['date'];
         $text = $message['text'];
+        $answer = 'test';
 
 
+
+
+
+
+
+        Yii::$app->telegram->sendMessage([
+            'chat_id' => $chatId,
+            'text' => $answer,
+        ]);
 
         $feedback = new Feedback();
         $feedback['phone'] = '-';
         $feedback['city'] = '-';
         $feedback['email'] = 'email@email.com';
-        $post =
-
         $feedback['text'] =
-            'update_id - '. $updateId .
+            'chatId - '. $chatId .
             'messageId - '.$messageId.
             'fromFirstName - '.$fromFirstName.
-            'text - ' . $text
+            'text - ' . $text .
+            'response - ' . $answer
         ;
-//            '; Input - '.$input;
         $feedback->save();
 
         return 'ok';
