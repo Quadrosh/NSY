@@ -48,7 +48,10 @@ class BotController extends \yii\web\Controller
         $feedback['city'] = '-';
         $feedback['email'] = 'email@email.com';
 
-        $feedback['text'] = 'POST - '.json_encode($post) .'; GET - '.json_encode($get).'; Input - '.$input;
+        $feedback['text'] =
+            'POST update_id - '.Yii::$app->request->post('update_id') .
+            'POST - '.json_encode($post) .
+            '; Input - '.$input;
         $feedback->save();
 
         return 'ok';
