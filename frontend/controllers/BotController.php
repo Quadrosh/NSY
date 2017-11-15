@@ -61,28 +61,28 @@ class BotController extends \yii\web\Controller
         }
 
         $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
-        if ($motivator == null) {
-            Yii::$app->telegram->sendMessage([
-                'chat_id' => $chatId,
-                'text' => 'нет такого мотиватора',
-            ]);
-        } else {
-            $quotes = $motivator->mLines;
-
-            Yii::$app->telegram->sendMessage([
-                'chat_id' => $chatId,
-                'text' => $motivator['list_name'],
-            ]);
-            sleep(3);
-
-            foreach ($quotes as $quote) {
-                Yii::$app->telegram->sendMessage([
-                    'chat_id' => $chatId,
-                    'text' => $quote['text'],
-                ]);
-                sleep(3);
-            }
-        }
+//        if ($motivator == null) {
+//            Yii::$app->telegram->sendMessage([
+//                'chat_id' => $chatId,
+//                'text' => 'нет такого мотиватора',
+//            ]);
+//        } else {
+//            $quotes = $motivator->mLines;
+//
+//            Yii::$app->telegram->sendMessage([
+//                'chat_id' => $chatId,
+//                'text' => $motivator['list_name'],
+//            ]);
+//            sleep(3);
+//
+//            foreach ($quotes as $quote) {
+//                Yii::$app->telegram->sendMessage([
+//                    'chat_id' => $chatId,
+//                    'text' => $quote['text'],
+//                ]);
+//                sleep(3);
+//            }
+//        }
 
 
 
