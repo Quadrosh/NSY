@@ -32,7 +32,7 @@ class BotController extends \yii\web\Controller
         ];
     }
 
-    public function actionDialog_()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
+    public function actionDialog()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
     {
 
         $input = Yii::$app->request->getRawBody();
@@ -68,54 +68,25 @@ class BotController extends \yii\web\Controller
             ]);
         } else {
             $quotes = $motivator->mLines;
+            $quoteText = '';
+            foreach ($quotes as $quote) {
+                $quoteText .= $quote['text'];
+                $quoteText .= '\n';
+            }
 
             Yii::$app->telegram->sendMessage([
                 'chat_id' => $chatId,
                 'text' => $motivator['list_name'],
             ]);
-            sleep(2);
-
-//            foreach ($quotes as $quote) {
-//                Yii::$app->telegram->sendMessage([
-//                    'chat_id' => $chatId,
-//                    'text' => $quote['text'],
-//                ]);
-//                sleep(3);
-//            }
-
-
-            for ($i=0; $i < count($quotes); $i++) {
-                Yii::$app->telegram->sendMessage([
-                    'chat_id' => $quotes[$i]['text'],
-                    'text' => $answer,
-                ]);
-                sleep(4);
-            }
 
             Yii::$app->telegram->sendMessage([
                 'chat_id' => $chatId,
-                'text' => 'Спасибо за внимание',
+                'text' => $quoteText,
             ]);
+
+
+
         }
-
-
-
-//        for ($i=0; $i < 3; $i++) {
-//            Yii::$app->telegram->sendMessage([
-//                'chat_id' => $chatId,
-//                'text' => $answer,
-//            ]);
-//            sleep(3);
-//        }
-
-
-//        Yii::$app->telegram->sendMessage([
-//            'chat_id' => $chatId,
-//            'text' => $answer,
-//        ]);
-
-
-
 
 
 
@@ -213,6 +184,23 @@ class BotController extends \yii\web\Controller
 }
 
 
+//            foreach ($quotes as $quote) {
+//                Yii::$app->telegram->sendMessage([
+//                    'chat_id' => $chatId,
+//                    'text' => $quote['text'],
+//                ]);
+//                sleep(3);
+//            }
+
+
+//            for ($i=0; $i < count($quotes); $i++) {
+//                Yii::$app->telegram->sendMessage([
+//                    'chat_id' => $chatId,
+//                    'text' => $quotes[$i]['text'],
+//                ]);
+//                sleep(4);
+//            }
+
 //        Yii::$app->telegram->sendMessage([
 //            'chat_id' => $fromId,
 //            'text' => 'this is test',
@@ -240,3 +228,21 @@ class BotController extends \yii\web\Controller
 //            'response - ' . $answer
 //        ;
 //        $feedback->save();
+
+
+
+
+
+//        for ($i=0; $i < 3; $i++) {
+//            Yii::$app->telegram->sendMessage([
+//                'chat_id' => $chatId,
+//                'text' => $answer,
+//            ]);
+//            sleep(3);
+//        }
+
+
+//        Yii::$app->telegram->sendMessage([
+//            'chat_id' => $chatId,
+//            'text' => $answer,
+//        ]);
