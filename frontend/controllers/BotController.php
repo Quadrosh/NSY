@@ -50,7 +50,7 @@ class BotController extends \yii\web\Controller
         $fromLastName = $from['last_name'];
         $fromUserName = $from['username'];
         $fromLanguageCode = $from['language_code'];
-        $chat = Yii::$app->request->post('chat');
+        $chat = $message['chat'];
         $chatId = $chat['id'];
         $chatType = $chat['type'];
         $date = $message['date'];
@@ -71,7 +71,7 @@ class BotController extends \yii\web\Controller
 //        ]);
 
         Yii::$app->telegram->sendMessage([
-            'chat_id' => $chatId,
+            'chat_id' => $fromId,
             'text' => 'this is test',
             'reply_markup' => json_encode([
                 'inline_keyboard'=>[
@@ -88,10 +88,10 @@ class BotController extends \yii\web\Controller
         $feedback['city'] = '-';
         $feedback['email'] = 'email@email.com';
         $feedback['text'] =
-            'chatId - '. $chatId .
-            'messageId - '.$messageId.
-            'fromFirstName - '.$fromFirstName.
-            'text - ' . $text .
+            'chatId - '. $chatId . '<br>'.
+            'messageId - '.$messageId. '<br>'.
+            'fromFirstName - '.$fromFirstName. '<br>'.
+            'text - ' . $text . '<br>'.
             'response - ' . $answer
         ;
         $feedback->save();
