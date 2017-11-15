@@ -35,7 +35,6 @@ class BotController extends \yii\web\Controller
     public function actionDialog()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
     {
 
-
         $input = Yii::$app->request->getRawBody();
         $updateId = Yii::$app->request->post('update_id');
         $message = Yii::$app->request->post('message');
@@ -62,41 +61,41 @@ class BotController extends \yii\web\Controller
 
         $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
 
-//        if ($motivator == null) {
-//            Yii::$app->telegram->sendMessage([
-//                'chat_id' => $chatId,
-//                'text' => 'нет такого мотиватора',
-//            ]);
-//        } else {
-//            $quotes = $motivator->mLines;
-//
-//            Yii::$app->telegram->sendMessage([
-//                'chat_id' => $chatId,
-//                'text' => $motivator['list_name'],
-//            ]);
-//            sleep(3);
-//
-////            foreach ($quotes as $quote) {
-////                Yii::$app->telegram->sendMessage([
-////                    'chat_id' => $chatId,
-////                    'text' => $quote['text'],
-////                ]);
-////                sleep(3);
-////            }
-//
-//
-//            for ($i=0; $i < count($quotes); $i++) {
+        if ($motivator == null) {
+            Yii::$app->telegram->sendMessage([
+                'chat_id' => $chatId,
+                'text' => 'нет такого мотиватора',
+            ]);
+        } else {
+            $quotes = $motivator->mLines;
+
+            Yii::$app->telegram->sendMessage([
+                'chat_id' => $chatId,
+                'text' => $motivator['list_name'],
+            ]);
+            sleep(2);
+
+//            foreach ($quotes as $quote) {
 //                Yii::$app->telegram->sendMessage([
 //                    'chat_id' => $chatId,
-//                    'text' => $answer,
+//                    'text' => $quote['text'],
 //                ]);
 //                sleep(3);
 //            }
-//
-//            Yii::$app->telegram->sendMessage([
-//                'chat_id' => $chatId,
-//                'text' => 'Спасибо за внимание',
-//            ]);
+
+
+            for ($i=0; $i < count($quotes); $i++) {
+                Yii::$app->telegram->sendMessage([
+                    'chat_id' => $quotes[$i]['text'],
+                    'text' => $answer,
+                ]);
+                sleep(4);
+            }
+
+            Yii::$app->telegram->sendMessage([
+                'chat_id' => $chatId,
+                'text' => 'Спасибо за внимание',
+            ]);
         }
 
 
