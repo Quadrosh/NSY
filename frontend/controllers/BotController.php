@@ -37,10 +37,11 @@ class BotController extends \yii\web\Controller
 
         $post = Yii::$app->request->post();
         $get = Yii::$app->request->get();
-//        $input = file_get_contents("php://input");
 
+//        $input = file_get_contents("php://input");
         $input = Yii::$app->request->getRawBody();
 
+        $arr =
 
         $feedback = new Feedback();
         $feedback['phone'] = '-';

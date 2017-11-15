@@ -30,7 +30,10 @@ return [
         ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
-            'cookieValidationKey' => 'DgaujypcSnGWPqwdtwTo'
+            'cookieValidationKey' => 'DgaujypcSnGWPqwdtwTo',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
