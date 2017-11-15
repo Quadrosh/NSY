@@ -71,8 +71,8 @@ class BotController extends \yii\web\Controller
             $quotes = $motivator->mLines;
             $quoteText = '';
             foreach ($quotes as $quote) {
-                $quoteText .= $quote['text'];
-                $quoteText .= '%0A';
+                $quoteText .= $quote['text'].PHP_EOL;
+//                $quoteText .= PHP_EOL;
             }
 //            $motivatorQuotes = Html::encode($quoteText);
 
