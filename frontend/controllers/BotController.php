@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Feedback;
 use common\models\Masters;
+use common\models\Motivator;
 use common\models\Pages;
 use yii\filters\ContentNegotiator;
 use yii\helpers\Url;
@@ -59,14 +60,39 @@ class BotController extends \yii\web\Controller
             $answer = 'ответ';
         }
 
-
-        for ($i=0; $i < 3; $i++) {
+        $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
+        if ($motivator == null) {
             Yii::$app->telegram->sendMessage([
                 'chat_id' => $chatId,
-                'text' => $answer,
+                'text' => 'нет такого мотиватора',
+            ]);
+        } else {
+            $quotes = $motivator->mLines;
+
+            Yii::$app->telegram->sendMessage([
+                'chat_id' => $chatId,
+                'text' => $motivator['list_name'],
             ]);
             sleep(3);
+
+            foreach ($quotes as $quote) {
+                Yii::$app->telegram->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => $quote['text'],
+                ]);
+                sleep(3);
+            }
         }
+
+
+
+//        for ($i=0; $i < 3; $i++) {
+//            Yii::$app->telegram->sendMessage([
+//                'chat_id' => $chatId,
+//                'text' => $answer,
+//            ]);
+//            sleep(3);
+//        }
 
 
 //        Yii::$app->telegram->sendMessage([
@@ -74,7 +100,7 @@ class BotController extends \yii\web\Controller
 //            'text' => $answer,
 //        ]);
 
-        
+
 //        Yii::$app->telegram->sendMessage([
 //            'chat_id' => $fromId,
 //            'text' => 'this is test',
