@@ -72,9 +72,9 @@ class BotController extends \yii\web\Controller
             $quoteText = '';
             foreach ($quotes as $quote) {
                 $quoteText .= $quote['text'];
-                $quoteText .= ' \n ';
+                $quoteText .= '%0A';
             }
-            $motivatorQuotes = Html::encode($quoteText);
+//            $motivatorQuotes = Html::encode($quoteText);
 
             Yii::$app->telegram->sendMessage([
                 'chat_id' => $chatId,
@@ -83,7 +83,7 @@ class BotController extends \yii\web\Controller
 
             Yii::$app->telegram->sendMessage([
                 'chat_id' => $chatId,
-                'text' => $motivatorQuotes,
+                'text' => $quoteText,
             ]);
 
         }
