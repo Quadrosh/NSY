@@ -72,7 +72,7 @@ class BotController extends \yii\web\Controller
             $quoteText = '';
             foreach ($quotes as $quote) {
                 $quoteText .= $quote['text'];
-                $quoteText .= '\n';
+                $quoteText .= ' \n ';
             }
             $motivatorQuotes = Html::encode($quoteText);
 
