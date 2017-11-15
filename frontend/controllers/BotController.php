@@ -35,8 +35,8 @@ class BotController extends \yii\web\Controller
     {
 
 
-        $post = Yii::$app->request->post();
-        $get = Yii::$app->request->get();
+//        $post = Yii::$app->request->post();
+//        $get = Yii::$app->request->get();
 
 //        $input = file_get_contents("php://input");
         $input = Yii::$app->request->getRawBody();
@@ -55,6 +55,8 @@ class BotController extends \yii\web\Controller
         $chatType = $chat['type'];
         $date = $message['date'];
         $text = $message['text'];
+
+
         $answer = 'test';
 
 
@@ -63,10 +65,23 @@ class BotController extends \yii\web\Controller
 
 
 
+//        Yii::$app->telegram->sendMessage([
+//            'chat_id' => $chatId,
+//            'text' => $answer,
+//        ]);
+
         Yii::$app->telegram->sendMessage([
             'chat_id' => $chatId,
-            'text' => $answer,
+            'text' => 'this is test',
+            'reply_markup' => json_encode([
+                'inline_keyboard'=>[
+                    [
+                        ['text'=>"refresh",'callback_data'=> time()]
+                    ]
+                ]
+            ]),
         ]);
+
 
         $feedback = new Feedback();
         $feedback['phone'] = '-';
