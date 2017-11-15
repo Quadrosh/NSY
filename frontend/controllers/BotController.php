@@ -40,18 +40,34 @@ class BotController extends \yii\web\Controller
 
 //        $input = file_get_contents("php://input");
         $input = Yii::$app->request->getRawBody();
+        $updateId = Yii::$app->request->post('update_id');
+        $message = Yii::$app->request->post('message');
+        $messageId = $message['message_id'];
+        $from = $message['from'];  // array
+        $fromId = $from['id'];
+        $fromIsBot = $from['is_bot'];
+        $fromFirstName = $from['first_name'];
+        $fromLastName = $from['last_name'];
+        $fromUserName = $from['username'];
+        $fromType = $from['type'];
+        $date = $message['date'];
+        $text = $message['text'];
 
-        $arr =
+
 
         $feedback = new Feedback();
         $feedback['phone'] = '-';
         $feedback['city'] = '-';
         $feedback['email'] = 'email@email.com';
+        $post =
 
         $feedback['text'] =
-            'POST update_id - '.Yii::$app->request->post('update_id') .
-            'POST - '.json_encode($post) .
-            '; Input - '.$input;
+            'update_id - '. $updateId .
+            'messageId - '.$messageId.
+            'fromFirstName - '.$fromFirstName.
+            'text - ' . $text
+        ;
+//            '; Input - '.$input;
         $feedback->save();
 
         return 'ok';
