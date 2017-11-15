@@ -7,6 +7,7 @@ use common\models\Masters;
 use common\models\Motivator;
 use common\models\Pages;
 use yii\filters\ContentNegotiator;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use Yii;
 use yii\web\Response;
@@ -73,7 +74,7 @@ class BotController extends \yii\web\Controller
                 $quoteText .= $quote['text'];
                 $quoteText .= '\n';
             }
-            $motivatorQuotes = urlencode($quoteText);
+            $motivatorQuotes = Html::encode($quoteText);
 
             Yii::$app->telegram->sendMessage([
                 'chat_id' => $chatId,
