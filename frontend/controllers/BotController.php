@@ -59,28 +59,28 @@ class BotController extends \yii\web\Controller
 
         $answer = 'test';
 
+        if ($text == 'вопрос') {
+            $answer = 'ответ';
+        }
 
 
-
-
-
-
-//        Yii::$app->telegram->sendMessage([
-//            'chat_id' => $chatId,
-//            'text' => $answer,
-//        ]);
 
         Yii::$app->telegram->sendMessage([
-            'chat_id' => $fromId,
-            'text' => 'this is test',
-            'reply_markup' => json_encode([
-                'inline_keyboard'=>[
-                    [
-                        ['text'=>"refresh",'callback_data'=> time()]
-                    ]
-                ]
-            ]),
+            'chat_id' => $chatId,
+            'text' => $answer,
         ]);
+
+//        Yii::$app->telegram->sendMessage([
+//            'chat_id' => $fromId,
+//            'text' => 'this is test',
+//            'reply_markup' => json_encode([
+//                'inline_keyboard'=>[
+//                    [
+//                        ['text'=>"refresh",'callback_data'=> time()]
+//                    ]
+//                ]
+//            ]),
+//        ]);
 
 
         $feedback = new Feedback();
