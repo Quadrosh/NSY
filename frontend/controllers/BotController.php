@@ -32,7 +32,7 @@ class BotController extends \yii\web\Controller
         ];
     }
 
-    public function actionDialog()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
+    public function actionDialog_()   //http://nsy.dev/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
     {
 
         $input = Yii::$app->request->getRawBody();
@@ -115,33 +115,7 @@ class BotController extends \yii\web\Controller
 //        ]);
 
 
-//        Yii::$app->telegram->sendMessage([
-//            'chat_id' => $fromId,
-//            'text' => 'this is test',
-//            'reply_markup' => json_encode([
-//                'inline_keyboard'=>[
-//                    [
-//                        ['text'=>"refresh",'callback_data'=> time()]
-//                    ]
-//                ]
-//            ]),
-//        ]);
 
-
-
-
-//        $feedback = new Feedback();
-//        $feedback['phone'] = '-';
-//        $feedback['city'] = '-';
-//        $feedback['email'] = 'email@email.com';
-//        $feedback['text'] =
-//            'chatId - '. $chatId . '<br>'.
-//            'messageId - '.$messageId. '<br>'.
-//            'fromFirstName - '.$fromFirstName. '<br>'.
-//            'text - ' . $text . '<br>'.
-//            'response - ' . $answer
-//        ;
-//        $feedback->save();
 
 
 
@@ -237,3 +211,32 @@ class BotController extends \yii\web\Controller
 //}' "https://YOUR.BOT.URL:YOURPORT/"
 
 }
+
+
+//        Yii::$app->telegram->sendMessage([
+//            'chat_id' => $fromId,
+//            'text' => 'this is test',
+//            'reply_markup' => json_encode([
+//                'inline_keyboard'=>[
+//                    [
+//                        ['text'=>"refresh",'callback_data'=> time()]
+//                    ]
+//                ]
+//            ]),
+//        ]);
+
+
+
+
+//        $feedback = new Feedback();
+//        $feedback['phone'] = '-';
+//        $feedback['city'] = '-';
+//        $feedback['email'] = 'email@email.com';
+//        $feedback['text'] =
+//            'chatId - '. $chatId . '<br>'.
+//            'messageId - '.$messageId. '<br>'.
+//            'fromFirstName - '.$fromFirstName. '<br>'.
+//            'text - ' . $text . '<br>'.
+//            'response - ' . $answer
+//        ;
+//        $feedback->save();
