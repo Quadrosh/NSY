@@ -35,10 +35,6 @@ class BotController extends \yii\web\Controller
     {
 
 
-//        $post = Yii::$app->request->post();
-//        $get = Yii::$app->request->get();
-
-//        $input = file_get_contents("php://input");
         $input = Yii::$app->request->getRawBody();
         $updateId = Yii::$app->request->post('update_id');
         $message = Yii::$app->request->post('message');
@@ -64,12 +60,21 @@ class BotController extends \yii\web\Controller
         }
 
 
+        for ($i=0; $i < 3; $i++) {
+            Yii::$app->telegram->sendMessage([
+                'chat_id' => $chatId,
+                'text' => $answer,
+            ]);
+            sleep(3);
+        }
 
-        Yii::$app->telegram->sendMessage([
-            'chat_id' => $chatId,
-            'text' => $answer,
-        ]);
 
+//        Yii::$app->telegram->sendMessage([
+//            'chat_id' => $chatId,
+//            'text' => $answer,
+//        ]);
+
+        
 //        Yii::$app->telegram->sendMessage([
 //            'chat_id' => $fromId,
 //            'text' => 'this is test',
@@ -83,27 +88,25 @@ class BotController extends \yii\web\Controller
 //        ]);
 
 
-        $feedback = new Feedback();
-        $feedback['phone'] = '-';
-        $feedback['city'] = '-';
-        $feedback['email'] = 'email@email.com';
-        $feedback['text'] =
-            'chatId - '. $chatId . '<br>'.
-            'messageId - '.$messageId. '<br>'.
-            'fromFirstName - '.$fromFirstName. '<br>'.
-            'text - ' . $text . '<br>'.
-            'response - ' . $answer
-        ;
-        $feedback->save();
+
+
+//        $feedback = new Feedback();
+//        $feedback['phone'] = '-';
+//        $feedback['city'] = '-';
+//        $feedback['email'] = 'email@email.com';
+//        $feedback['text'] =
+//            'chatId - '. $chatId . '<br>'.
+//            'messageId - '.$messageId. '<br>'.
+//            'fromFirstName - '.$fromFirstName. '<br>'.
+//            'text - ' . $text . '<br>'.
+//            'response - ' . $answer
+//        ;
+//        $feedback->save();
+
+
 
         return 'ok';
 
-//  Yii::app()->request->getRawBody()
-
-//        \Yii::$app->telegram->sendMessage([
-//            'chat_id' => $chat_id,
-//            'text' => 'test',
-//        ]);
     }
 
     public function beforeAction($action)
