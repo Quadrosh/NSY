@@ -1,12 +1,11 @@
 {
-    "name": "Наше Счастье",
-    "description": "Все о достижении счастья - знания, техники, практики.",
-    "keywords": ["техники счастья", "счастье", "практики достижения душевного равновесия", "методы достижения счастья в жизни"],
-    "homepage": "http://nashe-schastye.ru/",
+    "name": "NS",
+    "description": "NS",
+    "keywords": "NS",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "http://nashe-schastye.ru/feedback/"
+        "issues": "NS"
 
     },
     "minimum-stability": "dev",
