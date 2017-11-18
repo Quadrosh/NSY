@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bbceaf893221d72ca06628614833bde3",
+    "content-hash": "0a89147f0a491d1d7e59e10a88a20072",
     "packages": [
         {
             "name": "aki/yii2-bot-telegram",
@@ -591,29 +591,35 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "4.1.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2"
+                "reference": "1119a9765990a24f4c5218a85032fb6f3a91eaff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2d3d238c433cf69caeb4842e97a3223a116f94b2",
-                "reference": "2d3d238c433cf69caeb4842e97a3223a116f94b2",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/1119a9765990a24f4c5218a85032fb6f3a91eaff",
+                "reference": "1119a9765990a24f4c5218a85032fb6f3a91eaff",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.0",
-                "phpdocumentor/reflection-common": "^1.0@dev",
+                "phpdocumentor/reflection-common": "^1.0.0",
                 "phpdocumentor/type-resolver": "^0.4.0",
                 "webmozart/assert": "^1.0"
             },
             "require-dev": {
-                "mockery/mockery": "^0.9.4",
-                "phpunit/phpunit": "^4.4"
+                "doctrine/instantiator": "~1.0.5",
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^6.4"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "phpDocumentor\\Reflection\\": [
@@ -632,7 +638,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-08-30T18:51:59+00:00"
+            "time": "2017-11-15T19:01:54+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -950,12 +956,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-token-stream.git",
-                "reference": "9a02332089ac48e704c70f6cefed30c224e3c0b0"
+                "reference": "7aad36cd1f32bbbd09a9a5efc596d00039ecb224"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/9a02332089ac48e704c70f6cefed30c224e3c0b0",
-                "reference": "9a02332089ac48e704c70f6cefed30c224e3c0b0",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-token-stream/zipball/7aad36cd1f32bbbd09a9a5efc596d00039ecb224",
+                "reference": "7aad36cd1f32bbbd09a9a5efc596d00039ecb224",
                 "shasum": ""
             },
             "require": {
@@ -991,7 +997,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-08-20T05:47:52+00:00"
+            "time": "2017-11-16T09:53:19+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -999,12 +1005,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "f0b07fbcb0c563eae088736dd0c81acba1d31ac3"
+                "reference": "cb52087e4403c100622f05c8811201cce2607b24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f0b07fbcb0c563eae088736dd0c81acba1d31ac3",
-                "reference": "f0b07fbcb0c563eae088736dd0c81acba1d31ac3",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/cb52087e4403c100622f05c8811201cce2607b24",
+                "reference": "cb52087e4403c100622f05c8811201cce2607b24",
                 "shasum": ""
             },
             "require": {
@@ -1073,7 +1079,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-11-14T07:52:47+00:00"
+            "time": "2017-11-16T09:54:38+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1758,6 +1764,49 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2017-11-10T19:03:56+00:00"
+        },
+        {
+            "name": "vyants/yii2-daemon",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vyants/yii2-daemon.git",
+                "reference": "e3251425f4aea09e49da769db36b3be9b3fe7781"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vyants/yii2-daemon/zipball/e3251425f4aea09e49da769db36b3be9b3fe7781",
+                "reference": "e3251425f4aea09e49da769db36b3be9b3fe7781",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcntl": "*",
+                "ext-posix": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "vyants\\daemon\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Vladimir Yants",
+                    "email": "vladimir.yants@gmail.com"
+                }
+            ],
+            "description": "Extension provides functionality for simple daemons creation and control",
+            "keywords": [
+                "daemon",
+                "extension",
+                "yii2"
+            ],
+            "time": "2016-08-04T13:05:31+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -2675,12 +2724,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "0f859c42d6b557fdac74754c9823170765ae3872"
+                "reference": "f7f266a531fa0fd40253c4f6d87239f807c39a33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/0f859c42d6b557fdac74754c9823170765ae3872",
-                "reference": "0f859c42d6b557fdac74754c9823170765ae3872",
+                "url": "https://api.github.com/repos/symfony/console/zipball/f7f266a531fa0fd40253c4f6d87239f807c39a33",
+                "reference": "f7f266a531fa0fd40253c4f6d87239f807c39a33",
                 "shasum": ""
             },
             "require": {
@@ -2736,7 +2785,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-11-12T16:53:54+00:00"
+            "time": "2017-11-16T15:25:26+00:00"
         },
         {
             "name": "symfony/css-selector",
