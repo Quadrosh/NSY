@@ -87,11 +87,11 @@ class BotController extends \yii\web\Controller
                 'text' => $quoteText,
             ]);
 
-            $process = new MotivatorBotProcess();
-            $process['chat_id'] = $chatId;
-            $process['first_name'] = $fromFirstName;
-            $process['chat_date'] = $date;
-            $process->save();
+//            $process = new MotivatorBotProcess();
+//            $process['chat_id'] = $chatId;
+//            $process['first_name'] = $fromFirstName;
+//            $process['chat_date'] = $date;
+//            $process->save();
 
         }
 
