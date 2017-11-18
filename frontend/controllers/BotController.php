@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Feedback;
 use common\models\Masters;
 use common\models\Motivator;
+use common\models\MotivatorBotProcess;
 use common\models\Pages;
 use yii\filters\ContentNegotiator;
 use yii\helpers\Html;
@@ -85,6 +86,12 @@ class BotController extends \yii\web\Controller
                 'chat_id' => $chatId,
                 'text' => $quoteText,
             ]);
+
+            $process = new MotivatorBotProcess();
+            $process['chat_id'] = $chatId;
+            $process['first_name'] = $fromFirstName;
+            $process['chat_date'] = $date;
+            $process->save();
 
         }
 
