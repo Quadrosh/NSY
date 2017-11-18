@@ -1,11 +1,11 @@
 {
     "name": "NS",
-    "description": "NS",
-    "keywords": "NS",
+    "description": "Yii 2 Project Template",
+    "keywords": ["NS"],
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "NS"
+        "issues": "https://github.com/yiisoft/yii2/issues?state=open"
 
     },
     "minimum-stability": "dev",
@@ -17,7 +17,8 @@
         "yiisoft/yii2-jui": "^2.0",
         "cloudinary/cloudinary_php": "dev-master",
         "aki/yii2-bot-telegram": "*",
-        "phpunit/phpunit": "5.7.*"
+        "phpunit/phpunit": "5.7.*",
+        "vyants/yii2-daemon": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
