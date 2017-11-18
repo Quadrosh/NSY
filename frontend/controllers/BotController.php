@@ -87,11 +87,16 @@ class BotController extends \yii\web\Controller
                 'text' => $quoteText,
             ]);
 
-//            $process = new MotivatorBotProcess();
-//            $process['chat_id'] = $chatId;
-//            $process['first_name'] = $fromFirstName;
-//            $process['chat_date'] = $date;
-//            $process->save();
+            $process = new MotivatorBotProcess();
+            $process['chat_id'] = intval($chatId);
+            $process['first_name'] = strval($fromFirstName);
+            $process['chat_date'] = intval($date);
+
+            if ($process->save()) {
+                return Yii::$app->response->statusCode = 200;
+            } else {
+                throw new \yii\web\BadRequestHttpException;
+            }
 
         }
 
