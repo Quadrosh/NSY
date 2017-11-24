@@ -10,6 +10,7 @@ use common\models\MotivatorBotProcess;
 use common\models\Pages;
 use yii\filters\ContentNegotiator;
 use yii\helpers\Html;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use Yii;
 use yii\web\Response;
@@ -55,6 +56,10 @@ class BotController extends \yii\web\Controller
         $date = $message['date'];
         $text = $message['text'];
 
+        Yii::$app->telegram->sendMessage([
+            'chat_id' => $chatId,
+            'text' => 'input-'.Json::encode($input),
+        ]);
 
 
         $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
@@ -139,16 +144,9 @@ class BotController extends \yii\web\Controller
                         ]
                     ]),
                 ]);
-
             }
-
-
         }
-
-
-
         return 'end return';
-
     }
 
     public function beforeAction($action)
