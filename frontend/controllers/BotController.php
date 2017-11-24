@@ -56,13 +56,13 @@ class BotController extends \yii\web\Controller
         $date = $message['date'];
         $text = $message['text'];
 
-//        Yii::$app->telegram->sendMessage([
-//            'chat_id' => $chatId,
-//            'text' => 'input-'.Json::encode($input),
-//        ]);
+        Yii::$app->telegram->sendMessage([
+            'chat_id' => $chatId,
+            'text' => 'input-'.Json::encode($input),
+        ]);
 
 
-        $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
+//        $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
 
 //        if ($motivator == null) {
 //            Yii::$app->telegram->sendMessage([
