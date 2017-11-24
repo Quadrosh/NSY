@@ -139,8 +139,8 @@ class BotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-//                                ['text'=>"refresh",'callback_data'=> time()]
-                                ['text'=>"Наше счастье",'url'=>'http://nashe-schastye.ru/']
+                                ['text'=>"send data",'callback_data'=> 'data']
+//                                ['text'=>"Наше счастье",'url'=>'http://nashe-schastye.ru/']
                             ]
                         ]
                     ]),
