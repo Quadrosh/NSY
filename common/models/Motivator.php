@@ -21,6 +21,8 @@ class Motivator extends ActiveRecord
     {
         return $this->hasMany(MLine::className(),['motivator_id'=>'id']);
     }
+
+
     public function rules()
     {
         return [
