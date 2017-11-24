@@ -58,7 +58,7 @@ class BotController extends \yii\web\Controller
 
         Yii::$app->telegram->sendMessage([
             'chat_id' => $chatId,
-            'text' => 'input-'.Json::encode($message),
+            'text' => 'input-'.Json::encode($text),
         ]);
 
 
