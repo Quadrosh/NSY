@@ -62,7 +62,7 @@ class BotController extends \yii\web\Controller
 //        ]);
 
 
-//        $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
+        $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
 
 //        if ($motivator == null) {
 //            Yii::$app->telegram->sendMessage([
