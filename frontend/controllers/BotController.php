@@ -41,7 +41,7 @@ class BotController extends \yii\web\Controller
 
         $input = Yii::$app->request->getRawBody();
         $updateId = Yii::$app->request->post('update_id');
-        $message = Yii::$app->request->post('message');
+        $message = Yii::$app->request->post('message'); // array
         $messageId = $message['message_id'];
         $from = $message['from'];  // array
         $fromId = $from['id'];
@@ -58,7 +58,7 @@ class BotController extends \yii\web\Controller
 
         Yii::$app->telegram->sendMessage([
             'chat_id' => $chatId,
-            'text' => 'input-'.Json::encode($input),
+            'text' => 'input-'.Json::encode($message),
         ]);
 
 
