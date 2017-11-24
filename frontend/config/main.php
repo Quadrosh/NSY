@@ -24,10 +24,6 @@ return [
     'name' => 'Наше Счастье',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
-        'telegram' => [
-            'class' => 'aki\telegram\Telegram',
-            'botToken' => '475062491:AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ',
-        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
             'cookieValidationKey' => 'DgaujypcSnGWPqwdtwTo',

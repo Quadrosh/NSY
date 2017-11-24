@@ -16,7 +16,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $motivator_id
  * @property int $steps_qnt
  * @property int $current_step
- * @property int $block_qnt
+ * @property int $new_block
  * @property int $current_block
  * @property int $mline_id
  * @property string $text
@@ -49,7 +49,7 @@ class MotivatorBotProcess extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['chat_id', 'chat_date', 'motivator_id', 'steps_qnt', 'current_step', 'block_qnt', 'current_block', 'mline_id', 'start_time', 'created_at'], 'integer'],
+            [['chat_id', 'chat_date', 'motivator_id', 'steps_qnt', 'current_step', 'new_block', 'current_block', 'mline_id', 'start_time', 'created_at'], 'integer'],
             [['text'], 'string'],
             [['first_name', 'command'], 'string', 'max' => 255],
         ];
@@ -69,7 +69,7 @@ class MotivatorBotProcess extends \yii\db\ActiveRecord
             'motivator_id' => 'Motivator ID',
             'steps_qnt' => 'Steps Qnt',
             'current_step' => 'Current Step',
-            'block_qnt' => 'Block Qnt',
+            'new_block' => 'New Block',
             'current_block' => 'Current Block',
             'mline_id' => 'Mline ID',
             'text' => 'Text',

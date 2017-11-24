@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Daemons;
 use common\models\Feedback;
 use common\models\Masters;
 use common\models\Motivator;
@@ -55,11 +56,6 @@ class BotController extends \yii\web\Controller
         $text = $message['text'];
 
 
-        $answer = 'test';
-
-        if ($text == 'вопрос') {
-            $answer = 'ответ';
-        }
 
         $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
 
@@ -70,39 +66,88 @@ class BotController extends \yii\web\Controller
             ]);
         } else {
             $quotes = $motivator->mLines;
-            $quoteText = '';
-            foreach ($quotes as $quote) {
-                $quoteText .= $quote['text'].PHP_EOL;
-//                $quoteText .= PHP_EOL;
+            if ($text == 'accept-the-life-daemon') {
+                $quotesCount = count($quotes);
+                $now = date_timestamp_get(new \DateTime());
+                $timeMark = $now;
+                $stepI = 1;
+                $blockI = 1;
+
+                foreach ($quotes as $quote) {
+
+                    $process = new MotivatorBotProcess();
+                    $process['chat_id'] = $chatId;
+                    $process['first_name'] = $fromFirstName;
+                    $process['chat_date'] = $date;
+                    $process['command'] = $text;
+                    $process['motivator_id'] = $motivator['id'];
+                    $process['steps_qnt'] = $quotesCount;
+
+                    $process['current_step'] = $stepI;
+                    $process['current_block'] = $quote['block_num'];
+                    if ($process['current_block'] != $blockI) {
+                        $process['new_block'] = true;
+                        $process['start_time'] = $timeMark + 4;
+                        $blockI++;
+                    } else {
+                        $process['start_time'] = $timeMark + 2;
+                    }
+                    $timeMark = $process['start_time'];
+                    $process['mline_id'] = $quote['id'];
+                    $process['text'] = $quote['text'];
+
+                    $process->save();
+                    $stepI++;
+
+                }
+
+                $daemon = Daemons::find()->where(['daemon'=>'motivator-bot-daemon'])->one();
+                if ($daemon == null) {
+                    $daemon = new Daemons();
+                    $daemon['daemon'] = 'motivator-bot-daemon';
+                }
+                $daemon['enabled'] = true;
+                $daemon->save();
+
+                Yii::$app->telegram->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => $motivator['list_name'].' ('.$quotesCount.')',
+                ]);
+            } else {   // no daemon
+                $quoteText = '';
+                $quiteBox = null;
+                foreach ($quotes as $quote) {
+                    if ($quiteBox !=$quote['block_num']) {
+                        $quiteBox = $quote['block_num'];
+                        $quoteText .= '——————————————'.PHP_EOL;
+                    }
+                    $quoteText .= $quote['text'].PHP_EOL;
+                }
+                Yii::$app->telegram->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => $motivator['list_name'],
+                ]);
+
+                Yii::$app->telegram->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => $quoteText,
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"refresh",'callback_data'=> time()]
+                            ]
+                        ]
+                    ]),
+                ]);
+
             }
-//            $motivatorQuotes = Html::encode($quoteText);
 
-            Yii::$app->telegram->sendMessage([
-                'chat_id' => $chatId,
-                'text' => $motivator['list_name'],
-            ]);
-
-            Yii::$app->telegram->sendMessage([
-                'chat_id' => $chatId,
-                'text' => $quoteText,
-            ]);
-
-//            $process = new MotivatorBotProcess();
-//            $process['chat_id'] = intval($chatId);
-//            $process['first_name'] = strval($fromFirstName);
-//            $process['chat_date'] = intval($date);
-//
-//            if ($process->save()) {
-//                return Yii::$app->response->statusCode = 200;
-//            } else {
-//                throw new \yii\web\BadRequestHttpException;
-//            }
 
         }
 
 
 
-        return 'ok';
+        return 'end return';
 
     }
 
@@ -121,7 +166,8 @@ class BotController extends \yii\web\Controller
     {
 
     }
-
+}
+//  info   https://api.telegram.org/bot475062491:AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ/getwebhookinfo
 //   https://nashe-schastye.ru/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
 //   https://api.telegram.org/bot475062491:AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ/setWebhook?url=https://nashe-schastye.ru/475062491AAGxkvyWyk0xfbZzv5bKGZcFkaftHPTNEZQ
 
@@ -147,7 +193,7 @@ class BotController extends \yii\web\Controller
 //}
 //}' "https://YOUR.BOT.URL:YOURPORT/"
 
-}
+
 
 
 //            foreach ($quotes as $quote) {
