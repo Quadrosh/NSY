@@ -56,10 +56,10 @@ class BotController extends \yii\web\Controller
         $date = $message['date'];
         $text = $message['text'];
 
-//        Yii::$app->telegram->sendMessage([
-//            'chat_id' => $chatId,
-//            'text' => 'input-'.Json::encode($text),
-//        ]);
+        Yii::$app->telegram->sendMessage([
+            'chat_id' => $chatId,
+            'text' => 'input-'.Json::encode($input),
+        ]);
 
 
         $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
@@ -136,6 +136,13 @@ class BotController extends \yii\web\Controller
                 Yii::$app->telegram->sendMessage([
                     'chat_id' => $chatId,
                     'text' => $quoteText,
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"refresh",'callback_data'=> time()]
+                            ]
+                        ]
+                    ]),
                 ]);
             }
         }
@@ -156,10 +163,3 @@ class BotController extends \yii\web\Controller
 
 }
 //
-//'reply_markup' => json_encode([
-//    'inline_keyboard'=>[
-//        [
-//            ['text'=>"refresh",'callback_data'=> time()]
-//        ]
-//    ]
-//]),
