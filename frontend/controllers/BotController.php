@@ -56,7 +56,7 @@ class BotController extends \yii\web\Controller
         $date = $message['date'];
         $text = $message['text'];
 
-        Yii::$app->telegram->sendMessage([
+        $this->sendMessage([
             'chat_id' => $chatId,
             'text' => 'input-'.Json::encode($input),
         ]);
@@ -65,7 +65,7 @@ class BotController extends \yii\web\Controller
         $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
 
         if ($motivator == null) {
-            Yii::$app->telegram->sendMessage([
+            $this->sendMessage([
                 'chat_id' => $chatId,
                 'text' => 'нет такого мотиватора',
             ]);
@@ -128,22 +128,30 @@ class BotController extends \yii\web\Controller
                     }
                     $quoteText .= $quote['text'].PHP_EOL;
                 }
-                Yii::$app->telegram->sendMessage([
+//                Yii::$app->telegram->sendMessage([
+//                    'chat_id' => $chatId,
+//                    'text' => $motivator['list_name'],
+//                ]);
+//
+//                Yii::$app->telegram->sendMessage([
+//                    'chat_id' => $chatId,
+//                    'text' => $quoteText,
+//                    'reply_markup' => json_encode([
+//                        'inline_keyboard'=>[
+//                            [
+//                                ['text'=>"send data",'callback_data'=> 'data']
+////                                ['text'=>"Наше счастье",'url'=>'http://nashe-schastye.ru/']
+//                            ]
+//                        ]
+//                    ]),
+//                ]);
+                $this->sendMessage([
                     'chat_id' => $chatId,
                     'text' => $motivator['list_name'],
                 ]);
-
-                Yii::$app->telegram->sendMessage([
+                $this->sendMessage([
                     'chat_id' => $chatId,
                     'text' => $quoteText,
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>"send data",'callback_data'=> 'data']
-//                                ['text'=>"Наше счастье",'url'=>'http://nashe-schastye.ru/']
-                            ]
-                        ]
-                    ]),
                 ]);
             }
         }
@@ -160,7 +168,56 @@ class BotController extends \yii\web\Controller
         return parent::beforeAction($action);
     }
 
+    public function sendMessage(array $option){
+        $chat_id = $option['chat_id'];
+        $text = urlencode($option['text']);
+        unset($option['chat_id']);
+        unset($option['text']);
+        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+            Yii::$app->params['telegramBotToken'].
+            "/sendMessage?chat_id=".$chat_id .
+            '&text='.$text, $option);
+        return json_decode($jsonResponse);
+    }
 
+    private function curlCall($url, $option=array(), $headers=array())
+    {
+        $attachments = ['photo', 'sticker', 'audio', 'document', 'video'];
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Telebot");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        if (count($option)) {
+            curl_setopt($ch, CURLOPT_POST, true);
+            foreach($attachments as $attachment){
+                if(isset($option[$attachment])){
+                    $option[$attachment] = $this->curlFile($option[$attachment]);
+                    break;
+                }
+            }
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $option);
+        }
+        $r = curl_exec($ch);
+        if($r == false){
+            $text = 'eroror '.curl_error($ch);
+            $myfile = fopen("error_telegram.log", "w") or die("Unable to open file!");
+            fwrite($myfile, $text);
+            fclose($myfile);
+        }
+        curl_close($ch);
+        return $r;
+    }
+
+    private function curlFile($path)
+    {
+        if (is_array($path))
+            return $path['file_id'];
+        $realPath = realpath($path);
+        if (class_exists('CURLFile'))
+            return new \CURLFile($realPath);
+        return '@' . $realPath;
+    }
 
 }
 //
