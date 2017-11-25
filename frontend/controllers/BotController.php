@@ -45,6 +45,7 @@ class BotController extends \yii\web\Controller
         $callbackQuery = Yii::$app->request->post('callback_query'); // array
         $inlineQuery = Yii::$app->request->post('inline_query'); // array
 
+
         $messageId = $message['message_id'];
         $from = $message['from'];  // array
         $fromId = $from['id'];
@@ -170,6 +171,18 @@ class BotController extends \yii\web\Controller
             }
             return 'end return message';
         } elseif ($callbackQuery != null){
+//            $callbackQuery['id'];
+//            $callbackQuery['data'];
+            if ($callbackQuery['data']== 'motivatorList') {
+                $this->answerCallbackQuery([
+                    'callback_query_id' => $callbackQuery['id'], //require
+                    'text' => 'список строится', //Optional
+                    'show_alert' => 'my alert',  //Optional
+                    'url' => 'http://sample.com', //Optional
+    //                'cache_time' => 123231,  //Optional
+                ]);
+
+            }
 
             $this->sendMessage([
                 'chat_id' => '232544919',
@@ -244,22 +257,22 @@ class BotController extends \yii\web\Controller
     }
 
     /**
-     *   @var Array
-     *   sample
-     *   Yii::$app->telegram->answerCallbackQuery([
+     *   @var array
+     *   $this->answerCallbackQuery([
      *       'callback_query_id' => '3343545121', //require
      *       'text' => 'text', //Optional
      *       'show_alert' => 'my alert',  //Optional
      *       'url' => 'http://sample.com', //Optional
      *       'cache_time' => 123231,  //Optional
      *   ]);
-     *   Use this method to send answers to callback queries sent from inline keyboards.
      *   The answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
      *  On success, True is returned.
      */
     public function answerCallbackQuery(array $option = [])
     {
-        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" . Yii::$app->params['telegramBotToken'] . "/answerCallbackQuery", $option);
+        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+            Yii::$app->params['telegramBotToken'] .
+            "/answerCallbackQuery", $option);
         return json_decode($jsonResponse);
     }
 
