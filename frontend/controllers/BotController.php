@@ -226,18 +226,16 @@ class BotController extends \yii\web\Controller
                 }
 
                 $this->sendMessage([
-                    'chat_id' => $chatId,
+                    'chat_id' => $callbackQuery['from']['id'],
                     'text' => $motivator['list_name'],
                 ]);
                 $this->sendMessage([
-                    'chat_id' => $chatId,
+                    'chat_id' => $callbackQuery['from']['id'],
                     'text' => $quoteText,
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
                                 ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList=1'],
-//                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
-//                                    ['text'=>'switch','switch_inline_query'=>''],
                             ]
                         ]
                     ]),
