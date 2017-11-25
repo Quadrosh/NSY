@@ -244,7 +244,6 @@ class BotController extends \yii\web\Controller
 
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
-//                    'text' => '  $data='. Json::encode($data),
                     'text' => $type . ' мотиваторы',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=> $data
@@ -252,12 +251,12 @@ class BotController extends \yii\web\Controller
                 ]);
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
-                    'text' => ' ',
+                    'text' => 'Опции ',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
                                 ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'.$pointOfView],
-                                ['text'=>'Режим показа','callback_data'=> 'mode/you/all'],
+                                ['text'=>'Режим показа','callback_data'=> 'mode/'.$pointOfView.'/all'],
                             ]
                         ]
                     ]),
