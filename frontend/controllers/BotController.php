@@ -273,7 +273,7 @@ class BotController extends \yii\web\Controller
                 }
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
-                    'text' => 'текущая точка зрения - '. $pointOfView=='i'?'Я':'Ты',
+                    'text' => $pointOfView=='i'?'Текущая точка зрения - Я':'Текущая точка зрения - Ты',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
