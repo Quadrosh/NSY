@@ -189,14 +189,21 @@ class BotController extends \yii\web\Controller
                 ]);
                 if (isset($commandParts[1])) {
                     $pointOfView = $commandParts[1];
-                    $motivators = Motivator::find()
-                        ->where(['list_section'=>1,'position'=>0])
-                        ->orderBy('list_num')
-                        ->all();
+                    if ($pointOfView == 'you') {
+                        $motivators = Motivator::find()
+                            ->where(['list_section'=>'1','position'=>'1'])
+                            ->orderBy('list_num')
+                            ->all();
+                    } else {
+                        $motivators = Motivator::find()
+                            ->where(['list_section'=>'1','position'=>'0'])
+                            ->orderBy('list_num')
+                            ->all();
+                    }
                 } else {
                     $pointOfView = 'you';
                     $motivators = Motivator::find()
-                        ->where(['list_section'=>1,'position'=>1])
+                        ->where(['list_section'=>'1','position'=>'1'])
                         ->orderBy('list_num')
                         ->all();
                 }
