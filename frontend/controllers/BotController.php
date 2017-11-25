@@ -190,12 +190,14 @@ class BotController extends \yii\web\Controller
                     ->all();
                 $data = [];
                 $i = 0;
+                $rowI = 0;
 //                $arr = [];
                 foreach ($motivators as $motivator) {
-                    $data[$i] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
+                    $data[$rowI][$i] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
 //                    $data[$i]['text'] = $motivator['list_name'];
 //                    $data[$i]['callback_data'] = $motivator['hrurl'];
                     $i++;
+                    $rowI++;
                 }
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
