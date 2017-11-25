@@ -189,42 +189,20 @@ class BotController extends \yii\web\Controller
                     ->orderBy('list_num')
                     ->all();
                 $data = [];
-                $i = 1;
-//                $rowI = 1;
-                $arr = [];
                 foreach ($motivators as $motivator) {
                     $row = [];
-                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
+//                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
+                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> ['action'=>'motivator','name'=>$motivator['hrurl']]];
                     $data[] = $row;
-
-//                    $data[$rowI][$i] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
-//                    $data[$i] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
-
-//                    $data[$i]['text'] = $motivator['list_name'];
-//                    $data[$i]['callback_data'] = $motivator['hrurl'];
-
-//                    $data[$i] = [
-//                        ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']]
-//                    ];
-                    $i++;
-//                    $rowI++;
                 };
-                $oldData =  [
-                    [
-                        ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
-                    ],
-                    [
-                        ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
-                    ]
-                ];
 
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
-                    'text' => '  $data='. Json::encode($data).' _=_   $oldData='. Json::encode($oldData),
+//                    'text' => '  $data='. Json::encode($data).' _=_   $oldData='. Json::encode($oldData),
                     'reply_markup' => json_encode([
-//                        'inline_keyboard'=>$oldData
                         'inline_keyboard'=> $data
 
+//                        'inline_keyboard'=>$oldData
 //                        'inline_keyboard'=>[  $data
 ////                            [
 //////
