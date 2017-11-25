@@ -197,7 +197,7 @@ class BotController extends \yii\web\Controller
 
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
-                    'text' => '  $data='. Json::encode($data),
+//                    'text' => '  $data='. Json::encode($data),
                     'reply_markup' => json_encode([
                         'inline_keyboard'=> $data
 
