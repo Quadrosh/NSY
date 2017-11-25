@@ -176,7 +176,7 @@ class BotController extends \yii\web\Controller
         if ($callbackQuery != null) {
 //            $callbackQuery['id'];
 //            $callbackQuery['data'];
-            if ($callbackQuery['data']== 'motivatorList') {
+            if ($callbackQuery['data'] == 'motivatorList') {
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'], //require
                     'text' => 'список строится', //Optional
@@ -197,7 +197,7 @@ class BotController extends \yii\web\Controller
 
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
-//                    'text' => '  $data='. Json::encode($data).' _=_   $oldData='. Json::encode($oldData),
+                    'text' => '  $data='. Json::encode($data),
                     'reply_markup' => json_encode([
                         'inline_keyboard'=> $data
 
