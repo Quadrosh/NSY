@@ -74,10 +74,18 @@ class BotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/you'],
+                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
+                            ],
+                            [
+                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
+                            ],
+                            [
+                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
+                            ],
+                            [
                                 ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>"Раздел",'callback_data'=> 'theme/1'],
-                            ]
+                                ['text'=>"Режим показа",'callback_data'=> 'mode/1'],
+                            ],
                         ]
                     ]),
                 ]);
@@ -154,12 +162,17 @@ class BotController extends \yii\web\Controller
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
-                                    ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/1'],
+                                    ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/you'],
                                     ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
+//                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
+//                                    ['text'=>'switch','switch_inline_query'=>''],
+                                ],
+                                [
                                     ['text'=>"Раздел",'callback_data'=> 'theme/1'],
 //                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
 //                                    ['text'=>'switch','switch_inline_query'=>''],
-                                ]
+                                ],
+
                             ]
                         ]),
                     ]);
@@ -175,6 +188,8 @@ class BotController extends \yii\web\Controller
 
         }
 
+//       Callback
+
         if ($callbackQuery != null) {
             $commandParts = explode('/', $callbackQuery['data']);
             $action = $commandParts[0];
@@ -187,26 +202,29 @@ class BotController extends \yii\web\Controller
 //                    'url' => 'http://sample.com', //Optional
     //                'cache_time' => 123231,  //Optional
                 ]);
+                $section = $commandParts[2];
+
                 if (isset($commandParts[1])) {
                     $pointOfView = $commandParts[1];
                     if ($pointOfView == 'you') {
                         $motivators = Motivator::find()
-                            ->where(['list_section'=>'1','position'=>'1'])
+                            ->where(['list_section'=>$section,'position'=>'1'])
                             ->orderBy('list_num')
                             ->all();
                     } else {
                         $motivators = Motivator::find()
-                            ->where(['list_section'=>'1','position'=>'0'])
+                            ->where(['list_section'=>$section,'position'=>'0'])
                             ->orderBy('list_num')
                             ->all();
                     }
                 } else {
                     $pointOfView = 'you';
                     $motivators = Motivator::find()
-                        ->where(['list_section'=>'1','position'=>'1'])
+                        ->where(['list_section'=>$section,'position'=>'1'])
                         ->orderBy('list_num')
                         ->all();
                 }
+
 
                 $data = [];
                 foreach ($motivators as $motivator) {
@@ -291,6 +309,69 @@ class BotController extends \yii\web\Controller
                         ]
                     ]),
                 ]);
+            }
+            if ($action == 'options') {
+                $this->answerCallbackQuery([
+                    'callback_query_id' => $callbackQuery['id'], //require
+                    'text' => 'ответ получен', //Optional
+                ]);
+                if (isset($commandParts[1])) {
+                    $pointOfView = $commandParts[1];
+                } else {
+                    $pointOfView = 'you';
+                }
+                $this->sendMessage([
+                    'chat_id' => $callbackQuery['from']['id'],
+                    'text' => 'Список опций',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/you'],
+                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
+                            ],
+                            [
+                                ['text'=>"Раздел",'callback_data'=> 'section/1'],
+                                ['text'=>"Режим показа",'callback_data'=> 'mode/1'],
+                            ],
+                        ]
+                    ]),
+                ]);
+
+
+            }
+            if ($action == 'section') {
+                $this->answerCallbackQuery([
+                    'callback_query_id' => $callbackQuery['id'], //require
+                    'text' => 'ответ получен', //Optional
+                ]);
+                if (isset($commandParts[1])) {
+                    $pointOfView = $commandParts[1];
+                } else {
+                    $pointOfView = 'you';
+                }
+                $this->sendMessage([
+                    'chat_id' => $callbackQuery['from']['id'],
+                    'text' => 'Разделы',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Тематические",'callback_data'=> 'motivatorList/'.$pointOfView.'/1'],
+                                ['text'=>"Профессиональные",'callback_data'=> 'motivatorList/'.$pointOfView.'/2'],
+                                ['text'=>"Романтика",'callback_data'=> 'motivatorList/'.$pointOfView.'/4'],
+                            ]
+                        ]
+                    ]),
+                ]);
+
+
+            }
+            if ($action == 'mode') {
+                $this->answerCallbackQuery([
+                    'callback_query_id' => $callbackQuery['id'], //require
+                    'text' => 'ответ получен', //Optional
+                ]);
+
+
             }
 
 //            $this->sendMessage([
