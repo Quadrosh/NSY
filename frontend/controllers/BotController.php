@@ -280,7 +280,7 @@ class BotController extends \yii\web\Controller
                 }
 
                 $section = $motivator['list_section'];
-                if ($section==1) {
+                if ($section == 1) {
                     $type = 'Тематические';
                 } elseif ($section==2) {
                     $type = 'Профессиональные';
@@ -296,7 +296,7 @@ class BotController extends \yii\web\Controller
                 ]);
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
-                    'text' => ' ',
+                    'text' => $quoteText,
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
