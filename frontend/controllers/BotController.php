@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Daemons;
 use common\models\Feedback;
 use common\models\Masters;
+use common\models\MLine;
 use common\models\Motivator;
 use common\models\MotivatorBotProcess;
 use common\models\Pages;
@@ -273,7 +274,6 @@ class BotController extends \yii\web\Controller
                     $pointOfView = 'you';
                 }
                 $motivator = Motivator::find()->where(['hrurl'=>$hrurl])->one();
-                $quotes = $motivator->mLines;
                 $quoteText = '';
                 $quiteBox = null;
 
@@ -300,6 +300,7 @@ class BotController extends \yii\web\Controller
                     'text' => $motivator['list_name'],
                 ]);
                 if ($mode ==  'all') {
+                    $quotes = $motivator->mLines;
                     foreach ($quotes as $quote) {
                         if ($quiteBox !=$quote['block_num']) {
                             $quiteBox = $quote['block_num'];
@@ -321,15 +322,37 @@ class BotController extends \yii\web\Controller
                         ]),
                     ]);
                 } else { // $mode ==  'one'
+                    if (isset($commandParts[4])) {
+                        $quoteBlock = $commandParts[4];
+                    } else {
+                        $quoteBlock =  '1';
+                    }
+                    $quotes = MLine::find()
+                        ->where(['motivator_id'=>$motivator['id'], 'block_num'=>$quoteBlock])
+                        ->orderBy('quote_num')
+                        ->all();
+                    foreach ($quotes as $quote) {
+                        $quoteText .= $quote['text'].PHP_EOL;
+                    }
+                    if (MLine::find()->where(['motivator_id'=>$motivator['id'], 'block_num'=>intval($quoteBlock)+1])!=null) {
+                        $next = intval($quoteBlock)+1;
+                        $nextButtonName = 'Дальше';
+                        $nextButtonValue = 'motivator/' . $motivator['hrurl'].'/'.$pointOfView.'/one/'.$next;
+                    } else {
+                        $next = 'fin';
+                        $nextButtonName = 'Мотиваторы';
+                        $nextButtonValue = 'motivatorList/'.$pointOfView . '/' . $section .'/one';
+                    }
+
+
                     $this->sendMessage([
                         'chat_id' => $callbackQuery['from']['id'],
-                        'text' => 'По одному',
+                        'text' => $quoteText,
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
-//                                    ['text'=>$type .' мотиваторы','callback_data'=> 'motivatorList/'.$pointOfView . '/' . $section],
-//                                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView],
-//                                ['text'=>"Раздел",'callback_data'=> 'theme/1'],
+                                    ['text'=>$nextButtonName,'callback_data'=> $nextButtonValue],
+                                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/one'],
                                 ]
                             ]
                         ]),
