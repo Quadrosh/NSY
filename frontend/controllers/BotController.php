@@ -334,7 +334,7 @@ class BotController extends \yii\web\Controller
                     foreach ($quotes as $quote) {
                         $quoteText .= $quote['text'].PHP_EOL;
                     }
-                    if (!empty(MLine::find()->where(['motivator_id'=>$motivator['id'], 'block_num'=>intval($quoteBlock)+1]))) {
+                    if (!empty(MLine::find()->where(['motivator_id'=>$motivator['id'], 'block_num'=>intval($quoteBlock)+1])->one())) {
                         $next = intval($quoteBlock)+1;
                         $nextButtonName = 'Дальше';
                         $nextButtonValue = 'motivator/' . $motivator['hrurl'].'/'.$pointOfView.'/one/'.$next;
