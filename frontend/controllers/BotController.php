@@ -174,8 +174,8 @@ class BotController extends \yii\web\Controller
         }
 
         if ($callbackQuery != null) {
-            $parts = explode('=', $callbackQuery['data']);
-            $action = $parts[0];
+            $commandParts = explode('=', $callbackQuery['data']);
+            $action = $commandParts[0];
 
             if ($action == 'motivatorList') {
                 $this->answerCallbackQuery([
@@ -205,6 +205,46 @@ class BotController extends \yii\web\Controller
                     ]),
                 ]);
 
+            }
+            if ($action == 'motivator') {
+                $this->answerCallbackQuery([
+                    'callback_query_id' => $callbackQuery['id'], //require
+                    'text' => 'список строится', //Optional
+//                    'show_alert' => 'my alert',  //Optional
+//                    'url' => 'http://sample.com', //Optional
+                    //                'cache_time' => 123231,  //Optional
+                ]);
+                $hrurl = $commandParts[1];
+                $motivator = Motivator::find()->where(['hrurl'=>$hrurl])->one();
+                $quotes = $motivator->mLines;
+                $quoteText = '';
+                $quiteBox = null;
+                foreach ($quotes as $quote) {
+                    if ($quiteBox !=$quote['block_num']) {
+                        $quiteBox = $quote['block_num'];
+                        $quoteText .= '——————————————'.PHP_EOL;
+                    }
+                    $quoteText .= $quote['text'].PHP_EOL;
+                }
+
+                $this->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => $motivator['list_name'],
+                ]);
+                $this->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => $quoteText,
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList=1'],
+//                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
+//                                    ['text'=>'switch','switch_inline_query'=>''],
+                            ]
+                        ]
+                    ]),
+                ]);
+                
             }
 
             $this->sendMessage([
