@@ -238,12 +238,12 @@ class BotController extends \yii\web\Controller
                 $data = [];
                 foreach ($motivators as $motivator) {
                     $row = [];
-                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> 'motivator/' . $motivator['hrurl'].'/'.$pointOfView];
+                    $row[] = ['text'=>$motivator['pagehead'],'callback_data'=> 'motivator/' . $motivator['hrurl'].'/'.$pointOfView];
                     $data[] = $row;
                 };
                 // options
                 $data[] = [
-                    ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'.$pointOfView],
+                    ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'.$pointOfView.'/'.$section],
                     ['text'=>'Режим показа','callback_data'=> 'mode/'.$pointOfView.'/all'],
                 ];
 
@@ -254,18 +254,6 @@ class BotController extends \yii\web\Controller
                         'inline_keyboard'=> $data
                     ]),
                 ]);
-//                $this->sendMessage([
-//                    'chat_id' => $callbackQuery['from']['id'],
-//                    'text' => 'Опции ',
-//                    'reply_markup' => json_encode([
-//                        'inline_keyboard'=>[
-//                            [
-//                                ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'.$pointOfView],
-//                                ['text'=>'Режим показа','callback_data'=> 'mode/'.$pointOfView.'/all'],
-//                            ]
-//                        ]
-//                    ]),
-//                ]);
 
             }
             if ($action == 'motivator') {
@@ -332,14 +320,24 @@ class BotController extends \yii\web\Controller
                 } else {
                     $pointOfView = 'you';
                 }
+                $section = $commandParts[2];
+                if ($section==1) {
+                    $type = 'Тематические';
+                } elseif ($section==2) {
+                    $type = 'Профессиональные';
+                } elseif ($section==4) {
+                    $type = 'Романтичные';
+                } else {
+                    $type = 'Тематические';
+                }
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
                     'text' => $pointOfView=='i'?'Текущая точка зрения - Я':'Текущая точка зрения - Ты',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Мотиваторы - Я",'callback_data'=> 'motivatorList/i'],
-                                ['text'=>"Мотиваторы - Ты",'callback_data'=> 'motivatorList/you'],
+                                ['text'=> $type . ' мотиваторы - Я','callback_data'=> 'motivatorList/i/'.$section],
+                                ['text'=>$type . ' мотиваторы - Ты','callback_data'=> 'motivatorList/you/'.$section],
 
                             ]
                         ]
