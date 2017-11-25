@@ -61,15 +61,14 @@ class BotController extends \yii\web\Controller
         $date = $message['date'];
         $text = $message['text'];
 
+
+
         if ($message != null) {
-//            $this->sendMessage([
-//                'chat_id' => $chatId,
-//                'text' => 'input-'.Json::encode($input),
-//            ]);
+
+            //  Опции текст
 
             if ($message['text'] == '/options') {
                 $this->sendMessage([
-//                    'chat_id' => $chatId,
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'text' => 'Список опций',
                     'reply_markup' => json_encode([
@@ -197,10 +196,10 @@ class BotController extends \yii\web\Controller
 
             // motivatorList
 
-            if ($action == 'motivatorList') {
+            if ($action == 'motivatorList') { // motivatorList / pointOfView / section / mode
                 $this->answerCallbackQuery([
-                    'callback_query_id' => $callbackQuery['id'], //require
-                    'text' => 'список строится', //Optional
+                    'callback_query_id' => $callbackQuery['id'],
+                    'text' => 'список строится',
                 ]);
                 $section = $commandParts[2];
                 if ($section==1) {
@@ -215,7 +214,7 @@ class BotController extends \yii\web\Controller
                 if (isset($commandParts[3])) {
                     $mode = $commandParts[3];
                 } else {
-                    $mode =  'all';
+                    $mode =  'one';
                 }
 
                 if (isset($commandParts[1])) {
@@ -262,7 +261,7 @@ class BotController extends \yii\web\Controller
 
             // motivator
 
-            if ($action == 'motivator') {
+            if ($action == 'motivator') {   // motivator / hrurl /pointOfView  / mode
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'], //require
                     'text' => 'ответ получен', //Optional
@@ -292,7 +291,7 @@ class BotController extends \yii\web\Controller
                 if (isset($commandParts[3])) {
                     $mode = $commandParts[3];
                 } else {
-                    $mode =  'all';
+                    $mode =  'one';
                 }
 
 
@@ -318,7 +317,6 @@ class BotController extends \yii\web\Controller
                                 [
                                     ['text'=>$type .' мотиваторы','callback_data'=> 'motivatorList/'.$pointOfView . '/' . $section .'/all'],
                                     ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/all'],
-//                                ['text'=>"Раздел",'callback_data'=> 'theme/1'],
                                 ]
                             ]
                         ]),
@@ -351,7 +349,7 @@ class BotController extends \yii\web\Controller
                             'text' => $motivator['list_name'],
                         ]);
                     }
-                    
+
                     $this->sendMessage([
                         'chat_id' => $callbackQuery['from']['id'],
                         'text' => $quoteText,
@@ -371,7 +369,7 @@ class BotController extends \yii\web\Controller
 
             // pointOfView
 
-            if ($action == 'pointOfView') {
+            if ($action == 'pointOfView') {   // pointOfView / pointOfView / section / mode
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'], //require
                     'text' => 'ответ получен', //Optional
@@ -392,14 +390,21 @@ class BotController extends \yii\web\Controller
                 } else {
                     $type = 'Тематические';
                 }
+
+                if (isset($commandParts[3])) {
+                    $mode = $commandParts[3];
+                } else {
+                    $mode =  'one';
+                }
+
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
                     'text' => $pointOfView=='i'?'Текущая точка зрения - Я':'Текущая точка зрения - Ты',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=> 'мотиваторы - Я','callback_data'=> 'motivatorList/i/'.$section],
-                                ['text'=> 'мотиваторы - Ты','callback_data'=> 'motivatorList/you/'.$section],
+                                ['text'=> 'мотиваторы - Я','callback_data'=> 'motivatorList/i/'.$section.'/'.$mode],
+                                ['text'=> 'мотиваторы - Ты','callback_data'=> 'motivatorList/you/'.$section .'/'.$mode],
 
                             ]
                         ]
@@ -409,7 +414,7 @@ class BotController extends \yii\web\Controller
 
             // Опции
 
-            if ($action == 'options') {
+            if ($action == 'options') {    // options / pointOfView / section / mode
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'], //require
                     'text' => 'ответ получен', //Optional
@@ -424,7 +429,7 @@ class BotController extends \yii\web\Controller
                 if (isset($commandParts[3])) {
                     $mode = $commandParts[3];
                 } else {
-                    $mode =  'all';
+                    $mode =  'one';
                 }
 
                 $this->sendMessage([
@@ -481,8 +486,8 @@ class BotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"по одному",'callback_data'=> 'motivatorList/'.$pointOfView.'/'.$section.'/one'],
-                                ['text'=>"все сразу",'callback_data'=> 'motivatorList/'.$pointOfView.'/'.$section.'/all'],
+                                ['text'=>"По одному",'callback_data'=> 'motivatorList/'.$pointOfView.'/'.$section.'/one'],
+                                ['text'=>"Все сразу",'callback_data'=> 'motivatorList/'.$pointOfView.'/'.$section.'/all'],
                             ]
                         ]
                     ]),
