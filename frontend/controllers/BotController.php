@@ -66,10 +66,11 @@ class BotController extends \yii\web\Controller
 //                'text' => 'input-'.Json::encode($input),
 //            ]);
 
-            if ($message['text'] = '/motivator-list') {
+            if ($message['text'] == '/options') {
                 $this->sendMessage([
-                    'chat_id' => $chatId,
-//                    'text' => $quoteText,
+//                    'chat_id' => $chatId,
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'text' => 'Список опций',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
