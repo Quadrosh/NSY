@@ -191,26 +191,26 @@ class BotController extends \yii\web\Controller
                 $data = [];
                 $i = 0;
                 foreach ($motivators as $motivator) {
-                    $data[$i]=['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
+                    $data[$i][]=['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
                     $i++;
                 }
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
                     'text' => 'Список мотиваторов',
                     'reply_markup' => json_encode([
-                        'inline_keyboard'=>[ // $data
-                            [
-//
-                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
-////                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
-////                                    ['text'=>'switch','switch_inline_query'=>''],
-                            ],
-                            [
-//
-                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
-////                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
-////                                    ['text'=>'switch','switch_inline_query'=>''],
-                            ],
+                        'inline_keyboard'=>[  $data
+//                            [
+////
+//                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
+//////                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
+//////                                    ['text'=>'switch','switch_inline_query'=>''],
+//                            ],
+//                            [
+////
+//                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
+//////                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
+//////                                    ['text'=>'switch','switch_inline_query'=>''],
+//                            ],
                         ]
                     ]),
                 ]);
