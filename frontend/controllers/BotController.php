@@ -61,22 +61,17 @@ class BotController extends \yii\web\Controller
         $text = $message['text'];
 
         if ($message != null) {
-            $this->sendMessage([
-                'chat_id' => $chatId,
-                'text' => 'input-'.Json::encode($input),
-            ]);
+//            $this->sendMessage([
+//                'chat_id' => $chatId,
+//                'text' => 'input-'.Json::encode($input),
+//            ]);
 
+            if ($message['text'] = '/motivator-list') {
 
-            $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
-
-            if ($motivator == null) {
-                $this->sendMessage([
-                    'chat_id' => $chatId,
-                    'text' => 'нет такого мотиватора',
-                ]);
-            } else {
+            } elseif (Motivator::find()->where(['hrurl'=>$text])->one()){
+                $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
                 $quotes = $motivator->mLines;
-                if ($text == 'accept-the-life-daemon') {
+                if ($text == 'accept-the-life-daemon') { // daemon
                     $quotesCount = count($quotes);
                     $now = date_timestamp_get(new \DateTime());
                     $timeMark = $now;
@@ -133,23 +128,7 @@ class BotController extends \yii\web\Controller
                         }
                         $quoteText .= $quote['text'].PHP_EOL;
                     }
-//                Yii::$app->telegram->sendMessage([
-//                    'chat_id' => $chatId,
-//                    'text' => $motivator['list_name'],
-//                ]);
-//
-//                Yii::$app->telegram->sendMessage([
-//                    'chat_id' => $chatId,
-//                    'text' => $quoteText,
-//                    'reply_markup' => json_encode([
-//                        'inline_keyboard'=>[
-//                            [
-//                                ['text'=>"send data",'callback_data'=> 'data']
-////                                ['text'=>"Наше счастье",'url'=>'http://nashe-schastye.ru/']
-//                            ]
-//                        ]
-//                    ]),
-//                ]);
+
                     $this->sendMessage([
                         'chat_id' => $chatId,
                         'text' => $motivator['list_name'],
@@ -160,7 +139,7 @@ class BotController extends \yii\web\Controller
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
-                                    ['text'=>"send data",'callback_data'=> 'somedata'],
+                                    ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
                                     ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
                                     ['text'=>'switch','switch_inline_query'=>''],
                                 ]
@@ -168,9 +147,18 @@ class BotController extends \yii\web\Controller
                         ]),
                     ]);
                 }
+            } else { //
+                $this->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => 'чево?',
+                ]);
             }
+
             return 'end return message';
-        } elseif ($callbackQuery != null){
+
+        }
+
+        if ($callbackQuery != null) {
 //            $callbackQuery['id'];
 //            $callbackQuery['data'];
             if ($callbackQuery['data']== 'motivatorList') {
@@ -185,8 +173,9 @@ class BotController extends \yii\web\Controller
             }
 
             $this->sendMessage([
-                'chat_id' => '232544919',
-                'text' => Json::encode($callbackQuery),
+//                'chat_id' => '232544919',
+                'chat_id' => $callbackQuery['from']['id'],
+                'text' => 'туточки -'.Json::encode($callbackQuery),
             ]);
         }
 
