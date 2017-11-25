@@ -277,7 +277,8 @@ class BotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/'.$pointOfView],
+                                ['text'=>"Мотиваторы - Я",'callback_data'=> 'motivatorList/i'],
+                                ['text'=>"Мотиваторы - Ты",'callback_data'=> 'motivatorList/you'],
 
                             ]
                         ]
