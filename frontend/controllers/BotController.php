@@ -67,6 +67,19 @@ class BotController extends \yii\web\Controller
 //            ]);
 
             if ($message['text'] = '/motivator-list') {
+                $this->sendMessage([
+                    'chat_id' => $chatId,
+//                    'text' => $quoteText,
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
+//                                ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
+//                                ['text'=>'switch','switch_inline_query'=>''],
+                            ]
+                        ]
+                    ]),
+                ]);
 
             } elseif (Motivator::find()->where(['hrurl'=>$text])->one()){
                 $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
@@ -118,7 +131,8 @@ class BotController extends \yii\web\Controller
                         'chat_id' => $chatId,
                         'text' => $motivator['list_name'].' ('.$quotesCount.')',
                     ]);
-                } else {   // no daemon
+                }
+                else {   // no daemon
                     $quoteText = '';
                     $quiteBox = null;
                     foreach ($quotes as $quote) {
@@ -140,8 +154,8 @@ class BotController extends \yii\web\Controller
                             'inline_keyboard'=>[
                                 [
                                     ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
-                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
-                                    ['text'=>'switch','switch_inline_query'=>''],
+//                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
+//                                    ['text'=>'switch','switch_inline_query'=>''],
                                 ]
                             ]
                         ]),
