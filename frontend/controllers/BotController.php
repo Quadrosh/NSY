@@ -191,9 +191,11 @@ class BotController extends \yii\web\Controller
                 $data = [];
                 $i = 1;
 //                $rowI = 1;
-//                $arr = [];
+                $arr = [];
                 foreach ($motivators as $motivator) {
-                    $data[] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
+                    $row = [];
+                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
+                    $data[] = $row;
 
 //                    $data[$rowI][$i] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
 //                    $data[$i] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
