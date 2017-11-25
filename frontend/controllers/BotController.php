@@ -241,6 +241,11 @@ class BotController extends \yii\web\Controller
                     $row[] = ['text'=>$motivator['list_name'],'callback_data'=> 'motivator/' . $motivator['hrurl'].'/'.$pointOfView];
                     $data[] = $row;
                 };
+                // options
+                $data[] = [
+                    ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'.$pointOfView],
+                    ['text'=>'Режим показа','callback_data'=> 'mode/'.$pointOfView.'/all'],
+                ];
 
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
@@ -249,18 +254,18 @@ class BotController extends \yii\web\Controller
                         'inline_keyboard'=> $data
                     ]),
                 ]);
-                $this->sendMessage([
-                    'chat_id' => $callbackQuery['from']['id'],
-                    'text' => 'Опции ',
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'.$pointOfView],
-                                ['text'=>'Режим показа','callback_data'=> 'mode/'.$pointOfView.'/all'],
-                            ]
-                        ]
-                    ]),
-                ]);
+//                $this->sendMessage([
+//                    'chat_id' => $callbackQuery['from']['id'],
+//                    'text' => 'Опции ',
+//                    'reply_markup' => json_encode([
+//                        'inline_keyboard'=>[
+//                            [
+//                                ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'.$pointOfView],
+//                                ['text'=>'Режим показа','callback_data'=> 'mode/'.$pointOfView.'/all'],
+//                            ]
+//                        ]
+//                    ]),
+//                ]);
 
             }
             if ($action == 'motivator') {
