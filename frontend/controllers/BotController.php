@@ -198,26 +198,9 @@ class BotController extends \yii\web\Controller
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
 //                    'text' => '  $data='. Json::encode($data),
+                    'text' => 'Список мотиваторов',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=> $data
-
-//                        'inline_keyboard'=>$oldData
-
-//                        'inline_keyboard'=>[  $data
-////                            [
-//////
-////                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
-////////                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
-////////                                    ['text'=>'switch','switch_inline_query'=>''],
-////                            ],
-////                            [
-//////
-////                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
-////////                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
-////////                                    ['text'=>'switch','switch_inline_query'=>''],
-////                            ],
-//                        ]
-
                     ]),
                 ]);
 
