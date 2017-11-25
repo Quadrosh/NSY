@@ -354,6 +354,7 @@ class BotController extends \yii\web\Controller
                 } else {
                     $pointOfView = 'you';
                 }
+                $section = $commandParts[2];
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
                     'text' => 'Список опций',
@@ -369,7 +370,7 @@ class BotController extends \yii\web\Controller
                                 ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/4'],
                             ],
                             [
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/'.$pointOfView],
+                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/'.$pointOfView.'/'.$section],
                                 ['text'=>"Режим показа",'callback_data'=> 'mode/'.$pointOfView.'/all'],
                             ],
                         ]
