@@ -182,6 +182,27 @@ class BotController extends \yii\web\Controller
                     'chat_id' => $chatId,
                     'text' => 'чево?',
                 ]);
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'text' => 'То есть я хотел сказать - вот список опций )',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
+                            ],
+                            [
+                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
+                            ],
+                            [
+                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
+                            ],
+                            [
+                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
+                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/all'],
+                            ],
+                        ]
+                    ]),
+                ]);
             }
 
             return 'end return message';
