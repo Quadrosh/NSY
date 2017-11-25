@@ -74,8 +74,8 @@ class BotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/1'],
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/1'],
+                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/you'],
+                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
                                 ['text'=>"Раздел",'callback_data'=> 'theme/1'],
                             ]
                         ]
@@ -155,6 +155,8 @@ class BotController extends \yii\web\Controller
                             'inline_keyboard'=>[
                                 [
                                     ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/1'],
+                                    ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
+                                    ['text'=>"Раздел",'callback_data'=> 'theme/1'],
 //                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
 //                                    ['text'=>'switch','switch_inline_query'=>''],
                                 ]
@@ -185,14 +187,24 @@ class BotController extends \yii\web\Controller
 //                    'url' => 'http://sample.com', //Optional
     //                'cache_time' => 123231,  //Optional
                 ]);
-                $motivators = Motivator::find()
-                    ->where(['list_section'=>1,'position'=>0])
-                    ->orderBy('list_num')
-                    ->all();
+                if (isset($commandParts[1])) {
+                    $pointOfView = $commandParts[1];
+                    $motivators = Motivator::find()
+                        ->where(['list_section'=>1,'position'=>0])
+                        ->orderBy('list_num')
+                        ->all();
+                } else {
+                    $pointOfView = 'you';
+                    $motivators = Motivator::find()
+                        ->where(['list_section'=>1,'position'=>1])
+                        ->orderBy('list_num')
+                        ->all();
+                }
+
                 $data = [];
                 foreach ($motivators as $motivator) {
                     $row = [];
-                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> 'motivator/' . $motivator['hrurl']];
+                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> 'motivator/' . $motivator['hrurl'].'/'.$pointOfView];
                     $data[] = $row;
                 };
 
@@ -212,6 +224,11 @@ class BotController extends \yii\web\Controller
                     'text' => 'ответ получен', //Optional
                 ]);
                 $hrurl = $commandParts[1];
+                if (isset($commandParts[2])) {
+                    $pointOfView = $commandParts[2];
+                } else {
+                    $pointOfView = 'you';
+                }
                 $motivator = Motivator::find()->where(['hrurl'=>$hrurl])->one();
                 $quotes = $motivator->mLines;
                 $quoteText = '';
@@ -234,8 +251,9 @@ class BotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/1'],
-
+                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/'.$pointOfView],
+                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/'.$pointOfView],
+                                ['text'=>"Раздел",'callback_data'=> 'theme/1'],
                             ]
                         ]
                     ]),
@@ -246,6 +264,24 @@ class BotController extends \yii\web\Controller
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'], //require
                     'text' => 'ответ получен', //Optional
+                ]);
+
+                if (isset($commandParts[1])) {
+                    $pointOfView = $commandParts[1];
+                } else {
+                    $pointOfView = 'you';
+                }
+                $this->sendMessage([
+                    'chat_id' => $callbackQuery['from']['id'],
+                    'text' => 'текущая точка зрения - '. $pointOfView=='i'?'Я':'Ты',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/'.$pointOfView],
+
+                            ]
+                        ]
+                    ]),
                 ]);
             }
 
