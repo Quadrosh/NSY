@@ -84,7 +84,7 @@ class BotController extends \yii\web\Controller
                             ],
                             [
                                 ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/1'],
+                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/all'],
                             ],
                         ]
                     ]),
@@ -203,6 +203,15 @@ class BotController extends \yii\web\Controller
     //                'cache_time' => 123231,  //Optional
                 ]);
                 $section = $commandParts[2];
+                if ($section==1) {
+                    $type = 'Тематические';
+                } elseif ($section==2) {
+                    $type = 'Профессиональные';
+                } elseif ($section==4) {
+                    $type = 'Романтичные';
+                } else {
+                    $type = 'Тематические';
+                }
 
                 if (isset($commandParts[1])) {
                     $pointOfView = $commandParts[1];
@@ -236,9 +245,21 @@ class BotController extends \yii\web\Controller
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
 //                    'text' => '  $data='. Json::encode($data),
-                    'text' => 'Список мотиваторов',
+                    'text' => $type . ' мотиваторы',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=> $data
+                    ]),
+                ]);
+                $this->sendMessage([
+                    'chat_id' => $callbackQuery['from']['id'],
+                    'text' => ' ',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'.$pointOfView],
+                                ['text'=>'Режим показа','callback_data'=> 'mode/you/all'],
+                            ]
+                        ]
                     ]),
                 ]);
 
@@ -266,6 +287,17 @@ class BotController extends \yii\web\Controller
                     $quoteText .= $quote['text'].PHP_EOL;
                 }
 
+                $section = $motivator['list_section'];
+                if ($section==1) {
+                    $type = 'Тематические';
+                } elseif ($section==2) {
+                    $type = 'Профессиональные';
+                } elseif ($section==4) {
+                    $type = 'Романтичные';
+                } else {
+                    $type = 'Тематические';
+                }
+
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
                     'text' => $motivator['list_name'],
@@ -276,9 +308,9 @@ class BotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/'.$pointOfView],
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/'.$pointOfView],
-                                ['text'=>"Раздел",'callback_data'=> 'theme/1'],
+                                ['text'=>$type .' мотиваторы','callback_data'=> 'motivatorList/'.$pointOfView . '/' . $section],
+                                ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView],
+//                                ['text'=>"Раздел",'callback_data'=> 'theme/1'],
                             ]
                         ]
                     ]),
@@ -326,12 +358,17 @@ class BotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/you'],
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
+                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/1'],
                             ],
                             [
-                                ['text'=>"Раздел",'callback_data'=> 'section/1'],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/1'],
+                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/2'],
+                            ],
+                            [
+                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/4'],
+                            ],
+                            [
+                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/'.$pointOfView],
+                                ['text'=>"Режим показа",'callback_data'=> 'mode/'.$pointOfView.'/all'],
                             ],
                         ]
                     ]),
