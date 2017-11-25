@@ -243,11 +243,11 @@ class BotController extends \yii\web\Controller
 
             }
 
-            $this->sendMessage([
-//                'chat_id' => '232544919',
-                'chat_id' => $callbackQuery['from']['id'],
-                'text' => 'callbackQuery -'.Json::encode($callbackQuery),
-            ]);
+//            $this->sendMessage([
+////                'chat_id' => '232544919',
+//                'chat_id' => $callbackQuery['from']['id'],
+//                'text' => 'callbackQuery -'.Json::encode($callbackQuery),
+//            ]);
         }
 
 
