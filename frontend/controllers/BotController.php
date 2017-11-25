@@ -180,8 +180,8 @@ class BotController extends \yii\web\Controller
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'], //require
                     'text' => 'список строится', //Optional
-                    'show_alert' => 'my alert',  //Optional
-                    'url' => 'http://sample.com', //Optional
+//                    'show_alert' => 'my alert',  //Optional
+//                    'url' => 'http://sample.com', //Optional
     //                'cache_time' => 123231,  //Optional
                 ]);
                 $motivators = Motivator::find()
@@ -191,7 +191,8 @@ class BotController extends \yii\web\Controller
                 $data = [];
                 $i = 0;
                 foreach ($motivators as $motivator) {
-                    $data[]=['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
+                    $data[$i][]=['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
+                    $i++;
                 }
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
