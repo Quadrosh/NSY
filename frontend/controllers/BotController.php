@@ -74,9 +74,7 @@ class BotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
-//                                ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
-//                                ['text'=>'switch','switch_inline_query'=>''],
+                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList=1'],
                             ]
                         ]
                     ]),
@@ -244,7 +242,7 @@ class BotController extends \yii\web\Controller
                         ]
                     ]),
                 ]);
-                
+
             }
 
             $this->sendMessage([
