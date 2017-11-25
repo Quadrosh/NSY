@@ -295,11 +295,9 @@ class BotController extends \yii\web\Controller
                     $mode =  'all';
                 }
 
-                $this->sendMessage([
-                    'chat_id' => $callbackQuery['from']['id'],
-                    'text' => $motivator['list_name'],
-                ]);
+
                 if ($mode ==  'all') {
+
                     $quotes = $motivator->mLines;
                     foreach ($quotes as $quote) {
                         if ($quiteBox !=$quote['block_num']) {
@@ -308,6 +306,10 @@ class BotController extends \yii\web\Controller
                         }
                         $quoteText .= $quote['text'].PHP_EOL;
                     }
+                    $this->sendMessage([
+                        'chat_id' => $callbackQuery['from']['id'],
+                        'text' => $motivator['list_name'],
+                    ]);
                     $this->sendMessage([
                         'chat_id' => $callbackQuery['from']['id'],
                         'text' => $quoteText,
@@ -343,7 +345,13 @@ class BotController extends \yii\web\Controller
                         $nextButtonValue = 'motivatorList/'.$pointOfView . '/' . $section .'/one';
                     }
 
-
+                    if ($quoteBlock == '1') {
+                        $this->sendMessage([
+                            'chat_id' => $callbackQuery['from']['id'],
+                            'text' => $motivator['list_name'],
+                        ]);
+                    }
+                    
                     $this->sendMessage([
                         'chat_id' => $callbackQuery['from']['id'],
                         'text' => $quoteText,
@@ -351,7 +359,7 @@ class BotController extends \yii\web\Controller
                             'inline_keyboard'=>[
                                 [
                                     ['text'=>$nextButtonName,'callback_data'=> $nextButtonValue],
-                                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/one'],
+//                                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/one'],
                                 ]
                             ]
                         ]),
