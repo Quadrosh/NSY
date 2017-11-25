@@ -190,19 +190,19 @@ class BotController extends \yii\web\Controller
                     ->all();
                 $data = [];
                 $i = 1;
-                $rowI = 1;
+//                $rowI = 1;
 //                $arr = [];
                 foreach ($motivators as $motivator) {
 //                    $data[$rowI][$i] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
-                    $data[$i] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
-//                    $data[$i]['text'] = $motivator['list_name'];
-//                    $data[$i]['callback_data'] = $motivator['hrurl'];
+//                    $data[$i] = ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
+                    $data[$i]['text'] = $motivator['list_name'];
+                    $data[$i]['callback_data'] = $motivator['hrurl'];
 //                    $data[$i] = [
 //                        ['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']]
 //                    ];
                     $i++;
-                    $rowI++;
-                }
+//                    $rowI++;
+                };
                 $oldData =  [
                     [
                         ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
@@ -214,10 +214,10 @@ class BotController extends \yii\web\Controller
 
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['from']['id'],
-                    'text' => '$data='. Json::encode($data).' _=_   $oldData='.Json::encode($oldData),
+                    'text' => '  $data='. Json::encode($data).' _=_   $oldData='. Json::encode($oldData),
                     'reply_markup' => json_encode([
-//                        'inline_keyboard'=>$oldData
-                        'inline_keyboard'=>$data
+                        'inline_keyboard'=>$oldData
+//                        'inline_keyboard'=>$data
 //                        'inline_keyboard'=>[  $data
 ////                            [
 //////
