@@ -154,7 +154,7 @@ class BotController extends \yii\web\Controller
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
-                                    ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
+                                    ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList=1'],
 //                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
 //                                    ['text'=>'switch','switch_inline_query'=>''],
                                 ]
@@ -174,9 +174,10 @@ class BotController extends \yii\web\Controller
         }
 
         if ($callbackQuery != null) {
-//            $callbackQuery['id'];
-//            $callbackQuery['data'];
-            if ($callbackQuery['data'] == 'motivatorList') {
+            $parts = explode('=', $callbackQuery['data']);
+            $action = $parts[0];
+
+            if ($action == 'motivatorList') {
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'], //require
                     'text' => 'список строится', //Optional
@@ -191,7 +192,7 @@ class BotController extends \yii\web\Controller
                 $data = [];
                 foreach ($motivators as $motivator) {
                     $row = [];
-                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> 'mot=' . $motivator['hrurl']];
+                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> 'motivator=' . $motivator['hrurl']];
                     $data[] = $row;
                 };
 
