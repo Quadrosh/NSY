@@ -184,13 +184,36 @@ class BotController extends \yii\web\Controller
                     'url' => 'http://sample.com', //Optional
     //                'cache_time' => 123231,  //Optional
                 ]);
+                $motivators = Motivator::find()
+                    ->where(['list_section'=>1,'position'=>0])
+                    ->orderBy('list_num')
+                    ->all();
+                $data = [];
+                $i = 0;
+                foreach ($motivators as $motivator) {
+                    $data[]=['text'=>$motivator['list_name'],'callback_data'=> $motivator['hrurl']];
+                }
+                $this->sendMessage([
+                    'chat_id' => $callbackQuery['from']['id'],
+                    'text' => 'Список мотиваторов',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[ $data
+//                            [
+//
+////                                ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList'],
+////                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
+////                                    ['text'=>'switch','switch_inline_query'=>''],
+//                            ]
+                        ]
+                    ]),
+                ]);
 
             }
 
             $this->sendMessage([
 //                'chat_id' => '232544919',
                 'chat_id' => $callbackQuery['from']['id'],
-                'text' => 'туточки -'.Json::encode($callbackQuery),
+                'text' => 'callbackQuery -'.Json::encode($callbackQuery),
             ]);
         }
 
