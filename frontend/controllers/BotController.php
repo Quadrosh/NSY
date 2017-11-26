@@ -86,7 +86,7 @@ class BotController extends \yii\web\Controller
                             ],
                             [
                                 ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/all'],
+                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
                             ],
                         ]
                     ]),
@@ -113,7 +113,7 @@ class BotController extends \yii\web\Controller
                             ],
                             [
                                 ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/all'],
+                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
                             ],
                         ]
                     ]),
@@ -227,7 +227,7 @@ class BotController extends \yii\web\Controller
                             ],
                             [
                                 ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/all'],
+                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
                             ],
                         ]
                     ]),
@@ -498,6 +498,9 @@ class BotController extends \yii\web\Controller
                             [
                                 ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/'.$pointOfView.'/'.$section.'/'.$mode],
                                 ['text'=>"Режим показа",'callback_data'=> 'mode/'.$pointOfView.'/'.$section.'/'.$mode],
+                            ],
+                            [
+                                ['text'=>'Перейти на сайт','url'=> 'https://nashe-schastye.ru/'],
                             ],
                         ]
                     ]),
