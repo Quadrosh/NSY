@@ -193,20 +193,17 @@ class BotController extends \yii\web\Controller
                                 [
                                     ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/you'],
                                     ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-//                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
 //                                    ['text'=>'switch','switch_inline_query'=>''],
                                 ],
                                 [
                                     ['text'=>"Раздел",'callback_data'=> 'theme/1'],
-//                                    ['text'=>'doc','url'=>'https://core.telegram.org/bots/api#replykeyboardmarkup'],
-//                                    ['text'=>'switch','switch_inline_query'=>''],
                                 ],
 
                             ]
                         ]),
                     ]);
                 }
-            } else { //
+            } else {      //  непонятная команда
                 $this->sendMessage([
                     'chat_id' => $chatId,
                     'text' => 'чево?',
@@ -227,7 +224,11 @@ class BotController extends \yii\web\Controller
                             ],
                             [
                                 ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
+                                ['text'=>'Опции','callback_data'=> 'options/you/1/one'],
+//                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
+
+
+
                             ],
                         ]
                     ]),
@@ -407,7 +408,6 @@ class BotController extends \yii\web\Controller
                             'inline_keyboard'=>[
                                 [
                                     ['text'=>$nextButtonName,'callback_data'=> $nextButtonValue],
-//                                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/one'],
                                 ]
                             ]
                         ]),
@@ -493,7 +493,7 @@ class BotController extends \yii\web\Controller
                                 ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/2/'.$mode],
                             ],
                             [
-                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/4'.$mode],
+                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/4/'.$mode],
                             ],
                             [
                                 ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/'.$pointOfView.'/'.$section.'/'.$mode],
@@ -549,11 +549,6 @@ class BotController extends \yii\web\Controller
             }
 
 
-//            $this->sendMessage([
-////                'chat_id' => '232544919',
-//                'chat_id' => $callbackQuery['from']['id'],
-//                'text' => 'callbackQuery -'.Json::encode($callbackQuery),
-//            ]);
         }
 
 
