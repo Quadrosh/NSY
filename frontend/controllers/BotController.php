@@ -65,6 +65,35 @@ class BotController extends \yii\web\Controller
 
         if ($message != null) {
 
+            //   /start
+            //
+            //
+
+            if ($message['text'] == '/start') {
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'text' => 'Привет, я бот Мотиватор, ниже список опций',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
+                            ],
+                            [
+                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
+                            ],
+                            [
+                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
+                            ],
+                            [
+                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
+                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/all'],
+                            ],
+                        ]
+                    ]),
+                ]);
+
+            }
+
             //  Опции текст
 
             if ($message['text'] == '/options') {
@@ -266,8 +295,8 @@ class BotController extends \yii\web\Controller
                 };
                 // options
                 $data[] = [
-                    ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'.$pointOfView.'/'.$section.'/'.$mode],
-                    ['text'=>'Режим показа','callback_data'=> 'mode/'.$pointOfView.'/'.$section.'/'.$mode],
+                    ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'. $pointOfView.'/'.$section.'/'.$mode],
+                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/'.$mode],
                 ];
 
                 $this->sendMessage([
