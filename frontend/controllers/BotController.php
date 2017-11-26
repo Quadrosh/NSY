@@ -96,7 +96,7 @@ class BotController extends \yii\web\Controller
 
             //  Опции текст
 
-            if ($message['text'] == '/options') {
+            elseif ($message['text'] == '/options') {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'text' => 'Список опций',
