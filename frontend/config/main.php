@@ -91,7 +91,7 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                $params['motivBotPath']=>'bot/dialog',
+                $params['motivBotPath']=>'motivator-bot/dialog',
                 'motivator'=>'motivator/list',
                 'motivator/<pagename:[0-9a-z\-\_]+>' => 'motivator/show',
                 'liveout/warn/<id:\d+>' => 'liveout/warn',

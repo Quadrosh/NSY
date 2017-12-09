@@ -17,7 +17,7 @@ use Yii;
 use yii\web\Response;
 
 
-class BotController extends \yii\web\Controller
+class MotivatorBotController extends \yii\web\Controller
 {
     public function behaviors() {
         return [
