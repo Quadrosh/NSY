@@ -91,7 +91,7 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                $params['telegramBotPath']=>'bot/dialog',
+                $params['motivBotPath']=>'bot/dialog',
                 'motivator'=>'motivator/list',
                 'motivator/<pagename:[0-9a-z\-\_]+>' => 'motivator/show',
                 'liveout/warn/<id:\d+>' => 'liveout/warn',

@@ -227,8 +227,6 @@ class BotController extends \yii\web\Controller
                                 ['text'=>'Опции','callback_data'=> 'options/you/1/one'],
 //                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
 
-
-
                             ],
                         ]
                     ]),
@@ -572,7 +570,7 @@ class BotController extends \yii\web\Controller
         unset($option['chat_id']);
         unset($option['text']);
         $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
-            Yii::$app->params['telegramBotToken'].
+            Yii::$app->params['motivBotToken'].
             "/sendMessage?chat_id=".$chat_id .
             '&text='.$text, $option);
         return json_decode($jsonResponse);
@@ -632,7 +630,7 @@ class BotController extends \yii\web\Controller
     public function answerCallbackQuery(array $option = [])
     {
         $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
-            Yii::$app->params['telegramBotToken'] .
+            Yii::$app->params['motivBotToken'] .
             "/answerCallbackQuery", $option);
         return json_decode($jsonResponse);
     }
