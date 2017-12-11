@@ -128,7 +128,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     return 'middle return';
                 }
                 $activeVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'active'])->one();
-                
+
                 if ($activeVar == null) {
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
@@ -156,6 +156,8 @@ class ChepuhaBotController extends \yii\web\Controller
                 $newActiveVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
 
                 if ($newActiveVar != null) {
+                    $newActiveVar['status'] = 'active';
+                    $newActiveVar->save();
 
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
@@ -248,17 +250,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         }
 
                         $play = ChBotPlay::find()->where(['id'=>$playId])->one();
-
                         $playVars = $play->vars;
-//                        $playVars = ChBotPlayVars::find()->where(['play_id'=>$play['id']])->all();
-
-//                        $this->sendMessage([
-//                            'chat_id' => $callbackQuery['from']['id'],
-//                            'text' => 'count $playVars = '.count($playVars),
-//                        ]);
-//
-//                        return 'middle return';
-
                         $sessionVars = $session->vars;
                         if ($sessionVars == null) {
                             foreach ($playVars as $playVar) {
@@ -269,7 +261,6 @@ class ChepuhaBotController extends \yii\web\Controller
                                 $sessionVar['status'] = 'raw';
                                 $sessionVar->save();
                             }
-//                            $sessionVars = $session->vars;
                         }
                         $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
                         $goQuestion['status'] = 'active';
