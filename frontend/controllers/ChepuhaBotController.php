@@ -139,7 +139,7 @@ class ChepuhaBotController extends \yii\web\Controller
                             'chat_id' => $message['from']['id'],
                             'text' => 'нет активного шага',
                         ]);
-                        return 'middle return';
+                        return 'ok';
                     }
 
                 }
@@ -149,53 +149,33 @@ class ChepuhaBotController extends \yii\web\Controller
                 $newActiveVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
 
                 if ($newActiveVar != null) {
+
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
                         'text' => $newActiveVar['text'],
                     ]);
+                    return 'ok';
                 }
 
 
                 if ($newActiveVar == null && ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'done'])->one()) {
                     if ($session['item_type']=='play') {
                         $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
+
                         $this->sendMessage([
                             'chat_id' => $message['from']['id'],
                             'text' => $play['text'],
                         ]);
+                        return 'ok';
                     }
 
                 }
 
 
-//                $this->sendMessage([
-//                    'chat_id' => $chatId,
-//                    'text' => 'такой команды не найдено',
-//                ]);
-//                $this->sendMessage([
-//                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
-//                    'text' => 'Список опций',
-//                    'reply_markup' => json_encode([
-//                        'inline_keyboard'=>[
-//                            [
-//                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
-//                            ],
-//                            [
-//                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
-//                            ],
-////                            [
-////                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
-////                            ],
-////                            [
-////                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-////                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
-////                            ],
-//                        ]
-//                    ]),
-//                ]);
+
             }
 
-            return 'end return message';
+            return 'ok';
 
         }
 
