@@ -68,7 +68,7 @@ class ChBotSession extends \yii\db\ActiveRecord
      */
     public function getVars()
     {
-        return $this->hasMany(ChBotSessionVars::className(),['id'=>'session_id']);
+        return $this->hasMany(ChBotSessionVars::className(),['session_id'=>'id']);
     }
 
 }

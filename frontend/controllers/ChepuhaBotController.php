@@ -246,12 +246,12 @@ class ChepuhaBotController extends \yii\web\Controller
                         $playVars = $play->vars;
 //                        $playVars = ChBotPlayVars::find()->where(['play_id'=>$play['id']])->all();
 
-                        $this->sendMessage([
-                            'chat_id' => $callbackQuery['from']['id'],
-                            'text' => 'count $playVars = '.count($playVars),
-                        ]);
-
-                        return 'middle return';
+//                        $this->sendMessage([
+//                            'chat_id' => $callbackQuery['from']['id'],
+//                            'text' => 'count $playVars = '.count($playVars),
+//                        ]);
+//
+//                        return 'middle return';
 
                         $sessionVars = $session->vars;
                         if ($sessionVars == null) {
@@ -263,7 +263,7 @@ class ChepuhaBotController extends \yii\web\Controller
                                 $sessionVar['status'] = 'raw';
                                 $sessionVar->save();
                             }
-                            $sessionVars = $session->vars;
+//                            $sessionVars = $session->vars;
                         }
                         $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
                         $goQuestion['status'] = 'active';
