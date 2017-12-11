@@ -242,18 +242,15 @@ class ChepuhaBotController extends \yii\web\Controller
 
                         $play = ChBotPlay::find()->where(['id'=>$playId])->one();
 
+                        $playVars = $play->vars;
+
                         $this->sendMessage([
                             'chat_id' => $callbackQuery['from']['id'],
-                            'text' => $play['id'].$play['name'],
+                            'text' => 'count $playVars = '.count($playVars),
                         ]);
 
                         return 'middle return';
 
-
-
-
-
-                        $playVars = $play->vars;
                         $sessionVars = $session->vars;
                         if ($sessionVars == null) {
                             foreach ($playVars as $playVar) {
