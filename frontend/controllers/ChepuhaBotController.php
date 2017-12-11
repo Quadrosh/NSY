@@ -137,6 +137,15 @@ class ChepuhaBotController extends \yii\web\Controller
                 $activeVar['status'] = 'done';
                 $activeVar->save();
                 $newActiveVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
+                
+                if ($newActiveVar != null) {
+                    $this->sendMessage([
+                        'chat_id' => $message['from']['id'],
+                        'text' => $newActiveVar['text'],
+                    ]);
+                }
+
+
                 if ($newActiveVar == null && ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'done'])->one()) {
                     if ($session['item_type']=='play') {
                         $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
