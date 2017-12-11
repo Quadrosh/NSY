@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\ChBotPlay;
 use common\models\Daemons;
 use common\models\Feedback;
 use common\models\Masters;
@@ -76,18 +77,18 @@ class ChepuhaBotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
+                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
                             ],
                             [
-                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
+                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
                             ],
-                            [
-                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
-                            ],
-                            [
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
-                            ],
+//                            [
+//                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
+//                            ],
+//                            [
+//                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
+//                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
+//                            ],
                         ]
                     ]),
                 ]);
@@ -97,137 +98,46 @@ class ChepuhaBotController extends \yii\web\Controller
             //  Опции текст
 
             elseif ($message['text'] == '/options') {
+                $$this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'text' => 'Привет, я бот Мотиватор, ниже список опций',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                            ],
+                            [
+                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                            ],
+                        ]
+                    ]),
+                ]);
+
+            }
+
+            else {      //  непонятная команда
+                $this->sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => 'такой команды не найдено',
+                ]);
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'text' => 'Список опций',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
+                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
                             ],
                             [
-                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
+                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
                             ],
-                            [
-                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
-                            ],
-                            [
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
-                            ],
-                        ]
-                    ]),
-                ]);
-
-            } elseif (Motivator::find()->where(['hrurl'=>$text])->one()){
-                $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
-                $quotes = $motivator->mLines;
-                if ($text == 'accept-the-life-daemon') { // daemon
-                    $quotesCount = count($quotes);
-                    $now = date_timestamp_get(new \DateTime());
-                    $timeMark = $now;
-                    $stepI = 1;
-                    $blockI = 1;
-
-                    foreach ($quotes as $quote) {
-
-                        $process = new MotivatorBotProcess();
-                        $process['chat_id'] = $chatId;
-                        $process['first_name'] = $fromFirstName;
-                        $process['chat_date'] = $date;
-                        $process['command'] = $text;
-                        $process['motivator_id'] = $motivator['id'];
-                        $process['steps_qnt'] = $quotesCount;
-
-                        $process['current_step'] = $stepI;
-                        $process['current_block'] = $quote['block_num'];
-                        if ($process['current_block'] != $blockI) {
-                            $process['new_block'] = true;
-                            $process['start_time'] = $timeMark + 4;
-                            $blockI++;
-                        } else {
-                            $process['start_time'] = $timeMark + 2;
-                        }
-                        $timeMark = $process['start_time'];
-                        $process['mline_id'] = $quote['id'];
-                        $process['text'] = $quote['text'];
-
-                        $process->save();
-                        $stepI++;
-
-                    }
-
-                    $daemon = Daemons::find()->where(['daemon'=>'motivator-bot-daemon'])->one();
-                    if ($daemon == null) {
-                        $daemon = new Daemons();
-                        $daemon['daemon'] = 'motivator-bot-daemon';
-                    }
-                    $daemon['enabled'] = true;
-                    $daemon->save();
-
-                    Yii::$app->telegram->sendMessage([
-                        'chat_id' => $chatId,
-                        'text' => $motivator['list_name'].' ('.$quotesCount.')',
-                    ]);
-                }
-                else {   // no daemon
-                    $quoteText = '';
-                    $quiteBox = null;
-                    foreach ($quotes as $quote) {
-                        if ($quiteBox !=$quote['block_num']) {
-                            $quiteBox = $quote['block_num'];
-                            $quoteText .= '——————————————'.PHP_EOL;
-                        }
-                        $quoteText .= $quote['text'].PHP_EOL;
-                    }
-
-                    $this->sendMessage([
-                        'chat_id' => $chatId,
-                        'text' => $motivator['list_name'],
-                    ]);
-                    $this->sendMessage([
-                        'chat_id' => $chatId,
-                        'text' => $quoteText,
-                        'reply_markup' => json_encode([
-                            'inline_keyboard'=>[
-                                [
-                                    ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/you'],
-                                    ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-//                                    ['text'=>'switch','switch_inline_query'=>''],
-                                ],
-                                [
-                                    ['text'=>"Раздел",'callback_data'=> 'theme/1'],
-                                ],
-
-                            ]
-                        ]),
-                    ]);
-                }
-            } else {      //  непонятная команда
-                $this->sendMessage([
-                    'chat_id' => $chatId,
-                    'text' => 'чево?',
-                ]);
-                $this->sendMessage([
-                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'text' => 'То есть я хотел сказать - вот список опций )',
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
-                            ],
-                            [
-                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
-                            ],
-                            [
-                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
-                            ],
-                            [
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>'Опции','callback_data'=> 'options/you/1/one'],
+//                            [
+//                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
+//                            ],
+//                            [
+//                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
 //                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
-
-                            ],
+//                            ],
                         ]
                     ]),
                 ]);
@@ -240,224 +150,81 @@ class ChepuhaBotController extends \yii\web\Controller
 //       Callback
 
         if ($callbackQuery != null) {
-            $commandParts = explode('/', $callbackQuery['data']);
-            $action = $commandParts[0];
+            $commands = explode('/', $callbackQuery['data']);
+            $action = $commands[0];
 
-            // motivatorList
+            // play
 
-            if ($action == 'motivatorList') { // motivatorList / pointOfView / section / mode
+            if ($action == 'play') {
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'],
-                    'text' => 'список строится',
-                ]);
-                $section = $commandParts[2];
-                if ($section==1) {
-                    $type = 'Тематические';
-                } elseif ($section==2) {
-                    $type = 'Профессиональные';
-                } elseif ($section==4) {
-                    $type = 'Романтичные';
-                } else {
-                    $type = 'Тематические';
-                }
-                if (isset($commandParts[3])) {
-                    $mode = $commandParts[3];
-                } else {
-                    $mode =  'one';
-                }
-
-                if (isset($commandParts[1])) {
-                    $pointOfView = $commandParts[1];
-                    if ($pointOfView == 'you') {
-                        $motivators = Motivator::find()
-                            ->where(['list_section'=>$section,'position'=>'1'])
-                            ->orderBy('list_num')
-                            ->all();
-                    } else {
-                        $motivators = Motivator::find()
-                            ->where(['list_section'=>$section,'position'=>'0'])
-                            ->orderBy('list_num')
-                            ->all();
-                    }
-                } else {
-                    $pointOfView = 'you';
-                    $motivators = Motivator::find()
-                        ->where(['list_section'=>$section,'position'=>'1'])
-                        ->orderBy('list_num')
-                        ->all();
-                }
-                $data = [];
-                foreach ($motivators as $motivator) {
-                    $row = [];
-                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> 'motivator/' . $motivator['hrurl'].'/'.$pointOfView.'/'.$mode];
-                    $data[] = $row;
-                };
-                // options
-                $data[] = [
-                    ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'. $pointOfView.'/'.$section.'/'.$mode],
-                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/'.$mode],
-                ];
-
-                $this->sendMessage([
-                    'chat_id' => $callbackQuery['from']['id'],
-                    'text' => $type . ' мотиваторы',
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=> $data
-                    ]),
+                    'text' => 'в процессе',
                 ]);
 
-            }
+                if (isset($commands[1])) {
+                    if ($commands[1]=='all') {
+                        $plays = ChBotPlay::find()->all();
+                        $data = [];
+                        foreach ($plays as $play) {
+                            $row = [];
+                            $row[] = ['text'=>$play['name'],'callback_data'=> 'play/' . $play['id']];
+                            $data[] = $row;
+                        };
+                        // options
+//                        $data[] = [
+//                            ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'. $pointOfView.'/'.$section.'/'.$mode],
+//                            ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/'.$mode],
+//                        ];
 
-            // motivator
-
-            if ($action == 'motivator') {   // motivator / hrurl /pointOfView  / mode
-                $this->answerCallbackQuery([
-                    'callback_query_id' => $callbackQuery['id'], //require
-                    'text' => 'ответ получен', //Optional
-                ]);
-                $hrurl = $commandParts[1];
-                if (isset($commandParts[2])) {
-                    $pointOfView = $commandParts[2];
-                } else {
-                    $pointOfView = 'you';
-                }
-                $motivator = Motivator::find()->where(['hrurl'=>$hrurl])->one();
-                $quoteText = '';
-                $quiteBox = null;
-
-
-                $section = $motivator['list_section'];
-                if ($section == 1) {
-                    $type = 'Тематические';
-                } elseif ($section==2) {
-                    $type = 'Профессиональные';
-                } elseif ($section==4) {
-                    $type = 'Романтичные';
-                } else {
-                    $type = 'Тематические';
-                }
-
-                if (isset($commandParts[3])) {
-                    $mode = $commandParts[3];
-                } else {
-                    $mode =  'one';
-                }
-
-
-                if ($mode ==  'all') {
-
-                    $quotes = $motivator->mLines;
-                    foreach ($quotes as $quote) {
-                        if ($quiteBox !=$quote['block_num']) {
-                            $quiteBox = $quote['block_num'];
-                            $quoteText .= '——————————————'.PHP_EOL;
-                        }
-                        $quoteText .= $quote['text'].PHP_EOL;
-                    }
-                    $this->sendMessage([
-                        'chat_id' => $callbackQuery['from']['id'],
-                        'text' => $motivator['list_name'],
-                    ]);
-                    $this->sendMessage([
-                        'chat_id' => $callbackQuery['from']['id'],
-                        'text' => $quoteText,
-                        'reply_markup' => json_encode([
-                            'inline_keyboard'=>[
-                                [
-                                    ['text'=>$type .' мотиваторы','callback_data'=> 'motivatorList/'.$pointOfView . '/' . $section .'/all'],
-                                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/all'],
-                                ]
-                            ]
-                        ]),
-                    ]);
-                } else { // $mode ==  'one'
-                    if (isset($commandParts[4])) {
-                        $quoteBlock = $commandParts[4];
-                    } else {
-                        $quoteBlock =  '1';
-                    }
-                    $quotes = MLine::find()
-                        ->where(['motivator_id'=>$motivator['id'], 'block_num'=>$quoteBlock])
-                        ->orderBy('quote_num')
-                        ->all();
-                    foreach ($quotes as $quote) {
-                        $quoteText .= $quote['text'].PHP_EOL;
-                    }
-                    if (!empty(MLine::find()->where(['motivator_id'=>$motivator['id'], 'block_num'=>intval($quoteBlock)+1])->one())) {
-                        $next = intval($quoteBlock)+1;
-                        $nextButtonName = 'Дальше';
-                        $nextButtonValue = 'motivator/' . $motivator['hrurl'].'/'.$pointOfView.'/one/'.$next;
-                    } else {
-                        $nextButtonName = 'Мотиваторы';
-                        $nextButtonValue = 'motivatorList/'.$pointOfView . '/' . $section .'/one';
-                    }
-
-                    if ($quoteBlock == '1') {
                         $this->sendMessage([
                             'chat_id' => $callbackQuery['from']['id'],
-                            'text' => $motivator['list_name'],
+                            'text' => 'Чепусценки',
+                            'reply_markup' => json_encode([
+                                'inline_keyboard'=> $data
+                            ]),
                         ]);
+                        
+                    } else {
+                        $id = $commands[1];
+                        $play = ChBotPlay::find()->where(['id'=>$id])->one();
                     }
 
-                    $this->sendMessage([
-                        'chat_id' => $callbackQuery['from']['id'],
-                        'text' => $quoteText,
-                        'reply_markup' => json_encode([
-                            'inline_keyboard'=>[
-                                [
-                                    ['text'=>$nextButtonName,'callback_data'=> $nextButtonValue],
-                                ]
-                            ]
-                        ]),
-                    ]);
-                }
+                } else {
 
+                }
+//                $data = [];
+//                foreach ($motivators as $motivator) {
+//                    $row = [];
+//                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> 'motivator/' . $motivator['hrurl'].'/'.$pointOfView.'/'.$mode];
+//                    $data[] = $row;
+//                };
+//                // options
+//                $data[] = [
+//                    ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'. $pointOfView.'/'.$section.'/'.$mode],
+//                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/'.$mode],
+//                ];
+//
+//                $this->sendMessage([
+//                    'chat_id' => $callbackQuery['from']['id'],
+//                    'text' => $type . ' мотиваторы',
+//                    'reply_markup' => json_encode([
+//                        'inline_keyboard'=> $data
+//                    ]),
+//                ]);
 
             }
 
-            // pointOfView
+            // phrase
 
-            if ($action == 'pointOfView') {   // pointOfView / pointOfView / section / mode
+            if ($action == 'phrase') {
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'], //require
-                    'text' => 'ответ получен', //Optional
+                    'text' => 'в процессе', //Optional
                 ]);
 
-                if (isset($commandParts[1])) {
-                    $pointOfView = $commandParts[1];
-                } else {
-                    $pointOfView = 'you';
-                }
-                $section = $commandParts[2];
-                if ($section==1) {
-                    $type = 'Тематические';
-                } elseif ($section==2) {
-                    $type = 'Профессиональные';
-                } elseif ($section==4) {
-                    $type = 'Романтичные';
-                } else {
-                    $type = 'Тематические';
-                }
 
-                if (isset($commandParts[3])) {
-                    $mode = $commandParts[3];
-                } else {
-                    $mode =  'one';
-                }
-
-                $this->sendMessage([
-                    'chat_id' => $callbackQuery['from']['id'],
-                    'text' => $pointOfView=='i'?'Текущая точка зрения - Я':'Текущая точка зрения - Ты',
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=> 'Я','callback_data'=> 'motivatorList/i/'.$section.'/'.$mode],
-                                ['text'=> 'Ты','callback_data'=> 'motivatorList/you/'.$section .'/'.$mode],
-                            ]
-                        ]
-                    ]),
-                ]);
             }
+
 
             // Опции
 
@@ -466,85 +233,10 @@ class ChepuhaBotController extends \yii\web\Controller
                     'callback_query_id' => $callbackQuery['id'], //require
                     'text' => 'ответ получен', //Optional
                 ]);
-                if (isset($commandParts[1])) {
-                    $pointOfView = $commandParts[1];
-                } else {
-                    $pointOfView = 'you';
-                }
-                $section = $commandParts[2];
-
-                if (isset($commandParts[3])) {
-                    $mode = $commandParts[3];
-                } else {
-                    $mode =  'one';
-                }
-
-                $this->sendMessage([
-                    'chat_id' => $callbackQuery['from']['id'],
-                    'text' => 'Список опций',
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/1/'.$mode],
-                            ],
-                            [
-                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/2/'.$mode],
-                            ],
-                            [
-                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/4/'.$mode],
-                            ],
-                            [
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/'.$pointOfView.'/'.$section.'/'.$mode],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/'.$pointOfView.'/'.$section.'/'.$mode],
-                            ],
-                            [
-                                ['text'=>'Перейти на сайт','url'=> 'https://nashe-schastye.ru/'],
-                            ],
-                        ]
-                    ]),
-                ]);
-            }
-
-            // Режим показа
-
-            if ($action == 'mode') {
-                $this->answerCallbackQuery([
-                    'callback_query_id' => $callbackQuery['id'], //require
-                    'text' => 'ответ получен', //Optional
-                ]);
-                if (isset($commandParts[1])) {
-                    $pointOfView = $commandParts[1];
-                } else {
-                    $pointOfView = 'you';
-                }
-                $section = $commandParts[2];
-                if (isset($commandParts[3])) {
-                    $mode = $commandParts[3];
-                    if ($mode == 'all') {
-                        $modeName = 'Все сразу';
-                    } else {
-                        $modeName = 'По одному';
-
-                    }
-                } else {
-                    $mode =  'all';
-                    $modeName = 'Все сразу';
-                }
-                $this->sendMessage([
-                    'chat_id' => $callbackQuery['from']['id'],
-                    'text' => 'Режим - ' . $modeName,
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>"По одному",'callback_data'=> 'motivatorList/'.$pointOfView.'/'.$section.'/one'],
-                                ['text'=>"Все сразу",'callback_data'=> 'motivatorList/'.$pointOfView.'/'.$section.'/all'],
-                            ]
-                        ]
-                    ]),
-                ]);
-
 
             }
+
+
 
 
         }

@@ -1,0 +1,95 @@
+<?php
+
+use yii\helpers\Html;
+use \yii\widgets\Pjax;
+use \yii\widgets\ActiveForm;
+
+?>
+<!-- переменные сцены -->
+<div class="row mt20 bt pt20">
+    <?php Pjax::begin([
+        'id' => 'playVarsPjax',
+        'timeout' => 2000,
+        'enablePushState' => false
+    ]); ?>
+    <?php
+    $newVar = new \common\models\ChBotPlayVars();
+    $query = \common\models\ChBotPlayVars::find()->where(['play_id'=>$playId]);
+    $varsDataProvider = new \yii\data\ActiveDataProvider([
+        'query'=>$query,
+    ]);
+    ?>
+    <div class=" col-sm-6">
+        <h4>Создать переменную)</h4>
+        <?php $form = ActiveForm::begin([
+            'id'=>'varCreate',
+            'action' => ['/ch-bot-play/create-play-var?play='.$playId],
+//                    'method' => 'post',
+            'options' => ['data-pjax' => true ]
+        ]); ?>
+
+        <?= $form->field($newVar, 'question')
+            ->textarea(['rows' => 1,'maxlength' => true, 'id'=>'varCreate-question'])
+        ?>
+        <!--                --><?//= $form->field($newVar, 'value')
+        //                    ->textarea(['rows' => 1,'maxlength' => true, 'id'=>'varCreate-value'])
+        //                     ?>
+
+        <!--                --><?//= Html::a('<i class="fa fa-plus" aria-hidden="true"></i> Создать', '/psychotherapyitem/create',['class' => 'btn btn-success btn-xs']) ?>
+        <?= Html::submitButton('Создать <i class="fa fa-share" aria-hidden="true"></i>', ['class' => 'btn btn-primary btn-xs']) ?>
+        <?php ActiveForm::end() ?>
+    </div>
+    <div class="col-sm-6">
+
+        <?php
+        echo yii\grid\GridView::widget([
+            'dataProvider' => $varsDataProvider,
+            'emptyText' => 'пока пусто',
+            'columns'=>[
+                'id',
+//                        [
+//                            'label' => 'ID',
+//                            'attribute'=>'id',
+//                            'value' => function($data)
+//                            {
+////                                $theData = \common\models\PsychotherapyItem::find()->where(['id'=>$data['item_id']])->one();
+////                                return $theData['name'];
+//                                return $data['question'];
+//                            },
+//                        ],
+                [
+                    'label' => 'Переменная',
+                    'attribute'=>'question',
+                    'value' => function($data)
+                    {
+//                                $theData = \common\models\PsychotherapyItem::find()->where(['id'=>$data['item_id']])->one();
+//                                return $theData['name'];
+                        return $data['question'];
+                    },
+                ],
+                [
+                    'class' => \yii\grid\ActionColumn::className(),
+                    'buttons' => [
+                        'delete'=>function($url,$model){
+                            $newUrl = Yii::$app->getUrlManager()->createUrl(['/itemassign/delete','id'=>$model['id']]);
+                            return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-trash"></span>', $newUrl,
+//                                        ['title' => Yii::t('yii', 'Удалить'), 'data-pjax' => true,]);
+                                ['title' => Yii::t('yii', 'Удалить'), 'data-pjax' => '0','data-method'=>'post']);
+                        },
+                        'view'=>function($url,$model){
+                            return false;
+                        },
+                        'update'=>function($url,$model){
+                            return false;
+                        },
+
+                    ]
+                ],
+            ],
+        ]);
+        ?>
+
+    </div>
+    <?php Pjax::end(); ?>
+</div>
+<!-- /переменные сцены -->

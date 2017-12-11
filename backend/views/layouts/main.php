@@ -75,8 +75,14 @@ AppAsset::register($this);
                 ['label' => 'Фразы', 'url' => ['/mline/index']],
             ],
         ],
-        ['label' => 'Заявки', 'url' => ['/feedback/index']],
-//        ['label' => 'Статьи', 'url' => ['/article/index']],
+        [
+            'label' => 'Боты',
+            'items' => [
+                ['label' => 'ChBotSession', 'url' => ['/ch-bot-session/index']],
+                ['label' => 'ChBotPlay', 'url' => ['/ch-bot-play/index']],
+                ['label' => 'ChBotPlayVars', 'url' => ['/ch-bot-play-vars/index']],
+            ],
+        ],
         [
             'label' => 'Библиотека',
             'items' => [
@@ -89,6 +95,8 @@ AppAsset::register($this);
                 ['label' => 'Quotepad', 'url' => ['/quotepad/index']],
                 ['label' => 'Quotepad Images', 'url' => ['/quotepadimg/index']],
                 ['label' => 'Картинки', 'url' => ['/imagefile/index']],
+                ['label' => 'Заявки', 'url' => ['/feedback/index']],
+
             ],
         ],
 
