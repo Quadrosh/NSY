@@ -3,7 +3,6 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "ch_bot_session".
@@ -26,15 +25,6 @@ class ChBotSession extends \yii\db\ActiveRecord
         return 'ch_bot_session';
     }
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'updatedAtAttribute' => false,
-            ],
-        ];
-    }
     /**
      * @inheritdoc
      */
@@ -42,7 +32,7 @@ class ChBotSession extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'item_id', 'created_at'], 'integer'],
-            [['item_type', 'description'], 'required'],
+            [['item_type', ], 'required'],
             [['description', 'user_response'], 'string'],
             [['item_type'], 'string', 'max' => 255],
         ];
@@ -63,8 +53,12 @@ class ChBotSession extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
         ];
     }
-    public function getPlay()
+    /**
+     *
+     */
+    public function getVars()
     {
-        return $this->hasOne(ChBotPlay::className(),['id'=>'item_id'])->where(['item_type'=>'play']);
+        return $this->hasMany(ChBotSessionVars::className(),['id'=>'session_id']);
     }
+
 }
