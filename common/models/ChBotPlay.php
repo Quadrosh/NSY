@@ -68,6 +68,6 @@ class ChBotPlay extends \yii\db\ActiveRecord
      */
     public function getVars()
     {
-        return $this->hasMany(ChBotPlayVars::className(),['id'=>'play_id']);
+        return $this->hasMany(ChBotPlayVars::className(),['play_id'=>'id']);
     }
 }
