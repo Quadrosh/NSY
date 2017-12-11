@@ -73,7 +73,7 @@ class ChepuhaBotController extends \yii\web\Controller
             if ($message['text'] == '/start') {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'text' => 'Привет, я бот Мотиватор, ниже список опций',
+                    'text' => 'Привет, я бот Чепуха Про, ниже список опций',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
@@ -100,7 +100,7 @@ class ChepuhaBotController extends \yii\web\Controller
             elseif ($message['text'] == '/options') {
                 $$this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'text' => 'Привет, я бот Мотиватор, ниже список опций',
+                    'text' => 'Привет, я бот Чепуха Про, ниже список опций',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
@@ -183,7 +183,7 @@ class ChepuhaBotController extends \yii\web\Controller
                                 'inline_keyboard'=> $data
                             ]),
                         ]);
-                        
+
                     } else {
                         $id = $commands[1];
                         $play = ChBotPlay::find()->where(['id'=>$id])->one();
