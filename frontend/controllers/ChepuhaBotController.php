@@ -194,12 +194,12 @@ class ChepuhaBotController extends \yii\web\Controller
                 ]);
 
                 if (isset($commands[1])) {
-                    if ($commands[1]=='all') {
+                    if ($commands[1]=='all') {  // Список сцен
                         $plays = ChBotPlay::find()->all();
                         $data = [];
                         foreach ($plays as $play) {
                             $row = [];
-                            $row[] = ['text'=>$play['name'],'callback_data'=> 'play/' . $play['id']];
+                            $row[] = ['text'=>$play['name'],'callback_data'=> 'play/one/' . $play['id']];
                             $data[] = $row;
                         };
                         // options
