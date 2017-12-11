@@ -133,6 +133,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     if ($raw != null) {
                         $raw['status']='active';
                         $raw->save();
+                        $activeVar = $raw;
                     } else {
                         $this->sendMessage([
                             'chat_id' => $message['from']['id'],
