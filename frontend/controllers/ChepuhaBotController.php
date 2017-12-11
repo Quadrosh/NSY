@@ -178,7 +178,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                         $this->sendMessage([
                             'chat_id' => $callbackQuery['from']['id'],
-                            'text' => 'Чепусценки',
+                            'text' => 'Чепусценки'.count($plays),
                             'reply_markup' => json_encode([
                                 'inline_keyboard'=> $data
                             ]),
