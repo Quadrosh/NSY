@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "ch_bot_play".
@@ -23,6 +24,15 @@ class ChBotPlay extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'ch_bot_play';
+    }
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+//                'updatedAtAttribute' => false,
+            ],
+        ];
     }
 
     /**

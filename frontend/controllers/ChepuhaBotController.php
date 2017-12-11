@@ -223,10 +223,6 @@ class ChepuhaBotController extends \yii\web\Controller
 
 
                         $session = ChBotSession::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
-                        if ($session['item_type']== 'play') {
-                            $playId = $session['item_id'];
-                        }
-
 
                         if ($session == null) {
                             $session = new ChBotSession;
@@ -236,7 +232,22 @@ class ChepuhaBotController extends \yii\web\Controller
                             $session->save();
                         }
 
+                        if ($session['item_type'] == 'play') {
+                            $sessionPlayId = $session['item_id'];
+                            if ($playId != null  && $sessionPlayId != $playId) {
+                                $session['item_id'] = $playId;
+                                $session->save();
+                            }
+                        }
+
                         $play = ChBotPlay::find()->where(['id'=>$playId])->one();
+
+                        $this->sendMessage([
+                            'chat_id' => $callbackQuery['from']['id'],
+                            'text' => $play['id'].$play['name'],
+                        ]);
+
+
 
                         $playVars = $play->vars;
                         $sessionVars = $session->vars;
