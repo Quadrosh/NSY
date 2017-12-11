@@ -247,6 +247,10 @@ class ChepuhaBotController extends \yii\web\Controller
                             'text' => $play['id'].$play['name'],
                         ]);
 
+                        return 'middle return';
+
+
+
 
 
                         $playVars = $play->vars;
