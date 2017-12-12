@@ -116,6 +116,26 @@ class ChepuhaBotController extends \yii\web\Controller
 
             }
 
+            elseif ($message['text'] == '/debug'){
+                $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
+
+                $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
+                $text = $play['text'];
+                $vars = $session->vars;
+//                $playVars = $play->vars;
+
+                $res = $text;
+                foreach ( $vars as  $var) {
+                    $res = str_replace('#'.$var['item_var_id'], $var['value'], $res);
+                }
+
+                $this->sendMessage([
+                    'chat_id' => $message['from']['id'],
+                    'text' => $res,
+                ]);
+                return 'ok';
+            }
+
             else {      // текст от пользователя
 
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
