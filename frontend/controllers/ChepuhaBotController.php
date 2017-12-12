@@ -213,7 +213,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                         foreach ($vars as  $var) {
                             $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
-//                            $var->delete();
+                            $var->delete();
                         }
 
                         $this->sendMessage([
@@ -221,7 +221,6 @@ class ChepuhaBotController extends \yii\web\Controller
                             'text' => $text,
                         ]);
 
-                        $vars->delete();
                         $session->delete();
                         return 'ok';
                     }
