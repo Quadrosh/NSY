@@ -125,7 +125,10 @@ class ChepuhaBotController extends \yii\web\Controller
                         'chat_id' => $message['from']['id'],
                         'text' => 'нет активной сессии',
                     ]);
-                    return 'ok';
+                    return [
+                        'message' => 'ok',
+                        'code' => 200,
+                    ];
                 }
                 $activeVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'active'])->one();
 
@@ -134,7 +137,10 @@ class ChepuhaBotController extends \yii\web\Controller
                         'chat_id' => $message['from']['id'],
                         'text' => 'нет активного шага',
                     ]);
-                    return 'ok';
+                    return [
+                        'message' => 'ok',
+                        'code' => 200,
+                    ];
 
 //                    $raw = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
 //                    if ($raw != null) {
@@ -165,7 +171,10 @@ class ChepuhaBotController extends \yii\web\Controller
                         'chat_id' => $message['from']['id'],
                         'text' => $newActiveVar['text'],
                     ]);
-                    return 'ok';
+                    return [
+                        'message' => 'ok',
+                        'code' => 200,
+                    ];
                 }
 
 
