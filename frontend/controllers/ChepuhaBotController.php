@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\ChBotPhrase;
 use common\models\ChBotPlay;
 use common\models\ChBotPlayVars;
 use common\models\ChBotSession;
@@ -358,7 +359,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 if (isset($commands[1])) {
                     if ($commands[1]=='all') {  // Список сценариев
-                        $plays = ChBotPlay::find()->all();  // токамо фразы
+                        $plays = ChBotPhrase::find()->all();  // токамо фразы
 
                         $data = [];
                         foreach ($plays as $play) {

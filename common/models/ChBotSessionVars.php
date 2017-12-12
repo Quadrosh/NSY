@@ -3,7 +3,6 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "ch_bot_session_vars".
@@ -26,15 +25,6 @@ class ChBotSessionVars extends \yii\db\ActiveRecord
         return 'ch_bot_session_vars';
     }
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'updatedAtAttribute' => false,
-            ],
-        ];
-    }
     /**
      * @inheritdoc
      */
