@@ -18,8 +18,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'example')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'value')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'created_at')->textInput() ?>
 
     <div class="form-group">

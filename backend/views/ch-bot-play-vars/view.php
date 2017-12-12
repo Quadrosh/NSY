@@ -32,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'play_id',
             'question',
             'example',
-            'value',
             'created_at',
         ],
     ]) ?>

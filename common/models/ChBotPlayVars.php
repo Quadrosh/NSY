@@ -42,7 +42,7 @@ class ChBotPlayVars extends \yii\db\ActiveRecord
     {
         return [
             [['play_id', 'created_at'], 'integer'],
-            [['question', 'value'], 'string', 'max' => 510],
+            [['question'], 'string', 'max' => 510],
             [['question'], 'required'],
             [['example'], 'string', 'max' => 255],
         ];
@@ -58,7 +58,6 @@ class ChBotPlayVars extends \yii\db\ActiveRecord
             'play_id' => 'Play ID',
             'question' => 'Question',
             'example' => 'Example',
-            'value' => 'Value',
             'created_at' => 'Created At',
         ];
     }
