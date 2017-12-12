@@ -157,7 +157,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 }
 
-                $activeVar['value'] = $message['text'];
+                $activeVar['value'] = $message['text'].' $updateId='.$updateId;
                 $activeVar['status'] = 'done';
                 $activeVar->save();
 
