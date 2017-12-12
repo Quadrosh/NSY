@@ -195,13 +195,14 @@ class ChepuhaBotController extends \yii\web\Controller
 //                            $i++;
 //                        }
                         $vars = $session->vars;
+                        $res = $text;
                         foreach ( $vars as  $var) {
-                            str_replace('#'.$var['id'],$var['value'], $text);
+                            $res = str_replace('#'.$var['id'],$var['value'], $res);
                         }
 
                         $this->sendMessage([
                             'chat_id' => $message['from']['id'],
-                            'text' => $text,
+                            'text' => $res,
                         ]);
                         return 'ok';
                     }
