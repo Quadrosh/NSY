@@ -131,8 +131,10 @@ class ChepuhaBotController extends \yii\web\Controller
                     'chat_id' => $message['from']['id'],
                     'text' => $res,
                 ]);
-                
-                $vars->delete();
+
+                foreach ($vars as $var) {
+                    $var->delete();
+                }
                 $session->delete();
                 return 'ok';
             }
