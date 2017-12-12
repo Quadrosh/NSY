@@ -157,7 +157,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 }
 
-                $activeVar['value'] = $message['text'].' $updateId='.$updateId;
+                $activeVar['value'] = $message['text'];
                 $activeVar['status'] = 'done';
                 $activeVar->save();
 
@@ -176,7 +176,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         'text' => $newActiveVar['question'].'?',
 //                        'text' => '$newActiveVar id is saved'.$newActiveVar['id'],
                     ]);
-                    return ['message' => 'ok', 'code' => 200];
+                    return 'ok';
 
                 }
 
@@ -184,10 +184,24 @@ class ChepuhaBotController extends \yii\web\Controller
                 if ($newActiveVar == null && ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'done'])->one()) {
                     if ($session['item_type']=='play') {
                         $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
+                        $text = $play['text'];
+//                        $textArr = str_split($rawText);
+//                        $i = 0;
+//                        foreach ($textArr as $char) {
+//                            if ($char=='#') {
+//
+//                            }
+//
+//                            $i++;
+//                        }
+                        $vars = $session->vars;
+                        foreach ( $vars as  $var) {
+                            str_replace('#'.$var['id'],$var['value'], $text);
+                        }
 
                         $this->sendMessage([
                             'chat_id' => $message['from']['id'],
-                            'text' => $play['text'],
+                            'text' => $text,
                         ]);
                         return 'ok';
                     }
