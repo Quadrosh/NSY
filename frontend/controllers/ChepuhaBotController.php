@@ -122,8 +122,6 @@ class ChepuhaBotController extends \yii\web\Controller
                 $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
                 $text = $play['text'];
                 $vars = $session->vars;
-//                $playVars = $play->vars;
-
                 $res = $text;
                 foreach ( $vars as  $var) {
                     $res = str_replace('#'.$var['item_var_id'], $var['value'], $res);
@@ -133,6 +131,9 @@ class ChepuhaBotController extends \yii\web\Controller
                     'chat_id' => $message['from']['id'],
                     'text' => $res,
                 ]);
+                
+                $vars->delete();
+                $session->delete();
                 return 'ok';
             }
 
@@ -205,25 +206,21 @@ class ChepuhaBotController extends \yii\web\Controller
                     if ($session['item_type']=='play') {
                         $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
                         $text = $play['text'];
-//                        $textArr = str_split($rawText);
-//                        $i = 0;
-//                        foreach ($textArr as $char) {
-//                            if ($char=='#') {
-//
-//                            }
-//
-//                            $i++;
-//                        }
+
                         $vars = $session->vars;
-                        $res = $text;
-                        foreach ( $vars as  $var) {
-                            $res = str_replace('#'.$var['id'],$var['value'], $res);
+
+                        foreach ($vars as  $var) {
+                            $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
+//                            $var->delete();
                         }
 
                         $this->sendMessage([
                             'chat_id' => $message['from']['id'],
-                            'text' => $res,
+                            'text' => $text,
                         ]);
+
+                        $vars->delete();
+                        $session->delete();
                         return 'ok';
                     }
 
