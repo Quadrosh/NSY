@@ -169,24 +169,15 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 if ($newActiveVar != null) {
                     $newActiveVar['status'] = 'active';
-
                     $newActiveVar->save();
 
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
-                        'text' => '$newActiveVar id is saved'.$newActiveVar['id'],
+                        'text' => $newActiveVar['question'].'?',
+//                        'text' => '$newActiveVar id is saved'.$newActiveVar['id'],
                     ]);
                     return ['message' => 'ok', 'code' => 200];
 
-//                    $this->sendMessage([
-//                        'chat_id' => $message['from']['id'],
-//                        'text' => $newActiveVar['text'],
-//                    ]);
-//
-//                    return [
-//                        'message' => 'ok',
-//                        'code' => 200,
-//                    ];
                 }
 
 
