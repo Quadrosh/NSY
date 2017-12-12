@@ -53,15 +53,15 @@ class ChepuhaBotController extends \yii\web\Controller
 
         $messageId = $message['message_id'];
         $from = $message['from'];  // array
-        $fromId = $from['id'];
-        $fromIsBot = $from['is_bot'];
-        $fromFirstName = $from['first_name'];
-        $fromLastName = $from['last_name'];
-        $fromUserName = $from['username'];
-        $fromLanguageCode = $from['language_code'];
+        $fromId = $message['from']['id'];
+        $fromIsBot = $message['from']['is_bot'];
+        $fromFirstName = $message['from']['first_name'];
+        $fromLastName = $message['from']['last_name'];
+        $fromUserName = $message['from']['username'];
+        $fromLanguageCode = $message['from']['language_code'];
         $chat = $message['chat'];
-        $chatId = $chat['id'];
-        $chatType = $chat['type'];
+        $chatId = $message['chat']['id'];
+        $chatType = $message['chat']['type'];
         $date = $message['date'];
         $text = $message['text'];
 
@@ -70,8 +70,6 @@ class ChepuhaBotController extends \yii\web\Controller
         if ($message != null) {
 
             //   /start
-            //
-            //
 
             if ($message['text'] == '/start') {
                 $this->sendMessage([
@@ -118,14 +116,16 @@ class ChepuhaBotController extends \yii\web\Controller
 
             }
 
-            else {      // текст
+            else {      // текст от пользователя
+
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
+
                 if ($session == null) {
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
                         'text' => 'нет активной сессии',
                     ]);
-                    return 'middle return';
+                    return 'ok';
                 }
                 $activeVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'active'])->one();
 
@@ -150,9 +150,11 @@ class ChepuhaBotController extends \yii\web\Controller
 //                    }
 
                 }
+
                 $activeVar['value'] = $message['text'];
                 $activeVar['status'] = 'done';
                 $activeVar->save();
+
                 $newActiveVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
 
                 if ($newActiveVar != null) {
@@ -211,11 +213,6 @@ class ChepuhaBotController extends \yii\web\Controller
                             $row[] = ['text'=>$play['name'],'callback_data'=> 'play/one/' . $play['id']];
                             $data[] = $row;
                         };
-                        // options
-//                        $data[] = [
-//                            ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'. $pointOfView.'/'.$section.'/'.$mode],
-//                            ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/'.$mode],
-//                        ];
 
                         $this->sendMessage([
                             'chat_id' => $callbackQuery['from']['id'],
