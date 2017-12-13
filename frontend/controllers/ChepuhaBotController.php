@@ -180,6 +180,11 @@ class ChepuhaBotController extends \yii\web\Controller
                     $newActiveVar['status'] = 'active';
                     $newActiveVar->save();
 
+                    $this->deleteMessage([
+                        'chat_id' => $message['from']['id'],
+                        'message_id' => $message['message_id'],
+                    ]);
+
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
                         'text' => $newActiveVar['question'].'?',
@@ -327,28 +332,7 @@ class ChepuhaBotController extends \yii\web\Controller
                             ]
                         ]),
                     ]);
-
                 }
-//                $data = [];
-//                foreach ($motivators as $motivator) {
-//                    $row = [];
-//                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> 'motivator/' . $motivator['hrurl'].'/'.$pointOfView.'/'.$mode];
-//                    $data[] = $row;
-//                };
-//                // options
-//                $data[] = [
-//                    ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'. $pointOfView.'/'.$section.'/'.$mode],
-//                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/'.$mode],
-//                ];
-//
-//                $this->sendMessage([
-//                    'chat_id' => $callbackQuery['from']['id'],
-//                    'text' => $type . ' мотиваторы',
-//                    'reply_markup' => json_encode([
-//                        'inline_keyboard'=> $data
-//                    ]),
-//                ]);
-
             }
 
             // phrase
@@ -545,6 +529,71 @@ class ChepuhaBotController extends \yii\web\Controller
         $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
             Yii::$app->params['chepuBotToken'] .
             "/answerCallbackQuery", $option);
+        return json_decode($jsonResponse);
+    }
+    /**
+     *   @var array
+     *   sample
+     *   $this->editMessageText([
+     *       'chat_id' => '3343545121', //Optional
+     *       'message_id' => 13123, //Optional
+     *       'inline_message_id' => 'my alert',  //Optional
+     *       'text' => 'my text', //require
+     *       'parse_mode' => 123231,  //Optional
+     *       'disable_web_page_preview' => false or true,  //Optional
+     *       'reply_markup' => Type InlineKeyboardMarkup,  //Optional
+     *   ]);
+     *   Use this method to edit text and game messages sent by the bot or via the bot (for inline bots). On success,
+     *  if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+     */
+    public function editMessageText(array $option = [])
+    {
+        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+            Yii::$app->params['chepuBotToken'] .
+            "/editMessageText", $option);
+        return json_decode($jsonResponse);
+    }
+    /**
+     *   @var array
+     *   sample
+     *   $this->editMessageText([
+     *       'chat_id' => '3343545121', //Required
+     *       'message_id' => 13123, //Optional
+     *       'inline_message_id' => 'my alert',  //Optional
+     *       'caption' => 'my text', //require
+     *       'reply_markup' => Type InlineKeyboardMarkup,  //Optional
+     *   ]);
+     *
+     *   Use this method to edit captions of messages sent by the bot or via the bot (for inline bots). On success,
+     *    if edited message is sent by the bot, the edited Message is returned, otherwise True is returned.
+     */
+    public function editMessageCaption(array $option = [])
+    {
+        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+            Yii::$app->params['chepuBotToken'] .
+            "/editMessageCaption", $option);
+        return json_decode($jsonResponse);
+    }
+
+    /**
+     *   @var array
+     *   $this->deleteMessage([
+     *       'chat_id' => '3343545121', //Required
+     *       'message_id' => 13123, //Required
+     *   ]);
+     *   Use this method to delete a message, including service messages, with the following limitations:
+     *   - A message can only be deleted if it was sent less than 48 hours ago.
+     *   - Bots can delete outgoing messages in groups and supergroups.
+     *   - Bots granted can_post_messages permissions can delete outgoing messages in channels.
+     *   - If the bot is an administrator of a group, it can delete any message there.
+     *   - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+     *   Returns True on success.
+     */
+    public function deleteMessage(array $option = [])
+    {
+        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+            Yii::$app->params['chepuBotToken'] .
+            "/deleteMessage", $option);
         return json_decode($jsonResponse);
     }
 
