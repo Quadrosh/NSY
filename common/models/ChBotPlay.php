@@ -64,7 +64,7 @@ class ChBotPlay extends \yii\db\ActiveRecord
     }
 
     /**
-     *
+     * получить переменные
      */
     public function getVars()
     {

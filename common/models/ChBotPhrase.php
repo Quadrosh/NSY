@@ -62,4 +62,12 @@ class ChBotPhrase extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+
+    /**
+     * получить переменные
+     */
+    public function getVars()
+    {
+        return $this->hasMany(ChBotPhraseVars::className(),['play_id'=>'id']);
+    }
 }

@@ -75,7 +75,7 @@ class ChepuhaBotController extends \yii\web\Controller
             if ($message['text'] == '/start') {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'text' => 'Привет, я бот Чепуха Про, ниже список опций',
+                    'text' => 'Привет, я Чепухобот, ниже список опций',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
@@ -102,7 +102,7 @@ class ChepuhaBotController extends \yii\web\Controller
             elseif ($message['text'] == '/options') {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'text' => 'Привет, я бот Чепуха Про, ниже список опций',
+                    'text' => 'Чепухобот - список опций',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
@@ -140,7 +140,8 @@ class ChepuhaBotController extends \yii\web\Controller
 //                return 'ok';
             }
 
-            else {      // текст от пользователя
+            // любой текст от пользователя
+            else {
 
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
 
@@ -237,7 +238,7 @@ class ChepuhaBotController extends \yii\web\Controller
             $commands = explode('/', $callbackQuery['data']);
             $action = $commands[0];
 
-            // play
+            // play (чепусценка)
 
             if ($action == 'play') {
                 $this->answerCallbackQuery([
@@ -364,7 +365,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         $data = [];
                         foreach ($plays as $play) {
                             $row = [];
-                            $row[] = ['text'=>$play['name'],'callback_data'=> 'play/one/' . $play['id']];
+                            $row[] = ['text'=>$play['name'],'callback_data'=> 'phrase/one/' . $play['id']];
                             $data[] = $row;
                         };
 
@@ -387,12 +388,12 @@ class ChepuhaBotController extends \yii\web\Controller
                         if ($session == null) {
                             $session = new ChBotSession;
                             $session['user_id'] = $callbackQuery['from']['id'];
-                            $session['item_type'] = 'play';
+                            $session['item_type'] = 'phrase';
                             $session['item_id'] = $playId;
                             $session->save();
                         }
 
-                        if ($session['item_type'] == 'play') {
+                        if ($session['item_type'] == 'phrase') {
                             $sessionPlayId = $session['item_id'];
                             if ($playId != null  && $sessionPlayId != $playId) {
                                 $session['item_id'] = $playId;
@@ -400,7 +401,7 @@ class ChepuhaBotController extends \yii\web\Controller
                             }
                         }
 
-                        $play = ChBotPlay::find()->where(['id'=>$playId])->one();
+                        $play = ChBotPhrase::find()->where(['id'=>$playId])->one();
                         $playVars = $play->vars;
                         $sessionVars = $session->vars;
                         if ($sessionVars == null) {
