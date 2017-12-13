@@ -84,7 +84,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php $form = ActiveForm::begin([
                     'id'=>'varCreate',
                     'action' => ['/ch-bot-play/create-play-var?play='.$model['id']],
-//                    'method' => 'post',
                     'options' => ['data-pjax' => true ]
                 ]); ?>
 
@@ -117,8 +116,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute'=>'question',
                             'value' => function($data)
                             {
-//                                $theData = \common\models\PsychotherapyItem::find()->where(['id'=>$data['item_id']])->one();
-//                                return $theData['name'];
                                 return $data['question'];
                             },
                         ],

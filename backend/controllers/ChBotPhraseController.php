@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use common\models\ChBotPhraseVars;
 use Yii;
 use common\models\ChBotPhrase;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,6 +37,7 @@ class ChBotPhraseController extends Controller
      */
     public function actionIndex()
     {
+        Url::remember();
         $dataProvider = new ActiveDataProvider([
             'query' => ChBotPhrase::find(),
         ]);
@@ -51,9 +54,31 @@ class ChBotPhraseController extends Controller
      */
     public function actionView($id)
     {
+        Url::remember();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    /**
+     * Creates a new ChBotPlayVar model assigned to Play.
+     * @return mixed
+     */
+    public function actionCreatePhraseVar($play)
+    {
+
+        $playVar = new ChBotPhraseVars();
+        $request = Yii::$app->request->post('ChBotPhraseVars');
+
+        $playVar['play_id'] = $play;
+        $playVar['question'] = $request['question'];
+        $playVar->save();
+
+        return $this->render('_view-create_var', [
+            'playId'=>$play,
+
+        ]);
+
     }
 
     /**
@@ -66,7 +91,7 @@ class ChBotPhraseController extends Controller
         $model = new ChBotPhrase();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(Url::previous());
         }
 
         return $this->render('create', [
@@ -85,7 +110,7 @@ class ChBotPhraseController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(Url::previous());
         }
 
         return $this->render('update', [
@@ -103,7 +128,7 @@ class ChBotPhraseController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(Url::previous());
     }
 
     /**

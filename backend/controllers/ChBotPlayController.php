@@ -66,20 +66,13 @@ class ChBotPlayController extends Controller
      */
     public function actionCreatePlayVar($play)
     {
-//        $play = Yii::$app->request->get('play');
-
 
         $playVar = new ChBotPlayVars();
         $request = Yii::$app->request->post('ChBotPlayVars');
 
-
         $playVar['play_id'] = $play;
         $playVar['question'] = $request['question'];
         $playVar->save();
-
-//        var_dump($request); die;
-
-
 
         return $this->render('_view-create_var', [
             'playId'=>$play,
