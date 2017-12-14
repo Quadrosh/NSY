@@ -145,7 +145,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
 
-                if ($session == null) {
+                if ($session == null) {   // Нет активной игры
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
                         'text' => 'Нет активной игры, поиграем?',
@@ -160,16 +160,15 @@ class ChepuhaBotController extends \yii\web\Controller
                             ]
                         ]),
                     ]);
-
-
                     return [
                         'message' => 'ok',
                         'code' => 200,
                     ];
                 }
+
                 $activeVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'active'])->one();
 
-                if ($activeVar == null) {
+                if ($activeVar == null) {   // Нет активного шага
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
                         'text' => 'Нет активного шага, начнем сначала?',
@@ -188,9 +187,8 @@ class ChepuhaBotController extends \yii\web\Controller
                         'message' => 'ok',
                         'code' => 200,
                     ];
-
-
                 }
+
 
                 $activeVar['value'] = $message['text'];
                 $activeVar['status'] = 'done';
@@ -202,14 +200,32 @@ class ChepuhaBotController extends \yii\web\Controller
                     $newActiveVar['status'] = 'active';
                     $newActiveVar->save();
 
-//                    $this->deleteMessage([
-//                        'chat_id' => $message['from']['id'],
-//                        'message_id' => $message['message_id'],
-//                    ]);
+//                    if ($session['item_type']=='play') {
+//                        $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
+//                        $text = $newActiveVar['question'].'?';
+//                        $vars = $session->vars;
+//                        foreach ($vars as  $var) {
+//                            $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
+//                        }
+//                        $this->sendMessage([
+//                            'chat_id' => $message['from']['id'],
+//                            'text' => $text,
+//                        ]);
+//                        $session->delete();
+//                        return 'ok';
+//                    }
+
+                    $text = $newActiveVar['question'];
+                    $vars = $session->vars;
+                    foreach ($vars as  $var) {
+                        $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
+                    }
+
 
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
-                        'text' => $newActiveVar['question'].'?',
+                        'text' => $text.'?',
+//                        'text' => $newActiveVar['question'].'?',
                     ]);
                     return 'ok';
 
