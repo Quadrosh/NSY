@@ -148,7 +148,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 if ($session == null) {
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
-                        'text' => 'нет активной игры',
+                        'text' => 'Нет активной игры, поиграем?',
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
@@ -172,7 +172,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 if ($activeVar == null) {
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
-                        'text' => 'нет активного шага',
+                        'text' => 'Нет активного шага, начнем сначала?',
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
