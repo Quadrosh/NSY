@@ -148,8 +148,20 @@ class ChepuhaBotController extends \yii\web\Controller
                 if ($session == null) {
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
-                        'text' => 'нет активной сессии',
+                        'text' => 'нет активной игры',
+                        'reply_markup' => json_encode([
+                            'inline_keyboard'=>[
+                                [
+                                    ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                                ],
+                                [
+                                    ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                                ],
+                            ]
+                        ]),
                     ]);
+
+
                     return [
                         'message' => 'ok',
                         'code' => 200,
@@ -161,6 +173,16 @@ class ChepuhaBotController extends \yii\web\Controller
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
                         'text' => 'нет активного шага',
+                        'reply_markup' => json_encode([
+                            'inline_keyboard'=>[
+                                [
+                                    ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                                ],
+                                [
+                                    ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                                ],
+                            ]
+                        ]),
                     ]);
                     return [
                         'message' => 'ok',
@@ -180,10 +202,10 @@ class ChepuhaBotController extends \yii\web\Controller
                     $newActiveVar['status'] = 'active';
                     $newActiveVar->save();
 
-                    $this->deleteMessage([
-                        'chat_id' => $message['from']['id'],
-                        'message_id' => $message['message_id'],
-                    ]);
+//                    $this->deleteMessage([
+//                        'chat_id' => $message['from']['id'],
+//                        'message_id' => $message['message_id'],
+//                    ]);
 
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
