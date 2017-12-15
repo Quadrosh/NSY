@@ -17,6 +17,7 @@ use \yii\widgets\ActiveForm;
     $query = \common\models\ChBotPlayVars::find()->where(['play_id'=>$playId]);
     $varsDataProvider = new \yii\data\ActiveDataProvider([
         'query'=>$query,
+        'pagination'=> ['pageSize' => 100],
     ]);
     ?>
     <div class=" col-sm-6">
