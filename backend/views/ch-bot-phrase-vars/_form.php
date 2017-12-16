@@ -16,9 +16,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'question')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'example')->textInput(['maxlength' => true]) ?>
+<!--    --><?//= $form->field($model, 'example')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+<!--    --><?//= $form->field($model, 'created_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

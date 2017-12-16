@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\ChBotPlayVars */
 
-$this->title = 'Update Ch Bot Play Vars: {nameAttribute}';
+$this->title = 'Update Ch Bot Play Vars: '.$model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Ch Bot Play Vars', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
