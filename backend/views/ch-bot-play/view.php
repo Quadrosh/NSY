@@ -44,6 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <section>
     <div class="container">
+        <div class="row mt20 bt pt20">
+            <h4>Text+</h4>
+            <?= $textPlus ?>
+
+
+        </div>
 
         <!-- изменение текста -->
         <div class="row mt20 bt pt20">

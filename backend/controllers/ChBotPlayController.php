@@ -55,8 +55,16 @@ class ChBotPlayController extends Controller
     public function actionView($id)
     {
         Url::remember();
+        $model = $this->findModel($id);
+
+        $text = nl2br($model['text']);
+        $vars = $model->vars;
+        foreach ($vars as  $var) {
+            $text = str_replace('#'.$var['id'], '(#'.$var['id'].' '.$var['question'].')', $text);
+        }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'textPlus' => $text,
         ]);
     }
 
