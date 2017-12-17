@@ -34,7 +34,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description:ntext',
             'cat_id',
-            'text:ntext',
+//            'text:ntext',
+            [
+                'attribute'=>'text',
+                'value'=> function($data)
+                {
+                    $text = nl2br($data['text']);
+                    $vars = $data->vars;
+                    foreach ($vars as  $var) {
+                        $text = str_replace('#'.$var['id'], '(#'.$var['id'].' '.$var['question'].')', $text);
+                    }
+                    return $text;
+                },
+                'format'=> 'html',
+            ],
             'created_at',
             'updated_at',
         ],
@@ -44,12 +57,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <section>
     <div class="container">
-        <div class="row mt20 bt pt20">
-            <h4>Text+</h4>
-            <?= $textPlus ?>
-
-
-        </div>
 
         <!-- изменение текста -->
         <div class="row mt20 bt pt20">
