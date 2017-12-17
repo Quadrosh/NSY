@@ -126,18 +126,23 @@ $this->params['breadcrumbs'][] = $this->title;
                             'buttons' => [
                                 'delete'=>function($url,$model){
                                     $newUrl = Yii::$app->getUrlManager()->createUrl(['/ch-bot-phrase-vars/delete','id'=>$model['id']]);
-                                    return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-trash"></span>', $newUrl,
-//                                        ['title' => Yii::t('yii', 'Удалить'), 'data-pjax' => true,]);
-                                        ['title' => Yii::t('yii', 'Удалить'), 'data-pjax' => '0','data-method'=>'post']);
+                                    return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-trash"></span>', $newUrl, [
+                                        'title' => Yii::t('yii', 'Удалить'),
+                                        'data-pjax' => '0',
+                                        'data-confirm' => Yii::t('yii', 'Точно удалить?'),
+                                        'data-method'=>'post'
+                                    ]);
                                 },
                                 'view'=>function($url,$model){
                                     return false;
                                 },
                                 'update'=>function($url,$model){
                                     $newUrl = Yii::$app->getUrlManager()->createUrl(['/ch-bot-phrase-vars/update','id'=>$model['id']]);
-                                    return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-pencil"></span>', $newUrl,
-//                                        ['title' => Yii::t('yii', 'Удалить'), 'data-pjax' => true,]);
-                                        ['title' => Yii::t('yii', 'Редактировать'), 'data-pjax' => '0','data-method'=>'post']);
+                                    return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-pencil"></span>', $newUrl, [
+                                        'title' => Yii::t('yii', 'Редактировать'),
+                                        'data-pjax' => '0',
+                                        'data-method'=>'post'
+                                    ]);
                                 },
 
                             ]
