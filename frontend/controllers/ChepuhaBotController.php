@@ -166,6 +166,10 @@ class ChepuhaBotController extends \yii\web\Controller
                         ]
                     ]),
                 ]);
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
 
             }
 
@@ -188,33 +192,35 @@ class ChepuhaBotController extends \yii\web\Controller
                         '/settings - все доступные команды'.PHP_EOL.
                         '/new - новая игра'.PHP_EOL.
                         '/end - прервать игру',
-                    
+
                 ]);
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
 
             }
 
-            elseif ($message['text'] == '/debug'){
-//                $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
-//
-//                $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
-//                $text = $play['text'];
-//                $vars = $session->vars;
-//                $res = $text;
-//                foreach ( $vars as  $var) {
-//                    $res = str_replace('#'.$var['item_var_id'], $var['value'], $res);
-//                }
-//
-//                $this->sendMessage([
-//                    'chat_id' => $message['from']['id'],
-//                    'text' => $res,
-//                ]);
-//
-//                foreach ($vars as $var) {
-//                    $var->delete();
-//                }
-//                $session->delete();
-//                return 'ok';
+            // about
+            elseif (trim(strtolower($message['text'])) == '/about' OR trim(strtolower($message['text'])) == '/о проекте' ) {
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
+                    'text' => 'Я - Чепухобот. '.PHP_EOL.
+                        'Я задаю странные вопросы и составляю из ответов различные предложения.'.PHP_EOL.
+                        'У меня есть 2 типа игры - чепусценка и чепуфраза.'.PHP_EOL.
+                        '<b>Чепусценка</b> - сценка с несколькими действующими лицами, по мотивам какого-либо произведения.'.PHP_EOL.
+                        '<b>Чепуфраза</b> - набор вопросов, из ответов на которые собирается фраза.'.PHP_EOL.
+                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'
+                ]);
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+
             }
+
+
 
             // любой текст от пользователя
             else {
