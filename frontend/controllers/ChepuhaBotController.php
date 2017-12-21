@@ -145,23 +145,25 @@ class ChepuhaBotController extends \yii\web\Controller
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'text' => 'Чепухобот - список опций',
                     'reply_markup' => json_encode([
-                        'keyboard'=>[
-                            [
-                                ['text'=>"Чепусценка"],
-                            ],
-                            [
-                                ['text'=>"Чепуфраза"],
-                            ],
-                        ],
-                        'one_time_keyboard' => true,
-//                        'inline_keyboard'=>[
+
+//                        'keyboard'=>[
 //                            [
-//                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+//                                ['text'=>"Чепусценка"],
 //                            ],
 //                            [
-//                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+//                                ['text'=>"Чепуфраза"],
 //                            ],
-//                        ]
+//                        ],
+//                        'one_time_keyboard' => true,
+
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                            ],
+                            [
+                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                            ],
+                        ]
                     ]),
                 ]);
 
