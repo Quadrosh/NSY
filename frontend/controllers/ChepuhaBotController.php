@@ -75,7 +75,8 @@ class ChepuhaBotController extends \yii\web\Controller
             if ($message['text'] == '/start') {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'text' => 'Привет, я Чепухобот. Я задаю странные вопросы и составляю из твоих ответов различные предложения. Ниже список опций',
+                    'parse_mode' => 'html',
+                    'text' => 'Привет, я <b>Чепухобот</b>. Я задаю странные вопросы и составляю из твоих ответов различные предложения. Ниже список опций:',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
