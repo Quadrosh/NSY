@@ -105,21 +105,19 @@ class ChepuhaBotController extends \yii\web\Controller
 
             //      /end
 
-            if ($message['text'] == '/end') {
+            if (trim(strtolower($message['text'])) == '/end') {
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
                 $vars = $session->vars;
                 foreach ($vars as  $var) {
-                    $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
                     $var->delete();
                 }
-
                 $session->delete();
 
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
-                    'text' => 'Игра прервана,
-начать новую?',
+                    'text' => 'Игра прервана,'.PHP_EOL.
+                        'начать новую?',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
