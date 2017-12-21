@@ -96,6 +96,10 @@ class ChepuhaBotController extends \yii\web\Controller
                         ]
                     ]),
                 ]);
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
 
             }
 
