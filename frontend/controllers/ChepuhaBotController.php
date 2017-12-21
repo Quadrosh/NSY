@@ -70,7 +70,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
         if ($message != null) {
 
-            //   /start
+            //      /start
 
             if ($message['text'] == '/start') {
                 $this->sendMessage([
@@ -88,9 +88,7 @@ class ChepuhaBotController extends \yii\web\Controller
                             [
                                 ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
                             ],
-//                            [
-//                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
-//                            ],
+
 //                            [
 //                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
 //                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
@@ -100,6 +98,43 @@ class ChepuhaBotController extends \yii\web\Controller
                 ]);
 
             }
+
+            //      /end
+
+            if ($message['text'] == '/end') {
+                $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
+                $vars = $session->vars;
+                foreach ($vars as  $var) {
+                    $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
+                    $var->delete();
+                }
+                $this->sendMessage([
+                    'chat_id' => $message['from']['id'],
+                    'text' => $text,
+                ]);
+                $session->delete();
+
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
+                    'text' =>
+                        'Игра прервана,
+                        начать новую?',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                            ],
+                            [
+                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                            ],
+
+                        ]
+                    ]),
+                ]);
+
+            }
+
 
             //  Опции текст
 
