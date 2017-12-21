@@ -278,7 +278,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 if (isset($commands[1])) {
                     if ($commands[1]=='all') {  // Список сцен
-                        $plays = ChBotPlay::find()->orderBy('name')->all();
+                        $plays = ChBotPlay::find()->where('name != :value',['value'=>'work'])->orderBy('name')->all();
                         $data = [];
                         foreach ($plays as $play) {
                             $row = [];
