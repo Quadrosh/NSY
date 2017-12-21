@@ -75,7 +75,7 @@ class ChepuhaBotController extends \yii\web\Controller
             if ($message['text'] == '/start') {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'text' => 'Привет, я Чепухобот, ниже список опций',
+                    'text' => 'Привет, я Чепухобот. Я задаю странные вопросы и составляю из твоих ответов различные предложения. Ниже список опций',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
@@ -200,20 +200,6 @@ class ChepuhaBotController extends \yii\web\Controller
                     $newActiveVar['status'] = 'active';
                     $newActiveVar->save();
 
-//                    if ($session['item_type']=='play') {
-//                        $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
-//                        $text = $newActiveVar['question'].'?';
-//                        $vars = $session->vars;
-//                        foreach ($vars as  $var) {
-//                            $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
-//                        }
-//                        $this->sendMessage([
-//                            'chat_id' => $message['from']['id'],
-//                            'text' => $text,
-//                        ]);
-//                        $session->delete();
-//                        return 'ok';
-//                    }
 
                     $text = $newActiveVar['question'];
                     $vars = $session->vars;
@@ -292,7 +278,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 if (isset($commands[1])) {
                     if ($commands[1]=='all') {  // Список сцен
-                        $plays = ChBotPlay::find()->all();
+                        $plays = ChBotPlay::find()->orderBy('name')->all();
                         $data = [];
                         foreach ($plays as $play) {
                             $row = [];
