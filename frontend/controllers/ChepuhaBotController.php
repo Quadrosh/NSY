@@ -77,8 +77,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
                     'text' =>
-                        'Привет, я - <b>Чепухобот</b>.
-Я задаю странные вопросы и составляю из твоих ответов различные предложения.
+                        'Привет, я - <b>Чепухобот</b>. '.PHP_EOL.'Я задаю странные вопросы и составляю из твоих ответов различные предложения.
 Ниже список опций:',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
