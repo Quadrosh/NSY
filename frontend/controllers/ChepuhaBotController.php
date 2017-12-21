@@ -70,14 +70,14 @@ class ChepuhaBotController extends \yii\web\Controller
 
         if ($message != null) {
 
-            //      /start
+            //  start
 
             if (trim(strtolower($message['text'])) == '/start') {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
                     'text' =>
-                        'Привет, я - <b>Чепухобот</b>. '.PHP_EOL.
+                        'Я - <b>Чепухобот</b>. '.PHP_EOL.
                         'Я задаю странные вопросы и составляю из твоих ответов предложения.'.PHP_EOL.
                         'Ниже список опций:',
                     'reply_markup' => json_encode([
@@ -103,8 +103,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
             }
 
-            //      /end
-
+            //  end
             if (trim(strtolower($message['text'])) == '/end') {
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
                 $vars = $session->vars;
@@ -139,7 +138,6 @@ class ChepuhaBotController extends \yii\web\Controller
 
 
             //  Опции текст
-
             elseif (trim(strtolower($message['text'])) == '/options' OR trim(strtolower($message['text'])) == '/settings' ) {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
@@ -148,7 +146,6 @@ class ChepuhaBotController extends \yii\web\Controller
                         '/help - помощь'.PHP_EOL.
                         '/about - обо мне'.PHP_EOL.
                         '/settings - все доступные команды'.PHP_EOL.
-                        '/new - новая игра'.PHP_EOL.
                         '/end - прервать игру'.PHP_EOL.PHP_EOL.
                          'Начать игру?',
                     'reply_markup' => json_encode([
@@ -197,7 +194,6 @@ class ChepuhaBotController extends \yii\web\Controller
                         '/help - помощь'.PHP_EOL.
                         '/about - обо мне'.PHP_EOL.
                         '/settings - все доступные команды'.PHP_EOL.
-                        '/new - новая игра'.PHP_EOL.
                         '/end - прервать игру',
 
                 ]);
