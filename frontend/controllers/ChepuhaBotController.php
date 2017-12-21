@@ -143,7 +143,14 @@ class ChepuhaBotController extends \yii\web\Controller
             elseif (trim(strtolower($message['text'])) == '/options' OR trim(strtolower($message['text'])) == '/settings' ) {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'text' => 'Чепухобот - список опций',
+                    'text' => 'Доступные команды:'.PHP_EOL.
+                        '/start - начало новой игры'.PHP_EOL.
+                        '/help - помощь'.PHP_EOL.
+                        '/about - обо мне'.PHP_EOL.
+                        '/settings - все доступные команды'.PHP_EOL.
+                        '/new - новая игра'.PHP_EOL.
+                        '/end - прервать игру'.PHP_EOL.PHP_EOL.
+                         'Начать игру?',
                     'reply_markup' => json_encode([
 
 //                        'keyboard'=>[
