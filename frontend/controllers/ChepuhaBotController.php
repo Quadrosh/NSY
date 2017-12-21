@@ -118,9 +118,8 @@ class ChepuhaBotController extends \yii\web\Controller
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
-                    'text' =>
-                        'Игра прервана,
-                        начать новую?',
+                    'text' => 'Игра прервана,
+начать новую?',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
@@ -332,7 +331,9 @@ class ChepuhaBotController extends \yii\web\Controller
 
                         $this->sendMessage([
                             'chat_id' => $callbackQuery['from']['id'],
-                            'text' => 'Чепусценки',
+                            'parse_mode' => 'html',
+                            'text' => 'Чепусценки
+Название (уточнение) - количество вопросов.',
                             'reply_markup' => json_encode([
                                 'inline_keyboard'=> $data
                             ]),
