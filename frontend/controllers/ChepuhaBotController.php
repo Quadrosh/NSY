@@ -140,19 +140,27 @@ class ChepuhaBotController extends \yii\web\Controller
 
             //  Опции текст
 
-            elseif ($message['text'] == '/options') {
+            elseif (trim(strtolower($message['text'])) == '/options' OR trim(strtolower($message['text'])) == '/settings' ) {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'text' => 'Чепухобот - список опций',
                     'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
+                        'keyboard'=>[
                             [
-                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                                ['text'=>"Чепусценка"],
                             ],
                             [
-                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                                ['text'=>"Чепуфраза"],
                             ],
                         ]
+//                        'inline_keyboard'=>[
+//                            [
+//                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+//                            ],
+//                            [
+//                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+//                            ],
+//                        ]
                     ]),
                 ]);
 
