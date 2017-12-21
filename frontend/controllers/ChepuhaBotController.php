@@ -174,12 +174,13 @@ class ChepuhaBotController extends \yii\web\Controller
             elseif (trim(strtolower($message['text'])) == '/help' OR trim(strtolower($message['text'])) == '/помощь' ) {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
                     'text' => 'Я - Чепухобот. '.PHP_EOL.
                         'Я задаю странные вопросы и составляю из твоих ответов различные предложения.'.PHP_EOL.
                         'У меня есть 2 типа игры - чепусценка и чепуфраза.'.PHP_EOL.
-                        'Чепусценка - сценка с несколькими действующими лицами, по мотивам какого либо произведения.'.PHP_EOL.
-                        'Чепуфраза - набор вопросов, из ответов на которые собирается фраза.'.PHP_EOL.
-                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'.PHP_EOL.
+                        '<b>Чепусценка</b> - сценка с несколькими действующими лицами, по мотивам какого-либо произведения.'.PHP_EOL.
+                        '<b>Чепуфраза</b> - набор вопросов, из ответов на которые собирается фраза.'.PHP_EOL.
+                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'.PHP_EOL.PHP_EOL.
                         'Доступные команды:'.PHP_EOL.
                         '/start - начало новой игры'.PHP_EOL.
                         '/help - помощь'.PHP_EOL.
@@ -187,18 +188,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         '/settings - все доступные команды'.PHP_EOL.
                         '/new - новая игра'.PHP_EOL.
                         '/end - прервать игру',
-                    'reply_markup' => json_encode([
-
-
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
-                            ],
-                            [
-                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
-                            ],
-                        ]
-                    ]),
+                    
                 ]);
 
             }
