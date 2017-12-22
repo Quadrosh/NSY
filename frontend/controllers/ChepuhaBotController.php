@@ -79,6 +79,10 @@ class ChepuhaBotController extends \yii\web\Controller
                     'text' =>
                         'Я - <b>Чепухобот</b>. '.PHP_EOL.
                         'Я задаю странные вопросы и составляю из твоих ответов предложения.'.PHP_EOL.
+                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'.PHP_EOL.
+                        'Прервать игру можно командой /end '.PHP_EOL.
+                        'Помощь - /help '.PHP_EOL.
+
                         'Ниже список опций:',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
