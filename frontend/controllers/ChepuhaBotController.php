@@ -384,6 +384,11 @@ class ChepuhaBotController extends \yii\web\Controller
             Yii::info('чек чек');
             Yii::info($inlineQuery);
 
+            $this->answerInlineQuery([
+            'inline_query_id' => $inlineQuery['id'],
+//           'user' => User, //Optional
+//           'score' => Integer,  //Optional
+             ]);
 
 
 //            Log messages can be strings as well as complex data, such as arrays or objects. It is the responsibility of log targets to properly deal with log messages. By default, if a log message is not a string, it will be exported as a string by calling yii\helpers\VarDumper::export().
@@ -395,6 +400,7 @@ class ChepuhaBotController extends \yii\web\Controller
 ////           'user' => User, //Optional
 ////           'score' => Integer,  //Optional
 //        ]);
+            return 'ok';
         }
 
 //      Callback
