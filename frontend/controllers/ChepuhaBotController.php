@@ -70,8 +70,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
         if ($message != null) {
 
-            //  start
-
+//          /start
             if (trim(strtolower($message['text'])) == '/start') {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
@@ -107,7 +106,42 @@ class ChepuhaBotController extends \yii\web\Controller
 
             }
 
-            //  end
+//          /dev
+            if (trim(strtolower($message['text'])) == '/dev') {
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
+                    'text' =>
+                        'Я - <b>Чепухобот</b>. '.PHP_EOL.
+                        'Я задаю странные вопросы и составляю из твоих ответов предложения.'.PHP_EOL.
+                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'.PHP_EOL.
+                        'Прервать игру можно командой /end '.PHP_EOL.
+                        'Помощь - /help '.PHP_EOL.
+
+                        'Ниже список опций:',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Чепу-сценка",'switch_inline_query_current_chat'=> 'play/all'],
+                            ],
+                            [
+                                ['text'=>"Чепу-фраза",'switch_inline_query_current_chat'=> 'phrase/all'],
+                            ],
+                            [
+                                ['text'=>"Выбрать чат",'switch_inline_query'=> 'phrase/all'],
+                            ],
+
+                        ]
+                    ]),
+                ]);
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+
+            }
+
+//          /end
             if (trim(strtolower($message['text'])) == '/end') {
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
                 $vars = $session->vars;
@@ -140,8 +174,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 ];
             }
 
-
-            //  Опции текст
+//          /options   /settings
             elseif (trim(strtolower($message['text'])) == '/options' OR trim(strtolower($message['text'])) == '/settings' ) {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
@@ -181,8 +214,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
             }
 
-
-            // help
+//          /help     /помощь
             elseif (trim(strtolower($message['text'])) == '/help' OR trim(strtolower($message['text'])) == '/помощь' ) {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
@@ -208,7 +240,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
             }
 
-            // about
+//          /about    /о проекте
             elseif (trim(strtolower($message['text'])) == '/about' OR trim(strtolower($message['text'])) == '/о проекте' ) {
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
@@ -227,9 +259,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
             }
 
-
-
-            // любой текст от пользователя
+//          любой текст от пользователя (игра)
             else {
 
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
@@ -348,17 +378,31 @@ class ChepuhaBotController extends \yii\web\Controller
             }
 
             return 'ok';
+        }
+//      Inline
+        if ($inlineQuery != null) {
+            Yii::info('чек чек');
+            Yii::info($inlineQuery);
 
+
+
+//            Log messages can be strings as well as complex data, such as arrays or objects. It is the responsibility of log targets to properly deal with log messages. By default, if a log message is not a string, it will be exported as a string by calling yii\helpers\VarDumper::export().
+
+
+
+//            $this->answerInlineQuery([
+//            'inline_query_id' => Integer,
+////           'user' => User, //Optional
+////           'score' => Integer,  //Optional
+//        ]);
         }
 
-//       Callback
-
+//      Callback
         if ($callbackQuery != null) {
             $commands = explode('/', $callbackQuery['data']);
             $action = $commands[0];
 
-            // play (чепусценка)
-
+//          play (чепусценка)
             if ($action == 'play') {
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'],
@@ -450,8 +494,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 }
             }
 
-            // phrase
-
+//          phrase (чепуфраза)
             if ($action == 'phrase') {
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'], //require
@@ -546,23 +589,14 @@ class ChepuhaBotController extends \yii\web\Controller
             }
 
 
-            // Опции
-
+//          Опции    = пока пусто =
             if ($action == 'options') {    // options / pointOfView / section / mode
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'], //require
                     'text' => 'ответ получен', //Optional
                 ]);
-
             }
-
-
-
-
         }
-
-
-
         return 'end return';
     }
 
@@ -646,6 +680,28 @@ class ChepuhaBotController extends \yii\web\Controller
             "/answerCallbackQuery", $option);
         return json_decode($jsonResponse);
     }
+
+    /**
+     *   @var array
+     *   sample
+     *   $this->answerInlineQuery([
+     *       'inline_query_id' => Integer, //Required-Position in high score table for the game
+     *       'user' => User, //Optional
+     *       'score' => Integer,  //Optional
+     *   ]);
+     *
+     */
+    public function answerInlineQuery(array $option = [])
+    {
+        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+            Yii::$app->params['chepuBotToken'] .
+            "/answerInlineQuery", $option);
+        return json_decode($jsonResponse);
+    }
+
+
+
+
     /**
      *   @var array
      *   sample
