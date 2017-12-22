@@ -75,9 +75,18 @@ return [
 
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
+            'flushInterval' => 1,
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
+                    //            Yii::$app->log->targets['file']->enabled = false;
+//                    'file' => [
+//                        'class' => 'yii\log\FileTarget',
+//                    ],
+//                    'db' => [
+//                        'class' => 'yii\log\DbTarget',
+//                    ],
+                    'class' => 'yii\log\FileTarget',    // @runtime/logs/app.log   if $logFile not set
+                    'exportInterval' => 1,
                     'levels' => ['error', 'warning', 'info'],
                 ],
             ],
