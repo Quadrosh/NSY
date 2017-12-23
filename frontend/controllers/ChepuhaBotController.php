@@ -74,30 +74,56 @@ class ChepuhaBotController extends \yii\web\Controller
         $chatType = $message['chat']['type'];
         $date = $message['date'];
         $text = $message['text'];
+        $query = $inlineQuery['query'];
 
 
 //      Inline
         if ($inlineQuery != null) {
-            Yii::info('чеко чек1', 'chepuhoBot');
             Yii::info($inlineQuery, 'chepuhoBot');
+//            $query = $inlineQuery['query'];
+            $commands = explode('/', $inlineQuery['query']);
+            $action = $commands[0];
+
+            if ($action == 'play') {
+
+                if (isset($commands[1])) {
+                    if ($commands[1] == 'all') {  // Список сцен
+                        $plays = ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
+                        $results = [];
+                        foreach ($plays as $play) {
+//                            $row = [];
+//                            $row[] = ['text' => $play['name'], 'callback_data' => 'play/one/' . $play['id']];
+                            $results[] = [
+                                'type' => 'article',
+
+                                'title' => $play['name'],
+                                'input_message_content'=>$play['description'],
+
+                                'reply_markup' => json_encode([
+                                    'inline_keyboard'=>[
+                                        [
+                                            ['text'=>"Играть",'callback_data'=> 'play/one/' . $play['id']],
+                                        ]
+                                    ]
+                                ]),
+                            ];
+                        };
 
 
-            $this->answerInlineQuery([
-                'inline_query_id' => $inlineQuery['id'],
-//           'user' => User, //Optional
-//           'score' => Integer,  //Optional
-            ]);
+                        $this->answerInlineQuery([
+                            'inline_query_id' => $inlineQuery['id'],
+                            'results'=> $results
 
 
-//            Log messages can be strings as well as complex data, such as arrays or objects. It is the responsibility of log targets to properly deal with log messages. By default, if a log message is not a string, it will be exported as a string by calling yii\helpers\VarDumper::export().
+                        ]);
+
+
+                    }
+                }
+            }
 
 
 
-//            $this->answerInlineQuery([
-//            'inline_query_id' => Integer,
-////           'user' => User, //Optional
-////           'score' => Integer,  //Optional
-//        ]);
             return 'ok';
         }
 
@@ -605,8 +631,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
             }
 
-
-//          Опции    = пока пусто =
+//          Опции    - пока пусто
             if ($action == 'options') {    // options / pointOfView / section / mode
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'], //require
@@ -614,7 +639,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 ]);
             }
         }
-        return 'end return';
+        return 'ok';
     }
 
 
