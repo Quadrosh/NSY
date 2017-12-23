@@ -95,6 +95,7 @@ class ChepuhaBotController extends \yii\web\Controller
 //                            $row[] = ['text' => $play['name'], 'callback_data' => 'play/one/' . $play['id']];
                             $results[] = [
                                 'type' => 'article',
+                                'id' => $play['id'],
                                 'title' => $play['name'],
 //                                'input_message_content'=>$play['description'],
 //
