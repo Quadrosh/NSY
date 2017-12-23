@@ -91,22 +91,30 @@ class ChepuhaBotController extends \yii\web\Controller
                         $plays = ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
                         $results = [];
                         foreach ($plays as $play) {
-//                            $row = [];
-//                            $row[] = ['text' => $play['name'], 'callback_data' => 'play/one/' . $play['id']];
-                            $results[] = [
+
+                            $row = [];
+                            $row[] = [
                                 'type' => 'article',
                                 'id' => $play['id'],
                                 'title' => $play['name'],
-//                                'input_message_content'=>$play['description'],
-//
-//                                'reply_markup' => json_encode([
-//                                    'inline_keyboard'=>[
-//                                        [
-//                                            ['text'=>"Играть",'callback_data'=> 'play/one/' . $play['id']],
-//                                        ]
-//                                    ]
-//                                ]),
-                            ];
+                            ];;
+
+                            $results[] = $row;
+
+//                            $results[] = [
+//                                'type' => 'article',
+//                                'id' => $play['id'],
+//                                'title' => $play['name'],
+////                                'input_message_content'=>$play['description'],
+////
+////                                'reply_markup' => json_encode([
+////                                    'inline_keyboard'=>[
+////                                        [
+////                                            ['text'=>"Играть",'callback_data'=> 'play/one/' . $play['id']],
+////                                        ]
+////                                    ]
+////                                ]),
+//                            ];
                         };
 
 
