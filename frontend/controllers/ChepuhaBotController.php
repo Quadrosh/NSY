@@ -137,7 +137,8 @@ class ChepuhaBotController extends \yii\web\Controller
 //                            'results'=> $results
 //                        ]);
 
-                        $this->answerInlineQuery([
+                        $debugMessage = '';
+                        if ($this->answerInlineQuery([
                             'inline_query_id' => $inlineQuery['id'],
                             'results'=> [
                                 [
@@ -150,13 +151,18 @@ class ChepuhaBotController extends \yii\web\Controller
                                     ],
                                 ],
                             ],
-                        ]);
+                        ])) {
+                            $debugMessage = 'send';
+                        } else {
+                            $debugMessage = 'not send';
+                        }
+
 
                         Yii::info($results, 'chepuhoBot');
 
                         $this->sendMessage([
                             'chat_id' => $inlineQuery['from']['id'],
-                            'text' => 'тута',
+                            'text' => $debugMessage,
                         ]);
 
 
