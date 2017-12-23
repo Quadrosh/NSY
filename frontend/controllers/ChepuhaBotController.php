@@ -772,8 +772,10 @@ class ChepuhaBotController extends \yii\web\Controller
             $text = 'error '.curl_error($ch);
             Yii::info($text, 'chepuhoBot');
         } else {
-            $text = curl_getinfo($ch);
-            Yii::info($text, 'chepuhoBot');
+            $info = curl_getinfo($ch);
+            Yii::info($info, 'chepuhoBot');
+            Yii::info(CURLOPT_POSTFIELDS, 'chepuhoBot');
+
         }
         curl_close($ch);
         return $r;
