@@ -132,9 +132,24 @@ class ChepuhaBotController extends \yii\web\Controller
                         };
 
 
+//                        $this->answerInlineQuery([
+//                            'inline_query_id' => $inlineQuery['id'],
+//                            'results'=> $results
+//                        ]);
+
                         $this->answerInlineQuery([
                             'inline_query_id' => $inlineQuery['id'],
-                            'results'=> $results
+                            'results'=> [
+                                [
+                                    'type'=>'article',
+                                    'id' => '8',
+                                    'title' => 'article1',
+                                    'input_message_content'=>[
+                                        'message_text'=> 'text',
+
+                                    ],
+                                ],
+                            ],
                         ]);
 
                         Yii::info($results, 'chepuhoBot');
