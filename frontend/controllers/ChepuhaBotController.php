@@ -131,7 +131,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         } else {
                             $debugMessage = 'no';
                         }
-                        
+
 
 
 //                        if ($this->answerInlineQuery([
@@ -731,9 +731,13 @@ class ChepuhaBotController extends \yii\web\Controller
         $r = curl_exec($ch);
         if($r == false){
             $text = 'error '.curl_error($ch);
-            $myfile = fopen("error_telegram.log", "w") or die("Unable to open file!");
-            fwrite($myfile, $text);
-            fclose($myfile);
+//            $myfile = fopen("error_telegram.log", "w") or die("Unable to open file!");
+//            fwrite($myfile, $text);
+//            fclose($myfile);
+            Yii::info($text, 'chepuhoBot');
+        } else {
+            $text = 'curl info '.curl_getinfo($ch);
+            Yii::info($text, 'chepuhoBot');
         }
         curl_close($ch);
         return $r;
