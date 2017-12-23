@@ -92,8 +92,21 @@ class ChepuhaBotController extends \yii\web\Controller
                         $results = [];
                         foreach ($plays as $play) {
 
-                            $row = [];
-                            $row[] = [
+//                            $row = [];
+//                            $row[] = [
+//                                'type' => 'article',
+//                                'id' => $play['id'],
+//                                'title' => $play['name'],
+//                                'input_message_content'=>[
+//                                    'message_text'=> $play['description'],
+//                                    'parse_mode'=> 'html',
+//                                ],
+//
+//                            ];;
+//
+//                            $results[] = $row;
+
+                            $results[] = [
                                 'type' => 'article',
                                 'id' => $play['id'],
                                 'title' => $play['name'],
@@ -101,25 +114,16 @@ class ChepuhaBotController extends \yii\web\Controller
                                     'message_text'=> $play['description'],
                                     'parse_mode'=> 'html',
                                 ],
-
-                            ];;
-
-                            $results[] = $row;
-
-//                            $results[] = [
-//                                'type' => 'article',
-//                                'id' => $play['id'],
-//                                'title' => $play['name'],
-////                                'input_message_content'=>$play['description'],
-////
-////                                'reply_markup' => json_encode([
-////                                    'inline_keyboard'=>[
-////                                        [
-////                                            ['text'=>"Играть",'callback_data'=> 'play/one/' . $play['id']],
-////                                        ]
-////                                    ]
-////                                ]),
-//                            ];
+//                                'input_message_content'=>$play['description'],
+//
+//                                'reply_markup' => json_encode([
+//                                    'inline_keyboard'=>[
+//                                        [
+//                                            ['text'=>"Играть",'callback_data'=> 'play/one/' . $play['id']],
+//                                        ]
+//                                    ]
+//                                ]),
+                            ];
                         };
 
 
