@@ -85,9 +85,11 @@ return [
 //                    'db' => [
 //                        'class' => 'yii\log\DbTarget',
 //                    ],
-                    'class' => 'yii\log\FileTarget',    // @runtime/logs/app.log   if $logFile not set
+
+                
+//                    'class' => 'yii\log\FileTarget',    // @runtime/logs/app.log   if $logFile not set
 //                    'exportInterval' => 1,
-                    'levels' => ['error', 'warning', 'info'],
+//                    'levels' => ['error', 'warning', 'info'],
 
                     [
                         'class' => 'yii\log\FileTarget',
