@@ -731,9 +731,6 @@ class ChepuhaBotController extends \yii\web\Controller
         $r = curl_exec($ch);
         if($r == false){
             $text = 'error '.curl_error($ch);
-//            $myfile = fopen("error_telegram.log", "w") or die("Unable to open file!");
-//            fwrite($myfile, $text);
-//            fclose($myfile);
             Yii::info($text, 'chepuhoBot');
         } else {
             $text = curl_getinfo($ch);
@@ -785,9 +782,16 @@ class ChepuhaBotController extends \yii\web\Controller
      */
     public function answerInlineQuery(array $option = [])
     {
+        $inlineQueryId = $option['inline_query_id'];
+//        $text = urlencode($option['text']);
+        unset($option['inline_query_id']);
+//        unset($option['text']);
+
         $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
             Yii::$app->params['chepuBotToken'] .
-            "/answerInlineQuery", $option);
+            "/answerInlineQuery?inline_query_id=".$inlineQueryId , $option);
+
+//            "/answerInlineQuery", $option);
         return json_decode($jsonResponse);
     }
 
