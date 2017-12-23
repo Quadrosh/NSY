@@ -97,6 +97,11 @@ class ChepuhaBotController extends \yii\web\Controller
                                 'type' => 'article',
                                 'id' => $play['id'],
                                 'title' => $play['name'],
+                                'input_message_content'=>[
+                                    'message_text'=> $play['description'],
+                                    'parse_mode'=> 'html',
+                                ],
+
                             ];;
 
                             $results[] = $row;
