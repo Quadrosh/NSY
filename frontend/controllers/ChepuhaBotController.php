@@ -24,8 +24,6 @@ use yii\web\Response;
 
 class ChepuhaBotController extends \yii\web\Controller
 {
-//    protected $logDir = "@runtime/bots/chepuhobot/logs";
-
 
     public function behaviors() {
         return [
@@ -48,7 +46,6 @@ class ChepuhaBotController extends \yii\web\Controller
     public function beforeAction($action)
     {
         if (in_array($action->id, ['dialog'])) {
-//            $this->initLogger();
             $this->enableCsrfValidation = false;
         }
         return parent::beforeAction($action);
