@@ -95,17 +95,16 @@ class ChepuhaBotController extends \yii\web\Controller
 //                            $row[] = ['text' => $play['name'], 'callback_data' => 'play/one/' . $play['id']];
                             $results[] = [
                                 'type' => 'article',
-
                                 'title' => $play['name'],
-                                'input_message_content'=>$play['description'],
-
-                                'reply_markup' => json_encode([
-                                    'inline_keyboard'=>[
-                                        [
-                                            ['text'=>"Играть",'callback_data'=> 'play/one/' . $play['id']],
-                                        ]
-                                    ]
-                                ]),
+//                                'input_message_content'=>$play['description'],
+//
+//                                'reply_markup' => json_encode([
+//                                    'inline_keyboard'=>[
+//                                        [
+//                                            ['text'=>"Играть",'callback_data'=> 'play/one/' . $play['id']],
+//                                        ]
+//                                    ]
+//                                ]),
                             ];
                         };
 
@@ -113,9 +112,9 @@ class ChepuhaBotController extends \yii\web\Controller
                         $this->answerInlineQuery([
                             'inline_query_id' => $inlineQuery['id'],
                             'results'=> $results
-
-
                         ]);
+
+                        Yii::info($results, 'chepuhoBot');
 
 
                     }
