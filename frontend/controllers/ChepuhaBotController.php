@@ -710,6 +710,45 @@ class ChepuhaBotController extends \yii\web\Controller
         return json_decode($jsonResponse);
     }
 
+    /**
+     *   @var array
+     *   $this->answerCallbackQuery([
+     *       'callback_query_id' => '3343545121', //require
+     *       'text' => 'text', //Optional
+     *       'show_alert' => 'my alert',  //Optional
+     *       'url' => 'http://sample.com', //Optional
+     *       'cache_time' => 123231,  //Optional
+     *   ]);
+     *   The answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
+     *  On success, True is returned.
+     */
+    public function answerCallbackQuery(array $option = [])
+    {
+        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+            Yii::$app->params['chepuBotToken'] .
+            "/answerCallbackQuery", $option);
+        return json_decode($jsonResponse);
+    }
+
+    /**
+     *   @var array
+     *   sample
+     *   $this->answerInlineQuery([
+     *       'inline_query_id' => Integer, //Required-Position in high score table for the game
+     *       'user' => User, //Optional
+     *       'score' => Integer,  //Optional
+     *   ]);
+     *
+     */
+    public function answerInlineQuery(array $option = [])
+    {
+        $optionJs = json_encode($option);
+        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+            Yii::$app->params['chepuBotToken'] .
+            "/answerInlineQuery", $optionJs);
+        return json_decode($jsonResponse);
+    }
+
     private function curlCall($url, $option=array(), $headers=array())
     {
         $attachments = ['photo', 'sticker', 'audio', 'document', 'video'];
@@ -750,50 +789,7 @@ class ChepuhaBotController extends \yii\web\Controller
         return '@' . $realPath;
     }
 
-    /**
-     *   @var array
-     *   $this->answerCallbackQuery([
-     *       'callback_query_id' => '3343545121', //require
-     *       'text' => 'text', //Optional
-     *       'show_alert' => 'my alert',  //Optional
-     *       'url' => 'http://sample.com', //Optional
-     *       'cache_time' => 123231,  //Optional
-     *   ]);
-     *   The answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
-     *  On success, True is returned.
-     */
-    public function answerCallbackQuery(array $option = [])
-    {
-        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
-            Yii::$app->params['chepuBotToken'] .
-            "/answerCallbackQuery", $option);
-        return json_decode($jsonResponse);
-    }
 
-    /**
-     *   @var array
-     *   sample
-     *   $this->answerInlineQuery([
-     *       'inline_query_id' => Integer, //Required-Position in high score table for the game
-     *       'user' => User, //Optional
-     *       'score' => Integer,  //Optional
-     *   ]);
-     *
-     */
-    public function answerInlineQuery(array $option = [])
-    {
-        $inlineQueryId = $option['inline_query_id'];
-//        $text = urlencode($option['text']);
-        unset($option['inline_query_id']);
-//        unset($option['text']);
-
-        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
-            Yii::$app->params['chepuBotToken'] .
-            "/answerInlineQuery?inline_query_id=".$inlineQueryId , $option);
-
-//            "/answerInlineQuery", $option);
-        return json_decode($jsonResponse);
-    }
 
 
 
