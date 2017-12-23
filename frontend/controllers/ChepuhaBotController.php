@@ -97,38 +97,43 @@ class ChepuhaBotController extends \yii\web\Controller
                         $results = [];
                         foreach ($plays as $play) {
 
-//                            $row = [];
-//                            $row[] = [
-//                                'type' => 'article',
-//                                'id' => $play['id'],
-//                                'title' => $play['name'],
-//                                'input_message_content'=>[
-//                                    'message_text'=> $play['description'],
-//                                    'parse_mode'=> 'html',
-//                                ],
-//
-//                            ];;
-//
-//                            $results[] = $row;
-
-                            $results[] = [
+                            $row = [];
+                            $row[] = [
                                 'type' => 'article',
                                 'id' => $play['id'],
                                 'title' => $play['name'],
                                 'input_message_content'=>[
                                     'message_text'=> $play['description'],
+                                    'parse_mode'=> 'html',
                                 ],
 
-                            ];
+                            ];;
+
+                            $results[] = $row;
+
+//                            $results[] = [
+//                                'type' => 'article',
+//                                'id' => $play['id'],
+//                                'title' => $play['name'],
+//                                'input_message_content'=>[
+//                                    'message_text'=> $play['description'],
+//                                ],
+//
+//                            ];
                         };
 
-
-                        $this->answerInlineQuery([
+                        $debugMessage = '';
+                        if ($this->answerInlineQuery([
                             'inline_query_id' => $inlineQuery['id'],
                             'results'=> $results
-                        ]);
+                        ])) {
+                            $debugMessage = 'yes';
+                        } else {
+                            $debugMessage = 'no';
+                        }
+                        
 
-                        $debugMessage = '';
+
 //                        if ($this->answerInlineQuery([
 //                            'inline_query_id' => $inlineQuery['id'],
 ////                            'switch_pm_text' => 'asdfasdf',
@@ -158,6 +163,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         $this->sendMessage([
                             'chat_id' => $inlineQuery['from']['id'],
                             'text' => $debugMessage,
+//                            'text' => 'тут',
                         ]);
 
 
