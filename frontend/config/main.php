@@ -75,7 +75,7 @@ return [
 
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
-            'flushInterval' => 1,
+//            'flushInterval' => 1,
             'targets' => [
                 [
                     //            Yii::$app->log->targets['file']->enabled = false;
@@ -86,8 +86,22 @@ return [
 //                        'class' => 'yii\log\DbTarget',
 //                    ],
                     'class' => 'yii\log\FileTarget',    // @runtime/logs/app.log   if $logFile not set
-                    'exportInterval' => 1,
+//                    'exportInterval' => 1,
                     'levels' => ['error', 'warning', 'info'],
+
+                    [
+                        'class' => 'yii\log\FileTarget',
+                        'levels' => ['error', 'warning'],
+                    ],
+                    [
+                        'class' => 'yii\log\FileTarget',
+                        'levels' => ['info'],
+                        'categories' => ['chepuhoBot'],
+                        'logFile' => '@runtime/bots/chepuhobot/logs/chepuhobot.log',
+                        'logVars' => ['_SERVER'],
+                        'maxFileSize' => 1024 * 2,
+                        'maxLogFiles' => 20,
+                    ],
                 ],
             ],
         ],

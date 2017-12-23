@@ -24,7 +24,7 @@ use yii\web\Response;
 
 class ChepuhaBotController extends \yii\web\Controller
 {
-    protected $logDir = "@runtime/bots/chepuhobot/logs";
+//    protected $logDir = "@runtime/bots/chepuhobot/logs";
 
 
     public function behaviors() {
@@ -48,7 +48,7 @@ class ChepuhaBotController extends \yii\web\Controller
     public function beforeAction($action)
     {
         if (in_array($action->id, ['dialog'])) {
-            $this->initLogger();
+//            $this->initLogger();
             $this->enableCsrfValidation = false;
         }
         return parent::beforeAction($action);
@@ -81,9 +81,8 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //      Inline
         if ($inlineQuery != null) {
-            Yii::info('чек чек');
-            Yii::info($inlineQuery);
-//            \Yii::info('Daemon ' . $this->getProcessName() . ' pid ' . getmypid() . ' is stopped.');
+            Yii::info('чеко чек', 'chepuhoBot');
+            Yii::info($inlineQuery, 'chepuhoBot');
 
 
             $this->answerInlineQuery([
@@ -787,26 +786,26 @@ class ChepuhaBotController extends \yii\web\Controller
     }
 
     /**
-     * Adjusting logger. You can override it.
+     * Adjusting logger
      */
-    protected function initLogger()
-    {
-        $targets = \Yii::$app->getLog()->targets;
-        foreach ($targets as $name => $target) {
-            $target->enabled = false;
-        }
-        $config = [
-            'levels' => ['error', 'warning', 'trace', 'info'],
-            'logFile' => \Yii::getAlias($this->logDir) . DIRECTORY_SEPARATOR . 'chepuhobot.log',
-            'logVars' => [],
-            'except' => [
-                'yii\db\*', // Don't include messages from db
-            ],
-        ];
-        $targets['chepuhoBot'] = new \yii\log\FileTarget($config);
-        \Yii::$app->getLog()->targets = $targets;
-        \Yii::$app->getLog()->init();
-    }
+//    protected function initLogger()
+//    {
+//        $targets = \Yii::$app->getLog()->targets;
+//        foreach ($targets as $name => $target) {
+//            $target->enabled = false;
+//        }
+//        $config = [
+//            'levels' => ['error', 'warning', 'trace', 'info'],
+//            'logFile' => \Yii::getAlias($this->logDir) . DIRECTORY_SEPARATOR . 'chepuhobot.log',
+//            'logVars' => ['_SERVER'],  // $_GET, $_POST, $_FILES, $_COOKIE, $_SESSION, $_SERVER
+//            'except' => [
+//                'yii\db\*', // Don't include messages from db
+//            ],
+//        ];
+//        $targets['chepuhoBot'] = new \yii\log\FileTarget($config);
+//        \Yii::$app->getLog()->targets = $targets;
+//        \Yii::$app->getLog()->init();
+//    }
 
 
 }
