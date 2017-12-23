@@ -24,6 +24,9 @@ use yii\web\Response;
 
 class ChepuhaBotController extends \yii\web\Controller
 {
+    protected $logDir = "@runtime/bots/chepuhobot/logs";
+
+
     public function behaviors() {
         return [
             'contentNegotiator' => [
@@ -40,6 +43,15 @@ class ChepuhaBotController extends \yii\web\Controller
 ////                'except' => [ 'create' ],
 //            ],
         ];
+    }
+
+    public function beforeAction($action)
+    {
+        if (in_array($action->id, ['dialog'])) {
+            $this->initLogger();
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
     }
 
     public function actionDialog()
@@ -66,11 +78,13 @@ class ChepuhaBotController extends \yii\web\Controller
         $date = $message['date'];
         $text = $message['text'];
 
-        
+
 //      Inline
         if ($inlineQuery != null) {
             Yii::info('чек чек');
             Yii::info($inlineQuery);
+//            \Yii::info('Daemon ' . $this->getProcessName() . ' pid ' . getmypid() . ' is stopped.');
+
 
             $this->answerInlineQuery([
                 'inline_query_id' => $inlineQuery['id'],
@@ -609,13 +623,10 @@ class ChepuhaBotController extends \yii\web\Controller
 
 
 
-    public function beforeAction($action)
-    {
-        if (in_array($action->id, ['dialog'])) {
-        $this->enableCsrfValidation = false;
-        }
-        return parent::beforeAction($action);
-    }
+
+
+
+
 
     public function sendMessage(array $option){
         $chat_id = $option['chat_id'];
@@ -774,6 +785,29 @@ class ChepuhaBotController extends \yii\web\Controller
             "/deleteMessage", $option);
         return json_decode($jsonResponse);
     }
+
+    /**
+     * Adjusting logger. You can override it.
+     */
+    protected function initLogger()
+    {
+        $targets = \Yii::$app->getLog()->targets;
+        foreach ($targets as $name => $target) {
+            $target->enabled = false;
+        }
+        $config = [
+            'levels' => ['error', 'warning', 'trace', 'info'],
+            'logFile' => \Yii::getAlias($this->logDir) . DIRECTORY_SEPARATOR . 'chepuhobot.log',
+            'logVars' => [],
+            'except' => [
+                'yii\db\*', // Don't include messages from db
+            ],
+        ];
+        $targets['chepuhoBot'] = new \yii\log\FileTarget($config);
+        \Yii::$app->getLog()->targets = $targets;
+        \Yii::$app->getLog()->init();
+    }
+
 
 }
 //
