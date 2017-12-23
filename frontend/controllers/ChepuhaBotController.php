@@ -117,49 +117,40 @@ class ChepuhaBotController extends \yii\web\Controller
                                 'title' => $play['name'],
                                 'input_message_content'=>[
                                     'message_text'=> $play['description'],
-                                    'parse_mode'=> 'html',
                                 ],
-//                                'input_message_content'=>$play['description'],
-//
-//                                'reply_markup' => json_encode([
-//                                    'inline_keyboard'=>[
-//                                        [
-//                                            ['text'=>"Играть",'callback_data'=> 'play/one/' . $play['id']],
-//                                        ]
-//                                    ]
-//                                ]),
+
                             ];
                         };
 
 
-//                        $this->answerInlineQuery([
-//                            'inline_query_id' => $inlineQuery['id'],
-//                            'results'=> $results
-//                        ]);
+                        $this->answerInlineQuery([
+                            'inline_query_id' => $inlineQuery['id'],
+                            'results'=> $results
+                        ]);
 
                         $debugMessage = '';
-                        if ($this->answerInlineQuery([
-                            'inline_query_id' => $inlineQuery['id'],
-                            'switch_pm_text' => 'asdfasdf',
-                            'switch_pm_parameter' => 'qwe',
-                            'is_personal' => true,
-                            'next_offset' => '',
-                            'results'=> [
-                                [
-                                    'type'=>'article',
-                                    'id' => '8',
-                                    'title' => 'article1',
-                                    'input_message_content'=>[
-                                        'message_text'=> 'text',
-
-                                    ],
-                                ],
-                            ],
-                        ])) {
-                            $debugMessage = 'send';
-                        } else {
-                            $debugMessage = 'not send';
-                        }
+//                        if ($this->answerInlineQuery([
+//                            'inline_query_id' => $inlineQuery['id'],
+////                            'switch_pm_text' => 'asdfasdf',
+////                            'switch_pm_parameter' => 'qwe',
+////                            'is_personal' => true,
+////                            'next_offset' => '',
+//                            'results'=> [
+//                                [
+//                                    'type'=>'article',
+//                                    'id' => '8',
+//                                    'title' => 'article1',
+//                                    'input_message_content'=>[
+//                                        'message_text'=> 'text',
+//
+//                                    ],
+//                                ],
+//                            ],
+//                        ])) {
+//                            $debugMessage = 'send';
+//                        } else {
+//                            $debugMessage = 'not send';
+//                        }
 
 
                         Yii::info($results, 'chepuhoBot');
