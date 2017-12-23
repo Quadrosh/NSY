@@ -84,15 +84,14 @@ class ChepuhaBotController extends \yii\web\Controller
             $commands = explode('/', $inlineQuery['query']);
             $action = $commands[0];
 
+
+
             if ($action == 'play') {
 
                 if (isset($commands[1])) {
                     if ($commands[1] == 'all') {  // Список сцен
-                        
-                        $this->sendMessage([
-                            'chat_id' => $callbackQuery['from']['id'],
-                            'text' => 'тута',
-                        ]);
+
+
 
                         $plays = ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
                         $results = [];
@@ -140,7 +139,10 @@ class ChepuhaBotController extends \yii\web\Controller
 
                         Yii::info($results, 'chepuhoBot');
 
-
+                        $this->sendMessage([
+                            'chat_id' => $inlineQuery['from']['id'],
+                            'text' => 'тута',
+                        ]);
 
 
                     }
