@@ -782,27 +782,7 @@ class ChepuhaBotController extends \yii\web\Controller
         return json_decode($jsonResponse);
     }
 
-    /**
-     * Adjusting logger
-     */
-//    protected function initLogger()
-//    {
-//        $targets = \Yii::$app->getLog()->targets;
-//        foreach ($targets as $name => $target) {
-//            $target->enabled = false;
-//        }
-//        $config = [
-//            'levels' => ['error', 'warning', 'trace', 'info'],
-//            'logFile' => \Yii::getAlias($this->logDir) . DIRECTORY_SEPARATOR . 'chepuhobot.log',
-//            'logVars' => ['_SERVER'],  // $_GET, $_POST, $_FILES, $_COOKIE, $_SESSION, $_SERVER
-//            'except' => [
-//                'yii\db\*', // Don't include messages from db
-//            ],
-//        ];
-//        $targets['chepuhoBot'] = new \yii\log\FileTarget($config);
-//        \Yii::$app->getLog()->targets = $targets;
-//        \Yii::$app->getLog()->init();
-//    }
+
 
 
 }

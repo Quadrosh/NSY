@@ -86,7 +86,7 @@ return [
                     'levels' => ['info'],
                     'categories' => ['chepuhoBot'],
                     'logFile' => '@runtime/bots/chepuhobot/logs/chepuhobot.log',
-                    'logVars' => ['_POST'],   // $_GET, $_POST, $_FILES, $_COOKIE, $_SESSION, $_SERVER
+                    'logVars' => [],   // $_GET, $_POST, $_FILES, $_COOKIE, $_SESSION, $_SERVER
                     'maxFileSize' => 1024 * 2,
                     'maxLogFiles' => 20,
                 ],
