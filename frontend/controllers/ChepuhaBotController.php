@@ -125,7 +125,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         $debugMessage = '';
                         if ($this->answerInlineQuery([
                             'inline_query_id' => $inlineQuery['id'],
-                            'results'=> $results
+                            'results'=> json_encode($results)
                         ])) {
                             $debugMessage = 'yes';
                         } else {
@@ -774,7 +774,7 @@ class ChepuhaBotController extends \yii\web\Controller
         } else {
             $info = curl_getinfo($ch);
             Yii::info($info, 'chepuhoBot');
-            Yii::info(curl_error($ch), 'chepuhoBot');
+//            Yii::info(curl_error($ch), 'chepuhoBot');
 
         }
         curl_close($ch);
