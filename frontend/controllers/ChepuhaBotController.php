@@ -746,7 +746,7 @@ class ChepuhaBotController extends \yii\web\Controller
         $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
             Yii::$app->params['chepuBotToken'] .
             "/answerInlineQuery", $option);
-        return $jsonResponse;
+        return json_decode($jsonResponse);
     }
 
     private function curlCall($url, $option=array(), $headers=array())
@@ -774,7 +774,7 @@ class ChepuhaBotController extends \yii\web\Controller
         } else {
             $info = curl_getinfo($ch);
             Yii::info($info, 'chepuhoBot');
-//            Yii::info(CURLOPT_POSTFIELDS, 'chepuhoBot');
+            Yii::info(curl_error($ch), 'chepuhoBot');
 
         }
         curl_close($ch);
