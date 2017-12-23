@@ -134,6 +134,11 @@ class ChepuhaBotController extends \yii\web\Controller
 
                         Yii::info($results, 'chepuhoBot');
 
+                        $this->sendMessage([
+                            'chat_id' => $callbackQuery['from']['id'],
+                            'text' => 'тута',
+                        ]);
+
 
                     }
                 }
