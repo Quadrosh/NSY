@@ -78,7 +78,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //      Inline
         if ($inlineQuery != null) {
-            Yii::info('чеко чек', 'chepuhoBot');
+            Yii::info('чеко чек1', 'chepuhoBot');
             Yii::info($inlineQuery, 'chepuhoBot');
 
 
