@@ -97,29 +97,29 @@ class ChepuhaBotController extends \yii\web\Controller
                         $results = [];
                         foreach ($plays as $play) {
 
-                            $row = [];
-                            $row[] = [
-                                'type' => 'article',
-                                'id' => $play['id'],
-                                'title' => $play['name'],
-                                'input_message_content'=>[
-                                    'message_text'=> $play['description'],
-                                    'parse_mode'=> 'html',
-                                ],
-
-                            ];;
-
-                            $results[] = $row;
-
-//                            $results[] = [
+//                            $row = [];
+//                            $row[] = [
 //                                'type' => 'article',
 //                                'id' => $play['id'],
 //                                'title' => $play['name'],
 //                                'input_message_content'=>[
 //                                    'message_text'=> $play['description'],
+//                                    'parse_mode'=> 'html',
 //                                ],
 //
-//                            ];
+//                            ];;
+//                            $results[] = $row;
+
+
+                            $results[] = [
+                                'type' => 'article',
+                                'id' => $play['id'],
+                                'title' => $play['name'],
+                                'input_message_content'=>[
+                                    'message_text'=> $play['description'],
+                                ],
+
+                            ];
                         };
 
                         $debugMessage = '';
@@ -742,11 +742,11 @@ class ChepuhaBotController extends \yii\web\Controller
      */
     public function answerInlineQuery(array $option = [])
     {
-        $optionJs = json_encode($option);
+//        $optionJs = json_encode($option);
         $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
             Yii::$app->params['chepuBotToken'] .
-            "/answerInlineQuery", $optionJs);
-        return json_decode($jsonResponse);
+            "/answerInlineQuery", $option);
+        return $jsonResponse;
     }
 
     private function curlCall($url, $option=array(), $headers=array())
@@ -774,7 +774,7 @@ class ChepuhaBotController extends \yii\web\Controller
         } else {
             $info = curl_getinfo($ch);
             Yii::info($info, 'chepuhoBot');
-            Yii::info(CURLOPT_POSTFIELDS, 'chepuhoBot');
+//            Yii::info(CURLOPT_POSTFIELDS, 'chepuhoBot');
 
         }
         curl_close($ch);
