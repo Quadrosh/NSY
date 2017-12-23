@@ -140,6 +140,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         $debugMessage = '';
                         if ($this->answerInlineQuery([
                             'inline_query_id' => $inlineQuery['id'],
+                            'switch_pm_text' => 'вернуться к чату с ботом',
                             'results'=> [
                                 [
                                     'type'=>'article',
