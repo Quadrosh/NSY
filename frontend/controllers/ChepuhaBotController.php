@@ -91,7 +91,6 @@ class ChepuhaBotController extends \yii\web\Controller
                         'id' => $play['id'],
                         'title' => $play['name'],
                         'description' => $play['description'],
-                        'disable_web_page_preview'=> true,
                         'input_message_content'=>[
                             'message_text'=> 'play/' . $play['hrurl'],
                             'parse_mode'=> 'html',
