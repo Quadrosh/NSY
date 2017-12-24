@@ -102,7 +102,7 @@ class ChepuhaBotController extends \yii\web\Controller
                                 'title' => $play['name'],
                                 'description' => $play['description'],
                                 'input_message_content'=>[
-                                    'message_text'=> 'play/' . $play['id'],
+                                    'message_text'=> 'play/' . $play['hrurl'],
                                     'parse_mode'=> 'html',
                                     'disable_web_page_preview'=> true,
                                 ],
@@ -117,8 +117,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                     } else {    // $commands[1] != 'all'
                         $playId = $commands[1];
-
-
+                        
                         $session = ChBotSession::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
 
                         if ($session == null) {
