@@ -118,7 +118,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         'title' => $play['name'],
                         'description' => $play['description'],
                         'input_message_content'=>[
-                            'message_text'=> 'play/' . $play['hrurl'],
+                            'message_text'=> 'phrase/' . $play['hrurl'],
                             'parse_mode'=> 'html',
                             'disable_web_page_preview'=> true,
                         ],
@@ -384,11 +384,8 @@ class ChepuhaBotController extends \yii\web\Controller
                 Yii::info($message, 'chepuhoBot');
 
                 $hrurl = explode('/', $message['text'])[1];
-
                 $play = ChBotPhrase::find()->where(['hrurl'=>$hrurl])->one();
-
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
-
                 if ($session == null) {
                     $session = new ChBotSession;
                     $session['user_id'] = $message['from']['id'];
@@ -400,7 +397,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         }
                     }
                 }
-                
+
                 $session['item_type'] = 'phrase';
 
                 $session['item_id'] = $play['id'];
