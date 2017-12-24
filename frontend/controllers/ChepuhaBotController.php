@@ -326,11 +326,11 @@ class ChepuhaBotController extends \yii\web\Controller
                 $hrurl = explode('/', $message['text'])[1];
                 $play = ChBotPlay::find()->where(['hrurl'=>$hrurl])->one();
 
-                $session = ChBotSession::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
+                $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
 
                 if ($session == null) {
                     $session = new ChBotSession;
-                    $session['user_id'] = $callbackQuery['from']['id'];
+                    $session['user_id'] = $message['from']['id'];
                 } else {
                     $sessionVars = $session->vars;
                     if ($sessionVars != null) {
@@ -343,7 +343,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 $session['item_id'] = $play['id'];
                 $session->save();
 
-                
+
                 $playVars = $play->vars;
                 $sessionVars = $session->vars;
                 if ($sessionVars == null) {
@@ -361,7 +361,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 $goQuestion->save();
 
                 $this->sendMessage([
-                    'chat_id' => $callbackQuery['from']['id'],
+                    'chat_id' => $message['from']['id'],
                     'text' => $goQuestion['question'],
                 ]);
 
@@ -372,7 +372,7 @@ class ChepuhaBotController extends \yii\web\Controller
             }
 
 
-//          любой текст от пользователя (игра)
+//          любой текст от пользователя (игра в процессе)
             else {
 
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
