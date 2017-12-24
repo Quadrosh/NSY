@@ -480,7 +480,7 @@ class ChepuhaBotController extends \yii\web\Controller
                                 'inline_keyboard'=>[
                                     [
                                         ['text'=>'Играть еще','callback_data'=> 'newGame'],
-                                        ['text'=>'Отправить другу','switch_inline_query_current_chat'=> 'phrase'],
+//                                        ['text'=>'Отправить игру другу','switch_inline_query'=> 'phrase'],
                                     ],
                                 ]
                             ]),
