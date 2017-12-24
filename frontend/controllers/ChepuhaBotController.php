@@ -479,8 +479,8 @@ class ChepuhaBotController extends \yii\web\Controller
                             'reply_markup' => json_encode([
                                 'inline_keyboard'=>[
                                     [
-                                        ['text'=>"Играть еще",'callback_data'=> 'newGame'],
-                                        ['text'=>"Отправить другу",'switch_inline_query_current_chat'=> 'phrase'],
+                                        ['text'=>'Играть еще','callback_data'=> 'newGame'],
+                                        ['text'=>'Отправить другу','switch_inline_query_current_chat'=> 'phrase'],
                                     ],
                                 ]
                             ]),
@@ -511,7 +511,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 ]);
 
                 $this->sendMessage([
-                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'chat_id' => $callbackQuery['chat']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
                     'text' => '',
                     'reply_markup' => json_encode([
@@ -527,6 +527,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 ]);
                 return 'ok';
             }
+
 
             $commands = explode('/', $callbackQuery['data']);
             $action = $commands[0];
@@ -608,16 +609,22 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 } else {
                     $this->sendMessage([
-                        'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                        'chat_id' => $callbackQuery['chat']['id'],  // $message['from']['id']
                         'text' => 'Список опций',
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
-                                    ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                                    ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
                                 ],
                                 [
-                                    ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                                    ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
                                 ],
+//                                [
+//                                    ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+//                                ],
+//                                [
+//                                    ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+//                                ],
                             ]
                         ]),
                     ]);
