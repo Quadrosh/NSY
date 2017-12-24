@@ -223,11 +223,17 @@ class ChepuhaBotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
                             ],
                             [
-                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
                             ],
+//                            [
+//                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+//                            ],
+//                            [
+//                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+//                            ],
 
                         ]
                     ]),
@@ -264,11 +270,17 @@ class ChepuhaBotController extends \yii\web\Controller
 
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
                             ],
                             [
-                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
                             ],
+//                            [
+//                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+//                            ],
+//                            [
+//                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+//                            ],
                         ]
                     ]),
                 ]);
@@ -324,7 +336,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
             }
 
-//          /type/hrurl
+//          play/hrurl     phrase/hrurl
             elseif (substr($message['text'],0,5) == 'play/' OR  substr($message['text'],0,7) == 'phrase/'){
 
                 Yii::info($message, 'chepuhoBot');
