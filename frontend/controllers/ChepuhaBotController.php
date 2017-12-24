@@ -324,68 +324,69 @@ class ChepuhaBotController extends \yii\web\Controller
 
             }
 
-//          play/hrurl
+//          /play/hrurl
+            elseif (substr($message['text'],0,5) == 'play/' OR  substr($message['text'],0,7) == 'phrase/'){
 //            elseif (explode('/', $message['text'])[0]=='play' OR explode('/', $message['text'])[0]=='phrase'){
-//
-//                Yii::info($message, 'chepuhoBot');
-//
-//                $type = explode('/', $message['text'])[0];
-//                $hrurl = explode('/', $message['text'])[1];
-//
-//                if ($type == 'play') {
-//                    $play = ChBotPlay::find()->where(['hrurl'=>$hrurl])->one();
-//                } elseif ($type == 'phrase') {
-//                    $play = ChBotPhrase::find()->where(['hrurl'=>$hrurl])->one();
-//                } else {
-//                    $play = ChBotPlay::find()->where(['hrurl'=>$hrurl])->one();
-//                }
-//
-//
-//                $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
-//
-//                if ($session == null) {
-//                    $session = new ChBotSession;
-//                    $session['user_id'] = $message['from']['id'];
-//                } else {
-//                    $sessionVars = $session->vars;
-//                    if ($sessionVars != null) {
-//                        foreach ($sessionVars as $sessionVar) {
-//                            $sessionVar->delete();
-//                        }
-//                    }
-//                }
-//
-//                $session['item_type'] = $type;
-//                $session['item_id'] = $play['id'];
-//                $session->save();
-//
-//
-//                $playVars = $play->vars;
-//                $sessionVars = $session->vars;
-//                if ($sessionVars == null) {
-//                    foreach ($playVars as $playVar) {
-//                        $sessionVar = new ChBotSessionVars();
-//                        $sessionVar['session_id'] = $session['id'];
-//                        $sessionVar['item_var_id'] = $playVar['id'];
-//                        $sessionVar['question'] = $playVar['question'];
-//                        $sessionVar['status'] = 'raw';
-//                        $sessionVar->save();
-//                    }
-//                }
-//                $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
-//                $goQuestion['status'] = 'active';
-//                $goQuestion->save();
-//
-//                $this->sendMessage([
-//                    'chat_id' => $message['from']['id'],
-//                    'text' => $goQuestion['question'],
-//                ]);
-//
-//                return [
-//                    'message' => 'ok',
-//                    'code' => 200,
-//                ];
-//            }
+
+                Yii::info($message, 'chepuhoBot');
+
+                $type = explode('/', $message['text'])[0];
+                $hrurl = explode('/', $message['text'])[1];
+
+                if ($type == 'play') {
+                    $play = ChBotPlay::find()->where(['hrurl'=>$hrurl])->one();
+                } elseif ($type == 'phrase') {
+                    $play = ChBotPhrase::find()->where(['hrurl'=>$hrurl])->one();
+                } else {
+                    $play = ChBotPlay::find()->where(['hrurl'=>$hrurl])->one();
+                }
+
+
+                $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
+
+                if ($session == null) {
+                    $session = new ChBotSession;
+                    $session['user_id'] = $message['from']['id'];
+                } else {
+                    $sessionVars = $session->vars;
+                    if ($sessionVars != null) {
+                        foreach ($sessionVars as $sessionVar) {
+                            $sessionVar->delete();
+                        }
+                    }
+                }
+
+                $session['item_type'] = $type;
+                $session['item_id'] = $play['id'];
+                $session->save();
+
+
+                $playVars = $play->vars;
+                $sessionVars = $session->vars;
+                if ($sessionVars == null) {
+                    foreach ($playVars as $playVar) {
+                        $sessionVar = new ChBotSessionVars();
+                        $sessionVar['session_id'] = $session['id'];
+                        $sessionVar['item_var_id'] = $playVar['id'];
+                        $sessionVar['question'] = $playVar['question'];
+                        $sessionVar['status'] = 'raw';
+                        $sessionVar->save();
+                    }
+                }
+                $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
+                $goQuestion['status'] = 'active';
+                $goQuestion->save();
+
+                $this->sendMessage([
+                    'chat_id' => $message['from']['id'],
+                    'text' => $goQuestion['question'],
+                ]);
+
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+            }
 
 
 //          любой текст от пользователя (игра в процессе)
