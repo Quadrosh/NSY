@@ -502,6 +502,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //      Callback
         if ($callbackQuery != null) {
+            Yii::info($callbackQuery, 'chepuhoBot');
 
 //          newGame
             if ($callbackQuery['data']=='newGame') {
