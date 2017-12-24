@@ -480,8 +480,6 @@ class ChepuhaBotController extends \yii\web\Controller
                                 'inline_keyboard'=>[
                                     [
                                         ['text'=>"Играть еще",'callback_data'=> 'newGame'],
-                                    ],
-                                    [
                                         ['text'=>"Отправить другу",'switch_inline_query_current_chat'=> 'phrase'],
                                     ],
                                 ]
@@ -504,8 +502,6 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //      Callback
         if ($callbackQuery != null) {
-            $commands = explode('/', $callbackQuery['data']);
-            $action = $commands[0];
 
 //          newGame
             if ($callbackQuery['data']=='newGame') {
@@ -529,10 +525,13 @@ class ChepuhaBotController extends \yii\web\Controller
                         ]
                     ]),
                 ]);
-
-
-
+                return 'ok';
             }
+
+            $commands = explode('/', $callbackQuery['data']);
+            $action = $commands[0];
+
+
 //          play (чепусценка)
             if ($action == 'play') {
                 $this->answerCallbackQuery([
