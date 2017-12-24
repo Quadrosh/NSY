@@ -324,14 +324,14 @@ class ChepuhaBotController extends \yii\web\Controller
 
             }
 
-//          /play/hrurl
+//          /type/hrurl
             elseif (substr($message['text'],0,5) == 'play/' OR  substr($message['text'],0,7) == 'phrase/'){
-//            elseif (explode('/', $message['text'])[0]=='play' OR explode('/', $message['text'])[0]=='phrase'){
 
                 Yii::info($message, 'chepuhoBot');
 
-                $type = explode('/', $message['text'])[0];
-                $hrurl = explode('/', $message['text'])[1];
+                $commands = explode('/', $message['text']);
+                $type = $commands[0];
+                $hrurl = $commands[1];
 
                 if ($type == 'play') {
                     $play = ChBotPlay::find()->where(['hrurl'=>$hrurl])->one();
@@ -340,7 +340,6 @@ class ChepuhaBotController extends \yii\web\Controller
                 } else {
                     $play = ChBotPlay::find()->where(['hrurl'=>$hrurl])->one();
                 }
-
 
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
 
@@ -359,7 +358,6 @@ class ChepuhaBotController extends \yii\web\Controller
                 $session['item_type'] = $type;
                 $session['item_id'] = $play['id'];
                 $session->save();
-
 
                 $playVars = $play->vars;
                 $sessionVars = $session->vars;
