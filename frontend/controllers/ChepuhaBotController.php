@@ -83,7 +83,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //           список сцен play
             if ($inlineQuery['query'] == 'play') {
-                $plays = ChBotPlay::find()->where('hrurl != :value', ['value' => 'work'])->orderBy('name')->all();
+                $plays = ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
                 $results = [];
                 foreach ($plays as $play) {
                     $results[] = [
@@ -106,7 +106,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //           список сцен phrase
             elseif ($inlineQuery['query'] == 'phrase'){
-                $plays = ChBotPhrase::find()->where('hrurl != :value', ['value' => 'work'])->orderBy('name')->all();
+                $plays = ChBotPhrase::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
                 $results = [];
                 foreach ($plays as $play) {
                     $results[] = [
