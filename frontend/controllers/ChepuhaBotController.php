@@ -84,9 +84,9 @@ class ChepuhaBotController extends \yii\web\Controller
 //            $action = $commands[0];
 
 
-
+//           список сцен play
             if ($inlineQuery['query'] == 'play') {
-                $plays = ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
+                $plays = ChBotPlay::find()->where('hrurl != :value', ['value' => 'work'])->orderBy('name')->all();
                 $results = [];
                 foreach ($plays as $play) {
                     $results[] = [
@@ -106,7 +106,30 @@ class ChepuhaBotController extends \yii\web\Controller
                     'results'=> json_encode($results)
                 ]);
             }
-            
+
+//           список сцен phrase
+            elseif ($inlineQuery['query'] == 'phrase'){
+                $plays = ChBotPhrase::find()->where('hrurl != :value', ['value' => 'work'])->orderBy('name')->all();
+                $results = [];
+                foreach ($plays as $play) {
+                    $results[] = [
+                        'type' => 'article',
+                        'id' => $play['id'],
+                        'title' => $play['name'],
+                        'description' => $play['description'],
+                        'input_message_content'=>[
+                            'message_text'=> 'play/' . $play['hrurl'],
+                            'parse_mode'=> 'html',
+                            'disable_web_page_preview'=> true,
+                        ],
+                    ];
+                };
+                $this->answerInlineQuery([
+                    'inline_query_id' => $inlineQuery['id'],
+                    'results'=> json_encode($results)
+                ]);
+            }
+
             return 'ok';
         }
 
@@ -304,7 +327,7 @@ class ChepuhaBotController extends \yii\web\Controller
 //          play/hrurl
             elseif (explode('/', $message['text'])[0]=='play'){
 
-                Yii::info($input, 'chepuhoBot');
+                Yii::info($message, 'chepuhoBot');
 
 
                 $hrurl = explode('/', $message['text'])[1];
@@ -355,6 +378,58 @@ class ChepuhaBotController extends \yii\web\Controller
                 ];
             }
 
+
+            elseif (explode('/', $message['text'])[0]=='phrase'){
+
+                Yii::info($message, 'chepuhoBot');
+
+                $hrurl = explode('/', $message['text'])[1];
+                $play = ChBotPhrase::find()->where(['hrurl'=>$hrurl])->one();
+
+                $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
+
+                if ($session == null) {
+                    $session = new ChBotSession;
+                    $session['user_id'] = $message['from']['id'];
+                } else {
+                    $sessionVars = $session->vars;
+                    if ($sessionVars != null) {
+                        foreach ($sessionVars as $sessionVar) {
+                            $sessionVar->delete();
+                        }
+                    }
+                }
+                $session['item_type'] = 'play';
+                $session['item_id'] = $play['id'];
+                $session->save();
+
+
+                $playVars = $play->vars;
+                $sessionVars = $session->vars;
+                if ($sessionVars == null) {
+                    foreach ($playVars as $playVar) {
+                        $sessionVar = new ChBotSessionVars();
+                        $sessionVar['session_id'] = $session['id'];
+                        $sessionVar['item_var_id'] = $playVar['id'];
+                        $sessionVar['question'] = $playVar['question'];
+                        $sessionVar['status'] = 'raw';
+                        $sessionVar->save();
+                    }
+                }
+                $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
+                $goQuestion['status'] = 'active';
+                $goQuestion->save();
+
+                $this->sendMessage([
+                    'chat_id' => $message['from']['id'],
+                    'text' => $goQuestion['question'],
+                ]);
+
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+            }
 
 //          любой текст от пользователя (игра в процессе)
             else {
