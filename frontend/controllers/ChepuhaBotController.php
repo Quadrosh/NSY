@@ -115,9 +115,11 @@ class ChepuhaBotController extends \yii\web\Controller
                             'results'=> json_encode($results)
                         ]);
 
-                    } else {    // $commands[1] != 'all'
+                    }
+                    // $commands[1] != 'all'
+                    else {
                         $playId = $commands[1];
-                        
+
                         $session = ChBotSession::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
 
                         if ($session == null) {
@@ -355,6 +357,26 @@ class ChepuhaBotController extends \yii\web\Controller
                 ];
 
             }
+
+//          play/hrurl
+            elseif (explode('/', $message['text'])[0]=='play'){
+
+                Yii::info($input, 'chepuhoBot');
+
+
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
+                    'text' => 'тут play'
+                ]);
+
+
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+            }
+
 
 //          любой текст от пользователя (игра)
             else {
