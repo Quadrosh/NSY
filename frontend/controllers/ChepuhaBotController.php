@@ -151,16 +151,15 @@ class ChepuhaBotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
                             ],
                             [
-                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
                             ],
-
 //                            [
-//                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-//                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
+//                                ['text'=>"Выбрать чат",'switch_inline_query'=> 'phrase/all'],
 //                            ],
+
                         ]
                     ]),
                 ]);
@@ -168,6 +167,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     'message' => 'ok',
                     'code' => 200,
                 ];
+
 
             }
 
