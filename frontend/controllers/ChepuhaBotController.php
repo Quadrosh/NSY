@@ -91,88 +91,78 @@ class ChepuhaBotController extends \yii\web\Controller
                 if (isset($commands[1])) {
                     if ($commands[1] == 'all') {  // Список сцен
 
-
-
                         $plays = ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
                         $results = [];
                         foreach ($plays as $play) {
-
-//                            $row = [];
-//                            $row[] = [
-//                                'type' => 'article',
-//                                'id' => $play['id'],
-//                                'title' => $play['name'],
-//                                'input_message_content'=>[
-//                                    'message_text'=> $play['description'],
-//                                    'parse_mode'=> 'html',
-//                                ],
-//
-//                            ];;
-//                            $results[] = $row;
 
 
                             $results[] = [
                                 'type' => 'article',
                                 'id' => $play['id'],
                                 'title' => $play['name'],
+                                'description' => $play['description'],
                                 'input_message_content'=>[
-                                    'message_text'=> $play['description'],
+                                    'message_text'=> 'play/' . $play['id'],
+                                    'parse_mode'=> 'html',
+                                    'disable_web_page_preview'=> true,
                                 ],
 
                             ];
                         };
 
-                        $debugMessage = '';
-                        if ($this->answerInlineQuery([
+                        $this->answerInlineQuery([
                             'inline_query_id' => $inlineQuery['id'],
                             'results'=> json_encode($results)
-                        ])) {
-                            $debugMessage = 'yes';
-                        } else {
-                            $debugMessage = 'no';
-                        }
-
-
-
-//                        if ($this->answerInlineQuery([
-//                            'inline_query_id' => $inlineQuery['id'],
-////                            'switch_pm_text' => 'asdfasdf',
-////                            'switch_pm_parameter' => 'qwe',
-////                            'is_personal' => true,
-////                            'next_offset' => '',
-//                            'results'=> [
-//                                [
-//                                    'type'=>'article',
-//                                    'id' => '8',
-//                                    'title' => 'article1',
-//                                    'input_message_content'=>[
-//                                        'message_text'=> 'text',
-//
-//                                    ],
-//                                ],
-//                            ],
-//                        ])) {
-//                            $debugMessage = 'send';
-//                        } else {
-//                            $debugMessage = 'not send';
-//                        }
-
-
-                        Yii::info($results, 'chepuhoBot');
-
-                        $this->sendMessage([
-                            'chat_id' => $inlineQuery['from']['id'],
-                            'text' => $debugMessage,
-//                            'text' => 'тут',
                         ]);
 
+                    } else {    // $commands[1] != 'all'
+                        $playId = $commands[1];
 
+
+                        $session = ChBotSession::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
+
+                        if ($session == null) {
+                            $session = new ChBotSession;
+                            $session['user_id'] = $callbackQuery['from']['id'];
+                            $session['item_type'] = 'play';
+                            $session['item_id'] = $playId;
+                            $session->save();
+                        }
+
+                        if ($session['item_type'] == 'play') {
+                            $sessionPlayId = $session['item_id'];
+                            if ($playId != null  && $sessionPlayId != $playId) {
+                                $session['item_id'] = $playId;
+                                $session->save();
+                            }
+                        }
+
+                        $play = ChBotPlay::find()->where(['id'=>$playId])->one();
+
+                        $playVars = $play->vars;
+                        $sessionVars = $session->vars;
+                        if ($sessionVars == null) {
+                            foreach ($playVars as $playVar) {
+                                $sessionVar = new ChBotSessionVars();
+                                $sessionVar['session_id'] = $session['id'];
+                                $sessionVar['item_var_id'] = $playVar['id'];
+                                $sessionVar['question'] = $playVar['question'];
+                                $sessionVar['status'] = 'raw';
+                                $sessionVar->save();
+                            }
+                        }
+                        $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
+                        $goQuestion['status'] = 'active';
+                        $goQuestion->save();
+
+                        $this->sendMessage([
+                            'chat_id' => $callbackQuery['from']['id'],
+                            'text' => $goQuestion['question'],
+                        ]);
                     }
                 }
             }
-
-
-
+            
             return 'ok';
         }
 
