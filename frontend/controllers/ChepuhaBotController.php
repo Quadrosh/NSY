@@ -225,13 +225,6 @@ class ChepuhaBotController extends \yii\web\Controller
                             [
                                 ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
                             ],
-//                            [
-//                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
-//                            ],
-//                            [
-//                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
-//                            ],
-
                         ]
                     ]),
                 ]);
@@ -464,27 +457,15 @@ class ChepuhaBotController extends \yii\web\Controller
                     return 'ok';
                 }
 
-
                 if ($newActiveVar == null && ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'done'])->one()) {
 
                     if ($session['item_type']=='play') {
                         $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
-                        $text = $play['text'];
-                        $vars = $session->vars;
-                        foreach ($vars as  $var) {
-                            $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
-                            $var->delete();
-                        }
-                        $this->sendMessage([
-                            'chat_id' => $message['from']['id'],
-                            'text' => $text,
-                        ]);
-                        $session->delete();
-                        return 'ok';
-                    }
-
-                    if ($session['item_type']=='phrase') {
+                    } elseif ($session['item_type']=='phrase'){
                         $play = ChBotPhrase::find()->where(['id'=>$session['item_id']])->one();
+                    } else {
+                        $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
+                    }
                         $text = $play['text'];
                         $vars = $session->vars;
                         foreach ($vars as  $var) {
@@ -494,10 +475,34 @@ class ChepuhaBotController extends \yii\web\Controller
                         $this->sendMessage([
                             'chat_id' => $message['from']['id'],
                             'text' => $text,
+                            'inline_keyboard'=>[
+                                [
+                                    ['text'=>"Играть еще",'callback_data'=> 'newGame'],
+                                ],
+                                [
+                                    ['text'=>"Отправить другу",'switch_inline_query_current_chat'=> 'phrase'],
+                                ],
+                            ]
                         ]);
                         $session->delete();
                         return 'ok';
-                    }
+
+
+//                    if ($session['item_type']=='phrase') {
+//                        $play = ChBotPhrase::find()->where(['id'=>$session['item_id']])->one();
+//                        $text = $play['text'];
+//                        $vars = $session->vars;
+//                        foreach ($vars as  $var) {
+//                            $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
+//                            $var->delete();
+//                        }
+//                        $this->sendMessage([
+//                            'chat_id' => $message['from']['id'],
+//                            'text' => $text,
+//                        ]);
+//                        $session->delete();
+//                        return 'ok';
+//                    }
 
                 }
 
@@ -514,6 +519,32 @@ class ChepuhaBotController extends \yii\web\Controller
             $commands = explode('/', $callbackQuery['data']);
             $action = $commands[0];
 
+//          newGame
+            if ($callbackQuery['data']=='newGame') {
+                $this->answerCallbackQuery([
+                    'callback_query_id' => $callbackQuery['id'],
+                    'text' => 'в процессе',
+                ]);
+
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
+                    'text' => '',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                            ],
+                            [
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+                            ],
+                        ]
+                    ]),
+                ]);
+
+
+
+            }
 //          play (чепусценка)
             if ($action == 'play') {
                 $this->answerCallbackQuery([
