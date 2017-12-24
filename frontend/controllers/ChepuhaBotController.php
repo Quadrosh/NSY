@@ -118,48 +118,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     }
                     // $commands[1] != 'all'
                     else {
-                        $playId = $commands[1];
 
-                        $session = ChBotSession::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
-
-                        if ($session == null) {
-                            $session = new ChBotSession;
-                            $session['user_id'] = $callbackQuery['from']['id'];
-                            $session['item_type'] = 'play';
-                            $session['item_id'] = $playId;
-                            $session->save();
-                        }
-
-                        if ($session['item_type'] == 'play') {
-                            $sessionPlayId = $session['item_id'];
-                            if ($playId != null  && $sessionPlayId != $playId) {
-                                $session['item_id'] = $playId;
-                                $session->save();
-                            }
-                        }
-
-                        $play = ChBotPlay::find()->where(['id'=>$playId])->one();
-
-                        $playVars = $play->vars;
-                        $sessionVars = $session->vars;
-                        if ($sessionVars == null) {
-                            foreach ($playVars as $playVar) {
-                                $sessionVar = new ChBotSessionVars();
-                                $sessionVar['session_id'] = $session['id'];
-                                $sessionVar['item_var_id'] = $playVar['id'];
-                                $sessionVar['question'] = $playVar['question'];
-                                $sessionVar['status'] = 'raw';
-                                $sessionVar->save();
-                            }
-                        }
-                        $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
-                        $goQuestion['status'] = 'active';
-                        $goQuestion->save();
-
-                        $this->sendMessage([
-                            'chat_id' => $callbackQuery['from']['id'],
-                            'text' => $goQuestion['question'],
-                        ]);
                     }
                 }
             }
@@ -364,12 +323,47 @@ class ChepuhaBotController extends \yii\web\Controller
                 Yii::info($input, 'chepuhoBot');
 
 
-                $this->sendMessage([
-                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'parse_mode' => 'html',
-                    'text' => 'тут play'
-                ]);
+                $hrurl = explode('/', $message['text'])[1];
+                $play = ChBotPlay::find()->where(['hrurl'=>$hrurl])->one();
 
+                $session = ChBotSession::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
+
+                if ($session == null) {
+                    $session = new ChBotSession;
+                    $session['user_id'] = $callbackQuery['from']['id'];
+                } else {
+                    $sessionVars = $session->vars;
+                    if ($sessionVars != null) {
+                        foreach ($sessionVars as $sessionVar) {
+                            $sessionVar->delete();
+                        }
+                    }
+                }
+                $session['item_type'] = 'play';
+                $session['item_id'] = $play['id'];
+                $session->save();
+
+                
+                $playVars = $play->vars;
+                $sessionVars = $session->vars;
+                if ($sessionVars == null) {
+                    foreach ($playVars as $playVar) {
+                        $sessionVar = new ChBotSessionVars();
+                        $sessionVar['session_id'] = $session['id'];
+                        $sessionVar['item_var_id'] = $playVar['id'];
+                        $sessionVar['question'] = $playVar['question'];
+                        $sessionVar['status'] = 'raw';
+                        $sessionVar->save();
+                    }
+                }
+                $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
+                $goQuestion['status'] = 'active';
+                $goQuestion->save();
+
+                $this->sendMessage([
+                    'chat_id' => $callbackQuery['from']['id'],
+                    'text' => $goQuestion['question'],
+                ]);
 
                 return [
                     'message' => 'ok',
@@ -382,7 +376,6 @@ class ChepuhaBotController extends \yii\web\Controller
             else {
 
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
-
                 if ($session == null) {   // Нет активной игры
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
@@ -405,7 +398,6 @@ class ChepuhaBotController extends \yii\web\Controller
                 }
 
                 $activeVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'active'])->one();
-
                 if ($activeVar == null) {   // Нет активного шага
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
@@ -427,7 +419,6 @@ class ChepuhaBotController extends \yii\web\Controller
                     ];
                 }
 
-
                 $activeVar['value'] = $message['text'];
                 $activeVar['status'] = 'done';
                 $activeVar->save();
@@ -437,22 +428,16 @@ class ChepuhaBotController extends \yii\web\Controller
                 if ($newActiveVar != null) {
                     $newActiveVar['status'] = 'active';
                     $newActiveVar->save();
-
-
                     $text = $newActiveVar['question'];
                     $vars = $session->vars;
                     foreach ($vars as  $var) {
                         $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
                     }
-
-
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
                         'text' => $text.'?',
-//                        'text' => $newActiveVar['question'].'?',
                     ]);
                     return 'ok';
-
                 }
 
 
