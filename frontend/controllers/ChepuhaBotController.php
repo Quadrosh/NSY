@@ -162,7 +162,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     }
                 }
             }
-            
+
             return 'ok';
         }
 

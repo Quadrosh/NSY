@@ -44,6 +44,9 @@ class ChBotPhrase extends \yii\db\ActiveRecord
             [['description', 'text'], 'string'],
             [['cat_id', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 510],
+            [['hrurl'], 'string', 'max' => 255],
+            [['hrurl'],'unique'],
+
         ];
     }
 
@@ -54,6 +57,7 @@ class ChBotPhrase extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'hrurl' => 'hrurl',
             'name' => 'Name',
             'description' => 'Description',
             'cat_id' => 'Cat ID',
