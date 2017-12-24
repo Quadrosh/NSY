@@ -407,10 +407,10 @@ class ChepuhaBotController extends \yii\web\Controller
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
-                                    ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                                    ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
                                 ],
                                 [
-                                    ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                                    ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
                                 ],
                             ]
                         ]),
@@ -429,10 +429,10 @@ class ChepuhaBotController extends \yii\web\Controller
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
-                                    ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+                                    ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
                                 ],
                                 [
-                                    ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+                                    ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
                                 ],
                             ]
                         ]),
