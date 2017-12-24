@@ -514,7 +514,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 $this->sendMessage([
                     'chat_id' => $callbackQuery['chat']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
-                    'text' => '',
+                    'text' => 'Опции',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
