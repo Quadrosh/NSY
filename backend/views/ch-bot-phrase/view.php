@@ -35,7 +35,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description:ntext',
             'cat_id',
-            'text:ntext',
+            [
+                'attribute'=>'text',
+                'value'=> function($data)
+                {
+                    $text = nl2br($data['text']);
+                    $vars = $data->vars;
+                    foreach ($vars as  $var) {
+                        $text = str_replace('#'.$var['id'], '(#'.$var['id'].' '.$var['question'].')', $text);
+                    }
+                    return $text;
+                },
+                'format'=> 'html',
+            ],
             'created_at',
             'updated_at',
         ],
