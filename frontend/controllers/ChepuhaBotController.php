@@ -80,49 +80,33 @@ class ChepuhaBotController extends \yii\web\Controller
 //      Inline
         if ($inlineQuery != null) {
             Yii::info($inlineQuery, 'chepuhoBot');
-//            $query = $inlineQuery['query'];
-            $commands = explode('/', $inlineQuery['query']);
-            $action = $commands[0];
+//            $commands = explode('/', $inlineQuery['query']);
+//            $action = $commands[0];
 
 
 
-            if ($action == 'play') {
-
-                if (isset($commands[1])) {
-                    if ($commands[1] == 'all') {  // Список сцен
-
-                        $plays = ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
-                        $results = [];
-                        foreach ($plays as $play) {
-
-
-                            $results[] = [
-                                'type' => 'article',
-                                'id' => $play['id'],
-                                'title' => $play['name'],
-                                'description' => $play['description'],
-                                'input_message_content'=>[
-                                    'message_text'=> 'play/' . $play['hrurl'],
-                                    'parse_mode'=> 'html',
-                                    'disable_web_page_preview'=> true,
-                                ],
-
-                            ];
-                        };
-
-                        $this->answerInlineQuery([
-                            'inline_query_id' => $inlineQuery['id'],
-                            'results'=> json_encode($results)
-                        ]);
-
-                    }
-                    // $commands[1] != 'all'
-                    else {
-
-                    }
-                }
+            if ($inlineQuery['query'] == 'play') {
+                $plays = ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
+                $results = [];
+                foreach ($plays as $play) {
+                    $results[] = [
+                        'type' => 'article',
+                        'id' => $play['id'],
+                        'title' => $play['name'],
+                        'description' => $play['description'],
+                        'input_message_content'=>[
+                            'message_text'=> 'play/' . $play['hrurl'],
+                            'parse_mode'=> 'html',
+                            'disable_web_page_preview'=> true,
+                        ],
+                    ];
+                };
+                $this->answerInlineQuery([
+                    'inline_query_id' => $inlineQuery['id'],
+                    'results'=> json_encode($results)
+                ]);
             }
-
+            
             return 'ok';
         }
 
@@ -180,14 +164,14 @@ class ChepuhaBotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Чепу-сценка",'switch_inline_query_current_chat'=> 'play/all'],
+                                ['text'=>"Чепу-сценка",'switch_inline_query_current_chat'=> 'play'],
                             ],
                             [
-                                ['text'=>"Чепу-фраза",'switch_inline_query_current_chat'=> 'phrase/all'],
+                                ['text'=>"Чепу-фраза",'switch_inline_query_current_chat'=> 'phrase'],
                             ],
-                            [
-                                ['text'=>"Выбрать чат",'switch_inline_query'=> 'phrase/all'],
-                            ],
+//                            [
+//                                ['text'=>"Выбрать чат",'switch_inline_query'=> 'phrase/all'],
+//                            ],
 
                         ]
                     ]),
