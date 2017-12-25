@@ -24,7 +24,26 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'user_id',
-            'item_id',
+//            'item_id',
+            [
+                'attribute'=>'item_id',
+                'value'=> function($data)
+                {
+                    if ($data['item_type'] == 'play') {
+                        $play = \common\models\ChBotPlay::find()->where(['id'=>$data['item_id']])->one();
+                        return $play['hrurl'];
+                    }
+                    elseif ($data['item_type'] == 'phrase') {
+                        $play = \common\models\ChBotPhrase::find()->where(['id'=>$data['item_id']])->one();
+                        return $play['hrurl'];
+                    }
+                    else {
+                        return '';
+                    }
+
+                },
+                'format'=> 'html',
+            ],
             'item_type',
             'bot_name',
             'done',
