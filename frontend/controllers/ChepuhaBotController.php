@@ -354,6 +354,10 @@ class ChepuhaBotController extends \yii\web\Controller
                     $user['username'] = $message['from']['username'];
                     $user['language_code'] = $message['from']['language_code'];
                     $user->save();
+                    
+                    Yii::info($user, 'chepuhoBot');
+
+
 //                    try { $user->save();
 //                    }
 //                    catch(\Exception $e){
@@ -364,18 +368,15 @@ class ChepuhaBotController extends \yii\web\Controller
 //                    }
 
                 }
-                $use = new BotUse();
-                $use['bot_name'] = 'ChepuhoBot';
-                $use['user_id'] = $user['id'];
-                $use['item_type'] = $type;
-                $use['item_id'] = $play['id'];
-                $use['done'] = 'start';
-                $use->save();
-//                try { $use->save();
-//                }
-//                catch(\Exception $e){
-//                    Yii::info('Error saving $use '.$e, 'chepuhoBot');
-//                }
+//                $use = new BotUse();
+//                $use['bot_name'] = 'ChepuhoBot';
+//                $use['user_id'] = $user['id'];
+//                $use['item_type'] = $type;
+//                $use['item_id'] = $play['id'];
+//                $use['done'] = 'start';
+//                $use->save();
+
+
 
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
 
@@ -393,7 +394,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 $session['item_type'] = $type;
                 $session['item_id'] = $play['id'];
-                $session['description'] = $use['id'];
+//                $session['description'] = $use['id'];
                 $session->save();
 
                 $playVars = $play->vars;
