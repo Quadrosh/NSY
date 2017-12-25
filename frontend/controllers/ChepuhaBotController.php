@@ -173,8 +173,8 @@ class ChepuhaBotController extends \yii\web\Controller
 //          /dev
             if (trim(strtolower($message['text'])) == '/dev') {
                 $user = new BotUser();
-                $user['user_id'] = intval($message['from']['id']);
-//                $user['user_id'] = $message['from']['id'];
+//                $user['user_id'] = intval($message['from']['id']);
+                $user['user_id'] = $message['from']['id'];
                 $user['first_name'] = $message['from']['first_name'];
                 $user['last_name'] = $message['from']['last_name'];
                 $user['username'] = $message['from']['username'];
