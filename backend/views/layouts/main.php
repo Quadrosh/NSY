@@ -83,6 +83,8 @@ AppAsset::register($this);
                 ['label' => 'ChBotPlayVars', 'url' => ['/ch-bot-play-vars/index']],
                 ['label' => 'ChBotPhrase', 'url' => ['/ch-bot-phrase/index']],
                 ['label' => 'ChBotPhraseVars', 'url' => ['/ch-bot-phrase-vars/index']],
+                ['label' => 'BotUse', 'url' => ['/bot-use/index']],
+                ['label' => 'BotUser', 'url' => ['/bot-user/index']],
             ],
         ],
         [

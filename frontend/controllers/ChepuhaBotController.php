@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use common\models\BotUse;
+use common\models\BotUser;
 use common\models\ChBotPhrase;
 use common\models\ChBotPlay;
 use common\models\ChBotPlayVars;
@@ -343,6 +345,37 @@ class ChepuhaBotController extends \yii\web\Controller
                     $play = ChBotPlay::find()->where(['hrurl'=>$hrurl])->one();
                 }
 
+                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
+                if ($user == null) {
+                    $user = new BotUser();
+                    $user['user_id'] = $message['from']['id'];
+                    $user['first_name'] = $message['from']['first_name'];
+                    $user['last_name'] = $message['from']['last_name'];
+                    $user['username'] = $message['from']['username'];
+                    $user['language_code'] = $message['from']['language_code'];
+                    try { $user->save();
+                    }
+                    catch(\Exception $e){
+                        Yii::info('Error saving $user '.$e, 'chepuhoBot');
+                    }
+//                    if (!$user->save()) {
+//
+//                    }
+
+                }
+                $use = new BotUse();
+                $use['bot_name'] = 'ChepuhoBot';
+                $use['user_id'] = $user['id'];
+                $use['item_type'] = $type;
+                $use['item_id'] = $play['id'];
+                $use['done'] = 'start';
+//                $use->save();
+                try { $use->save();
+                }
+                catch(\Exception $e){
+                    Yii::info('Error saving $user '.$e, 'chepuhoBot');
+                }
+
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
 
                 if ($session == null) {
@@ -359,6 +392,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 $session['item_type'] = $type;
                 $session['item_id'] = $play['id'];
+                $session['description'] = $use['id'];
                 $session->save();
 
                 $playVars = $play->vars;
@@ -466,28 +500,33 @@ class ChepuhaBotController extends \yii\web\Controller
                     } else {
                         $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
                     }
-                        $text = $play['text'];
-                        $vars = $session->vars;
-                        foreach ($vars as  $var) {
-                            $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
-                            $var->delete();
-                        }
-                        $this->sendMessage([
-                            'chat_id' => $message['from']['id'],
-                            'text' => $text,
-                            'parse_mode' => 'html',
-                            'reply_markup' => json_encode([
-                                'inline_keyboard'=>[
-                                    [
-                                        ['text'=>'Играть еще','callback_data'=> 'newGame'],
+                    $text = $play['text'];
+                    $vars = $session->vars;
+                    foreach ($vars as  $var) {
+                        $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
+                        $var->delete();
+                    }
+                    $this->sendMessage([
+                        'chat_id' => $message['from']['id'],
+                        'text' => $text,
+                        'parse_mode' => 'html',
+                        'reply_markup' => json_encode([
+                            'inline_keyboard'=>[
+                                [
+                                    ['text'=>'Играть еще','callback_data'=> 'newGame'],
 //                                        ['text'=>'Отправить игру другу','switch_inline_query'=> 'phrase'],
-                                    ],
-                                ]
-                            ]),
+                                ],
+                            ]
+                        ]),
 
-                        ]);
-                        $session->delete();
-                        return 'ok';
+                    ]);
+
+                    $use = BotUse::find()->where(['id'=>$session['description']])->one();
+                    $session->delete();
+                    $use['done'] = 'done';
+                    $use->save();
+
+                    return 'ok';
 
 
                 }

@@ -1,0 +1,70 @@
+<?php
+
+namespace common\models;
+
+use Yii;
+use yii\behaviors\TimestampBehavior;
+
+
+/**
+ * This is the model class for table "bot_use".
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $item_id
+ * @property string $item_type
+ * @property string $bot_name
+ * @property string $done
+ * @property string $user_result
+ * @property int $created_at
+ */
+class BotUse extends \yii\db\ActiveRecord
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'bot_use';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'updatedAtAttribute' => false,
+            ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['user_id', 'item_id', 'created_at'], 'integer'],
+            [['bot_name'], 'required'],
+            [['user_result'], 'string'],
+            [['item_type', 'bot_name', 'done'], 'string', 'max' => 255],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'user_id' => 'User ID',
+            'item_id' => 'Item ID',
+            'item_type' => 'Item Type',
+            'bot_name' => 'Bot Name',
+            'done' => 'Done',
+            'user_result' => 'User Result',
+            'created_at' => 'Created At',
+        ];
+    }
+}
