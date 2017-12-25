@@ -173,11 +173,12 @@ class ChepuhaBotController extends \yii\web\Controller
 //          /dev
             if (trim(strtolower($message['text'])) == '/dev') {
                 $user = new BotUser();
-//                $user['user_id'] = intval($message['from']['id']);
-//                $user['first_name'] = $message['from']['first_name'];
-//                $user['last_name'] = $message['from']['last_name'];
+                $user['user_id'] = intval($message['from']['id']);
+//                $user['user_id'] = $message['from']['id'];
+                $user['first_name'] = $message['from']['first_name'];
+                $user['last_name'] = $message['from']['last_name'];
                 $user['username'] = $message['from']['username'];
-//                $user['language_code'] = $message['from']['language_code'];
+                $user['language_code'] = $message['from']['language_code'];
 
                 $user->save();
 
@@ -190,9 +191,9 @@ class ChepuhaBotController extends \yii\web\Controller
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
 //                    'text' => $message['from']['username'],
-//                    'text' => json_encode($user),
-                    'text' => json_encode($user->save()),
-//                    'text' => $user->hasErrors(),
+                    'text' => json_encode($user),
+//                    'text' => json_encode($user->save()),
+//                    'text' => json_encode($user->hasErrors()),
 
                 ]);
                 return [
