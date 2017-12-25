@@ -354,26 +354,17 @@ class ChepuhaBotController extends \yii\web\Controller
                     $user['language_code'] = $message['from']['language_code'];
                     $user->save();
 
-                    Yii::info($user, 'chepuhoBot');
+//                    Yii::info($user, 'chepuhoBot');
 
-
-//                    try { $user->save();
-//                    }
-//                    catch(\Exception $e){
-//                        Yii::info('Error saving $user '.$e, 'chepuhoBot');
-//                    }
-//                    if (!$user->save()) {
-//
-//                    }
 
                 }
-//                $use = new BotUse();
-//                $use['bot_name'] = 'ChepuhoBot';
-//                $use['user_id'] = $user['id'];
-//                $use['item_type'] = $type;
-//                $use['item_id'] = $play['id'];
-//                $use['done'] = 'start';
-//                $use->save();
+                $use = new BotUse();
+                $use['bot_name'] = 'ChepuhoBot';
+                $use['user_id'] = $user['id'];
+                $use['item_type'] = $type;
+                $use['item_id'] = $play['id'];
+                $use['done'] = 'start';
+                $use->save();
 
 
 
@@ -393,7 +384,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 $session['item_type'] = $type;
                 $session['item_id'] = $play['id'];
-//                $session['description'] = $use['id'];
+                $session['description'] = $use['id'];
                 $session->save();
 
                 $playVars = $play->vars;
