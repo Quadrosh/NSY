@@ -384,7 +384,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 $session['item_type'] = $type;
                 $session['item_id'] = $play['id'];
-                $session['description'] = $use['id'];
+                $session['description'] = strval($use['id']);
                 $session->save();
 
                 $playVars = $play->vars;
