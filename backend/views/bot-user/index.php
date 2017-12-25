@@ -20,16 +20,25 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+//            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'user_id',
             'first_name',
             'last_name',
             'username',
-            //'language_code',
+            'language_code',
             //'updated_at',
-            //'created_at',
+//            'created_at',
+            [
+                'attribute'=>'created_at',
+                'value'=> function($data)
+                {
+                    return \Yii::$app->formatter->asDatetime($data->created_at, 'HH:mm dd/MM/yyyy');
+
+                },
+                'format'=> 'html',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
