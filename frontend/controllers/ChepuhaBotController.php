@@ -178,8 +178,19 @@ class ChepuhaBotController extends \yii\web\Controller
 //                $user['last_name'] = $message['from']['last_name'];
                 $user['username'] = $message['from']['username'];
 //                $user['language_code'] = $message['from']['language_code'];
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
+                    'text' => json_encode($user),
+                ]);
                 $user->save();
 
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
+                    'text' => json_encode($user),
+                ]);
+                
                 Yii::info($user, 'chepuhoBot');
                 Yii::info($user->getErrors(), 'chepuhoBot');
 
