@@ -191,8 +191,8 @@ class ChepuhaBotController extends \yii\web\Controller
                     'parse_mode' => 'html',
 //                    'text' => $message['from']['username'],
 //                    'text' => json_encode($user),
-//                    'text' => json_encode($user->getErrors()),
-                    'text' => $user->hasErrors(),
+                    'text' => json_encode($user->save()),
+//                    'text' => $user->hasErrors(),
 
                 ]);
                 return [
