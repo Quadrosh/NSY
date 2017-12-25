@@ -353,11 +353,12 @@ class ChepuhaBotController extends \yii\web\Controller
                     $user['last_name'] = $message['from']['last_name'];
                     $user['username'] = $message['from']['username'];
                     $user['language_code'] = $message['from']['language_code'];
-                    try { $user->save();
-                    }
-                    catch(\Exception $e){
-                        Yii::info('Error saving $user '.$e, 'chepuhoBot');
-                    }
+                    $user->save();
+//                    try { $user->save();
+//                    }
+//                    catch(\Exception $e){
+//                        Yii::info('Error saving $user '.$e, 'chepuhoBot');
+//                    }
 //                    if (!$user->save()) {
 //
 //                    }
@@ -369,12 +370,12 @@ class ChepuhaBotController extends \yii\web\Controller
                 $use['item_type'] = $type;
                 $use['item_id'] = $play['id'];
                 $use['done'] = 'start';
-//                $use->save();
-                try { $use->save();
-                }
-                catch(\Exception $e){
-                    Yii::info('Error saving $user '.$e, 'chepuhoBot');
-                }
+                $use->save();
+//                try { $use->save();
+//                }
+//                catch(\Exception $e){
+//                    Yii::info('Error saving $use '.$e, 'chepuhoBot');
+//                }
 
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
 
