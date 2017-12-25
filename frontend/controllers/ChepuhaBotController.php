@@ -185,7 +185,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
-                    'text' => $message['from']['id'],
+                    'text' => $message['from']['username'],
 //                    'text' => json_encode($user),
 
                 ]);
