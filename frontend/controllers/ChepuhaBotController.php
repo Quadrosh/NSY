@@ -210,7 +210,11 @@ class ChepuhaBotController extends \yii\web\Controller
                 foreach ($vars as  $var) {
                     $var->delete();
                 }
+//                $session->delete();
+                $use = BotUse::find()->where(['id'=>intval($session['description'])])->one();
                 $session->delete();
+                $use['done'] = 'interrupt';
+                $use->save();
 
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
