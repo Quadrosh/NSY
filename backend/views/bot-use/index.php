@@ -23,7 +23,16 @@ $this->params['breadcrumbs'][] = $this->title;
 //            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'user_id',
+//            'user_id',
+            [
+                'attribute'=>'user_id',
+                'value'=> function($data)
+                {
+                    $user = \common\models\BotUser::find()->where(['id'=>$data['user_id']])->one();
+                    return $user['username'];
+                },
+                'format'=> 'html',
+            ],
 //            'item_id',
             [
                 'attribute'=>'item_id',

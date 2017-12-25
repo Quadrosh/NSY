@@ -329,7 +329,7 @@ class ChepuhaBotController extends \yii\web\Controller
 //          play/hrurl     phrase/hrurl
             elseif (substr($message['text'],0,5) == 'play/' OR  substr($message['text'],0,7) == 'phrase/'){
 
-                Yii::info($message, 'chepuhoBot');
+//                Yii::info($message, 'chepuhoBot');
 
                 $commands = explode('/', $message['text']);
                 $type = $commands[0];
@@ -353,11 +353,8 @@ class ChepuhaBotController extends \yii\web\Controller
                     $user['username'] = $message['from']['username'];
                     $user['language_code'] = $message['from']['language_code'];
                     $user->save();
-
-//                    Yii::info($user, 'chepuhoBot');
-
-
                 }
+
                 $use = new BotUse();
                 $use['bot_name'] = 'ChepuhoBot';
                 $use['user_id'] = $user['id'];
@@ -519,7 +516,6 @@ class ChepuhaBotController extends \yii\web\Controller
                     $use->save();
 
                     return 'ok';
-
 
                 }
 
