@@ -172,31 +172,21 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //          /dev
             if (trim(strtolower($message['text'])) == '/dev') {
+                $user = new BotUser();
+                $user['user_id'] = $message['from']['id'];
+                $user['first_name'] = $message['from']['first_name'];
+                $user['last_name'] = $message['from']['last_name'];
+                $user['username'] = $message['from']['username'];
+                $user['language_code'] = $message['from']['language_code'];
+                $user->save();
+
+                Yii::info($user, 'chepuhoBot');
+
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
-                    'text' =>
-                        'Я - <b>Чепухобот</b>. '.PHP_EOL.
-                        'Я задаю странные вопросы и составляю из твоих ответов предложения.'.PHP_EOL.
-                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'.PHP_EOL.
-                        'Прервать игру можно командой /end '.PHP_EOL.
-                        'Помощь - /help '.PHP_EOL.
-
-                        'Ниже список опций:',
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>"Чепу-сценка",'switch_inline_query_current_chat'=> 'play'],
-                            ],
-                            [
-                                ['text'=>"Чепу-фраза",'switch_inline_query_current_chat'=> 'phrase'],
-                            ],
-//                            [
-//                                ['text'=>"Выбрать чат",'switch_inline_query'=> 'phrase/all'],
-//                            ],
-
-                        ]
-                    ]),
+                    'text' => json_encode($user),
+                   
                 ]);
                 return [
                     'message' => 'ok',
@@ -346,6 +336,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 }
 
                 $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
+
                 if ($user == null) {
                     $user = new BotUser();
                     $user['user_id'] = $message['from']['id'];
@@ -354,7 +345,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     $user['username'] = $message['from']['username'];
                     $user['language_code'] = $message['from']['language_code'];
                     $user->save();
-                    
+
                     Yii::info($user, 'chepuhoBot');
 
 
