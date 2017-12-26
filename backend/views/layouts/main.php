@@ -86,6 +86,7 @@ AppAsset::register($this);
                 ['label' => 'ChBotRestriction', 'url' => ['/ch-bot-restriction/index']],
                 ['label' => 'BotUse', 'url' => ['/bot-use/index']],
                 ['label' => 'BotUser', 'url' => ['/bot-user/index']],
+                ['label' => 'BotUserPermission', 'url' => ['/bot-user-permission/index']],
             ],
         ],
         [

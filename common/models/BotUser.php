@@ -66,4 +66,35 @@ class BotUser extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
         ];
     }
+
+
+    public function getPermissions()
+    {
+        return $this->hasMany(BotUserPermission::className(),['user_id'=>'id']);
+    }
+
+    public function hasPermission($short)
+    {
+        if (BotUserPermission::find()->where(['short'=>$short,'user_id'=>$this['id']])->one()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function addPermission($short)
+    {
+        if (BotUserPermission::find()->where(['short'=>$short,'user_id'=>$this['id']])->one()) {
+            return true;
+        } else {
+            $permission = new BotUserPermission();
+            $permission['user_id'] = $this['id'];
+            $permission['short'] = $short;
+            if ($permission->save()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
 }

@@ -347,6 +347,8 @@ class ChepuhaBotController extends \yii\web\Controller
                     $play = ChBotPlay::find()->where(['hrurl'=>$hrurl])->one();
                 }
 
+
+
                 $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
 
                 if ($user == null) {
@@ -359,6 +361,36 @@ class ChepuhaBotController extends \yii\web\Controller
                     $user->save();
                 }
 
+//              18+
+                if ($play->restriction) {
+                    $restriction = $play->restriction;
+
+                    if (!$user->hasPermission($restriction['short'])) {
+
+                        $this->sendMessage([
+                            'chat_id' => $message['from']['id'],
+                            'text' => $restriction['text'],
+                            'reply_markup' => json_encode([
+                                'inline_keyboard'=>[
+                                    [
+                                        [
+                                            'text'=>"Продолжить",
+                                            'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$message['text']
+                                        ],
+                                    ],
+                                    [
+                                        ['text'=>"Вернуться", 'callback_data'=> 'newGame'],
+                                    ],
+                                ]
+                            ]),
+                        ]);
+                        return [
+                            'message' => 'ok',
+                            'code' => 200,
+                        ];
+                    }
+                }
+
                 $use = new BotUse();
                 $use['bot_name'] = 'ChepuhoBot';
                 $use['user_id'] = $user['id'];
@@ -366,8 +398,6 @@ class ChepuhaBotController extends \yii\web\Controller
                 $use['item_id'] = $play['id'];
                 $use['done'] = 'start';
                 $use->save();
-
-
 
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
 
@@ -561,209 +591,239 @@ class ChepuhaBotController extends \yii\web\Controller
             }
 
 
-            $commands = explode('/', $callbackQuery['data']);
-            $action = $commands[0];
-
-
-//          play (чепусценка)
-            if ($action == 'play') {
+//          addPermission
+            if (substr($callbackQuery['data'],0,14) == 'addPermission/') {
                 $this->answerCallbackQuery([
                     'callback_query_id' => $callbackQuery['id'],
                     'text' => 'в процессе',
                 ]);
 
-                if (isset($commands[1])) {
-                    if ($commands[1]=='all') {  // Список сцен
-                        $plays = ChBotPlay::find()->where('name != :value',['value'=>'work'])->orderBy('name')->all();
-                        $data = [];
-                        foreach ($plays as $play) {
-                            $row = [];
-                            $row[] = ['text'=>$play['name'],'callback_data'=> 'play/one/' . $play['id']];
-                            $data[] = $row;
-                        };
-
-                        $this->sendMessage([
-                            'chat_id' => $callbackQuery['from']['id'],
-                            'parse_mode' => 'html',
-                            'text' => 'Чепусценки
-Название (уточнение) - количество вопросов.',
-                            'reply_markup' => json_encode([
-                                'inline_keyboard'=> $data
-                            ]),
-                        ]);
 
 
-
-                    } elseif ($commands[1]=='one') { // play item
-                        $playId = $commands[2];
+//                'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$message['text']
 
 
-                        $session = ChBotSession::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
+                $commands = explode('/', $callbackQuery['data']);
+                $restrictionShort = $commands[1];
+                $type = $commands[2];
+                $hrurl = $commands[3];
 
-                        if ($session == null) {
-                            $session = new ChBotSession;
-                            $session['user_id'] = $callbackQuery['from']['id'];
-                            $session['item_type'] = 'play';
-                            $session['item_id'] = $playId;
-                            $session->save();
-                        }
-
-                        if ($session['item_type'] == 'play') {
-                            $sessionPlayId = $session['item_id'];
-                            if ($playId != null  && $sessionPlayId != $playId) {
-                                $session['item_id'] = $playId;
-                                $session->save();
-                            }
-                        }
-
-                        $play = ChBotPlay::find()->where(['id'=>$playId])->one();
-                        $playVars = $play->vars;
-                        $sessionVars = $session->vars;
-                        if ($sessionVars == null) {
-                            foreach ($playVars as $playVar) {
-                                $sessionVar = new ChBotSessionVars();
-                                $sessionVar['session_id'] = $session['id'];
-                                $sessionVar['item_var_id'] = $playVar['id'];
-                                $sessionVar['question'] = $playVar['question'];
-                                $sessionVar['status'] = 'raw';
-                                $sessionVar->save();
-                            }
-                        }
-                        $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
-                        $goQuestion['status'] = 'active';
-                        $goQuestion->save();
-
-                        $this->sendMessage([
-                            'chat_id' => $callbackQuery['from']['id'],
-                            'text' => $goQuestion['question'],
-                        ]);
-                    }
-
-                } else {
+                $user = BotUser::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
+                if ($user->addPermission($restrictionShort)) {
                     $this->sendMessage([
-                        'chat_id' => $callbackQuery['chat']['id'],  // $message['from']['id']
-                        'text' => 'Список опций',
-                        'reply_markup' => json_encode([
-                            'inline_keyboard'=>[
-                                [
-                                    ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
-                                ],
-                                [
-                                    ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
-                                ],
+                        'chat_id' => $callbackQuery['from']['id'],  // $message['from']['id']
+                        'parse_mode' => 'html',
+                        'text' => $type.'/'.$hrurl,
+                    ]);
+                }
+
+                return 'ok';
+            }
+
+
+//            $commands = explode('/', $callbackQuery['data']);
+//            $action = $commands[0];
+//
+//
+////          play (чепусценка)
+//            if ($action == 'play') {
+//                $this->answerCallbackQuery([
+//                    'callback_query_id' => $callbackQuery['id'],
+//                    'text' => 'в процессе',
+//                ]);
+//
+//                if (isset($commands[1])) {
+//                    if ($commands[1]=='all') {  // Список сцен
+//                        $plays = ChBotPlay::find()->where('name != :value',['value'=>'work'])->orderBy('name')->all();
+//                        $data = [];
+//                        foreach ($plays as $play) {
+//                            $row = [];
+//                            $row[] = ['text'=>$play['name'],'callback_data'=> 'play/one/' . $play['id']];
+//                            $data[] = $row;
+//                        };
+//
+//                        $this->sendMessage([
+//                            'chat_id' => $callbackQuery['from']['id'],
+//                            'parse_mode' => 'html',
+//                            'text' => 'Чепусценки
+//Название (уточнение) - количество вопросов.',
+//                            'reply_markup' => json_encode([
+//                                'inline_keyboard'=> $data
+//                            ]),
+//                        ]);
+//
+//
+//
+//                    } elseif ($commands[1]=='one') { // play item
+//                        $playId = $commands[2];
+//
+//
+//                        $session = ChBotSession::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
+//
+//                        if ($session == null) {
+//                            $session = new ChBotSession;
+//                            $session['user_id'] = $callbackQuery['from']['id'];
+//                            $session['item_type'] = 'play';
+//                            $session['item_id'] = $playId;
+//                            $session->save();
+//                        }
+//
+//                        if ($session['item_type'] == 'play') {
+//                            $sessionPlayId = $session['item_id'];
+//                            if ($playId != null  && $sessionPlayId != $playId) {
+//                                $session['item_id'] = $playId;
+//                                $session->save();
+//                            }
+//                        }
+//
+//                        $play = ChBotPlay::find()->where(['id'=>$playId])->one();
+//                        $playVars = $play->vars;
+//                        $sessionVars = $session->vars;
+//                        if ($sessionVars == null) {
+//                            foreach ($playVars as $playVar) {
+//                                $sessionVar = new ChBotSessionVars();
+//                                $sessionVar['session_id'] = $session['id'];
+//                                $sessionVar['item_var_id'] = $playVar['id'];
+//                                $sessionVar['question'] = $playVar['question'];
+//                                $sessionVar['status'] = 'raw';
+//                                $sessionVar->save();
+//                            }
+//                        }
+//                        $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
+//                        $goQuestion['status'] = 'active';
+//                        $goQuestion->save();
+//
+//                        $this->sendMessage([
+//                            'chat_id' => $callbackQuery['from']['id'],
+//                            'text' => $goQuestion['question'],
+//                        ]);
+//                    }
+//
+//                } else {
+//                    $this->sendMessage([
+//                        'chat_id' => $callbackQuery['chat']['id'],  // $message['from']['id']
+//                        'text' => 'Список опций',
+//                        'reply_markup' => json_encode([
+//                            'inline_keyboard'=>[
+//                                [
+//                                    ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+//                                ],
+//                                [
+//                                    ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+//                                ],
+////                                [
+////                                    ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+////                                ],
+////                                [
+////                                    ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+////                                ],
+//                            ]
+//                        ]),
+//                    ]);
+//                }
+//            }
+//
+////          phrase (чепуфраза)
+//            if ($action == 'phrase') {
+//                $this->answerCallbackQuery([
+//                    'callback_query_id' => $callbackQuery['id'], //require
+//                    'text' => 'в процессе', //Optional
+//                ]);
+//
+//                if (isset($commands[1])) {
+//                    if ($commands[1]=='all') {  // Список сценариев
+//                        $plays = ChBotPhrase::find()->all();  // токамо фразы
+//
+//                        $data = [];
+//                        foreach ($plays as $play) {
+//                            $row = [];
+//                            $row[] = ['text'=>$play['name'],'callback_data'=> 'phrase/one/' . $play['id']];
+//                            $data[] = $row;
+//                        };
+//
+//                        $this->sendMessage([
+//                            'chat_id' => $callbackQuery['from']['id'],
+//                            'text' => 'Чепуфразы',
+//                            'reply_markup' => json_encode([
+//                                'inline_keyboard'=> $data
+//                            ]),
+//                        ]);
+//
+//
+//
+//                    } elseif ($commands[1]=='one') { // play item
+//                        $playId = $commands[2];
+//
+//
+//                        $session = ChBotSession::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
+//
+//                        if ($session == null) {
+//                            $session = new ChBotSession;
+//                            $session['user_id'] = $callbackQuery['from']['id'];
+//                            $session['item_type'] = 'phrase';
+//                            $session['item_id'] = $playId;
+//                            $session->save();
+//                        }
+//
+//                        if ($session['item_type'] == 'phrase') {
+//                            $sessionPlayId = $session['item_id'];
+//                            if ($playId != null  && $sessionPlayId != $playId) {
+//                                $session['item_id'] = $playId;
+//                                $session->save();
+//                            }
+//                        }
+//
+//                        $play = ChBotPhrase::find()->where(['id'=>$playId])->one();
+//                        $playVars = $play->vars;
+//                        $sessionVars = $session->vars;
+//                        if ($sessionVars == null) {
+//                            foreach ($playVars as $playVar) {
+//                                $sessionVar = new ChBotSessionVars();
+//                                $sessionVar['session_id'] = $session['id'];
+//                                $sessionVar['item_var_id'] = $playVar['id'];
+//                                $sessionVar['question'] = $playVar['question'];
+//                                $sessionVar['status'] = 'raw';
+//                                $sessionVar->save();
+//                            }
+//                        }
+//                        $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
+//                        $goQuestion['status'] = 'active';
+//                        $goQuestion->save();
+//
+//                        $this->sendMessage([
+//                            'chat_id' => $callbackQuery['from']['id'],
+//                            'text' => $goQuestion['question'],
+//                        ]);
+//                    }
+//
+//                } else {
+//                    $this->sendMessage([
+//                        'chat_id' => $message['chat']['id'],  // $message['from']['id']
+//                        'text' => 'Список опций',
+//                        'reply_markup' => json_encode([
+//                            'inline_keyboard'=>[
 //                                [
 //                                    ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
 //                                ],
 //                                [
 //                                    ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
 //                                ],
-                            ]
-                        ]),
-                    ]);
-                }
-            }
-
-//          phrase (чепуфраза)
-            if ($action == 'phrase') {
-                $this->answerCallbackQuery([
-                    'callback_query_id' => $callbackQuery['id'], //require
-                    'text' => 'в процессе', //Optional
-                ]);
-
-                if (isset($commands[1])) {
-                    if ($commands[1]=='all') {  // Список сценариев
-                        $plays = ChBotPhrase::find()->all();  // токамо фразы
-
-                        $data = [];
-                        foreach ($plays as $play) {
-                            $row = [];
-                            $row[] = ['text'=>$play['name'],'callback_data'=> 'phrase/one/' . $play['id']];
-                            $data[] = $row;
-                        };
-
-                        $this->sendMessage([
-                            'chat_id' => $callbackQuery['from']['id'],
-                            'text' => 'Чепуфразы',
-                            'reply_markup' => json_encode([
-                                'inline_keyboard'=> $data
-                            ]),
-                        ]);
-
-
-
-                    } elseif ($commands[1]=='one') { // play item
-                        $playId = $commands[2];
-
-
-                        $session = ChBotSession::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
-
-                        if ($session == null) {
-                            $session = new ChBotSession;
-                            $session['user_id'] = $callbackQuery['from']['id'];
-                            $session['item_type'] = 'phrase';
-                            $session['item_id'] = $playId;
-                            $session->save();
-                        }
-
-                        if ($session['item_type'] == 'phrase') {
-                            $sessionPlayId = $session['item_id'];
-                            if ($playId != null  && $sessionPlayId != $playId) {
-                                $session['item_id'] = $playId;
-                                $session->save();
-                            }
-                        }
-
-                        $play = ChBotPhrase::find()->where(['id'=>$playId])->one();
-                        $playVars = $play->vars;
-                        $sessionVars = $session->vars;
-                        if ($sessionVars == null) {
-                            foreach ($playVars as $playVar) {
-                                $sessionVar = new ChBotSessionVars();
-                                $sessionVar['session_id'] = $session['id'];
-                                $sessionVar['item_var_id'] = $playVar['id'];
-                                $sessionVar['question'] = $playVar['question'];
-                                $sessionVar['status'] = 'raw';
-                                $sessionVar->save();
-                            }
-                        }
-                        $goQuestion = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
-                        $goQuestion['status'] = 'active';
-                        $goQuestion->save();
-
-                        $this->sendMessage([
-                            'chat_id' => $callbackQuery['from']['id'],
-                            'text' => $goQuestion['question'],
-                        ]);
-                    }
-
-                } else {
-                    $this->sendMessage([
-                        'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                        'text' => 'Список опций',
-                        'reply_markup' => json_encode([
-                            'inline_keyboard'=>[
-                                [
-                                    ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
-                                ],
-                                [
-                                    ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
-                                ],
-                            ]
-                        ]),
-                    ]);
-
-                }
-
-
-            }
-
-//          Опции    - пока пусто
-            if ($action == 'options') {    // options / pointOfView / section / mode
-                $this->answerCallbackQuery([
-                    'callback_query_id' => $callbackQuery['id'], //require
-                    'text' => 'ответ получен', //Optional
-                ]);
-            }
+//                            ]
+//                        ]),
+//                    ]);
+//
+//                }
+//
+//
+//            }
+//
+////          Опции    - пока пусто
+//            if ($action == 'options') {    // options / pointOfView / section / mode
+//                $this->answerCallbackQuery([
+//                    'callback_query_id' => $callbackQuery['id'], //require
+//                    'text' => 'ответ получен', //Optional
+//                ]);
+//            }
         }
         return 'ok';
     }
