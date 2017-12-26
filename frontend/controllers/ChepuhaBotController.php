@@ -375,11 +375,10 @@ class ChepuhaBotController extends \yii\web\Controller
                             'reply_markup' => json_encode([
                                 'inline_keyboard'=>[
                                     [
-//                                        ['text'=>"Продолжить", 'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$message['text']],
                                         ['text'=>"Вернуться", 'callback_data'=> 'newGame'],
                                         ['text'=>"Продолжить", 'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$type.'/'.$play['id']],
                                     ],
-                                 
+
                                 ]
                             ]),
                         ]);
@@ -602,14 +601,21 @@ class ChepuhaBotController extends \yii\web\Controller
                 $commands = explode('/', $callbackQuery['data']);
                 $restrictionShort = $commands[1];
                 $type = $commands[2];
-                $hrurl = $commands[3];
+                $itemId = $commands[3];
+                if ($type == 'play') {
+                    $play = ChBotPlay::find()->where(['id'=>$itemId])->one();
+                } elseif ($type == 'phrase') {
+                    $play = ChBotPhrase::find()->where(['id'=>$itemId])->one();
+                } else {
+                    $play = ChBotPlay::find()->where(['id'=>$itemId])->one();
+                }
 
                 $user = BotUser::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
                 if ($user->addPermission($restrictionShort)) {
                     $this->sendMessage([
                         'chat_id' => $callbackQuery['from']['id'],  // $message['from']['id']
                         'parse_mode' => 'html',
-                        'text' => $type.'/'.$hrurl,
+                        'text' => $type.'/'.$play['hrurl'],
                     ]);
                 }
 
