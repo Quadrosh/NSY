@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+
 
 /**
  * This is the model class for table "bot_user_permission".
@@ -21,6 +23,16 @@ class BotUserPermission extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'bot_user_permission';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'updatedAtAttribute' => false,
+            ],
+        ];
     }
 
     /**
