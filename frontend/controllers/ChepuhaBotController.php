@@ -370,7 +370,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
                         $this->sendMessage([
                             'chat_id' => $message['from']['id'],
-                            'text' => $restriction['short'],
+                            'text' => $message['text'],
                         ]);
 
                         $this->sendMessage([
