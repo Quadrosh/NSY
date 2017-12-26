@@ -428,7 +428,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
-                                    ['text'=>'Играть еще','callback_data'=> 'newGame'],
+                                    ['text'=>'Играть еще '.hex2bin('E29EA1'),'callback_data'=> 'newGame'],
 //                                        ['text'=>'Отправить игру другу','switch_inline_query'=> 'phrase'],
                                 ],
                             ]
@@ -566,7 +566,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         'inline_keyboard'=>[
                             [
                                 ['text'=>"Вернуться", 'callback_data'=> 'newGame'],
-                                ['text'=>"Продолжить", 'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$type.'/'.$play['id']],
+                                ['text'=>"Продолжить ".hex2bin('E29EA1'), 'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$type.'/'.$play['id']],
                             ],
 
                         ]
