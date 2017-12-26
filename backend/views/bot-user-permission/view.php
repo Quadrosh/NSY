@@ -32,7 +32,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'user_id',
             'short',
             'description:ntext',
-            'created_at',
+            [
+                'attribute'=>'created_at',
+                'value'=> function($data)
+                {
+                    return \Yii::$app->formatter->asDatetime($data->created_at, 'HH:mm dd/MM/yyyy');
+
+                },
+                'format'=> 'html',
+            ],
         ],
     ]) ?>
 
