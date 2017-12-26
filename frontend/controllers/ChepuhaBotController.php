@@ -363,6 +363,15 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //              18+
                 if ($play->restriction) {
+
+
+                    $this->sendMessage([
+                        'chat_id' => $message['from']['id'],
+                        'text' => 'debug',
+                    ]);
+
+
+
                     $restriction = $play->restriction;
 
                     if (!$user->hasPermission($restriction['short'])) {
@@ -598,10 +607,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     'text' => 'в процессе',
                 ]);
 
-
-
 //                'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$message['text']
-
 
                 $commands = explode('/', $callbackQuery['data']);
                 $restrictionShort = $commands[1];
