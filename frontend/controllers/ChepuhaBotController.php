@@ -368,24 +368,24 @@ class ChepuhaBotController extends \yii\web\Controller
 
                     if (!$user->hasPermission($restriction['short'])) {
 
-                        $this->sendMessage([
-                            'chat_id' => $message['from']['id'],
-                            'text' => $message['text'],
-                        ]);
+//                        $this->sendMessage([
+//                            'chat_id' => $message['from']['id'],
+//                            'text' => $message['text'],
+//                        ]);
 
                         $this->sendMessage([
                             'chat_id' => $message['from']['id'],
                             'text' => $restriction['text'],
-                            'reply_markup' => json_encode([
-                                'inline_keyboard'=>[
-                                    [
-                                        ['text'=>"Продолжить", 'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$message['text']],
-                                    ],
-                                    [
-                                        ['text'=>"Вернуться", 'callback_data'=> 'newGame'],
-                                    ],
-                                ]
-                            ]),
+//                            'reply_markup' => json_encode([
+//                                'inline_keyboard'=>[
+//                                    [
+//                                        ['text'=>"Продолжить", 'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$message['text']],
+//                                    ],
+//                                    [
+//                                        ['text'=>"Вернуться", 'callback_data'=> 'newGame'],
+//                                    ],
+//                                ]
+//                            ]),
                         ]);
                         return [
                             'message' => 'ok',
