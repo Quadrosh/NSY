@@ -376,7 +376,7 @@ class ChepuhaBotController extends \yii\web\Controller
                                 'inline_keyboard'=>[
                                     [
 //                                        ['text'=>"Продолжить", 'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$message['text']],
-                                        ['text'=>"Продолжить", 'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$type],
+                                        ['text'=>"Продолжить", 'callback_data'=> 'addPermission/'.$restriction['short'].'/'.$type.'/'.$play['id']],
                                     ],
                                     [
                                         ['text'=>"Вернуться", 'callback_data'=> 'newGame'],
