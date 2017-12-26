@@ -35,8 +35,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'description:ntext',
             'text:ntext',
-            'created_at',
-            'updated_at',
+            [
+                'attribute'=>'updated_at',
+                'value'=> function($data)
+                {
+                    return \Yii::$app->formatter->asDatetime($data->updated_at, 'HH:mm dd/MM/yyyy');
+
+                },
+                'format'=> 'html',
+            ],
+            [
+                'attribute'=>'created_at',
+                'value'=> function($data)
+                {
+                    return \Yii::$app->formatter->asDatetime($data->created_at, 'HH:mm dd/MM/yyyy');
+
+                },
+                'format'=> 'html',
+            ],
         ],
     ]) ?>
 
