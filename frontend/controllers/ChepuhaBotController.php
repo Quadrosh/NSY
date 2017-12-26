@@ -191,7 +191,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
 //                    'text' => $message['from']['username'],
-                    'text' => json_encode($user),
+                    'text' => 'дальше U+27A1',
 //                    'text' => json_encode($user->save()),
 //                    'text' => json_encode($user->hasErrors()),
 
