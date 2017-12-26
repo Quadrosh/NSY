@@ -74,4 +74,12 @@ class ChBotPhrase extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ChBotPhraseVars::className(),['play_id'=>'id']);
     }
+
+    /**
+     * получить ограничение
+     */
+    public function getRestriction()
+    {
+        return $this->hasOne(ChBotRestriction::className(),['item_id'=>'id'])->where(['item_type'=>'phrase']);
+    }
 }

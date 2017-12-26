@@ -5,26 +5,30 @@ namespace common\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
+
 /**
- * This is the model class for table "ch_bot_play".
+ * This is the model class for table "ch_bot_restriction".
  *
  * @property int $id
+ * @property string $item_type
+ * @property int $item_id
+ * @property string $short
  * @property string $name
  * @property string $description
- * @property int $cat_id
  * @property string $text
  * @property int $created_at
  * @property int $updated_at
  */
-class ChBotPlay extends \yii\db\ActiveRecord
+class ChBotRestriction extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'ch_bot_play';
+        return 'ch_bot_restriction';
     }
+
     public function behaviors()
     {
         return [
@@ -41,11 +45,10 @@ class ChBotPlay extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['item_id', 'created_at', 'updated_at'], 'integer'],
             [['description', 'text'], 'string'],
-            [['cat_id', 'created_at', 'updated_at'], 'integer'],
-            [['name'], 'string', 'max' => 510],
-            [['hrurl'], 'string', 'max' => 255],
-            [['hrurl'],'unique'],
+            [['item_type', 'name'], 'string', 'max' => 255],
+            [['short'], 'string', 'max' => 10],
         ];
     }
 
@@ -56,29 +59,14 @@ class ChBotPlay extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'hrurl' => 'hrurl',
+            'item_type' => 'Item Type',
+            'item_id' => 'Item ID',
+            'short' => 'Short',
             'name' => 'Name',
             'description' => 'Description',
-            'cat_id' => 'Cat ID',
             'text' => 'Text',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
-    }
-
-    /**
-     * получить переменные
-     */
-    public function getVars()
-    {
-        return $this->hasMany(ChBotPlayVars::className(),['play_id'=>'id']);
-    }
-
-    /**
-     * получить ограничение
-     */
-    public function getRestriction()
-    {
-        return $this->hasOne(ChBotRestriction::className(),['item_id'=>'id'])->where(['item_type'=>'play']);
     }
 }
