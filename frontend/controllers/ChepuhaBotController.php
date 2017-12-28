@@ -439,6 +439,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     $use = BotUse::find()->where(['id'=>intval($session['description'])])->one();
                     $session->delete();
                     $use['done'] = 'done';
+                    $use['user_result'] = $text;
                     $use->save();
 
                     return 'ok';
