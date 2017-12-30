@@ -503,18 +503,19 @@ class ChepuhaBotController extends \yii\web\Controller
                     $play = ChBotPlay::find()->where(['id'=>$itemId])->one();
                 }
 
-                $user = BotUser::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
-                if ($user->addPermission($restrictionShort)) {
-                    $this->gameInit([
-                        'from' => $callbackQuery['from'],  // $message['from']['id']
-                        'text' => $type.'/'.$play['hrurl'],
-                    ]);
-                } else {
-                    $this->sendMessage([
-                        'chat_id' => $callbackQuery['from']['id'],
-                        'text' => 'Внутренняя ошибка, попробуйте еще раз',
-                    ]);
-                }
+//                TEST
+//                $user = BotUser::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
+//                if ($user->addPermission($restrictionShort)) {
+//                    $this->gameInit([
+//                        'from' => $callbackQuery['from'],  // $message['from']['id']
+//                        'text' => $type.'/'.$play['hrurl'],
+//                    ]);
+//                } else {
+//                    $this->sendMessage([
+//                        'chat_id' => $callbackQuery['from']['id'],
+//                        'text' => 'Внутренняя ошибка, попробуйте еще раз',
+//                    ]);
+//                }
 
                 return 'ok';
             }
