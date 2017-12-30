@@ -504,18 +504,27 @@ class ChepuhaBotController extends \yii\web\Controller
                 }
 
 //                TEST
-//                $user = BotUser::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
-//                if ($user->addPermission($restrictionShort)) {
-//                    $this->gameInit([
-//                        'from' => $callbackQuery['from'],  // $message['from']['id']
-//                        'text' => $type.'/'.$play['hrurl'],
-//                    ]);
-//                } else {
-//                    $this->sendMessage([
-//                        'chat_id' => $callbackQuery['from']['id'],
-//                        'text' => 'Внутренняя ошибка, попробуйте еще раз',
-//                    ]);
-//                }
+                $user = BotUser::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
+                if ($user == null) {
+                    $user = new BotUser();
+                    $user['user_id'] = $message['from']['id'];
+                    $user['first_name'] = $message['from']['first_name'];
+                    $user['last_name'] = $message['from']['last_name'];
+                    $user['username'] = $message['from']['username'];
+                    $user['language_code'] = $message['from']['language_code'];
+                    $user->save();
+                }
+                if ($user->addPermission($restrictionShort)) {
+                    $this->gameInit([
+                        'from' => $callbackQuery['from'],  // $message['from']['id']
+                        'text' => $type.'/'.$play['hrurl'],
+                    ]);
+                } else {
+                    $this->sendMessage([
+                        'chat_id' => $callbackQuery['from']['id'],
+                        'text' => 'Внутренняя ошибка, попробуйте еще раз',
+                    ]);
+                }
 
                 return 'ok';
             }
