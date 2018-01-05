@@ -182,28 +182,29 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //          /dev
             if (trim(strtolower($message['text'])) == '/dev') {
-                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
+//                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
 
-                if (!$user) {
-                    $user = new BotUser();
-//                $user['user_id'] = intval($message['from']['id']);
-                    $user['user_id'] = $message['from']['id'];
-                    $user['first_name'] = $message['from']['first_name'];
-                    $user['last_name'] = $message['from']['last_name'];
-                    $user['username'] = $message['from']['username'];
-                    $user['language_code'] = $message['from']['language_code'];
-
-                    $user->save();
-                }
-
-
+//                if (!$user) {
+//                    $user = new BotUser();
+////                $user['user_id'] = intval($message['from']['id']);
+//                    $user['user_id'] = $message['from']['id'];
+//                    $user['first_name'] = $message['from']['first_name'];
+//                    $user['last_name'] = $message['from']['last_name'];
+//                    $user['username'] = $message['from']['username'];
+//                    $user['language_code'] = $message['from']['language_code'];
+//
+//                    $user->save();
+//                }
 
 
-                Yii::info($user, 'chepuhoBot');
-                Yii::info($user->getErrors(), 'chepuhoBot');
+
+//
+//                Yii::info($user, 'chepuhoBot');
+//                Yii::info($user->getErrors(), 'chepuhoBot');
 
                 $this->sendMessage([
-                    'chat_id' => $message['from']['id'],  // $message['from']['id']
+                    'chat_id' => '232544919',  // $message['from']['id']
+//                    'chat_id' => $message['from']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
 //                    'text' => $message['from']['username'],
                     'text' => 'дальше '.hex2bin('E29EA1'),
