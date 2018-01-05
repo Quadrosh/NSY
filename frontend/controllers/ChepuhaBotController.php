@@ -200,6 +200,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //
                 Yii::info($user, 'chepuhoBot');
+                Yii::info('тута', 'chepuhoBot');
 //                Yii::info($user->getErrors(), 'chepuhoBot');
 
                 $this->sendMessage([
