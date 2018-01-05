@@ -598,7 +598,13 @@ class ChepuhaBotController extends \yii\web\Controller
 
         $use = new BotUse();
         $use['bot_name'] = 'ChepuhoBot';
-        $use['user_id'] = $user['id'];
+        if (isset($user['id'])) {
+            $use['user_id'] = $user['id'];
+        } else {
+            Yii::info('no_user_id', 'chepuhoBot');
+            Yii::info($user, 'chepuhoBot');
+        }
+
         $use['item_type'] = $type;
         $use['item_id'] = $play['id'];
         $use['done'] = 'start';
