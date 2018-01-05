@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-//            'user_id',
+            'user_id',
             [
                 'attribute'=>'user_id',
                 'value'=> function($data)
@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 },
                 'format'=> 'html',
+                'label'=> 'username',
             ],
 //            'item_id',
             [
