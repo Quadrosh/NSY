@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+//            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'user_id',
@@ -28,7 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'item_type',
             'description:ntext',
             //'user_response:ntext',
-            //'created_at',
+//            'created_at',
+            [
+                'attribute'=>'created_at',
+                'value'=> function($data)
+                {
+                    return \Yii::$app->formatter->asDatetime($data->created_at, 'HH:mm dd/MM/yyyy');
+
+                },
+                'format'=> 'html',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
