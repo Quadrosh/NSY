@@ -136,7 +136,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //          /start
             if (trim(strtolower($message['text'])) == '/start') {
-                $user = BotUser::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
+                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
                 if ($user == null) {
                     $user = new BotUser();
                     $user['user_id'] = $message['from']['id'];
