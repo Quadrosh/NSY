@@ -53,6 +53,528 @@ class ChepuhaBotController extends \yii\web\Controller
         return parent::beforeAction($action);
     }
 
+//
+//
+//    public function actionDialog()
+//    {
+//
+//        $input = Yii::$app->request->getRawBody();
+//        $updateId = Yii::$app->request->post('update_id');
+//        $message = Yii::$app->request->post('message'); // array
+//        $callbackQuery = Yii::$app->request->post('callback_query'); // array
+//        $inlineQuery = Yii::$app->request->post('inline_query'); // array
+//
+//
+//        $messageId = $message['message_id'];
+//        $from = $message['from'];  // array
+//        $fromId = $from['id'];
+//        $fromIsBot = $from['is_bot'];
+//        $fromFirstName = $from['first_name'];
+//        $fromLastName = $from['last_name'];
+//        $fromUserName = $from['username'];
+//        $fromLanguageCode = $from['language_code'];
+//        $chat = $message['chat'];
+//        $chatId = $chat['id'];
+//        $chatType = $chat['type'];
+//        $date = $message['date'];
+//        $text = $message['text'];
+//
+//
+//
+//        if ($message != null) {
+//
+//            //   /start
+//            //
+//            //
+//
+//            if ($message['text'] == '/start') {
+//                $this->sendMessage([
+//                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+//                    'text' => 'Привет, я бот Мотиватор, ниже список опций',
+//                    'reply_markup' => json_encode([
+//                        'inline_keyboard'=>[
+//                            [
+//                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
+//                            ],
+//                            [
+//                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
+//                            ],
+//                            [
+//                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
+//                            ],
+//                            [
+//                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
+//                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
+//                            ],
+//                        ]
+//                    ]),
+//                ]);
+//
+//            }
+//
+//            //  Опции текст
+//
+//            elseif ($message['text'] == '/options') {
+//                $this->sendMessage([
+//                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+//                    'text' => 'Список опций',
+//                    'reply_markup' => json_encode([
+//                        'inline_keyboard'=>[
+//                            [
+//                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
+//                            ],
+//                            [
+//                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
+//                            ],
+//                            [
+//                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
+//                            ],
+//                            [
+//                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
+//                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
+//                            ],
+//                        ]
+//                    ]),
+//                ]);
+//
+//            } elseif (Motivator::find()->where(['hrurl'=>$text])->one()){
+//                $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
+//                $quotes = $motivator->mLines;
+//                if ($text == 'accept-the-life-daemon') { // daemon
+//                    $quotesCount = count($quotes);
+//                    $now = date_timestamp_get(new \DateTime());
+//                    $timeMark = $now;
+//                    $stepI = 1;
+//                    $blockI = 1;
+//
+//                    foreach ($quotes as $quote) {
+//
+//                        $process = new MotivatorBotProcess();
+//                        $process['chat_id'] = $chatId;
+//                        $process['first_name'] = $fromFirstName;
+//                        $process['chat_date'] = $date;
+//                        $process['command'] = $text;
+//                        $process['motivator_id'] = $motivator['id'];
+//                        $process['steps_qnt'] = $quotesCount;
+//
+//                        $process['current_step'] = $stepI;
+//                        $process['current_block'] = $quote['block_num'];
+//                        if ($process['current_block'] != $blockI) {
+//                            $process['new_block'] = true;
+//                            $process['start_time'] = $timeMark + 4;
+//                            $blockI++;
+//                        } else {
+//                            $process['start_time'] = $timeMark + 2;
+//                        }
+//                        $timeMark = $process['start_time'];
+//                        $process['mline_id'] = $quote['id'];
+//                        $process['text'] = $quote['text'];
+//
+//                        $process->save();
+//                        $stepI++;
+//
+//                    }
+//
+//                    $daemon = Daemons::find()->where(['daemon'=>'motivator-bot-daemon'])->one();
+//                    if ($daemon == null) {
+//                        $daemon = new Daemons();
+//                        $daemon['daemon'] = 'motivator-bot-daemon';
+//                    }
+//                    $daemon['enabled'] = true;
+//                    $daemon->save();
+//
+//                    Yii::$app->telegram->sendMessage([
+//                        'chat_id' => $chatId,
+//                        'text' => $motivator['list_name'].' ('.$quotesCount.')',
+//                    ]);
+//                }
+//                else {   // no daemon
+//                    $quoteText = '';
+//                    $quiteBox = null;
+//                    foreach ($quotes as $quote) {
+//                        if ($quiteBox !=$quote['block_num']) {
+//                            $quiteBox = $quote['block_num'];
+//                            $quoteText .= '——————————————'.PHP_EOL;
+//                        }
+//                        $quoteText .= $quote['text'].PHP_EOL;
+//                    }
+//
+//                    $this->sendMessage([
+//                        'chat_id' => $chatId,
+//                        'text' => $motivator['list_name'],
+//                    ]);
+//                    $this->sendMessage([
+//                        'chat_id' => $chatId,
+//                        'text' => $quoteText,
+//                        'reply_markup' => json_encode([
+//                            'inline_keyboard'=>[
+//                                [
+//                                    ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/you'],
+//                                    ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
+////                                    ['text'=>'switch','switch_inline_query'=>''],
+//                                ],
+//                                [
+//                                    ['text'=>"Раздел",'callback_data'=> 'theme/1'],
+//                                ],
+//
+//                            ]
+//                        ]),
+//                    ]);
+//                }
+//            } else {      //  непонятная команда
+//                $this->sendMessage([
+//                    'chat_id' => $chatId,
+//                    'text' => 'чево?',
+//                ]);
+//                $this->sendMessage([
+//                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+//                    'text' => 'То есть я хотел сказать - вот список опций )',
+//                    'reply_markup' => json_encode([
+//                        'inline_keyboard'=>[
+//                            [
+//                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
+//                            ],
+//                            [
+//                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
+//                            ],
+//                            [
+//                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
+//                            ],
+//                            [
+//                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
+//                                ['text'=>'Опции','callback_data'=> 'options/you/1/one'],
+////                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
+//
+//                            ],
+//                        ]
+//                    ]),
+//                ]);
+//            }
+//
+//            return 'end return message';
+//
+//        }
+//
+////       Callback
+//
+//        if ($callbackQuery != null) {
+//            $commandParts = explode('/', $callbackQuery['data']);
+//            $action = $commandParts[0];
+//
+//            // motivatorList
+//
+//            if ($action == 'motivatorList') { // motivatorList / pointOfView / section / mode
+//                $this->answerCallbackQuery([
+//                    'callback_query_id' => $callbackQuery['id'],
+//                    'text' => 'список строится',
+//                ]);
+//                $section = $commandParts[2];
+//                if ($section==1) {
+//                    $type = 'Тематические';
+//                } elseif ($section==2) {
+//                    $type = 'Профессиональные';
+//                } elseif ($section==4) {
+//                    $type = 'Романтичные';
+//                } else {
+//                    $type = 'Тематические';
+//                }
+//                if (isset($commandParts[3])) {
+//                    $mode = $commandParts[3];
+//                } else {
+//                    $mode =  'one';
+//                }
+//
+//                if (isset($commandParts[1])) {
+//                    $pointOfView = $commandParts[1];
+//                    if ($pointOfView == 'you') {
+//                        $motivators = Motivator::find()
+//                            ->where(['list_section'=>$section,'position'=>'1'])
+//                            ->orderBy('list_num')
+//                            ->all();
+//                    } else {
+//                        $motivators = Motivator::find()
+//                            ->where(['list_section'=>$section,'position'=>'0'])
+//                            ->orderBy('list_num')
+//                            ->all();
+//                    }
+//                } else {
+//                    $pointOfView = 'you';
+//                    $motivators = Motivator::find()
+//                        ->where(['list_section'=>$section,'position'=>'1'])
+//                        ->orderBy('list_num')
+//                        ->all();
+//                }
+//                $data = [];
+//                foreach ($motivators as $motivator) {
+//                    $row = [];
+//                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> 'motivator/' . $motivator['hrurl'].'/'.$pointOfView.'/'.$mode];
+//                    $data[] = $row;
+//                };
+//                // options
+//                $data[] = [
+//                    ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'. $pointOfView.'/'.$section.'/'.$mode],
+//                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/'.$mode],
+//                ];
+//
+//                $this->sendMessage([
+//                    'chat_id' => $callbackQuery['from']['id'],
+//                    'text' => $type . ' мотиваторы',
+//                    'reply_markup' => json_encode([
+//                        'inline_keyboard'=> $data
+//                    ]),
+//                ]);
+//
+//            }
+//
+//            // motivator
+//
+//            if ($action == 'motivator') {   // motivator / hrurl /pointOfView  / mode
+//                $this->answerCallbackQuery([
+//                    'callback_query_id' => $callbackQuery['id'], //require
+//                    'text' => 'ответ получен', //Optional
+//                ]);
+//                $hrurl = $commandParts[1];
+//                if (isset($commandParts[2])) {
+//                    $pointOfView = $commandParts[2];
+//                } else {
+//                    $pointOfView = 'you';
+//                }
+//                $motivator = Motivator::find()->where(['hrurl'=>$hrurl])->one();
+//                $quoteText = '';
+//                $quiteBox = null;
+//
+//
+//                $section = $motivator['list_section'];
+//                if ($section == 1) {
+//                    $type = 'Тематические';
+//                } elseif ($section==2) {
+//                    $type = 'Профессиональные';
+//                } elseif ($section==4) {
+//                    $type = 'Романтичные';
+//                } else {
+//                    $type = 'Тематические';
+//                }
+//
+//                if (isset($commandParts[3])) {
+//                    $mode = $commandParts[3];
+//                } else {
+//                    $mode =  'one';
+//                }
+//
+//
+//                if ($mode ==  'all') {
+//
+//                    $quotes = $motivator->mLines;
+//                    foreach ($quotes as $quote) {
+//                        if ($quiteBox !=$quote['block_num']) {
+//                            $quiteBox = $quote['block_num'];
+//                            $quoteText .= '——————————————'.PHP_EOL;
+//                        }
+//                        $quoteText .= $quote['text'].PHP_EOL;
+//                    }
+//                    $this->sendMessage([
+//                        'chat_id' => $callbackQuery['from']['id'],
+//                        'text' => $motivator['list_name'],
+//                    ]);
+//                    $this->sendMessage([
+//                        'chat_id' => $callbackQuery['from']['id'],
+//                        'text' => $quoteText,
+//                        'reply_markup' => json_encode([
+//                            'inline_keyboard'=>[
+//                                [
+//                                    ['text'=>$type .' мотиваторы','callback_data'=> 'motivatorList/'.$pointOfView . '/' . $section .'/all'],
+//                                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/all'],
+//                                ]
+//                            ]
+//                        ]),
+//                    ]);
+//                } else { // $mode ==  'one'
+//                    if (isset($commandParts[4])) {
+//                        $quoteBlock = $commandParts[4];
+//                    } else {
+//                        $quoteBlock =  '1';
+//                    }
+//                    $quotes = MLine::find()
+//                        ->where(['motivator_id'=>$motivator['id'], 'block_num'=>$quoteBlock])
+//                        ->orderBy('quote_num')
+//                        ->all();
+//                    foreach ($quotes as $quote) {
+//                        $quoteText .= $quote['text'].PHP_EOL;
+//                    }
+//                    if (!empty(MLine::find()->where(['motivator_id'=>$motivator['id'], 'block_num'=>intval($quoteBlock)+1])->one())) {
+//                        $next = intval($quoteBlock)+1;
+//                        $nextButtonName = 'Дальше';
+//                        $nextButtonValue = 'motivator/' . $motivator['hrurl'].'/'.$pointOfView.'/one/'.$next;
+//                    } else {
+//                        $nextButtonName = 'Мотиваторы';
+//                        $nextButtonValue = 'motivatorList/'.$pointOfView . '/' . $section .'/one';
+//                    }
+//
+//                    if ($quoteBlock == '1') {
+//                        $this->sendMessage([
+//                            'chat_id' => $callbackQuery['from']['id'],
+//                            'text' => $motivator['list_name'],
+//                        ]);
+//                    }
+//
+//                    $this->sendMessage([
+//                        'chat_id' => $callbackQuery['from']['id'],
+//                        'text' => $quoteText,
+//                        'reply_markup' => json_encode([
+//                            'inline_keyboard'=>[
+//                                [
+//                                    ['text'=>$nextButtonName,'callback_data'=> $nextButtonValue],
+//                                ]
+//                            ]
+//                        ]),
+//                    ]);
+//                }
+//
+//
+//            }
+//
+//            // pointOfView
+//
+//            if ($action == 'pointOfView') {   // pointOfView / pointOfView / section / mode
+//                $this->answerCallbackQuery([
+//                    'callback_query_id' => $callbackQuery['id'], //require
+//                    'text' => 'ответ получен', //Optional
+//                ]);
+//
+//                if (isset($commandParts[1])) {
+//                    $pointOfView = $commandParts[1];
+//                } else {
+//                    $pointOfView = 'you';
+//                }
+//                $section = $commandParts[2];
+//                if ($section==1) {
+//                    $type = 'Тематические';
+//                } elseif ($section==2) {
+//                    $type = 'Профессиональные';
+//                } elseif ($section==4) {
+//                    $type = 'Романтичные';
+//                } else {
+//                    $type = 'Тематические';
+//                }
+//
+//                if (isset($commandParts[3])) {
+//                    $mode = $commandParts[3];
+//                } else {
+//                    $mode =  'one';
+//                }
+//
+//                $this->sendMessage([
+//                    'chat_id' => $callbackQuery['from']['id'],
+//                    'text' => $pointOfView=='i'?'Текущая точка зрения - Я':'Текущая точка зрения - Ты',
+//                    'reply_markup' => json_encode([
+//                        'inline_keyboard'=>[
+//                            [
+//                                ['text'=> 'Я','callback_data'=> 'motivatorList/i/'.$section.'/'.$mode],
+//                                ['text'=> 'Ты','callback_data'=> 'motivatorList/you/'.$section .'/'.$mode],
+//                            ]
+//                        ]
+//                    ]),
+//                ]);
+//            }
+//
+//            // Опции
+//
+//            if ($action == 'options') {    // options / pointOfView / section / mode
+//                $this->answerCallbackQuery([
+//                    'callback_query_id' => $callbackQuery['id'], //require
+//                    'text' => 'ответ получен', //Optional
+//                ]);
+//                if (isset($commandParts[1])) {
+//                    $pointOfView = $commandParts[1];
+//                } else {
+//                    $pointOfView = 'you';
+//                }
+//                $section = $commandParts[2];
+//
+//                if (isset($commandParts[3])) {
+//                    $mode = $commandParts[3];
+//                } else {
+//                    $mode =  'one';
+//                }
+//
+//                $this->sendMessage([
+//                    'chat_id' => $callbackQuery['from']['id'],
+//                    'text' => 'Список опций',
+//                    'reply_markup' => json_encode([
+//                        'inline_keyboard'=>[
+//                            [
+//                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/1/'.$mode],
+//                            ],
+//                            [
+//                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/2/'.$mode],
+//                            ],
+//                            [
+//                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/4/'.$mode],
+//                            ],
+//                            [
+//                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/'.$pointOfView.'/'.$section.'/'.$mode],
+//                                ['text'=>"Режим показа",'callback_data'=> 'mode/'.$pointOfView.'/'.$section.'/'.$mode],
+//                            ],
+//                            [
+//                                ['text'=>'Перейти на сайт','url'=> 'https://nashe-schastye.ru/'],
+//                            ],
+//                        ]
+//                    ]),
+//                ]);
+//            }
+//
+//            // Режим показа
+//
+//            if ($action == 'mode') {
+//                $this->answerCallbackQuery([
+//                    'callback_query_id' => $callbackQuery['id'], //require
+//                    'text' => 'ответ получен', //Optional
+//                ]);
+//                if (isset($commandParts[1])) {
+//                    $pointOfView = $commandParts[1];
+//                } else {
+//                    $pointOfView = 'you';
+//                }
+//                $section = $commandParts[2];
+//                if (isset($commandParts[3])) {
+//                    $mode = $commandParts[3];
+//                    if ($mode == 'all') {
+//                        $modeName = 'Все сразу';
+//                    } else {
+//                        $modeName = 'По одному';
+//
+//                    }
+//                } else {
+//                    $mode =  'all';
+//                    $modeName = 'Все сразу';
+//                }
+//                $this->sendMessage([
+//                    'chat_id' => $callbackQuery['from']['id'],
+//                    'text' => 'Режим - ' . $modeName,
+//                    'reply_markup' => json_encode([
+//                        'inline_keyboard'=>[
+//                            [
+//                                ['text'=>"По одному",'callback_data'=> 'motivatorList/'.$pointOfView.'/'.$section.'/one'],
+//                                ['text'=>"Все сразу",'callback_data'=> 'motivatorList/'.$pointOfView.'/'.$section.'/all'],
+//                            ]
+//                        ]
+//                    ]),
+//                ]);
+//
+//
+//            }
+//
+//
+//        }
+//
+//
+//
+//        return 'end return';
+//    }
+//
+//
+
+
 
 
     public function actionDialog()
@@ -65,1063 +587,541 @@ class ChepuhaBotController extends \yii\web\Controller
         $inlineQuery = Yii::$app->request->post('inline_query'); // array
 
 
-        $messageId = $message['message_id'];
-        $from = $message['from'];  // array
-        $fromId = $from['id'];
-        $fromIsBot = $from['is_bot'];
-        $fromFirstName = $from['first_name'];
-        $fromLastName = $from['last_name'];
-        $fromUserName = $from['username'];
-        $fromLanguageCode = $from['language_code'];
-        $chat = $message['chat'];
-        $chatId = $chat['id'];
-        $chatType = $chat['type'];
-        $date = $message['date'];
-        $text = $message['text'];
+//        $messageId = $message['message_id'];
+//        $from = $message['from'];  // array
+//        $fromId = $message['from']['id'];
+//        $fromIsBot = $message['from']['is_bot'];
+//        $fromFirstName = $message['from']['first_name'];
+//        $fromLastName = $message['from']['last_name'];
+//        $fromUserName = $message['from']['username'];
+//        $fromLanguageCode = $message['from']['language_code'];
+//        $chat = $message['chat'];
+//        $chatId = $message['chat']['id'];
+//        $chatType = $message['chat']['type'];
+//        $date = $message['date'];
+//        $text = $message['text'];
+//        $query = $inlineQuery['query'];
 
 
+        if (trim(strtolower($message['text'])) == '/dev') {
+//                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
+
+//                if (!$user) {
+//                    $user = new BotUser();
+////                $user['user_id'] = intval($message['from']['id']);
+//                    $user['user_id'] = $message['from']['id'];
+//                    $user['first_name'] = $message['from']['first_name'];
+//                    $user['last_name'] = $message['from']['last_name'];
+//                    $user['username'] = $message['from']['username'];
+//                    $user['language_code'] = $message['from']['language_code'];
+//
+//                    $user->save();
+//                }
+
+
+
+//
+//                Yii::info($user, 'chepuhoBot');
+
+//                Yii::info('тута', 'chepuhoBot');
+//                Yii::info($user->getErrors(), 'chepuhoBot');
+
+
+
+
+//                $this->sendMessage([
+//                    'chat_id' => '232544919',  // $message['from']['id']
+////                    'chat_id' => $message['from']['id'],  // $message['from']['id']
+////                    'parse_mode' => 'html',
+////                    'text' => $message['from']['username'],
+//                    'text' => 'тут ',
+////                    'text' => json_encode($user->save()),
+////                    'text' => json_encode($user->hasErrors()),
+//
+//                ]);
+            return [
+                'message' => 'ok',
+                'code' => 200,
+            ];
+
+        }
+
+
+
+
+//      Inline
+        if ($inlineQuery != null) {
+            Yii::info($inlineQuery, 'chepuhoBot');
+
+//           список сцен play
+            if ($inlineQuery['query'] == 'play') {
+                $plays = ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
+                $results = [];
+                foreach ($plays as $play) {
+                    $results[] = [
+                        'type' => 'article',
+                        'id' => $play['id'],
+                        'title' => $play['name'],
+                        'description' => $play['description'],
+                        'input_message_content'=>[
+                            'message_text'=> 'play/' . $play['hrurl'],
+                            'parse_mode'=> 'html',
+                            'disable_web_page_preview'=> true,
+                        ],
+                    ];
+                };
+                $this->answerInlineQuery([
+                    'inline_query_id' => $inlineQuery['id'],
+                    'results'=> json_encode($results)
+                ]);
+            }
+
+//           список сцен phrase
+            elseif ($inlineQuery['query'] == 'phrase'){
+                $plays = ChBotPhrase::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
+                $results = [];
+                foreach ($plays as $play) {
+                    $results[] = [
+                        'type' => 'article',
+                        'id' => $play['id'],
+                        'title' => $play['name'],
+                        'description' => $play['description'],
+                        'input_message_content'=>[
+                            'message_text'=> 'phrase/' . $play['hrurl'],
+                            'parse_mode'=> 'html',
+                            'disable_web_page_preview'=> true,
+                        ],
+                    ];
+                };
+                $this->answerInlineQuery([
+                    'inline_query_id' => $inlineQuery['id'],
+                    'results'=> json_encode($results)
+                ]);
+            }
+
+            return 'ok';
+        }
 
         if ($message != null) {
 
-            //   /start
-            //
-            //
-
-            if ($message['text'] == '/start') {
+//          /start
+            if (trim(strtolower($message['text'])) == '/start') {
+                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
+                if ($user == null) {
+                    $user = new BotUser();
+                    $user['user_id'] = $message['from']['id'];
+                    $user['first_name'] = $message['from']['first_name'];
+                    $user['last_name'] = $message['from']['last_name'];
+                    $user['username'] = $message['from']['username'];
+                    $user['language_code'] = $message['from']['language_code'];
+                    $user->save();
+                }
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'text' => 'Привет, я бот Мотиватор, ниже список опций',
+                    'parse_mode' => 'html',
+                    'text' =>
+                        'Я - <b>Чепухобот</b>. '.PHP_EOL.
+                        'Я задаю странные вопросы и составляю из твоих ответов предложения.'.PHP_EOL.
+                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'.PHP_EOL.
+                        'Прервать игру можно командой /end '.PHP_EOL.
+                        'Помощь - /help '.PHP_EOL.
+
+                        'Ниже список опций:',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
                             ],
                             [
-                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
                             ],
-                            [
-                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
-                            ],
-                            [
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
-                            ],
+
                         ]
                     ]),
                 ]);
-
-            }
-
-            //  Опции текст
-
-            elseif ($message['text'] == '/options') {
-                $this->sendMessage([
-                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'text' => 'Список опций',
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
-                            ],
-                            [
-                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
-                            ],
-                            [
-                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
-                            ],
-                            [
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
-                            ],
-                        ]
-                    ]),
-                ]);
-
-            } elseif (Motivator::find()->where(['hrurl'=>$text])->one()){
-                $motivator = Motivator::find()->where(['hrurl'=>$text])->one();
-                $quotes = $motivator->mLines;
-                if ($text == 'accept-the-life-daemon') { // daemon
-                    $quotesCount = count($quotes);
-                    $now = date_timestamp_get(new \DateTime());
-                    $timeMark = $now;
-                    $stepI = 1;
-                    $blockI = 1;
-
-                    foreach ($quotes as $quote) {
-
-                        $process = new MotivatorBotProcess();
-                        $process['chat_id'] = $chatId;
-                        $process['first_name'] = $fromFirstName;
-                        $process['chat_date'] = $date;
-                        $process['command'] = $text;
-                        $process['motivator_id'] = $motivator['id'];
-                        $process['steps_qnt'] = $quotesCount;
-
-                        $process['current_step'] = $stepI;
-                        $process['current_block'] = $quote['block_num'];
-                        if ($process['current_block'] != $blockI) {
-                            $process['new_block'] = true;
-                            $process['start_time'] = $timeMark + 4;
-                            $blockI++;
-                        } else {
-                            $process['start_time'] = $timeMark + 2;
-                        }
-                        $timeMark = $process['start_time'];
-                        $process['mline_id'] = $quote['id'];
-                        $process['text'] = $quote['text'];
-
-                        $process->save();
-                        $stepI++;
-
-                    }
-
-                    $daemon = Daemons::find()->where(['daemon'=>'motivator-bot-daemon'])->one();
-                    if ($daemon == null) {
-                        $daemon = new Daemons();
-                        $daemon['daemon'] = 'motivator-bot-daemon';
-                    }
-                    $daemon['enabled'] = true;
-                    $daemon->save();
-
-                    Yii::$app->telegram->sendMessage([
-                        'chat_id' => $chatId,
-                        'text' => $motivator['list_name'].' ('.$quotesCount.')',
-                    ]);
-                }
-                else {   // no daemon
-                    $quoteText = '';
-                    $quiteBox = null;
-                    foreach ($quotes as $quote) {
-                        if ($quiteBox !=$quote['block_num']) {
-                            $quiteBox = $quote['block_num'];
-                            $quoteText .= '——————————————'.PHP_EOL;
-                        }
-                        $quoteText .= $quote['text'].PHP_EOL;
-                    }
-
-                    $this->sendMessage([
-                        'chat_id' => $chatId,
-                        'text' => $motivator['list_name'],
-                    ]);
-                    $this->sendMessage([
-                        'chat_id' => $chatId,
-                        'text' => $quoteText,
-                        'reply_markup' => json_encode([
-                            'inline_keyboard'=>[
-                                [
-                                    ['text'=>"Список мотиваторов",'callback_data'=> 'motivatorList/you'],
-                                    ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-//                                    ['text'=>'switch','switch_inline_query'=>''],
-                                ],
-                                [
-                                    ['text'=>"Раздел",'callback_data'=> 'theme/1'],
-                                ],
-
-                            ]
-                        ]),
-                    ]);
-                }
-            } else {      //  непонятная команда
-                $this->sendMessage([
-                    'chat_id' => $chatId,
-                    'text' => 'чево?',
-                ]);
-                $this->sendMessage([
-                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
-                    'text' => 'То есть я хотел сказать - вот список опций )',
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/you/1'],
-                            ],
-                            [
-                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/you/2'],
-                            ],
-                            [
-                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/you/4'],
-                            ],
-                            [
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/you'],
-                                ['text'=>'Опции','callback_data'=> 'options/you/1/one'],
-//                                ['text'=>"Режим показа",'callback_data'=> 'mode/you/one'],
-
-                            ],
-                        ]
-                    ]),
-                ]);
-            }
-
-            return 'end return message';
-
-        }
-
-//       Callback
-
-        if ($callbackQuery != null) {
-            $commandParts = explode('/', $callbackQuery['data']);
-            $action = $commandParts[0];
-
-            // motivatorList
-
-            if ($action == 'motivatorList') { // motivatorList / pointOfView / section / mode
-                $this->answerCallbackQuery([
-                    'callback_query_id' => $callbackQuery['id'],
-                    'text' => 'список строится',
-                ]);
-                $section = $commandParts[2];
-                if ($section==1) {
-                    $type = 'Тематические';
-                } elseif ($section==2) {
-                    $type = 'Профессиональные';
-                } elseif ($section==4) {
-                    $type = 'Романтичные';
-                } else {
-                    $type = 'Тематические';
-                }
-                if (isset($commandParts[3])) {
-                    $mode = $commandParts[3];
-                } else {
-                    $mode =  'one';
-                }
-
-                if (isset($commandParts[1])) {
-                    $pointOfView = $commandParts[1];
-                    if ($pointOfView == 'you') {
-                        $motivators = Motivator::find()
-                            ->where(['list_section'=>$section,'position'=>'1'])
-                            ->orderBy('list_num')
-                            ->all();
-                    } else {
-                        $motivators = Motivator::find()
-                            ->where(['list_section'=>$section,'position'=>'0'])
-                            ->orderBy('list_num')
-                            ->all();
-                    }
-                } else {
-                    $pointOfView = 'you';
-                    $motivators = Motivator::find()
-                        ->where(['list_section'=>$section,'position'=>'1'])
-                        ->orderBy('list_num')
-                        ->all();
-                }
-                $data = [];
-                foreach ($motivators as $motivator) {
-                    $row = [];
-                    $row[] = ['text'=>$motivator['list_name'],'callback_data'=> 'motivator/' . $motivator['hrurl'].'/'.$pointOfView.'/'.$mode];
-                    $data[] = $row;
-                };
-                // options
-                $data[] = [
-                    ['text'=>'Точка восприятия','callback_data'=> 'pointOfView/'. $pointOfView.'/'.$section.'/'.$mode],
-                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/'.$mode],
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
                 ];
 
-                $this->sendMessage([
-                    'chat_id' => $callbackQuery['from']['id'],
-                    'text' => $type . ' мотиваторы',
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=> $data
-                    ]),
-                ]);
 
             }
 
-            // motivator
+//          /dev
+            if (trim(strtolower($message['text'])) == '/dev') {
+//                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
 
-            if ($action == 'motivator') {   // motivator / hrurl /pointOfView  / mode
-                $this->answerCallbackQuery([
-                    'callback_query_id' => $callbackQuery['id'], //require
-                    'text' => 'ответ получен', //Optional
+//                if (!$user) {
+//                    $user = new BotUser();
+////                $user['user_id'] = intval($message['from']['id']);
+//                    $user['user_id'] = $message['from']['id'];
+//                    $user['first_name'] = $message['from']['first_name'];
+//                    $user['last_name'] = $message['from']['last_name'];
+//                    $user['username'] = $message['from']['username'];
+//                    $user['language_code'] = $message['from']['language_code'];
+//
+//                    $user->save();
+//                }
+
+
+
+//
+//                Yii::info($user, 'chepuhoBot');
+
+//                Yii::info('тута', 'chepuhoBot');
+//                Yii::info($user->getErrors(), 'chepuhoBot');
+
+
+
+
+//                $this->sendMessage([
+//                    'chat_id' => '232544919',  // $message['from']['id']
+////                    'chat_id' => $message['from']['id'],  // $message['from']['id']
+////                    'parse_mode' => 'html',
+////                    'text' => $message['from']['username'],
+//                    'text' => 'тут ',
+////                    'text' => json_encode($user->save()),
+////                    'text' => json_encode($user->hasErrors()),
+//
+//                ]);
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+
+            }
+
+//          /end
+            if (trim(strtolower($message['text'])) == '/end') {
+                $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
+                $vars = $session->vars;
+                foreach ($vars as  $var) {
+                    $var->delete();
+                }
+//                $session->delete();
+                $use = BotUse::find()->where(['id'=>intval($session['description'])])->one();
+                $session->delete();
+                $use['done'] = 'interrupt';
+                $use->save();
+
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
+                    'text' => 'Игра прервана,'.PHP_EOL.
+                        'начать новую?',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                            ],
+                            [
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+                            ],
+                        ]
+                    ]),
                 ]);
-                $hrurl = $commandParts[1];
-                if (isset($commandParts[2])) {
-                    $pointOfView = $commandParts[2];
-                } else {
-                    $pointOfView = 'you';
-                }
-                $motivator = Motivator::find()->where(['hrurl'=>$hrurl])->one();
-                $quoteText = '';
-                $quiteBox = null;
+
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+            }
+
+//          /options   /settings
+            elseif (trim(strtolower($message['text'])) == '/options' OR trim(strtolower($message['text'])) == '/settings' ) {
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'text' => 'Доступные команды:'.PHP_EOL.
+                        '/start - начало новой игры'.PHP_EOL.
+                        '/help - помощь'.PHP_EOL.
+                        '/about - обо мне'.PHP_EOL.
+                        '/settings - все доступные команды'.PHP_EOL.
+                        '/end - прервать игру'.PHP_EOL.PHP_EOL.
+                         'Начать игру?',
+                    'reply_markup' => json_encode([
+
+//                        'keyboard'=>[
+//                            [
+//                                ['text'=>"Чепусценка"],
+//                            ],
+//                            [
+//                                ['text'=>"Чепуфраза"],
+//                            ],
+//                        ],
+//                        'one_time_keyboard' => true,
+
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                            ],
+                            [
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+                            ],
+//                            [
+//                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
+//                            ],
+//                            [
+//                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
+//                            ],
+                        ]
+                    ]),
+                ]);
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+
+            }
+
+//          /help     /помощь
+            elseif (trim(strtolower($message['text'])) == '/help' OR trim(strtolower($message['text'])) == '/помощь' ) {
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
+                    'text' => 'Я - Чепухобот. '.PHP_EOL.
+                        'Я задаю странные вопросы и составляю из твоих ответов различные предложения.'.PHP_EOL.
+                        'У меня есть 2 типа игры - чепусценка и чепуфраза.'.PHP_EOL.
+                        '<b>Чепусценка</b> - сценка с несколькими действующими лицами, по мотивам какого-либо произведения.'.PHP_EOL.
+                        '<b>Чепуфраза</b> - набор вопросов, из ответов на которые собирается фраза.'.PHP_EOL.
+                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'.PHP_EOL.PHP_EOL.
+                        'Доступные команды:'.PHP_EOL.
+                        '/start - начало новой игры'.PHP_EOL.
+                        '/help - помощь'.PHP_EOL.
+                        '/about - обо мне'.PHP_EOL.
+                        '/settings - все доступные команды'.PHP_EOL.
+                        '/end - прервать игру',
+
+                ]);
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+
+            }
+
+//          /about    /о проекте
+            elseif (trim(strtolower($message['text'])) == '/about' OR trim(strtolower($message['text'])) == '/о проекте' ) {
+                $this->sendMessage([
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
+                    'text' => 'Я - Чепухобот. '.PHP_EOL.
+                        'Я задаю странные вопросы и составляю из ответов различные предложения.'.PHP_EOL.
+                        'У меня есть 2 типа игры - чепусценка и чепуфраза.'.PHP_EOL.
+                        '<b>Чепусценка</b> - сценка с несколькими действующими лицами, по мотивам какого-либо произведения.'.PHP_EOL.
+                        '<b>Чепуфраза</b> - набор вопросов, из ответов на которые собирается фраза.'.PHP_EOL.
+                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'
+                ]);
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+
+            }
+
+//          play/hrurl     phrase/hrurl
+            elseif (substr($message['text'],0,5) == 'play/' OR  substr($message['text'],0,7) == 'phrase/'){
+
+                $this->gameInit($message);
+
+            }
 
 
-                $section = $motivator['list_section'];
-                if ($section == 1) {
-                    $type = 'Тематические';
-                } elseif ($section==2) {
-                    $type = 'Профессиональные';
-                } elseif ($section==4) {
-                    $type = 'Романтичные';
-                } else {
-                    $type = 'Тематические';
-                }
+//          любой текст от пользователя (игра в процессе)
+            else {
 
-                if (isset($commandParts[3])) {
-                    $mode = $commandParts[3];
-                } else {
-                    $mode =  'one';
-                }
-
-
-                if ($mode ==  'all') {
-
-                    $quotes = $motivator->mLines;
-                    foreach ($quotes as $quote) {
-                        if ($quiteBox !=$quote['block_num']) {
-                            $quiteBox = $quote['block_num'];
-                            $quoteText .= '——————————————'.PHP_EOL;
-                        }
-                        $quoteText .= $quote['text'].PHP_EOL;
-                    }
+                $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
+                if ($session == null) {   // Нет активной игры
                     $this->sendMessage([
-                        'chat_id' => $callbackQuery['from']['id'],
-                        'text' => $motivator['list_name'],
-                    ]);
-                    $this->sendMessage([
-                        'chat_id' => $callbackQuery['from']['id'],
-                        'text' => $quoteText,
+                        'chat_id' => $message['from']['id'],
+                        'text' => 'Нет активной игры, поиграем?',
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
-                                    ['text'=>$type .' мотиваторы','callback_data'=> 'motivatorList/'.$pointOfView . '/' . $section .'/all'],
-                                    ['text'=>'Опции','callback_data'=> 'options/'.$pointOfView .'/' . $section .'/all'],
-                                ]
+                                    ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                                ],
+                                [
+                                    ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+                                ],
                             ]
                         ]),
                     ]);
-                } else { // $mode ==  'one'
-                    if (isset($commandParts[4])) {
-                        $quoteBlock = $commandParts[4];
-                    } else {
-                        $quoteBlock =  '1';
-                    }
-                    $quotes = MLine::find()
-                        ->where(['motivator_id'=>$motivator['id'], 'block_num'=>$quoteBlock])
-                        ->orderBy('quote_num')
-                        ->all();
-                    foreach ($quotes as $quote) {
-                        $quoteText .= $quote['text'].PHP_EOL;
-                    }
-                    if (!empty(MLine::find()->where(['motivator_id'=>$motivator['id'], 'block_num'=>intval($quoteBlock)+1])->one())) {
-                        $next = intval($quoteBlock)+1;
-                        $nextButtonName = 'Дальше';
-                        $nextButtonValue = 'motivator/' . $motivator['hrurl'].'/'.$pointOfView.'/one/'.$next;
-                    } else {
-                        $nextButtonName = 'Мотиваторы';
-                        $nextButtonValue = 'motivatorList/'.$pointOfView . '/' . $section .'/one';
-                    }
+                    return [
+                        'message' => 'ok',
+                        'code' => 200,
+                    ];
+                }
 
-                    if ($quoteBlock == '1') {
-                        $this->sendMessage([
-                            'chat_id' => $callbackQuery['from']['id'],
-                            'text' => $motivator['list_name'],
-                        ]);
-                    }
-
+                $activeVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'active'])->one();
+                if ($activeVar == null) {   // Нет активного шага
                     $this->sendMessage([
-                        'chat_id' => $callbackQuery['from']['id'],
-                        'text' => $quoteText,
+                        'chat_id' => $message['from']['id'],
+                        'text' => 'Нет активного шага, начнем сначала?',
                         'reply_markup' => json_encode([
                             'inline_keyboard'=>[
                                 [
-                                    ['text'=>$nextButtonName,'callback_data'=> $nextButtonValue],
-                                ]
+                                    ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                                ],
+                                [
+                                    ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+                                ],
                             ]
                         ]),
                     ]);
+                    return [
+                        'message' => 'ok',
+                        'code' => 200,
+                    ];
                 }
 
+                $activeVar['value'] = $message['text'];
+                $activeVar['status'] = 'done';
+                $activeVar->save();
 
-            }
+                $newActiveVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
 
-            // pointOfView
-
-            if ($action == 'pointOfView') {   // pointOfView / pointOfView / section / mode
-                $this->answerCallbackQuery([
-                    'callback_query_id' => $callbackQuery['id'], //require
-                    'text' => 'ответ получен', //Optional
-                ]);
-
-                if (isset($commandParts[1])) {
-                    $pointOfView = $commandParts[1];
-                } else {
-                    $pointOfView = 'you';
-                }
-                $section = $commandParts[2];
-                if ($section==1) {
-                    $type = 'Тематические';
-                } elseif ($section==2) {
-                    $type = 'Профессиональные';
-                } elseif ($section==4) {
-                    $type = 'Романтичные';
-                } else {
-                    $type = 'Тематические';
-                }
-
-                if (isset($commandParts[3])) {
-                    $mode = $commandParts[3];
-                } else {
-                    $mode =  'one';
-                }
-
-                $this->sendMessage([
-                    'chat_id' => $callbackQuery['from']['id'],
-                    'text' => $pointOfView=='i'?'Текущая точка зрения - Я':'Текущая точка зрения - Ты',
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=> 'Я','callback_data'=> 'motivatorList/i/'.$section.'/'.$mode],
-                                ['text'=> 'Ты','callback_data'=> 'motivatorList/you/'.$section .'/'.$mode],
-                            ]
-                        ]
-                    ]),
-                ]);
-            }
-
-            // Опции
-
-            if ($action == 'options') {    // options / pointOfView / section / mode
-                $this->answerCallbackQuery([
-                    'callback_query_id' => $callbackQuery['id'], //require
-                    'text' => 'ответ получен', //Optional
-                ]);
-                if (isset($commandParts[1])) {
-                    $pointOfView = $commandParts[1];
-                } else {
-                    $pointOfView = 'you';
-                }
-                $section = $commandParts[2];
-
-                if (isset($commandParts[3])) {
-                    $mode = $commandParts[3];
-                } else {
-                    $mode =  'one';
-                }
-
-                $this->sendMessage([
-                    'chat_id' => $callbackQuery['from']['id'],
-                    'text' => 'Список опций',
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>"Тематические мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/1/'.$mode],
-                            ],
-                            [
-                                ['text'=>"Профессиональные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/2/'.$mode],
-                            ],
-                            [
-                                ['text'=>"Романтичные мотиваторы",'callback_data'=> 'motivatorList/'.$pointOfView.'/4/'.$mode],
-                            ],
-                            [
-                                ['text'=>"Точка восприятия",'callback_data'=> 'pointOfView/'.$pointOfView.'/'.$section.'/'.$mode],
-                                ['text'=>"Режим показа",'callback_data'=> 'mode/'.$pointOfView.'/'.$section.'/'.$mode],
-                            ],
-                            [
-                                ['text'=>'Перейти на сайт','url'=> 'https://nashe-schastye.ru/'],
-                            ],
-                        ]
-                    ]),
-                ]);
-            }
-
-            // Режим показа
-
-            if ($action == 'mode') {
-                $this->answerCallbackQuery([
-                    'callback_query_id' => $callbackQuery['id'], //require
-                    'text' => 'ответ получен', //Optional
-                ]);
-                if (isset($commandParts[1])) {
-                    $pointOfView = $commandParts[1];
-                } else {
-                    $pointOfView = 'you';
-                }
-                $section = $commandParts[2];
-                if (isset($commandParts[3])) {
-                    $mode = $commandParts[3];
-                    if ($mode == 'all') {
-                        $modeName = 'Все сразу';
-                    } else {
-                        $modeName = 'По одному';
-
+                if ($newActiveVar != null) {
+                    $newActiveVar['status'] = 'active';
+                    $newActiveVar->save();
+                    $text = $newActiveVar['question'];
+                    $vars = $session->vars;
+                    foreach ($vars as  $var) {
+                        $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
                     }
-                } else {
-                    $mode =  'all';
-                    $modeName = 'Все сразу';
+                    $this->sendMessage([
+                        'chat_id' => $message['from']['id'],
+                        'text' => $text.'?',
+                    ]);
+                    return 'ok';
                 }
+
+                if ($newActiveVar == null && ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'done'])->one()) {
+
+                    if ($session['item_type']=='play') {
+                        $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
+                    } elseif ($session['item_type']=='phrase'){
+                        $play = ChBotPhrase::find()->where(['id'=>$session['item_id']])->one();
+                    } else {
+                        $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
+                    }
+                    $text = $play['text'];
+                    $vars = $session->vars;
+                    foreach ($vars as  $var) {
+                        $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
+                        $var->delete();
+                    }
+                    $this->sendMessage([
+                        'chat_id' => $message['from']['id'],
+                        'text' => $text,
+                        'parse_mode' => 'html',
+                        'reply_markup' => json_encode([
+                            'inline_keyboard'=>[
+                                [
+                                    ['text'=>'Играть еще '.hex2bin('E29EA1'),'callback_data'=> 'newGame'],
+//                                        ['text'=>'Отправить игру другу','switch_inline_query'=> 'phrase'],
+                                ],
+                            ]
+                        ]),
+
+                    ]);
+
+                    $use = BotUse::find()->where(['id'=>intval($session['description'])])->one();
+                    $session->delete();
+                    $use['done'] = 'done';
+                    $use['user_result'] = $text;
+                    $use->save();
+
+                    return 'ok';
+
+                }
+
+
+
+            }
+
+            return 'ok';
+        }
+
+
+//      Callback
+        if ($callbackQuery != null) {
+            Yii::info($callbackQuery, 'chepuhoBot');
+
+//          newGame
+            if ($callbackQuery['data']=='newGame') {
+                $this->answerCallbackQuery([
+                    'callback_query_id' => $callbackQuery['id'],
+                    'text' => 'в процессе',
+                ]);
+
                 $this->sendMessage([
-                    'chat_id' => $callbackQuery['from']['id'],
-                    'text' => 'Режим - ' . $modeName,
+                    'chat_id' => $callbackQuery['from']['id'],  // $message['from']['id']
+                    'parse_mode' => 'html',
+                    'text' => 'Игры:',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"По одному",'callback_data'=> 'motivatorList/'.$pointOfView.'/'.$section.'/one'],
-                                ['text'=>"Все сразу",'callback_data'=> 'motivatorList/'.$pointOfView.'/'.$section.'/all'],
-                            ]
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                            ],
+                            [
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+                            ],
                         ]
                     ]),
                 ]);
+                return 'ok';
+            }
 
 
+//          addPermission
+            if (substr($callbackQuery['data'],0,14) == 'addPermission/') {
+                $this->answerCallbackQuery([
+                    'callback_query_id' => $callbackQuery['id'],
+                    'text' => 'в процессе',
+                ]);
+
+                $commands = explode('/', $callbackQuery['data']);
+                $restrictionShort = $commands[1];
+                $type = $commands[2];
+                $itemId = $commands[3];
+                if ($type == 'play') {
+                    $play = ChBotPlay::find()->where(['id'=>$itemId])->one();
+                } elseif ($type == 'phrase') {
+                    $play = ChBotPhrase::find()->where(['id'=>$itemId])->one();
+                } else {
+                    $play = ChBotPlay::find()->where(['id'=>$itemId])->one();
+                }
+
+//                TEST
+                $user = BotUser::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
+                if ($user == null) {
+                    $user = new BotUser();
+                    $user['user_id'] = $message['from']['id'];
+                    $user['first_name'] = $message['from']['first_name'];
+                    $user['last_name'] = $message['from']['last_name'];
+                    $user['username'] = $message['from']['username'];
+                    $user['language_code'] = $message['from']['language_code'];
+                    $user->save();
+                }
+                if ($user->addPermission($restrictionShort)) {
+                    $this->gameInit([
+                        'from' => $callbackQuery['from'],  // $message['from']['id']
+                        'text' => $type.'/'.$play['hrurl'],
+                    ]);
+                } else {
+                    $this->sendMessage([
+                        'chat_id' => $callbackQuery['from']['id'],
+                        'text' => 'Внутренняя ошибка, попробуйте еще раз',
+                    ]);
+                }
+
+                return 'ok';
             }
 
 
         }
-
-
-
-        return 'end return';
+        return 'ok';
     }
 
-
-
-
-
-//
-//    public function actionDialog()
-//    {
-//
-//        $input = Yii::$app->request->getRawBody();
-//        $updateId = Yii::$app->request->post('update_id');
-//        $message = Yii::$app->request->post('message'); // array
-//        $callbackQuery = Yii::$app->request->post('callback_query'); // array
-//        $inlineQuery = Yii::$app->request->post('inline_query'); // array
-//
-//
-////        $messageId = $message['message_id'];
-////        $from = $message['from'];  // array
-////        $fromId = $message['from']['id'];
-////        $fromIsBot = $message['from']['is_bot'];
-////        $fromFirstName = $message['from']['first_name'];
-////        $fromLastName = $message['from']['last_name'];
-////        $fromUserName = $message['from']['username'];
-////        $fromLanguageCode = $message['from']['language_code'];
-////        $chat = $message['chat'];
-////        $chatId = $message['chat']['id'];
-////        $chatType = $message['chat']['type'];
-////        $date = $message['date'];
-////        $text = $message['text'];
-////        $query = $inlineQuery['query'];
-//
-//
-//        if (trim(strtolower($message['text'])) == '/dev') {
-////                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
-//
-////                if (!$user) {
-////                    $user = new BotUser();
-//////                $user['user_id'] = intval($message['from']['id']);
-////                    $user['user_id'] = $message['from']['id'];
-////                    $user['first_name'] = $message['from']['first_name'];
-////                    $user['last_name'] = $message['from']['last_name'];
-////                    $user['username'] = $message['from']['username'];
-////                    $user['language_code'] = $message['from']['language_code'];
-////
-////                    $user->save();
-////                }
-//
-//
-//
-////
-////                Yii::info($user, 'chepuhoBot');
-//
-////                Yii::info('тута', 'chepuhoBot');
-////                Yii::info($user->getErrors(), 'chepuhoBot');
-//
-//
-//
-//
-////                $this->sendMessage([
-////                    'chat_id' => '232544919',  // $message['from']['id']
-//////                    'chat_id' => $message['from']['id'],  // $message['from']['id']
-//////                    'parse_mode' => 'html',
-//////                    'text' => $message['from']['username'],
-////                    'text' => 'тут ',
-//////                    'text' => json_encode($user->save()),
-//////                    'text' => json_encode($user->hasErrors()),
-////
-////                ]);
-//            return [
-//                'message' => 'ok',
-//                'code' => 200,
-//            ];
-//
-//        }
-//
-//
-//
-//
-////      Inline
-//        if ($inlineQuery != null) {
-//            Yii::info($inlineQuery, 'chepuhoBot');
-//
-////           список сцен play
-//            if ($inlineQuery['query'] == 'play') {
-//                $plays = ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
-//                $results = [];
-//                foreach ($plays as $play) {
-//                    $results[] = [
-//                        'type' => 'article',
-//                        'id' => $play['id'],
-//                        'title' => $play['name'],
-//                        'description' => $play['description'],
-//                        'input_message_content'=>[
-//                            'message_text'=> 'play/' . $play['hrurl'],
-//                            'parse_mode'=> 'html',
-//                            'disable_web_page_preview'=> true,
-//                        ],
-//                    ];
-//                };
-//                $this->answerInlineQuery([
-//                    'inline_query_id' => $inlineQuery['id'],
-//                    'results'=> json_encode($results)
-//                ]);
-//            }
-//
-////           список сцен phrase
-//            elseif ($inlineQuery['query'] == 'phrase'){
-//                $plays = ChBotPhrase::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
-//                $results = [];
-//                foreach ($plays as $play) {
-//                    $results[] = [
-//                        'type' => 'article',
-//                        'id' => $play['id'],
-//                        'title' => $play['name'],
-//                        'description' => $play['description'],
-//                        'input_message_content'=>[
-//                            'message_text'=> 'phrase/' . $play['hrurl'],
-//                            'parse_mode'=> 'html',
-//                            'disable_web_page_preview'=> true,
-//                        ],
-//                    ];
-//                };
-//                $this->answerInlineQuery([
-//                    'inline_query_id' => $inlineQuery['id'],
-//                    'results'=> json_encode($results)
-//                ]);
-//            }
-//
-//            return 'ok';
-//        }
-//
-//        if ($message != null) {
-//
-////          /start
-//            if (trim(strtolower($message['text'])) == '/start') {
-//                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
-//                if ($user == null) {
-//                    $user = new BotUser();
-//                    $user['user_id'] = $message['from']['id'];
-//                    $user['first_name'] = $message['from']['first_name'];
-//                    $user['last_name'] = $message['from']['last_name'];
-//                    $user['username'] = $message['from']['username'];
-//                    $user['language_code'] = $message['from']['language_code'];
-//                    $user->save();
-//                }
-//                $this->sendMessage([
-//                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
-//                    'parse_mode' => 'html',
-//                    'text' =>
-//                        'Я - <b>Чепухобот</b>. '.PHP_EOL.
-//                        'Я задаю странные вопросы и составляю из твоих ответов предложения.'.PHP_EOL.
-//                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'.PHP_EOL.
-//                        'Прервать игру можно командой /end '.PHP_EOL.
-//                        'Помощь - /help '.PHP_EOL.
-//
-//                        'Ниже список опций:',
-//                    'reply_markup' => json_encode([
-//                        'inline_keyboard'=>[
-//                            [
-//                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
-//                            ],
-//                            [
-//                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
-//                            ],
-//
-//                        ]
-//                    ]),
-//                ]);
-//                return [
-//                    'message' => 'ok',
-//                    'code' => 200,
-//                ];
-//
-//
-//            }
-//
-////          /dev
-//            if (trim(strtolower($message['text'])) == '/dev') {
-////                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
-//
-////                if (!$user) {
-////                    $user = new BotUser();
-//////                $user['user_id'] = intval($message['from']['id']);
-////                    $user['user_id'] = $message['from']['id'];
-////                    $user['first_name'] = $message['from']['first_name'];
-////                    $user['last_name'] = $message['from']['last_name'];
-////                    $user['username'] = $message['from']['username'];
-////                    $user['language_code'] = $message['from']['language_code'];
-////
-////                    $user->save();
-////                }
-//
-//
-//
-////
-////                Yii::info($user, 'chepuhoBot');
-//
-////                Yii::info('тута', 'chepuhoBot');
-////                Yii::info($user->getErrors(), 'chepuhoBot');
-//
-//
-//
-//
-////                $this->sendMessage([
-////                    'chat_id' => '232544919',  // $message['from']['id']
-//////                    'chat_id' => $message['from']['id'],  // $message['from']['id']
-//////                    'parse_mode' => 'html',
-//////                    'text' => $message['from']['username'],
-////                    'text' => 'тут ',
-//////                    'text' => json_encode($user->save()),
-//////                    'text' => json_encode($user->hasErrors()),
-////
-////                ]);
-//                return [
-//                    'message' => 'ok',
-//                    'code' => 200,
-//                ];
-//
-//            }
-//
-////          /end
-//            if (trim(strtolower($message['text'])) == '/end') {
-//                $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
-//                $vars = $session->vars;
-//                foreach ($vars as  $var) {
-//                    $var->delete();
-//                }
-////                $session->delete();
-//                $use = BotUse::find()->where(['id'=>intval($session['description'])])->one();
-//                $session->delete();
-//                $use['done'] = 'interrupt';
-//                $use->save();
-//
-//                $this->sendMessage([
-//                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
-//                    'parse_mode' => 'html',
-//                    'text' => 'Игра прервана,'.PHP_EOL.
-//                        'начать новую?',
-//                    'reply_markup' => json_encode([
-//                        'inline_keyboard'=>[
-//                            [
-//                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
-//                            ],
-//                            [
-//                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
-//                            ],
-//                        ]
-//                    ]),
-//                ]);
-//
-//                return [
-//                    'message' => 'ok',
-//                    'code' => 200,
-//                ];
-//            }
-//
-////          /options   /settings
-//            elseif (trim(strtolower($message['text'])) == '/options' OR trim(strtolower($message['text'])) == '/settings' ) {
-//                $this->sendMessage([
-//                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
-//                    'text' => 'Доступные команды:'.PHP_EOL.
-//                        '/start - начало новой игры'.PHP_EOL.
-//                        '/help - помощь'.PHP_EOL.
-//                        '/about - обо мне'.PHP_EOL.
-//                        '/settings - все доступные команды'.PHP_EOL.
-//                        '/end - прервать игру'.PHP_EOL.PHP_EOL.
-//                         'Начать игру?',
-//                    'reply_markup' => json_encode([
-//
-////                        'keyboard'=>[
-////                            [
-////                                ['text'=>"Чепусценка"],
-////                            ],
-////                            [
-////                                ['text'=>"Чепуфраза"],
-////                            ],
-////                        ],
-////                        'one_time_keyboard' => true,
-//
-//                        'inline_keyboard'=>[
-//                            [
-//                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
-//                            ],
-//                            [
-//                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
-//                            ],
-////                            [
-////                                ['text'=>"Чепусценка",'callback_data'=> 'play/all'],
-////                            ],
-////                            [
-////                                ['text'=>"Чепуфраза",'callback_data'=> 'phrase/all'],
-////                            ],
-//                        ]
-//                    ]),
-//                ]);
-//                return [
-//                    'message' => 'ok',
-//                    'code' => 200,
-//                ];
-//
-//            }
-//
-////          /help     /помощь
-//            elseif (trim(strtolower($message['text'])) == '/help' OR trim(strtolower($message['text'])) == '/помощь' ) {
-//                $this->sendMessage([
-//                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
-//                    'parse_mode' => 'html',
-//                    'text' => 'Я - Чепухобот. '.PHP_EOL.
-//                        'Я задаю странные вопросы и составляю из твоих ответов различные предложения.'.PHP_EOL.
-//                        'У меня есть 2 типа игры - чепусценка и чепуфраза.'.PHP_EOL.
-//                        '<b>Чепусценка</b> - сценка с несколькими действующими лицами, по мотивам какого-либо произведения.'.PHP_EOL.
-//                        '<b>Чепуфраза</b> - набор вопросов, из ответов на которые собирается фраза.'.PHP_EOL.
-//                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'.PHP_EOL.PHP_EOL.
-//                        'Доступные команды:'.PHP_EOL.
-//                        '/start - начало новой игры'.PHP_EOL.
-//                        '/help - помощь'.PHP_EOL.
-//                        '/about - обо мне'.PHP_EOL.
-//                        '/settings - все доступные команды'.PHP_EOL.
-//                        '/end - прервать игру',
-//
-//                ]);
-//                return [
-//                    'message' => 'ok',
-//                    'code' => 200,
-//                ];
-//
-//            }
-//
-////          /about    /о проекте
-//            elseif (trim(strtolower($message['text'])) == '/about' OR trim(strtolower($message['text'])) == '/о проекте' ) {
-//                $this->sendMessage([
-//                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
-//                    'parse_mode' => 'html',
-//                    'text' => 'Я - Чепухобот. '.PHP_EOL.
-//                        'Я задаю странные вопросы и составляю из ответов различные предложения.'.PHP_EOL.
-//                        'У меня есть 2 типа игры - чепусценка и чепуфраза.'.PHP_EOL.
-//                        '<b>Чепусценка</b> - сценка с несколькими действующими лицами, по мотивам какого-либо произведения.'.PHP_EOL.
-//                        '<b>Чепуфраза</b> - набор вопросов, из ответов на которые собирается фраза.'.PHP_EOL.
-//                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'
-//                ]);
-//                return [
-//                    'message' => 'ok',
-//                    'code' => 200,
-//                ];
-//
-//            }
-//
-////          play/hrurl     phrase/hrurl
-//            elseif (substr($message['text'],0,5) == 'play/' OR  substr($message['text'],0,7) == 'phrase/'){
-//
-//                $this->gameInit($message);
-//
-//            }
-//
-//
-////          любой текст от пользователя (игра в процессе)
-//            else {
-//
-//                $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
-//                if ($session == null) {   // Нет активной игры
-//                    $this->sendMessage([
-//                        'chat_id' => $message['from']['id'],
-//                        'text' => 'Нет активной игры, поиграем?',
-//                        'reply_markup' => json_encode([
-//                            'inline_keyboard'=>[
-//                                [
-//                                    ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
-//                                ],
-//                                [
-//                                    ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
-//                                ],
-//                            ]
-//                        ]),
-//                    ]);
-//                    return [
-//                        'message' => 'ok',
-//                        'code' => 200,
-//                    ];
-//                }
-//
-//                $activeVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'active'])->one();
-//                if ($activeVar == null) {   // Нет активного шага
-//                    $this->sendMessage([
-//                        'chat_id' => $message['from']['id'],
-//                        'text' => 'Нет активного шага, начнем сначала?',
-//                        'reply_markup' => json_encode([
-//                            'inline_keyboard'=>[
-//                                [
-//                                    ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
-//                                ],
-//                                [
-//                                    ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
-//                                ],
-//                            ]
-//                        ]),
-//                    ]);
-//                    return [
-//                        'message' => 'ok',
-//                        'code' => 200,
-//                    ];
-//                }
-//
-//                $activeVar['value'] = $message['text'];
-//                $activeVar['status'] = 'done';
-//                $activeVar->save();
-//
-//                $newActiveVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
-//
-//                if ($newActiveVar != null) {
-//                    $newActiveVar['status'] = 'active';
-//                    $newActiveVar->save();
-//                    $text = $newActiveVar['question'];
-//                    $vars = $session->vars;
-//                    foreach ($vars as  $var) {
-//                        $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
-//                    }
-//                    $this->sendMessage([
-//                        'chat_id' => $message['from']['id'],
-//                        'text' => $text.'?',
-//                    ]);
-//                    return 'ok';
-//                }
-//
-//                if ($newActiveVar == null && ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'done'])->one()) {
-//
-//                    if ($session['item_type']=='play') {
-//                        $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
-//                    } elseif ($session['item_type']=='phrase'){
-//                        $play = ChBotPhrase::find()->where(['id'=>$session['item_id']])->one();
-//                    } else {
-//                        $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
-//                    }
-//                    $text = $play['text'];
-//                    $vars = $session->vars;
-//                    foreach ($vars as  $var) {
-//                        $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
-//                        $var->delete();
-//                    }
-//                    $this->sendMessage([
-//                        'chat_id' => $message['from']['id'],
-//                        'text' => $text,
-//                        'parse_mode' => 'html',
-//                        'reply_markup' => json_encode([
-//                            'inline_keyboard'=>[
-//                                [
-//                                    ['text'=>'Играть еще '.hex2bin('E29EA1'),'callback_data'=> 'newGame'],
-////                                        ['text'=>'Отправить игру другу','switch_inline_query'=> 'phrase'],
-//                                ],
-//                            ]
-//                        ]),
-//
-//                    ]);
-//
-//                    $use = BotUse::find()->where(['id'=>intval($session['description'])])->one();
-//                    $session->delete();
-//                    $use['done'] = 'done';
-//                    $use['user_result'] = $text;
-//                    $use->save();
-//
-//                    return 'ok';
-//
-//                }
-//
-//
-//
-//            }
-//
-//            return 'ok';
-//        }
-//
-//
-////      Callback
-//        if ($callbackQuery != null) {
-//            Yii::info($callbackQuery, 'chepuhoBot');
-//
-////          newGame
-//            if ($callbackQuery['data']=='newGame') {
-//                $this->answerCallbackQuery([
-//                    'callback_query_id' => $callbackQuery['id'],
-//                    'text' => 'в процессе',
-//                ]);
-//
-//                $this->sendMessage([
-//                    'chat_id' => $callbackQuery['from']['id'],  // $message['from']['id']
-//                    'parse_mode' => 'html',
-//                    'text' => 'Игры:',
-//                    'reply_markup' => json_encode([
-//                        'inline_keyboard'=>[
-//                            [
-//                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
-//                            ],
-//                            [
-//                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
-//                            ],
-//                        ]
-//                    ]),
-//                ]);
-//                return 'ok';
-//            }
-//
-//
-////          addPermission
-//            if (substr($callbackQuery['data'],0,14) == 'addPermission/') {
-//                $this->answerCallbackQuery([
-//                    'callback_query_id' => $callbackQuery['id'],
-//                    'text' => 'в процессе',
-//                ]);
-//
-//                $commands = explode('/', $callbackQuery['data']);
-//                $restrictionShort = $commands[1];
-//                $type = $commands[2];
-//                $itemId = $commands[3];
-//                if ($type == 'play') {
-//                    $play = ChBotPlay::find()->where(['id'=>$itemId])->one();
-//                } elseif ($type == 'phrase') {
-//                    $play = ChBotPhrase::find()->where(['id'=>$itemId])->one();
-//                } else {
-//                    $play = ChBotPlay::find()->where(['id'=>$itemId])->one();
-//                }
-//
-////                TEST
-//                $user = BotUser::find()->where(['user_id'=>$callbackQuery['from']['id']])->one();
-//                if ($user == null) {
-//                    $user = new BotUser();
-//                    $user['user_id'] = $message['from']['id'];
-//                    $user['first_name'] = $message['from']['first_name'];
-//                    $user['last_name'] = $message['from']['last_name'];
-//                    $user['username'] = $message['from']['username'];
-//                    $user['language_code'] = $message['from']['language_code'];
-//                    $user->save();
-//                }
-//                if ($user->addPermission($restrictionShort)) {
-//                    $this->gameInit([
-//                        'from' => $callbackQuery['from'],  // $message['from']['id']
-//                        'text' => $type.'/'.$play['hrurl'],
-//                    ]);
-//                } else {
-//                    $this->sendMessage([
-//                        'chat_id' => $callbackQuery['from']['id'],
-//                        'text' => 'Внутренняя ошибка, попробуйте еще раз',
-//                    ]);
-//                }
-//
-//                return 'ok';
-//            }
-//
-//
-//        }
-//        return 'ok';
-//    }
-//
 
 
 
