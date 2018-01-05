@@ -63,20 +63,20 @@ class ChepuhaBotController extends \yii\web\Controller
         $inlineQuery = Yii::$app->request->post('inline_query'); // array
 
 
-        $messageId = $message['message_id'];
-        $from = $message['from'];  // array
-        $fromId = $message['from']['id'];
-        $fromIsBot = $message['from']['is_bot'];
-        $fromFirstName = $message['from']['first_name'];
-        $fromLastName = $message['from']['last_name'];
-        $fromUserName = $message['from']['username'];
-        $fromLanguageCode = $message['from']['language_code'];
-        $chat = $message['chat'];
-        $chatId = $message['chat']['id'];
-        $chatType = $message['chat']['type'];
-        $date = $message['date'];
-        $text = $message['text'];
-        $query = $inlineQuery['query'];
+//        $messageId = $message['message_id'];
+//        $from = $message['from'];  // array
+//        $fromId = $message['from']['id'];
+//        $fromIsBot = $message['from']['is_bot'];
+//        $fromFirstName = $message['from']['first_name'];
+//        $fromLastName = $message['from']['last_name'];
+//        $fromUserName = $message['from']['username'];
+//        $fromLanguageCode = $message['from']['language_code'];
+//        $chat = $message['chat'];
+//        $chatId = $message['chat']['id'];
+//        $chatType = $message['chat']['type'];
+//        $date = $message['date'];
+//        $text = $message['text'];
+//        $query = $inlineQuery['query'];
 
 
         if (trim(strtolower($message['text'])) == '/dev') {
@@ -105,16 +105,16 @@ class ChepuhaBotController extends \yii\web\Controller
 
 
 
-                $this->sendMessage([
-                    'chat_id' => '232544919',  // $message['from']['id']
-//                    'chat_id' => $message['from']['id'],  // $message['from']['id']
-//                    'parse_mode' => 'html',
-//                    'text' => $message['from']['username'],
-                    'text' => 'тут ',
-//                    'text' => json_encode($user->save()),
-//                    'text' => json_encode($user->hasErrors()),
-
-                ]);
+//                $this->sendMessage([
+//                    'chat_id' => '232544919',  // $message['from']['id']
+////                    'chat_id' => $message['from']['id'],  // $message['from']['id']
+////                    'parse_mode' => 'html',
+////                    'text' => $message['from']['username'],
+//                    'text' => 'тут ',
+////                    'text' => json_encode($user->save()),
+////                    'text' => json_encode($user->hasErrors()),
+//
+//                ]);
             return [
                 'message' => 'ok',
                 'code' => 200,
