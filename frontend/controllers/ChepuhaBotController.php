@@ -65,20 +65,20 @@ class ChepuhaBotController extends \yii\web\Controller
         $inlineQuery = Yii::$app->request->post('inline_query'); // array
 
 
-//        $messageId = $message['message_id'];
-//        $from = $message['from'];  // array
-//        $fromId = $message['from']['id'];
-//        $fromIsBot = $message['from']['is_bot'];
-//        $fromFirstName = $message['from']['first_name'];
-//        $fromLastName = $message['from']['last_name'];
-//        $fromUserName = $message['from']['username'];
-//        $fromLanguageCode = $message['from']['language_code'];
-//        $chat = $message['chat'];
-//        $chatId = $message['chat']['id'];
-//        $chatType = $message['chat']['type'];
-//        $date = $message['date'];
-//        $text = $message['text'];
-//        $query = $inlineQuery['query'];
+        $messageId = $message['message_id'];
+        $from = $message['from'];  // array
+        $fromId = $message['from']['id'];
+        $fromIsBot = $message['from']['is_bot'];
+        $fromFirstName = $message['from']['first_name'];
+        $fromLastName = $message['from']['last_name'];
+        $fromUserName = $message['from']['username'];
+        $fromLanguageCode = $message['from']['language_code'];
+        $chat = $message['chat'];
+        $chatId = $message['chat']['id'];
+        $chatType = $message['chat']['type'];
+        $date = $message['date'];
+        $text = $message['text'];
+        $query = $inlineQuery['query'];
 
 
         Yii::info($input, 'chepuhoBot');
@@ -154,7 +154,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     $user['user_id'] = $message['from']['id'];
                     $user['first_name'] = $message['from']['first_name'];
                     $user['last_name'] = $message['from']['last_name'];
-                    $user['username'] = $message['from']['username'];
+                    $user['username'] = $message['from']['username'] ? $message['from']['username'] : 'noUsername';
                     $user['language_code'] = $message['from']['language_code'];
                     $user->save();
                 }
@@ -518,7 +518,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     $user['user_id'] = $message['from']['id'];
                     $user['first_name'] = $message['from']['first_name'];
                     $user['last_name'] = $message['from']['last_name'];
-                    $user['username'] = $message['from']['username'];
+                    $user['username'] = $message['from']['username'] ? $message['from']['username'] : 'noUsername';
                     $user['language_code'] = $message['from']['language_code'];
                     $user->save();
                 }
@@ -566,7 +566,7 @@ class ChepuhaBotController extends \yii\web\Controller
             $user['user_id'] = $message['from']['id'];
             $user['first_name'] = $message['from']['first_name'];
             $user['last_name'] = $message['from']['last_name'];
-            $user['username'] = $message['from']['username'];
+            $user['username'] = $message['from']['username'] ? $message['from']['username'] : 'noUsername';
             $user['language_code'] = $message['from']['language_code'];
             $user->save();
         }
