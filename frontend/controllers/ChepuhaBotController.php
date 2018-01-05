@@ -200,20 +200,23 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //
 //                Yii::info($user, 'chepuhoBot');
-                
-                Yii::info('тута', 'chepuhoBot');
+
+//                Yii::info('тута', 'chepuhoBot');
 //                Yii::info($user->getErrors(), 'chepuhoBot');
 
-                $this->sendMessage([
-                    'chat_id' => '232544919',  // $message['from']['id']
-//                    'chat_id' => $message['from']['id'],  // $message['from']['id']
-//                    'parse_mode' => 'html',
-//                    'text' => $message['from']['username'],
-                    'text' => 'тут ',
-//                    'text' => json_encode($user->save()),
-//                    'text' => json_encode($user->hasErrors()),
 
-                ]);
+
+
+//                $this->sendMessage([
+//                    'chat_id' => '232544919',  // $message['from']['id']
+////                    'chat_id' => $message['from']['id'],  // $message['from']['id']
+////                    'parse_mode' => 'html',
+////                    'text' => $message['from']['username'],
+//                    'text' => 'тут ',
+////                    'text' => json_encode($user->save()),
+////                    'text' => json_encode($user->hasErrors()),
+//
+//                ]);
                 return [
                     'message' => 'ok',
                     'code' => 200,
