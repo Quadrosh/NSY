@@ -37,6 +37,15 @@ class MotivatorBotController extends \yii\web\Controller
         ];
     }
 
+
+    public function beforeAction($action)
+    {
+        if (in_array($action->id, ['dialog'])) {
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
+
     public function actionDialog()
     {
 
@@ -556,13 +565,7 @@ class MotivatorBotController extends \yii\web\Controller
 
 
 
-    public function beforeAction($action)
-    {
-        if (in_array($action->id, ['dialog'])) {
-        $this->enableCsrfValidation = false;
-        }
-        return parent::beforeAction($action);
-    }
+
 
     public function sendMessage(array $option){
         $chat_id = $option['chat_id'];
