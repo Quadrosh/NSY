@@ -603,48 +603,7 @@ class ChepuhaBotController extends \yii\web\Controller
 //        $query = $inlineQuery['query'];
 
 
-        if (trim(strtolower($message['text'])) == '/dev') {
-//                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
 
-//                if (!$user) {
-//                    $user = new BotUser();
-////                $user['user_id'] = intval($message['from']['id']);
-//                    $user['user_id'] = $message['from']['id'];
-//                    $user['first_name'] = $message['from']['first_name'];
-//                    $user['last_name'] = $message['from']['last_name'];
-//                    $user['username'] = $message['from']['username'];
-//                    $user['language_code'] = $message['from']['language_code'];
-//
-//                    $user->save();
-//                }
-
-
-
-//
-//                Yii::info($user, 'chepuhoBot');
-
-//                Yii::info('тута', 'chepuhoBot');
-//                Yii::info($user->getErrors(), 'chepuhoBot');
-
-
-
-
-//                $this->sendMessage([
-//                    'chat_id' => '232544919',  // $message['from']['id']
-////                    'chat_id' => $message['from']['id'],  // $message['from']['id']
-////                    'parse_mode' => 'html',
-////                    'text' => $message['from']['username'],
-//                    'text' => 'тут ',
-////                    'text' => json_encode($user->save()),
-////                    'text' => json_encode($user->hasErrors()),
-//
-//                ]);
-            return [
-                'message' => 'ok',
-                'code' => 200,
-            ];
-
-        }
 
 
 
@@ -774,16 +733,16 @@ class ChepuhaBotController extends \yii\web\Controller
 
 
 
-//                $this->sendMessage([
+                $this->sendMessage([
 //                    'chat_id' => '232544919',  // $message['from']['id']
-////                    'chat_id' => $message['from']['id'],  // $message['from']['id']
-////                    'parse_mode' => 'html',
-////                    'text' => $message['from']['username'],
-//                    'text' => 'тут ',
-////                    'text' => json_encode($user->save()),
-////                    'text' => json_encode($user->hasErrors()),
-//
-//                ]);
+                    'chat_id' => $message['from']['id'],  // $message['from']['id']
+//                    'parse_mode' => 'html',
+//                    'text' => $message['from']['username'],
+                    'text' => 'test',
+//                    'text' => json_encode($user->save()),
+//                    'text' => json_encode($user->hasErrors()),
+
+                ]);
                 return [
                     'message' => 'ok',
                     'code' => 200,
