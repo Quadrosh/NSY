@@ -81,6 +81,8 @@ class ChepuhaBotController extends \yii\web\Controller
 //        $query = $inlineQuery['query'];
 
 
+        Yii::info($input, 'chepuhoBot');
+
 
 //      Inline
         if ($inlineQuery != null) {
