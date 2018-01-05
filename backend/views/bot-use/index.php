@@ -29,7 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=> function($data)
                 {
                     $user = \common\models\BotUser::find()->where(['id'=>$data['user_id']])->one();
-                    return $user['username'];
+                    if ($user) {
+                        return $user['username'];
+                    } else {
+                        return $data['user_id'];
+                    }
+
                 },
                 'format'=> 'html',
             ],
