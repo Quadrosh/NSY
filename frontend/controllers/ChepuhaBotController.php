@@ -182,7 +182,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //          /dev
             if (trim(strtolower($message['text'])) == '/dev') {
-//                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
+                $user = BotUser::find()->where(['user_id'=>$message['from']['id']])->one();
 
 //                if (!$user) {
 //                    $user = new BotUser();
@@ -199,15 +199,15 @@ class ChepuhaBotController extends \yii\web\Controller
 
 
 //
-//                Yii::info($user, 'chepuhoBot');
+                Yii::info($user, 'chepuhoBot');
 //                Yii::info($user->getErrors(), 'chepuhoBot');
 
                 $this->sendMessage([
                     'chat_id' => '232544919',  // $message['from']['id']
 //                    'chat_id' => $message['from']['id'],  // $message['from']['id']
-                    'parse_mode' => 'html',
+//                    'parse_mode' => 'html',
 //                    'text' => $message['from']['username'],
-                    'text' => 'дальше '.hex2bin('E29EA1'),
+                    'text' => 'тут ',
 //                    'text' => json_encode($user->save()),
 //                    'text' => json_encode($user->hasErrors()),
 
