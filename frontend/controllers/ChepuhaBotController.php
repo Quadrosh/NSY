@@ -227,19 +227,19 @@ class ChepuhaBotController extends \yii\web\Controller
                     ];
                 };
 
-                foreach ($phrases as $phrase) {
-                    $results[] = [
-                        'type' => 'article',
-                        'id' => $phrase['id'],
-                        'title' => 'чф '.$phrase['name'],
-                        'description' => $phrase['description'],
-                        'input_message_content'=>[
-                            'message_text'=> 'phrase/' . $phrase['hrurl'],
-                            'parse_mode'=> 'html',
-                            'disable_web_page_preview'=> true,
-                        ],
-                    ];
-                };
+//                foreach ($phrases as $phrase) {
+//                    $results[] = [
+//                        'type' => 'article',
+//                        'id' => $phrase['id'],
+//                        'title' => 'чф '.$phrase['name'],
+//                        'description' => $phrase['description'],
+//                        'input_message_content'=>[
+//                            'message_text'=> 'phrase/' . $phrase['hrurl'],
+//                            'parse_mode'=> 'html',
+//                            'disable_web_page_preview'=> true,
+//                        ],
+//                    ];
+//                };
 
 
 
