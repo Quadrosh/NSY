@@ -54,8 +54,22 @@ class ChepuhaBotController extends \yii\web\Controller
     }
 
 
-
     public function actionDialog()
+    {
+        $message = Yii::$app->request->post('message'); // array
+        $this->sendMessage([
+            'chat_id' => $message['chat']['id'],  // $message['from']['id']
+            'parse_mode' => 'html',
+            'text' =>
+                'Бот на тех-обслуживании 5-10 мин',
+
+        ]);
+        return [
+            'message' => 'ok',
+            'code' => 200,
+        ];
+    }
+    public function actionDialogDEV()
     {
 
         $input = Yii::$app->request->getRawBody();
