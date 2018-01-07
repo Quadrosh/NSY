@@ -205,6 +205,29 @@ class ChepuhaBotController extends \yii\web\Controller
                 ]);
             }
 
+//           остальные $inlineQuery['query']
+            else {
+                $plays = ChBotPhrase::find()->orderBy('name')->all();
+                $results = [];
+                foreach ($plays as $play) {
+                    $results[] = [
+                        'type' => 'article',
+                        'id' => $play['id'],
+                        'title' => $play['name'],
+                        'description' => $play['description'],
+                        'input_message_content'=>[
+                            'message_text'=> 'phrase/' . $play['hrurl'],
+                            'parse_mode'=> 'html',
+                            'disable_web_page_preview'=> true,
+                        ],
+                    ];
+                };
+                $this->answerInlineQuery([
+                    'inline_query_id' => $inlineQuery['id'],
+                    'is_personal' => true,
+                    'results'=> json_encode($results)
+                ]);
+            }
 
 
 
