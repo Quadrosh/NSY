@@ -230,7 +230,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 foreach ($phrases as $phrase) {
                     $results[] = [
                         'type' => 'article',
-                        'id' => $phrase['id'],
+                        'id' => '2000'.$phrase['id'],
                         'title' => 'чф '.$phrase['name'],
                         'description' => $phrase['description'],
                         'input_message_content'=>[
