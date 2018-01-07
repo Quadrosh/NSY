@@ -213,33 +213,33 @@ class ChepuhaBotController extends \yii\web\Controller
 //                $allPlaysAndPhrase = array_push($plays,$phrases);
                 $results = [];
 
-                foreach ($plays as $play) {
-                    $results[] = [
-                        'type' => 'article',
-                        'id' => $play['id'],
-                        'title' => 'чс '.$play['name'],
-                        'description' => $play['description'],
-                        'input_message_content'=>[
-                            'message_text'=> 'play/' . $play['hrurl'],
-                            'parse_mode'=> 'html',
-                            'disable_web_page_preview'=> true,
-                        ],
-                    ];
-                };
-
-//                foreach ($phrases as $phrase) {
+//                foreach ($plays as $play) {
 //                    $results[] = [
 //                        'type' => 'article',
-//                        'id' => $phrase['id'],
-//                        'title' => 'чф '.$phrase['name'],
-//                        'description' => $phrase['description'],
+//                        'id' => $play['id'],
+//                        'title' => 'чс '.$play['name'],
+//                        'description' => $play['description'],
 //                        'input_message_content'=>[
-//                            'message_text'=> 'phrase/' . $phrase['hrurl'],
+//                            'message_text'=> 'play/' . $play['hrurl'],
 //                            'parse_mode'=> 'html',
 //                            'disable_web_page_preview'=> true,
 //                        ],
 //                    ];
 //                };
+
+                foreach ($phrases as $phrase) {
+                    $results[] = [
+                        'type' => 'article',
+                        'id' => $phrase['id'],
+                        'title' => 'чф '.$phrase['name'],
+                        'description' => $phrase['description'],
+                        'input_message_content'=>[
+                            'message_text'=> 'phrase/' . $phrase['hrurl'],
+                            'parse_mode'=> 'html',
+                            'disable_web_page_preview'=> true,
+                        ],
+                    ];
+                };
 
 
 
