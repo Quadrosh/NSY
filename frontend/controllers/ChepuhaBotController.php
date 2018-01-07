@@ -197,11 +197,21 @@ class ChepuhaBotController extends \yii\web\Controller
                 $this->sendMessage([
 //                    'chat_id' => '232544919',  // $message['from']['id']
                     'chat_id' => $message['from']['id'],  // $message['from']['id']
-//                    'parse_mode' => 'html',
+                    'parse_mode' => 'html',
 //                    'text' => $message['from']['username'],
                     'text' => 'test',
-//                    'text' => json_encode($user->save()),
-//                    'text' => json_encode($user->hasErrors()),
+//
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                            ],
+                            [
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+                            ],
+
+                        ]
+                    ]),
 
                 ]);
                 return [
