@@ -272,8 +272,6 @@ class ChepuhaBotController extends \yii\web\Controller
                     'parse_mode' => 'html',
                     'text' =>
                         'Я - <b>Чепухо Dev</b>. '.PHP_EOL.
-                        'Я задаю странные вопросы и составляю из твоих ответов предложения.'.PHP_EOL.
-                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'.PHP_EOL.
                         'Прервать игру можно командой /end '.PHP_EOL.
                         'Помощь - /help '.PHP_EOL.
 
@@ -281,10 +279,10 @@ class ChepuhaBotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play_dev'],
                             ],
                             [
-                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase_dev'],
                             ],
 
                         ]
