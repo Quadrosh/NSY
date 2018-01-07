@@ -61,7 +61,7 @@ class ChepuhaBotController extends \yii\web\Controller
             'chat_id' => $message['chat']['id'],  // $message['from']['id']
             'parse_mode' => 'html',
             'text' =>
-                'Бот на тех-обслуживании 5-10 мин',
+                'Извините, я на тех-обслуживании 5-10 мин',
 
         ]);
         return [
@@ -69,6 +69,9 @@ class ChepuhaBotController extends \yii\web\Controller
             'code' => 200,
         ];
     }
+
+
+
     public function actionDialogDEV()
     {
 
