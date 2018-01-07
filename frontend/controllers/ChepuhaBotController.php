@@ -279,10 +279,10 @@ class ChepuhaBotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play_dev'],
+                                ['text'=>"Чепусценка dev",'switch_inline_query_current_chat'=> 'play_dev'],
                             ],
                             [
-                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase_dev'],
+                                ['text'=>"Чепуфраза dev",'switch_inline_query_current_chat'=> 'phrase_dev'],
                             ],
 
                         ]
