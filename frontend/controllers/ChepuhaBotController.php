@@ -268,24 +268,27 @@ class ChepuhaBotController extends \yii\web\Controller
 
 
                 $this->sendMessage([
-//                    'chat_id' => '232544919',  // $message['from']['id']
-                    'chat_id' => $message['from']['id'],  // $message['from']['id']
+                    'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'parse_mode' => 'html',
-//                    'text' => $message['from']['username'],
-                    'text' => 'test',
-//
-//                    'reply_markup' => json_encode([
-//                        'inline_keyboard'=>[
-//                            [
-//                                ['text'=>"Чепусценки все",'switch_inline_query_current_chat'=> 'play_dev'],
-//                            ],
-//                            [
-//                                ['text'=>"Чепуфразы все",'switch_inline_query_current_chat'=> 'phrase_dev'],
-//                            ],
-//
-//                        ]
-//                    ]),
+                    'text' =>
+                        'Я - <b>Чепухо Dev</b>. '.PHP_EOL.
+                        'Я задаю странные вопросы и составляю из твоих ответов предложения.'.PHP_EOL.
+                        'В названии игры указано количество вопросов и (если есть) возрастное ограничение.'.PHP_EOL.
+                        'Прервать игру можно командой /end '.PHP_EOL.
+                        'Помощь - /help '.PHP_EOL.
 
+                        'Ниже список опций:',
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                            ],
+                            [
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+                            ],
+
+                        ]
+                    ]),
                 ]);
                 return [
                     'message' => 'ok',
