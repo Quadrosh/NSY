@@ -207,21 +207,42 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //           остальные $inlineQuery['query']
             else {
-                $plays = ChBotPhrase::find()->orderBy('name')->all();
+
+                $plays =  ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
+                $phrases = ChBotPhrase::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
+//                $allPlaysAndPhrase = array_push($plays,$phrases);
                 $results = [];
+
                 foreach ($plays as $play) {
                     $results[] = [
                         'type' => 'article',
                         'id' => $play['id'],
-                        'title' => $play['name'],
+                        'title' => 'чс '.$play['name'],
                         'description' => $play['description'],
                         'input_message_content'=>[
-                            'message_text'=> 'phrase/' . $play['hrurl'],
+                            'message_text'=> 'play/' . $play['hrurl'],
                             'parse_mode'=> 'html',
                             'disable_web_page_preview'=> true,
                         ],
                     ];
                 };
+
+                foreach ($phrases as $phrase) {
+                    $results[] = [
+                        'type' => 'article',
+                        'id' => $phrase['id'],
+                        'title' => 'чф '.$phrase['name'],
+                        'description' => $phrase['description'],
+                        'input_message_content'=>[
+                            'message_text'=> 'phrase/' . $phrase['hrurl'],
+                            'parse_mode'=> 'html',
+                            'disable_web_page_preview'=> true,
+                        ],
+                    ];
+                };
+
+
+
                 $this->answerInlineQuery([
                     'inline_query_id' => $inlineQuery['id'],
                     'is_personal' => true,
