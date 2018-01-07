@@ -136,6 +136,62 @@ class ChepuhaBotController extends \yii\web\Controller
                 ]);
             }
 
+
+
+//           dev
+
+//           список сцен play - все
+            elseif ($inlineQuery['query'] == 'play_dev') {
+                $plays = ChBotPlay::find()->orderBy('name')->all();
+                $results = [];
+                foreach ($plays as $play) {
+                    $results[] = [
+                        'type' => 'article',
+                        'id' => $play['id'],
+                        'title' => $play['name'],
+                        'description' => $play['description'],
+                        'input_message_content'=>[
+                            'message_text'=> 'play/' . $play['hrurl'],
+                            'parse_mode'=> 'html',
+                            'disable_web_page_preview'=> true,
+                        ],
+                    ];
+                };
+                $this->answerInlineQuery([
+                    'inline_query_id' => $inlineQuery['id'],
+                    'is_personal' => true,
+                    'results'=> json_encode($results)
+                ]);
+            }
+
+//           список сцен phrase - все
+            elseif ($inlineQuery['query'] == 'phrase_dev'){
+                $plays = ChBotPhrase::find()->orderBy('name')->all();
+                $results = [];
+                foreach ($plays as $play) {
+                    $results[] = [
+                        'type' => 'article',
+                        'id' => $play['id'],
+                        'title' => $play['name'],
+                        'description' => $play['description'],
+                        'input_message_content'=>[
+                            'message_text'=> 'phrase/' . $play['hrurl'],
+                            'parse_mode'=> 'html',
+                            'disable_web_page_preview'=> true,
+                        ],
+                    ];
+                };
+                $this->answerInlineQuery([
+                    'inline_query_id' => $inlineQuery['id'],
+                    'is_personal' => true,
+                    'results'=> json_encode($results)
+                ]);
+            }
+
+
+
+
+
             return [
                 'message' => 'ok',
                 'code' => 200,
@@ -204,10 +260,10 @@ class ChepuhaBotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                                ['text'=>"Чепусценки все",'switch_inline_query_current_chat'=> 'play_dev'],
                             ],
                             [
-                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+                                ['text'=>"Чепуфразы все",'switch_inline_query_current_chat'=> 'phrase_dev'],
                             ],
 
                         ]
