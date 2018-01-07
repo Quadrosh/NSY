@@ -257,17 +257,17 @@ class ChepuhaBotController extends \yii\web\Controller
 //                    'text' => $message['from']['username'],
                     'text' => 'test',
 //
-                    'reply_markup' => json_encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>"Чепусценки все",'switch_inline_query_current_chat'=> 'play_dev'],
-                            ],
-                            [
-                                ['text'=>"Чепуфразы все",'switch_inline_query_current_chat'=> 'phrase_dev'],
-                            ],
-
-                        ]
-                    ]),
+//                    'reply_markup' => json_encode([
+//                        'inline_keyboard'=>[
+//                            [
+//                                ['text'=>"Чепусценки все",'switch_inline_query_current_chat'=> 'play_dev'],
+//                            ],
+//                            [
+//                                ['text'=>"Чепуфразы все",'switch_inline_query_current_chat'=> 'phrase_dev'],
+//                            ],
+//
+//                        ]
+//                    ]),
 
                 ]);
                 return [
