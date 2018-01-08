@@ -342,15 +342,18 @@ class ChepuhaBotController extends \yii\web\Controller
 //          /end
             if (trim(strtolower($message['text'])) == '/end') {
                 $session = ChBotSession::find()->where(['user_id'=>$message['from']['id']])->one();
-                $vars = $session->vars;
-                foreach ($vars as  $var) {
-                    $var->delete();
+                
+                if ($session != null) {
+                    $vars = $session->vars;
+                    foreach ($vars as  $var) {
+                        $var->delete();
+                    }
+                    $use = BotUse::find()->where(['id'=>intval($session['description'])])->one();
+                    $session->delete();
+                    $use['done'] = 'interrupt';
+                    $use->save();
                 }
-//                $session->delete();
-                $use = BotUse::find()->where(['id'=>intval($session['description'])])->one();
-                $session->delete();
-                $use['done'] = 'interrupt';
-                $use->save();
+
 
                 $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
