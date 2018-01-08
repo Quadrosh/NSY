@@ -54,7 +54,7 @@ class ChepuhaBotController extends \yii\web\Controller
     }
 
 
-    public function actionDialogDEV()
+    public function actionDialog()
     {
         $message = Yii::$app->request->post('message'); // array
         $this->sendMessage([
@@ -72,7 +72,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
 
 
-    public function actionDialog()
+    public function actionDialogDEV()
     {
 
         $input = Yii::$app->request->getRawBody();
