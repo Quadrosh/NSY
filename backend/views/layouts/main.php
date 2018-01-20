@@ -78,6 +78,13 @@ AppAsset::register($this);
         [
             'label' => 'Боты',
             'items' => [
+                [
+                    'label' => 'Stat',
+                    'items' => [
+                        ['label' => 'Games', 'url' => ['/bot-use/stat?days=7']],
+                        ['label' => 'Users', 'url' => ['/bot-user/stat']],
+                    ],
+                ],
                 ['label' => 'ChBotSession', 'url' => ['/ch-bot-session/index']],
                 ['label' => 'ChBotPlay', 'url' => ['/ch-bot-play/index']],
                 ['label' => 'ChBotPlayVars', 'url' => ['/ch-bot-play-vars/index']],
