@@ -13,8 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title.' за '.$days.'дней') ?></h1>
 
-    <p>
-<!--        --><?//= Html::a('Create Bot Use', ['create'], ['class' => 'btn btn-success']) ?>
+    <p class="text-center centerSumm">
+        <?= $summ; ?>
     </p>
 
     <?= GridView::widget([

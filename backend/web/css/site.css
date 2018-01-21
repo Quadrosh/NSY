@@ -161,3 +161,18 @@ a.desc:after {
     /*background-color: #FFC107;*/
     /*border-color: #080808;*/
 }
+.centerSumm {
+    display: inline-block;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    left: 50%;
+    margin-left:-50px;
+    /*border: 1px black solid;*/
+    font-size: 48px;
+    color: #337ab7;
+    text-shadow:
+            3px 3px 1px  rgba(0,0,0,0.3),
+            2px 2px 10px  rgba(0,0,0,0.2)
+;
+}

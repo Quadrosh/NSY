@@ -67,6 +67,8 @@ class BotUseController extends Controller
         $now = time();
         $statLowDate = $now-($days*86400);
         $uses = BotUse::find()->where('created_at > :value', ['value' => $statLowDate])->all();
+        $summ = count($uses);
+
         $res = [];
         foreach ($uses as $use) {
             if (!isset($res[$use['item_id'].'_'.$use['item_type']])) {
@@ -147,6 +149,7 @@ class BotUseController extends Controller
         return $this->render('stat', [
             'dataProvider' => $dataProvider,
             'days' => $days,
+            'summ' => $summ,
         ]);
     }
 
