@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Bot Games Stat';
+$this->title = 'Bot Games';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bot-use-index">
