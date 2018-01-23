@@ -66,7 +66,10 @@ class BotUseController extends Controller
 
         $now = time();
         $statLowDate = $now-($days*86400);
-        $uses = BotUse::find()->where('created_at > :value', ['value' => $statLowDate])->all();
+        $uses = BotUse::find()
+            ->where('created_at > :value', ['value' => $statLowDate])
+            ->andWhere('user_id != :value', ['value' => '31'])
+            ->all();
         $summ = count($uses);
 
         $res = [];
