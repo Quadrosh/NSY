@@ -540,15 +540,10 @@ class ChepuhaBotController extends \yii\web\Controller
                     $text = $newActiveVar['question'];
                     $vars = $session->vars;
                     foreach ($vars as  $var) {  // замена упоминаний переменных на них самих
-//                        if ($session['user_response']=='dev') {
-//                            $text = str_replace('#'.$var['item_var_id'],'$'.$var['item_var_id'].'-'.$var['value'], $text);
-//                        } else {
-//                            $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
-//                        }
                         $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
                     }
-                    if ($session['user_response']=='dev') {
-                        $text = '$'.$newActiveVar['item_var_id'].'_'.$text;
+                    if ($session['user_response']=='dev') {   // dev question
+                        $text = '#'.$newActiveVar['item_var_id'].' '.$text;
                     }
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
