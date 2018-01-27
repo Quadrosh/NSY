@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'item_id',
             'item_type',
             'description:ntext',
-            //'user_response:ntext',
+            'user_response:ntext',
 //            'created_at',
             [
                 'attribute'=>'created_at',
