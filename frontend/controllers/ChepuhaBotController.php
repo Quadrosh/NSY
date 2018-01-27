@@ -168,7 +168,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         'title' => $play['name'],
                         'description' => $play['description'],
                         'input_message_content'=>[
-                            'message_text'=> 'play/' . $play['hrurl'],
+                            'message_text'=> 'play_dev/' . $play['hrurl'],
                             'parse_mode'=> 'html',
                             'disable_web_page_preview'=> true,
                         ],
@@ -192,7 +192,7 @@ class ChepuhaBotController extends \yii\web\Controller
                         'title' => $play['name'],
                         'description' => $play['description'],
                         'input_message_content'=>[
-                            'message_text'=> 'phrase/' . $play['hrurl'],
+                            'message_text'=> 'phrase_dev/' . $play['hrurl'],
                             'parse_mode'=> 'html',
                             'disable_web_page_preview'=> true,
                         ],
@@ -473,9 +473,12 @@ class ChepuhaBotController extends \yii\web\Controller
 
 //          play/hrurl     phrase/hrurl
             elseif (substr($message['text'],0,5) == 'play/' OR  substr($message['text'],0,7) == 'phrase/'){
-
                 $this->gameInit($message);
+            }
 
+//          play_dev/hrurl     phrase_dev/hrurl
+            elseif (substr($message['text'],0,9) == 'play_dev/' OR  substr($message['text'],0,11) == 'phrase_dev/'){
+                $this->gameInit($message,'dev');
             }
 
 
@@ -504,7 +507,9 @@ class ChepuhaBotController extends \yii\web\Controller
                     ];
                 }
 
-                $activeVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'active'])->one();
+                $activeVar = ChBotSessionVars::find()
+                    ->where(['session_id'=>$session['id'],'status'=>'active'])
+                    ->one();
                 if ($activeVar == null) {   // Нет активного шага
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
@@ -530,15 +535,21 @@ class ChepuhaBotController extends \yii\web\Controller
                 $activeVar['status'] = 'done';
                 $activeVar->save();
 
-                $newActiveVar = ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'raw'])->one();
-
+                $newActiveVar = ChBotSessionVars::find()
+                    ->where(['session_id'=>$session['id'],'status'=>'raw'])
+                    ->one();
+// question
                 if ($newActiveVar != null) {
                     $newActiveVar['status'] = 'active';
                     $newActiveVar->save();
                     $text = $newActiveVar['question'];
                     $vars = $session->vars;
                     foreach ($vars as  $var) {
-                        $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
+                        if ($session['user_response']=='dev') {
+                            $text = str_replace('#'.$var['item_var_id'],'#'.$var['item_var_id'].$var['value'], $text);
+                        } else {
+                            $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
+                        }
                     }
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
@@ -547,11 +558,16 @@ class ChepuhaBotController extends \yii\web\Controller
                     return 'ok';
                 }
 
-                if ($newActiveVar == null && ChBotSessionVars::find()->where(['session_id'=>$session['id'],'status'=>'done'])->one()) {
+// final text
+                if ($newActiveVar == null
+                    && ChBotSessionVars::find()
+                        ->where(['session_id'=>$session['id'],'status'=>'done'])
+                        ->one()) {
 
-                    if ($session['item_type']=='play') {
+                    if ($session['item_type']=='play' ) {
                         $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
-                    } elseif ($session['item_type']=='phrase'){
+                    }
+                    elseif ($session['item_type']=='phrase'){
                         $play = ChBotPhrase::find()->where(['id'=>$session['item_id']])->one();
                     } else {
                         $play = ChBotPlay::find()->where(['id'=>$session['item_id']])->one();
@@ -678,7 +694,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
 
 
-    private function gameInit(array $message)
+    private function gameInit(array $message, $mode = null)
     {
         $commands = explode('/', $message['text']);
         $type = $commands[0];
@@ -762,6 +778,9 @@ class ChepuhaBotController extends \yii\web\Controller
         $session['item_type'] = $type;
         $session['item_id'] = $play['id'];
         $session['description'] = strval($use['id']);
+        if ($mode == 'dev') {
+            $session['user_response'] = 'dev';
+        }
         $session->save();
 
         $playVars = $play->vars;
