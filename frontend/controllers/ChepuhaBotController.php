@@ -720,7 +720,7 @@ class ChepuhaBotController extends \yii\web\Controller
             $user->save();
         }
 
-//              18+
+//  18+
         if ($play->restriction) {
 
             $restriction = $play->restriction;

@@ -42,7 +42,7 @@ class ChBotPlay extends \yii\db\ActiveRecord
     {
         return [
             [['description', 'text'], 'string'],
-            [['cat_id', 'created_at', 'updated_at'], 'integer'],
+            [['cat_id', 'created_at', 'updated_at', 'restriction_id'], 'integer'],
             [['name'], 'string', 'max' => 510],
             [['hrurl'], 'string', 'max' => 255],
             [['hrurl'],'unique'],

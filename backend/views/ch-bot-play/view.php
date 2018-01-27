@@ -12,93 +12,7 @@ $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Ch Bot Plays', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<section>
-    <div class="container">
 
-
-
-        <!-- restrictions -->
-        <div class="row mt20 bt pt20">
-
-
-            <?php
-            $query = \common\models\ChBotRestriction::find()->where(['item_type'=>'play','item_id'=>$model['id']]);
-            $restrictionDataProvider = new \yii\data\ActiveDataProvider([
-                'query'=>$query,
-            ]); ?>
-
-
-            <div class="col-sm-12">
-                <h6>Ограничения</h6>
-
-                <?php
-                echo yii\grid\GridView::widget([
-                    'dataProvider' => $restrictionDataProvider,
-                    'emptyText' => 'пока пусто',
-                    'columns'=>[
-                        'id',
-                        'item_type',
-                        'item_id',
-                        'short',
-                        'name',
-                        'description',
-                        'text',
-//                        [
-//                            'label' => '#',
-//                            'attribute'=>'id',
-//                            'value' => function($data)
-//                            {
-//                                return '#'.$data['id'];
-//                            },
-//                        ],
-
-//                        [
-//                            'label' => 'Переменная',
-//                            'attribute'=>'question',
-//                            'value' => function($data)
-//                            {
-//                                return $data['question'];
-//                            },
-//                        ],
-//                        [
-//                            'class' => \yii\grid\ActionColumn::className(),
-//                            'buttons' => [
-//                                'delete'=>function($url,$model){
-//                                    $newUrl = Yii::$app->getUrlManager()->createUrl(['/ch-bot-play-vars/delete','id'=>$model['id']]);
-//                                    return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-trash"></span>', $newUrl, [
-//                                        'title' => Yii::t('yii', 'Удалить'),
-//                                        'data-pjax' => '0',
-//                                        'data-confirm' => Yii::t('yii', 'Точно удалить?'),
-//                                        'data-method'=>'post'
-//                                    ]);
-//                                },
-//                                'view'=>function($url,$model){
-//                                    return false;
-//                                },
-//                                'update'=>function($url,$model){
-//                                    $newUrl = Yii::$app->getUrlManager()->createUrl(['/ch-bot-play-vars/update','id'=>$model['id']]);
-//                                    return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-pencil"></span>', $newUrl, [
-//                                        'title' => Yii::t('yii', 'Редактировать'),
-//                                        'data-pjax' => '0',
-//                                        'data-method'=>'post'
-//                                    ]);
-//                                },
-//
-//                            ]
-//                        ],
-                    ],
-                ]);
-                ?>
-
-            </div>
-            <div class=" col-sm-12 text-right">
-<!--                <h4>Создать ограничение</h4>-->
-                <?= Html::a('Создать ограничение', ['update', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
-            </div>
-        </div>
-        <!-- /restrictions -->
-    </div>
-</section>
 <div class="ch-bot-play-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -117,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            'restriction_id',
             'id',
             'hrurl',
             'name',
