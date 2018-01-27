@@ -27,22 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'query'=>$query,
             ]); ?>
 
-            <div class=" col-sm-6">
-                <h4>Создать ограничение</h4>
-<!--                --><?php //$form = ActiveForm::begin([
-//                    'id'=>'varCreate',
-//                    'action' => ['/ch-bot-play/create-play-var?play='.$model['id']],
-//                    'options' => ['data-pjax' => true ]
-//                ]); ?>
-<!---->
-<!--                --><?//= $form->field($newVar, 'question')
-//                    ->textarea(['rows' => 1,'maxlength' => true, 'id'=>'varCreate-question'])
-//                ?>
-<!---->
-<!--                --><?//= Html::submitButton('Создать <i class="fa fa-share" aria-hidden="true"></i>', ['class' => 'btn btn-primary btn-xs']) ?>
-<!--                --><?php //ActiveForm::end() ?>
-            </div>
-            <div class="col-sm-6">
+
+            <div class="col-sm-12">
 
                 <?php
                 echo yii\grid\GridView::widget([
@@ -53,9 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'item_type',
                         'item_id',
                         'short',
-//                        'name',
-//                        'description',
-//                        'text',
+                        'name',
+                        'description',
+                        'text',
 //                        [
 //                            'label' => '#',
 //                            'attribute'=>'id',
@@ -103,6 +89,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]);
                 ?>
 
+            </div>
+            <div class=" col-sm-12">
+                <h4>Создать ограничение</h4>
+                <!--                --><?php //$form = ActiveForm::begin([
+                //                    'id'=>'varCreate',
+                //                    'action' => ['/ch-bot-play/create-play-var?play='.$model['id']],
+                //                    'options' => ['data-pjax' => true ]
+                //                ]); ?>
+                <!---->
+                <!--                --><?//= $form->field($newVar, 'question')
+                //                    ->textarea(['rows' => 1,'maxlength' => true, 'id'=>'varCreate-question'])
+                //                ?>
+                <!---->
+                <!--                --><?//= Html::submitButton('Создать <i class="fa fa-share" aria-hidden="true"></i>', ['class' => 'btn btn-primary btn-xs']) ?>
+                <!--                --><?php //ActiveForm::end() ?>
             </div>
         </div>
         <!-- /restrictions -->
