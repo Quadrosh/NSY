@@ -12,6 +12,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'restriction_id')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'hrurl')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label('Name // (work) = в работе') ?>
