@@ -37,6 +37,14 @@ class ChBotSessionController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => ChBotSession::find(),
+            'pagination'=> [
+                'pageSize' => 100,
+            ],
+            'sort' =>[
+                'defaultOrder'=> [
+                    'id' => SORT_DESC
+                ]
+            ]
         ]);
 
         return $this->render('index', [
