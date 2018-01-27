@@ -473,9 +473,9 @@ class ChepuhaBotController extends \yii\web\Controller
             }
 
 //          play_dev/hrurl     phrase_dev/hrurl
-            elseif (substr($message['text'],0,9) == 'play_dev/' OR  substr($message['text'],0,11) == 'phrase_dev/'){
-                $this->gameInit($message,'dev');
-            }
+//            elseif (substr($message['text'],0,9) == 'play_dev/' OR  substr($message['text'],0,11) == 'phrase_dev/'){
+//                $this->gameInit($message,'dev');
+//            }
 
 
 //          любой текст от пользователя (игра в процессе)
@@ -541,11 +541,12 @@ class ChepuhaBotController extends \yii\web\Controller
                     $text = $newActiveVar['question'];
                     $vars = $session->vars;
                     foreach ($vars as  $var) {
-                        if ($session['user_response']=='dev') {
-                            $text = str_replace('#'.$var['item_var_id'],'#'.$var['item_var_id'].$var['value'], $text);
-                        } else {
-                            $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
-                        }
+//                        if ($session['user_response']=='dev') {
+//                            $text = str_replace('#'.$var['item_var_id'],'#'.$var['item_var_id'].$var['value'], $text);
+//                        } else {
+//                            $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
+//                        }
+                        $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
                     }
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
@@ -694,12 +695,12 @@ class ChepuhaBotController extends \yii\web\Controller
     {
         $commands = explode('/', $message['text']);
         $type = $commands[0];
-        if ($type == 'play_dev') {
-            $type ='play';
-        } elseif($type =='phrase_dev'){
-            $type ='phrase';
-        }
-        
+//        if ($type == 'play_dev') {
+//            $type ='play';
+//        } elseif($type =='phrase_dev'){
+//            $type ='phrase';
+//        }
+
         $hrurl = $commands[1];
 
         if ($type == 'play') {
