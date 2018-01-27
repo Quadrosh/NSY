@@ -694,11 +694,12 @@ class ChepuhaBotController extends \yii\web\Controller
     {
         $commands = explode('/', $message['text']);
         $type = $commands[0];
-//        if ($type == 'play_dev') {
-//            $type ='play';
-//        } elseif($type =='phrase_dev'){
-//            $type ='phrase';
-//        }
+        if ($type == 'play_dev') {
+            $type ='play';
+        } elseif($type =='phrase_dev'){
+            $type ='phrase';
+        }
+        
         $hrurl = $commands[1];
 
         if ($type == 'play') {
