@@ -71,16 +71,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'dataProvider' => $varsDataProvider,
                     'emptyText' => 'пока пусто',
                     'columns'=>[
-//                        'id',
+                        'id',
                         [
                             'label' => '#',
-                            'attribute'=>'id',
+                            'attribute'=>'item_var_id',
                             'value' => function($data)
                             {
-                                return '#'.$data['id'];
+                                return '#'.$data['item_var_id'];
                             },
                         ],
-                        'item_var_id',
+//                        'item_var_id',
                         'question',
                         'value',
                         'status',
