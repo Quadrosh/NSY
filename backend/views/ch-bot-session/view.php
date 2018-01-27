@@ -48,3 +48,83 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
+<section>
+    <div class="container">
+
+        <!-- переменные  -->
+        <div class="row mt20 bt pt20">
+
+
+            <?php
+            $query = \common\models\ChBotSessionVars::find()->where(['session_id'=>$model['id']]);
+
+            $varsDataProvider = new \yii\data\ActiveDataProvider([
+                'query'=>$query,
+                'pagination'=> ['pageSize' => 100],
+            ]); ?>
+
+
+            <div class="col-sm-8 col-sm-offset-2">
+
+                <?php
+                echo yii\grid\GridView::widget([
+                    'dataProvider' => $varsDataProvider,
+                    'emptyText' => 'пока пусто',
+                    'columns'=>[
+//                        'id',
+                        [
+                            'label' => '#',
+                            'attribute'=>'id',
+                            'value' => function($data)
+                            {
+                                return '#'.$data['id'];
+                            },
+                        ],
+                        'item_var_id',
+                        'question',
+                        'value',
+                        'status',
+                        'created_at',
+//                        [
+//                            'label' => 'Переменная',
+//                            'attribute'=>'question',
+//                            'value' => function($data)
+//                            {
+//                                return $data['question'];
+//                            },
+//                        ],
+//                        [
+//                            'class' => \yii\grid\ActionColumn::className(),
+//                            'buttons' => [
+//                                'delete'=>function($url,$model){
+//                                    $newUrl = Yii::$app->getUrlManager()->createUrl(['/ch-bot-play-vars/delete','id'=>$model['id']]);
+//                                    return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-trash"></span>', $newUrl, [
+//                                        'title' => Yii::t('yii', 'Удалить'),
+//                                        'data-pjax' => '0',
+//                                        'data-confirm' => Yii::t('yii', 'Точно удалить?'),
+//                                        'data-method'=>'post'
+//                                    ]);
+//                                },
+//                                'view'=>function($url,$model){
+//                                    return false;
+//                                },
+//                                'update'=>function($url,$model){
+//                                    $newUrl = Yii::$app->getUrlManager()->createUrl(['/ch-bot-play-vars/update','id'=>$model['id']]);
+//                                    return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-pencil"></span>', $newUrl, [
+//                                        'title' => Yii::t('yii', 'Редактировать'),
+//                                        'data-pjax' => '0',
+//                                        'data-method'=>'post'
+//                                    ]);
+//                                },
+//
+//                            ]
+//                        ],
+                    ],
+                ]);
+                ?>
+
+            </div>
+        </div>
+        <!-- /переменные сцены -->
+    </div>
+</section>
