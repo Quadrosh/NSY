@@ -541,7 +541,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     $vars = $session->vars;
                     foreach ($vars as  $var) {
                         if ($session['user_response']=='dev') {
-                            $text = str_replace('#'.$var['item_var_id'],'#'.$var['item_var_id'].$var['value'], $text);
+                            $text = str_replace('#'.$var['item_var_id'],$var['item_var_id'].'-'.$var['value'], $text);
                         } else {
                             $text = str_replace('#'.$var['item_var_id'],$var['value'], $text);
                         }
@@ -696,7 +696,7 @@ class ChepuhaBotController extends \yii\web\Controller
         $type = $commands[0];
         if ($type == 'play_dev') {
             $type ='play';
-        } elseif($type =='phrase_dev'){
+        } elseif ($type =='phrase_dev'){
             $type ='phrase';
         }
 
