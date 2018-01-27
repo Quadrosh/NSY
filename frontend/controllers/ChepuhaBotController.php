@@ -317,9 +317,7 @@ class ChepuhaBotController extends \yii\web\Controller
                     'text' =>
                         'Я - <b>Чепухо Dev</b>. '.PHP_EOL.
                         'Прервать игру можно командой /end '.PHP_EOL.
-                        'Помощь - /help '.PHP_EOL.
-
-                        'Ниже список опций:',
+                        'Cписок опций:',
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
@@ -328,7 +326,6 @@ class ChepuhaBotController extends \yii\web\Controller
                             [
                                 ['text'=>"Чепуфраза dev",'switch_inline_query_current_chat'=> 'phrase_dev'],
                             ],
-
                         ]
                     ]),
                 ]);
@@ -336,7 +333,6 @@ class ChepuhaBotController extends \yii\web\Controller
                     'message' => 'ok',
                     'code' => 200,
                 ];
-
             }
 
 //          /end
@@ -698,6 +694,11 @@ class ChepuhaBotController extends \yii\web\Controller
     {
         $commands = explode('/', $message['text']);
         $type = $commands[0];
+        if ($type == 'play_dev') {
+            $type ='play';
+        } elseif($type =='phrase_dev'){
+            $type ='phrase';
+        }
         $hrurl = $commands[1];
 
         if ($type == 'play') {
