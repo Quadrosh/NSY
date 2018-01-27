@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'restriction_id',
             [
                 'attribute'=>'restriction_id',
+                'label'=>'Ограничение',
                 'value'=> function($data) {
                     $restriction = \common\models\ChBotRestriction::find()
                         ->where(['id'=>$data['restriction_id']])->one();
