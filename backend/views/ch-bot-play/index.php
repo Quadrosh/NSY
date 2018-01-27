@@ -26,7 +26,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'hrurl',
             'name',
             'description:ntext',
-            'cat_id',
+//            'restriction_id',
+            [
+                'attribute'=>'restriction_id',
+                'label'=>'Ограничение',
+                'value'=> function($data) {
+                    $restriction = \common\models\ChBotRestriction::find()
+                        ->where(['id'=>$data['restriction_id']])->one();
+                    return $restriction['short'];
+                },
+            ],
+//            'cat_id',
 //            'text:ntext',
             //'created_at',
             //'updated_at',
