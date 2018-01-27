@@ -80,6 +80,7 @@ class ChBotPhrase extends \yii\db\ActiveRecord
      */
     public function getRestriction()
     {
-        return $this->hasOne(ChBotRestriction::className(),['item_id'=>'id'])->where(['item_type'=>'phrase']);
+//        return $this->hasOne(ChBotRestriction::className(),['item_id'=>'id'])->where(['item_type'=>'phrase']);
+        return $this->hasOne(ChBotRestriction::className(),['id'=>'restriction_id']);
     }
 }
