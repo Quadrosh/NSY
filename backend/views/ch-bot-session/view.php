@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'columns'=>[
                         'id',
                         [
-                            'label' => '#',
+                            'label' => 'item_var_id',
                             'attribute'=>'item_var_id',
                             'value' => function($data)
                             {
