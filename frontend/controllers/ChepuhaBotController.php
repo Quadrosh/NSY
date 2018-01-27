@@ -210,7 +210,6 @@ class ChepuhaBotController extends \yii\web\Controller
 
                 $plays =  ChBotPlay::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
                 $phrases = ChBotPhrase::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
-//                $allPlaysAndPhrase = array_push($plays,$phrases);
                 $results = [];
 
                 foreach ($plays as $play) {
@@ -473,9 +472,9 @@ class ChepuhaBotController extends \yii\web\Controller
             }
 
 //          play_dev/hrurl     phrase_dev/hrurl
-//            elseif (substr($message['text'],0,9) == 'play_dev/' OR  substr($message['text'],0,11) == 'phrase_dev/'){
-//                $this->gameInit($message,'dev');
-//            }
+            elseif (substr($message['text'],0,9) == 'play_dev/' OR  substr($message['text'],0,11) == 'phrase_dev/'){
+                $this->gameInit($message,'dev');
+            }
 
 
 //          любой текст от пользователя (игра в процессе)
