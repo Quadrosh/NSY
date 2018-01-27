@@ -30,7 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'restriction_id',
+//            'restriction_id',
+            [
+                'attribute'=>'restriction_id',
+                'value'=> function($data) {
+                    $restriction = \common\models\ChBotRestriction::find()
+                        ->where(['id'=>$data['restriction_id']])->one();
+                    return $restriction['short'];
+                },
+                'format'=> 'html',
+            ],
             'id',
             'hrurl',
             'name',
