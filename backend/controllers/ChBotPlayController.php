@@ -2,10 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\BotUse;
 use common\models\ChBotPlayVars;
 use Yii;
 use common\models\ChBotPlay;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -59,6 +61,33 @@ class ChBotPlayController extends Controller
 
         return $this->render('view', [
             'model' => $model,
+        ]);
+    }
+
+    /**
+     * Displays play results of a single ChBotPlay model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionResults($id)
+    {
+        Url::remember();
+        $model = $this->findModel($id);
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => BotUse::find()
+                ->where(['item_type'=>'play'])
+                ->andWhere(['item_id'=>$id])
+                ->andWhere(['!=','user_result', ''])
+                ->orderBy(['id'=> SORT_DESC])
+                ->all(),
+            'pagination'=> [
+                'pageSize' => 100,
+            ],
+        ]);
+
+        return $this->render('results', [
+            'model' => $model,
+            'dataProvider' => $dataProvider,
         ]);
     }
 

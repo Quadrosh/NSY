@@ -41,7 +41,23 @@ $this->params['breadcrumbs'][] = $this->title;
             //'created_at',
             //'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+//            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => \yii\grid\ActionColumn::className(),
+                'buttons' => [
+                    'delete'=>function($url,$model){
+                        $newUrl = Yii::$app->getUrlManager()->createUrl(['/ch-bot-play/results','id'=>$model['id']]);
+                        return \yii\helpers\Html::a( '<span class="glyphicon glyphicon-list"></span>', $newUrl, [
+                            'title' => Yii::t('yii', 'Результаты'),
+                            'data-pjax' => '0',
+//                            'data-confirm' => Yii::t('yii', 'Тоооочно удалить?'),
+                            'data-method'=>'post'
+                        ]);
+                    },
+
+
+                ]
+            ],
         ],
     ]); ?>
 </div>

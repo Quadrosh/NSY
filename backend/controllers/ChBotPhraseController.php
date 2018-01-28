@@ -2,10 +2,12 @@
 
 namespace backend\controllers;
 
+use common\models\BotUse;
 use common\models\ChBotPhraseVars;
 use Yii;
 use common\models\ChBotPhrase;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -57,6 +59,33 @@ class ChBotPhraseController extends Controller
         Url::remember();
         return $this->render('view', [
             'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Displays play results of a single ChBotPlay model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionResults($id)
+    {
+        Url::remember();
+        $model = $this->findModel($id);
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => BotUse::find()
+                ->where(['item_type'=>'phrase'])
+                ->andWhere(['item_id'=>$id])
+                ->andWhere(['!=','user_result', ''])
+                ->orderBy(['id'=> SORT_DESC])
+                ->all(),
+            'pagination'=> [
+                'pageSize' => 100,
+            ],
+        ]);
+
+        return $this->render('results', [
+            'model' => $model,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
