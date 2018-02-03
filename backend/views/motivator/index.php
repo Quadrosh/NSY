@@ -55,7 +55,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=> 'html',
             ],
             'list_name',
-            'hrurl:url',
+//            'hrurl:url',
+            [
+                'attribute'=>'hrurl',
+                'value' => function($data)
+                {
+                    if (Yii::$app->request->getHostName() == 'cp.nsy.local') {
+                        $theData = '<a  href="http://nsy.local/motivator/'.$data['hrurl'].'">'.$data['hrurl'].'</a>';
+                    } else {
+                        $theData = '<a  href="http://nashe-schastye.ru/motivator/'.$data['hrurl'].'">'.$data['hrurl'].'</a>';
+                    }
+                    return $theData;
+                },
+                'format'=> 'html',
+            ],
              'title',
              'description:ntext',
              'keywords:ntext',

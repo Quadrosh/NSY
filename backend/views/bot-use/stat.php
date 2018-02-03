@@ -21,7 +21,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
 
-            'hrurl',
+            [
+                'attribute'=>'hrurl',
+                'value' => function($data)
+                {
+                    if ($data['type']=='phrase') {
+                        return '<a  href="/ch-bot-phrase/results?id='.$data['id'].'">'.$data['hrurl'].'</a>';
+                    }
+                    elseif ($data['type']=='play') {
+                        return '<a  href="/ch-bot-play/results?id='.$data['id'].'">'.$data['hrurl'].'</a>';
+                    }
+                },
+                'format'=> 'html',
+            ],
             'plays',
             'interrupt',
             'start',

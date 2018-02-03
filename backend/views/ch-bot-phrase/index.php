@@ -23,7 +23,15 @@ $this->params['breadcrumbs'][] = $this->title;
 //            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'hrurl',
+//            'hrurl',
+            [
+                'attribute'=>'hrurl',
+                'value' => function($data)
+                {
+                    return '<a  href="/ch-bot-phrase/view?id='.$data['id'].'">'.$data['hrurl'].'</a>';
+                },
+                'format'=> 'html',
+            ],
             'name',
             'description:ntext',
 //            'cat_id',

@@ -89,6 +89,9 @@ class BotUseController extends Controller
                 }
                 $res[$use['item_id'].'_'.$use['item_type']]['hrurl'] = $hrurl;
                 $res[$use['item_id'].'_'.$use['item_type']]['plays'] = 1;
+                $res[$use['item_id'].'_'.$use['item_type']]['type'] = $use['item_type'];
+                $res[$use['item_id'].'_'.$use['item_type']]['id'] = $use['item_id'];
+
 
                 if ($use['done'] == 'done') {
                     $res[$use['item_id'].'_'.$use['item_type']]['done'] = 1;
