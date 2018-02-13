@@ -199,8 +199,8 @@ class B2bBotController extends \yii\web\Controller
             $info = curl_getinfo($ch);
 //            $info['direction']='to user';
 //            array_unshift($info, ['direction'=>'to user']);
-//            $info = ['action'=>'to user'] + $info;
-            $info = ['action'=>$this->context->action->id] + $info;
+            $info = ['action'=>'to user'] + $info;
+//            $info = ['action'=>$this->context->action->id] + $info;
             Yii::info($info, 'b2bBot');
 
         }
