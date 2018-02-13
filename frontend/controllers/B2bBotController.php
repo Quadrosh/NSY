@@ -67,9 +67,17 @@ class B2bBotController extends \yii\web\Controller
         $query = $inlineQuery['query'];
 
 
+//        if ($message['text']=='dev') {
+//            $orders = $this->orders([
+//                'phone' => Yii::$app->params['b2bTestPhone'],
+//                'orderId' => 'МУЗ006396',
+//            ]);
+//        }
+
+
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
-            'text' => 'ou years',
+            'text' => 'our years',
         ]);
 
         return [
@@ -85,14 +93,14 @@ class B2bBotController extends \yii\web\Controller
 
 
 
-    public function order(array $options = [])
+    private function order(array $options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdOrder'], $options);
         return json_decode($jsonResponse);
     }
 
 
-    public function orders(array $options = [])
+    private function orders(array $options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdLastOrders'], $options);
         return json_decode($jsonResponse);
@@ -112,12 +120,12 @@ class B2bBotController extends \yii\web\Controller
         $r = curl_exec($ch);
         if($r == false){
             $text = 'error '.curl_error($ch);
-//            Yii::info($text, 'attBot');
+            Yii::info($text, 'b2bBot');
             return $text;
         } else {
 //            return curl_getinfo($ch);
-//            $info = curl_getinfo($ch);
-//            Yii::info($info, 'attBot');
+            $info = curl_getinfo($ch);
+            Yii::info($info, 'b2bBot');
 //            print_r($info) ;
 
         }
