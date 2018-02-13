@@ -77,7 +77,7 @@ class B2bBotController extends \yii\web\Controller
 
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
-            'text' => 'our years',
+            'text' => 'чота на русском',
         ]);
 
         return [
@@ -137,8 +137,8 @@ class B2bBotController extends \yii\web\Controller
     {
         $chat_id = $option['chat_id'];
         $urlEncodedText = urlencode($option['text']);
-//        unset($option['chat_id']);
-//        unset($option['text']);
+        unset($option['chat_id']);
+        unset($option['text']);
         $jsonResponse = $this->sendToUser("https://api.telegram.org/bot" .
             Yii::$app->params['b2bBotToken'].
             "/sendMessage?chat_id=".$chat_id .
@@ -199,8 +199,7 @@ class B2bBotController extends \yii\web\Controller
             $info = curl_getinfo($ch);
             $info = [
                     'action'=>'to User',
-                    'user ID'=>$options['chat_id'],
-                    'text'=>$options['text']
+                    'POSTFIELDS'=>$options,
                 ] + $info;
             Yii::info($info, 'b2bBot');
 
