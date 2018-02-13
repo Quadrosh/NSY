@@ -181,15 +181,15 @@ class B2bBotController extends \yii\web\Controller
         return json_decode($jsonResponse);
     }
 
-    private function sendToUser($url, $option=array())
+    private function sendToUser($url, $options=array())
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_USERAGENT, "Telebot");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        if (count($option)) {
+        if (count($options)) {
             curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $option);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $options);
         }
         $r = curl_exec($ch);
         if($r == false){
@@ -197,10 +197,11 @@ class B2bBotController extends \yii\web\Controller
             Yii::info($text, 'b2bBot');
         } else {
             $info = curl_getinfo($ch);
-//            $info['direction']='to user';
-//            array_unshift($info, ['direction'=>'to user']);
-            $info = ['action'=>'to user'] + $info;
-//            $info = ['action'=>$this->context->action->id] + $info;
+            $info = [
+                    'action'=>'to User',
+                    'user ID'=>$options['chat_id'],
+                    'text'=>$options['text']
+                ] + $info;
             Yii::info($info, 'b2bBot');
 
         }
