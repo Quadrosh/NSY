@@ -40,6 +40,7 @@ class ArticleController extends BackController
      */
     public function actionIndex()
     {
+        Url::remember();
         $dataProvider = new ActiveDataProvider([
             'query' => Articles::find(),
         ]);

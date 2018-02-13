@@ -102,6 +102,7 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                $params['b2bBotPath']=>'b2b-bot/do',
                 $params['motivBotPath']=>'motivator-bot/dialog',
                 $params['chepuBotPath']=>'chepuha-bot/dialog',
                 'motivator'=>'motivator/list',
