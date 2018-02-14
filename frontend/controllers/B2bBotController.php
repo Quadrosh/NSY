@@ -50,21 +50,10 @@ class B2bBotController extends \yii\web\Controller
         $callbackQuery = Yii::$app->request->post('callback_query'); // array
         $inlineQuery = Yii::$app->request->post('inline_query'); // array
 
+        Yii::info($input, 'b2bBot');
 
-        $messageId = $message['message_id'];
-        $from = $message['from'];  // array
-        $fromId = $message['from']['id'];
-        $fromIsBot = $message['from']['is_bot'];
-        $fromFirstName = $message['from']['first_name'];
-        $fromLastName = $message['from']['last_name'];
-        $fromUserName = $message['from']['username'];
-        $fromLanguageCode = $message['from']['language_code'];
-        $chat = $message['chat'];
-        $chatId = $message['chat']['id'];
-        $chatType = $message['chat']['type'];
-        $date = $message['date'];
-        $text = $message['text'];
-        $query = $inlineQuery['query'];
+
+
 
 
 //        if ($message['text']=='dev') {
@@ -200,7 +189,7 @@ class B2bBotController extends \yii\web\Controller
         } else {
             $info = curl_getinfo($ch);
             $info = [
-                    'action'=>'to User',
+                    'action'=>'curl to User',
                     'options'=>$options,
                     'optionsInBody'=>$optionsInBody,
                 ] + $info;
