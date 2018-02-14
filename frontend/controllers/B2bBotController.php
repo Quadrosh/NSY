@@ -50,7 +50,7 @@ class B2bBotController extends \yii\web\Controller
         $callbackQuery = Yii::$app->request->post('callback_query'); // array
         $inlineQuery = Yii::$app->request->post('inline_query'); // array
 
-        Yii::info($input, 'b2bBot');
+        Yii::info(json_decode($input), 'b2bBot');
 
 
 
