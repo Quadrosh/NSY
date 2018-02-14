@@ -51,9 +51,8 @@ class B2bBotController extends \yii\web\Controller
         $inlineQuery = Yii::$app->request->post('inline_query'); // array
 
         Yii::info([
-            'action'=>'curl to User',
+            'action'=>'request from User',
             'input'=>$input,
-            'decoded input'=>json_decode($input),
             'updateId'=>$updateId,
             'message'=>$message,
             'callbackQuery'=>$callbackQuery,
@@ -61,9 +60,7 @@ class B2bBotController extends \yii\web\Controller
         ], 'b2bBot');
 
 
-
-
-
+        
 //        if ($message['text']=='dev') {
 //            $orders = $this->orders([
 //                'phone' => Yii::$app->params['b2bTestPhone'],
