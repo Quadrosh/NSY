@@ -50,7 +50,15 @@ class B2bBotController extends \yii\web\Controller
         $callbackQuery = Yii::$app->request->post('callback_query'); // array
         $inlineQuery = Yii::$app->request->post('inline_query'); // array
 
-        Yii::info(json_decode($input), 'b2bBot');
+        Yii::info([
+            'action'=>'curl to User',
+            'input'=>$input,
+            'decoded input'=>json_decode($input),
+            'updateId'=>$updateId,
+            'message'=>$message,
+            'callbackQuery'=>$callbackQuery,
+            'inlineQuery'=>$inlineQuery
+        ], 'b2bBot');
 
 
 
@@ -161,8 +169,6 @@ class B2bBotController extends \yii\web\Controller
     {
         $chat_id = $options['chat_id'];
         $urlEncodedText = urlencode($options['text']);
-//        unset($options['chat_id']);
-//        unset($options['text']);
         $jsonResponse = $this->sendToUser("https://api.telegram.org/bot" .
             Yii::$app->params['b2bBotToken'].
             "/sendMessage?chat_id=".$chat_id .
