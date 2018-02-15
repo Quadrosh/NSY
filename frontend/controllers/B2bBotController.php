@@ -81,10 +81,16 @@ class B2bBotController extends \yii\web\Controller
             'serverResponse'=>$serverResponse,
         ], 'b2bBot');
 
+        $resp = '';
+        foreach ($serverResponse as $item) {
+            $resp .= 'Заказ '. $item['orderId'].PHP_EOL;
+
+        }
+
 
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
-            'text' => 'чота на русском, updateId = '.$updateId,
+            'text' => 'Работаем, updateId = '.$updateId.PHP_EOL. $resp,
         ]);
 
         return [
