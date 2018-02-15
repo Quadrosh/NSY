@@ -130,8 +130,8 @@ class B2bBotController extends \yii\web\Controller
             return $text;
         } else {
             $info = curl_getinfo($ch);
-            $info['url'] = str_replace(Yii::$app->params['b2bServerApiKey'],'xxx',  $info['url']);;
-            $options['apiKey']='xxx';
+            $info['url'] = str_replace(Yii::$app->params['b2bServerApiKey'],'_not_logged_',  $info['url']);;
+            $options['apiKey']='_not_logged_';
             $info = [
                     'action'=>'curl to Server',
                     'options'=>$options,
@@ -208,6 +208,7 @@ class B2bBotController extends \yii\web\Controller
             Yii::info($text, 'b2bBot');
         } else {
             $info = curl_getinfo($ch);
+            $info['url'] = str_replace(Yii::$app->params['b2bBotToken'],'_not_logged_',  $info['url']);;
             $info = [
                     'action'=>'curl to User',
                     'options'=>$options,
