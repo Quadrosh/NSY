@@ -52,7 +52,7 @@ class B2bBotController extends \yii\web\Controller
 
         Yii::info([
             'action'=>'request from User',
-            'input'=>$input,
+            'input'=>Json::decode($input),
             'updateId'=>$updateId,
             'message'=>$message,
             'callbackQuery'=>$callbackQuery,
