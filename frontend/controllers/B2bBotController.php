@@ -107,8 +107,6 @@ class B2bBotController extends \yii\web\Controller
     private function orders(array $options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdLastOrders'], $options);
-//        return json_decode($jsonResponse);
-//        return $jsonResponse;
         return Json::decode($jsonResponse);
     }
 
@@ -125,11 +123,15 @@ class B2bBotController extends \yii\web\Controller
         }
         $r = curl_exec($ch);
         if($r == false){
-            $text = 'error '.curl_error($ch);
+            $text = 'curl error '.curl_error($ch);
             Yii::info($text, 'b2bBot');
             return $text;
         } else {
             $info = curl_getinfo($ch);
+            $info = [
+                    'action'=>'curl to Server',
+                    'options'=>$options,
+                ] + $info;
             Yii::info($info, 'b2bBot');
 
         }
@@ -199,7 +201,7 @@ class B2bBotController extends \yii\web\Controller
         }
         $r = curl_exec($ch);
         if($r == false){
-            $text = 'error '.curl_error($ch);
+            $text = 'curl error '.curl_error($ch);
             Yii::info($text, 'b2bBot');
         } else {
             $info = curl_getinfo($ch);
