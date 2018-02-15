@@ -53,10 +53,6 @@ class B2bBotController extends \yii\web\Controller
         Yii::info([
             'action'=>'request from User',
             'input'=>Json::decode($input),
-            'updateId'=>$updateId,
-            'message'=>$message,
-            'callbackQuery'=>$callbackQuery,
-            'inlineQuery'=>$inlineQuery
         ], 'b2bBot');
 
 
@@ -106,7 +102,7 @@ class B2bBotController extends \yii\web\Controller
     private function order(array $options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdOrder'], $options);
-        return json_decode($jsonResponse);
+        return Json::decode($jsonResponse);
     }
 
 
@@ -139,7 +135,6 @@ class B2bBotController extends \yii\web\Controller
                     'options'=>$options,
                 ] + $info;
             Yii::info($info, 'b2bBot');
-
         }
         curl_close($ch);
         return $r;
@@ -222,9 +217,6 @@ class B2bBotController extends \yii\web\Controller
         curl_close($ch);
         return $r;
     }
-
-
-
 
 
 }

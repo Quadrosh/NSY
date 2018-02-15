@@ -15,6 +15,7 @@ use Yii;
  * @property string $b2b_name
  * @property string $email
  * @property string $phone
+ * @property int $status
  * @property int $updated_at
  * @property int $created_at
  */
@@ -35,7 +36,7 @@ class B2bBotUser extends \yii\db\ActiveRecord
     {
         return [
             [['telegram_user_id'], 'required'],
-            [['telegram_user_id', 'updated_at', 'created_at'], 'integer'],
+            [['telegram_user_id', 'status', 'updated_at', 'created_at'], 'integer'],
             [['first_name', 'last_name', 'username', 'b2b_name', 'email', 'phone'], 'string', 'max' => 255],
         ];
     }
@@ -54,6 +55,7 @@ class B2bBotUser extends \yii\db\ActiveRecord
             'b2b_name' => 'B2b Name',
             'email' => 'Email',
             'phone' => 'Phone',
+            'status' => 'Status',
             'updated_at' => 'Updated At',
             'created_at' => 'Created At',
         ];
