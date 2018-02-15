@@ -60,7 +60,9 @@ class B2bBotController extends \yii\web\Controller
         ], 'b2bBot');
 
 
-        
+        $userPhone = Yii::$app->params['b2bTestPhone'];
+        $orderId = 'МУЗ006396';
+
 //        if ($message['text']=='dev') {
 //            $orders = $this->orders([
 //                'phone' => Yii::$app->params['b2bTestPhone'],
@@ -69,9 +71,20 @@ class B2bBotController extends \yii\web\Controller
 //        }
 
 
+        $serverResponse = $this->orders([
+            'phone' => $userPhone,
+        ]);
+
+        Yii::info([
+            'action'=>'response from Server',
+            'updateId'=>$updateId,
+            'serverResponse'=>$serverResponse,
+        ], 'b2bBot');
+
+
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
-            'text' => 'чота на русском',
+            'text' => 'чота на русском, updateId = '.$updateId,
         ]);
 
         return [
@@ -79,10 +92,7 @@ class B2bBotController extends \yii\web\Controller
             'code' => 200,
         ];
 
-//        return $this->orders([
-//            'phone' => Yii::$app->params['b2bTestPhone'],
-//            'orderId' => 'МУЗ006396',
-//        ]);
+
     }
 
 
