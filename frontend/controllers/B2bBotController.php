@@ -130,6 +130,8 @@ class B2bBotController extends \yii\web\Controller
             return $text;
         } else {
             $info = curl_getinfo($ch);
+            $info['url'] = str_replace(Yii::$app->params['b2bServerApiKey'],'xxx',  $info['url']);;
+            $options['apiKey']='xxx';
             $info = [
                     'action'=>'curl to Server',
                     'options'=>$options,
