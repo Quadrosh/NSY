@@ -81,7 +81,7 @@ class B2bBotController extends \yii\web\Controller
 
         $request = new B2bBotRequest;
         $request['user_id'] = $this->user['id'];
-        $request['update_id'] = $updateId;
+        $request['update_id'] = strval($updateId);
         $request['user_time'] = intval($message['date']);
         $request['request'] = $message['text'];
         $result = $request->save();
@@ -93,6 +93,8 @@ class B2bBotController extends \yii\web\Controller
             '$saveResult'=>$result,
         ], 'b2bBot');
 
+
+        
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
             'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL,
