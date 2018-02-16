@@ -72,12 +72,19 @@ class B2bBotController extends \yii\web\Controller
         }
         $this->user = $user;
 
-        $this->request = new B2bBotRequest;
-        $this->request['user_id'] = $this->user['id'];
-        $this->request['update_id'] = $updateId;
-        $this->request['user_time'] = intval($message['date']);
-        $this->request['request'] = $message['text'];
-        $result = $this->request->save();
+//        $this->request = new B2bBotRequest;
+//        $this->request['user_id'] = $this->user['id'];
+//        $this->request['update_id'] = $updateId;
+//        $this->request['user_time'] = intval($message['date']);
+//        $this->request['request'] = $message['text'];
+//        $result = $this->request->save();
+
+        $request = new B2bBotRequest;
+        $request['user_id'] = $this->user['id'];
+        $request['update_id'] = $updateId;
+        $request['user_time'] = intval($message['date']);
+        $request['request'] = $message['text'];
+        $result = $request->save();
 
         Yii::info([
             'action'=>'$this->request',
@@ -89,11 +96,7 @@ class B2bBotController extends \yii\web\Controller
             'chat_id' => $message['from']['id'],
             'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL,
         ]);
-//        $request = new B2bBotRequest;
-//        $request['update_id'] = $updateId;
-//        $request['user_time'] = intval($message['date']);
-//        $request['request'] = $message['text'];
-//        $request->save();
+
 
 
 
