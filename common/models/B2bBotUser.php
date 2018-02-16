@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "b2b_bot_user".
@@ -15,7 +16,7 @@ use Yii;
  * @property string $b2b_name
  * @property string $email
  * @property string $phone
- * @property int $status
+ * @property string $status
  * @property int $updated_at
  * @property int $created_at
  */
@@ -29,6 +30,16 @@ class B2bBotUser extends \yii\db\ActiveRecord
         return 'b2b_bot_user';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+//                'updatedAtAttribute' => false,
+            ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -36,8 +47,8 @@ class B2bBotUser extends \yii\db\ActiveRecord
     {
         return [
             [['telegram_user_id'], 'required'],
-            [['telegram_user_id', 'status', 'updated_at', 'created_at'], 'integer'],
-            [['first_name', 'last_name', 'username', 'b2b_name', 'email', 'phone'], 'string', 'max' => 255],
+            [['telegram_user_id', 'updated_at', 'created_at'], 'integer'],
+            [['first_name', 'last_name', 'username', 'b2b_name', 'email', 'phone', 'status'], 'string', 'max' => 255],
         ];
     }
 

@@ -82,7 +82,7 @@ AppAsset::register($this);
                     'label' => 'Stat',
                     'items' => [
                         ['label' => 'Games', 'url' => ['/bot-use/stat?days=7']],
-                        ['label' => 'Users', 'url' => ['/bot-user/stat']],
+//                        ['label' => 'Users', 'url' => ['/bot-user/stat']],
                     ],
                 ],
                 ['label' => 'ChBotSession', 'url' => ['/ch-bot-session/index']],
@@ -94,6 +94,13 @@ AppAsset::register($this);
                 ['label' => 'BotUse', 'url' => ['/bot-use/index']],
                 ['label' => 'BotUser', 'url' => ['/bot-user/index']],
                 ['label' => 'BotUserPermission', 'url' => ['/bot-user-permission/index']],
+                [
+                    'label' => 'Development',
+                    'items' => [
+                        ['label' => 'b2bBotUser', 'url' => ['/b2b-bot-user']],
+                        ['label' => 'b2bBotRequest', 'url' => ['/b2b-bot-request']],
+                    ],
+                ],
             ],
         ],
         [

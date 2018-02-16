@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 
+use common\models\B2bBotUser;
 use yii\filters\ContentNegotiator;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -56,6 +57,17 @@ class B2bBotController extends \yii\web\Controller
         ], 'b2bBot');
 
 
+        $user = B2bBotUser::find()->where(['telegram_user_id'=>$message['from']['id']])->one();
+        if (!$user) {
+            $user = new B2bBotUser;
+            $user['telegram_user_id'] = $message['from']['id'];
+            $user['first_name'] = $message['from']['first_name'];
+            $user['last_name'] = $message['from']['last_name'];
+            $user['username'] = $message['from']['username'];
+            $user['status'] = 'unconfirmed';
+            $user->save();
+        }
+
         $userPhone = Yii::$app->params['b2bTestPhone'];
         $orderId = 'МУЗ006396';
 
@@ -86,7 +98,7 @@ class B2bBotController extends \yii\web\Controller
 
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
-            'text' => 'Работаем, updateId = '.$updateId.PHP_EOL. $resp,
+            'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL. $resp,
         ]);
 
         return [
@@ -130,7 +142,7 @@ class B2bBotController extends \yii\web\Controller
             return $text;
         } else {
             $info = curl_getinfo($ch);
-            $info['url'] = str_replace(Yii::$app->params['b2bServerApiKey'],'_not_logged_',  $info['url']);;
+            $info['url'] = str_replace(Yii::$app->params['b2bServerApiKey'],'_not_logged_',  $info['url']);
             $options['apiKey']='_not_logged_';
             $info = [
                     'action'=>'curl to Server',
@@ -208,14 +220,13 @@ class B2bBotController extends \yii\web\Controller
             Yii::info($text, 'b2bBot');
         } else {
             $info = curl_getinfo($ch);
-            $info['url'] = str_replace(Yii::$app->params['b2bBotToken'],'_not_logged_',  $info['url']);;
+            $info['url'] = str_replace(Yii::$app->params['b2bBotToken'],'_not_logged_',  $info['url']);
             $info = [
                     'action'=>'curl to User',
                     'options'=>$options,
                     'optionsInBody'=>$optionsInBody,
                 ] + $info;
             Yii::info($info, 'b2bBot');
-
         }
         curl_close($ch);
         return $r;
