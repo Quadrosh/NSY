@@ -71,11 +71,19 @@ class B2bBotController extends \yii\web\Controller
             $user->save();
         }
         $this->user = $user;
+
         $this->request = new B2bBotRequest;
+        $this->request['user_id'] = $this->user['id'];
         $this->request['update_id'] = $updateId;
         $this->request['user_time'] = intval($message['date']);
         $this->request['request'] = $message['text'];
         $this->request->save();
+//
+//        $request = new B2bBotRequest;
+//        $request['update_id'] = $updateId;
+//        $request['user_time'] = intval($message['date']);
+//        $request['request'] = $message['text'];
+//        $request->save();
 
 
         $userPhone = Yii::$app->params['b2bTestPhone'];
