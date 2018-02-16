@@ -27,9 +27,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'user_id',
             'request:ntext',
             'answer:ntext',
-            'user_time:datetime',
-            'request_time:datetime',
-            'answer_time:datetime',
+            'user_time',
+            'request_time',
+//            'answer_time'
+            [
+                'attribute'=>'answer_time',
+                'value' => function($data)
+                {
+                    return \Yii::$app->formatter->asDatetime($data['answer_time'], 'dd/MM HH:mm:ss');
+                },
+                'format'=> 'html',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
