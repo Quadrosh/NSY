@@ -73,7 +73,7 @@ class B2bBotController extends \yii\web\Controller
         $this->user = $user;
         $this->request = new B2bBotRequest();
         $this->request['update_id'] = $updateId;
-        $this->request['user_time'] = $message['date'];
+        $this->request['user_time'] = intval($message['date']);
         $this->request['request'] = $message['text'];
         $this->request->save();
 
