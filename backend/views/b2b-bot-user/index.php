@@ -31,8 +31,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             'phone',
             'status',
-            'updated_at',
-            'created_at',
+//            'updated_at',
+            [
+                'attribute'=>'updated_at',
+                'value' => function($data)
+                {
+                    return \Yii::$app->formatter->asDatetime($data['updated_at'], 'dd/MM/yy HH:mm:ss');
+                },
+                'format'=> 'html',
+            ],
+//            'created_at',
+            [
+                'attribute'=>'created_at',
+                'value' => function($data)
+                {
+                    return \Yii::$app->formatter->asDatetime($data['created_at'], 'dd/MM/yy HH:mm:ss');
+                },
+                'format'=> 'html',
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -27,14 +27,30 @@ $this->params['breadcrumbs'][] = $this->title;
             'user_id',
             'request:ntext',
             'answer:ntext',
-            'user_time',
-            'request_time',
+//            'user_time',
+            [
+                'attribute'=>'user_time',
+                'value' => function($data)
+                {
+                    return \Yii::$app->formatter->asDatetime($data['user_time'], 'dd/MM/yy HH:mm:ss');
+                },
+                'format'=> 'html',
+            ],
+//            'request_time',
+            [
+                'attribute'=>'request_time',
+                'value' => function($data)
+                {
+                    return \Yii::$app->formatter->asDatetime($data['request_time'], 'dd/MM/yy HH:mm:ss');
+                },
+                'format'=> 'html',
+            ],
 //            'answer_time'
             [
                 'attribute'=>'answer_time',
                 'value' => function($data)
                 {
-                    return \Yii::$app->formatter->asDatetime($data['answer_time'], 'dd/MM HH:mm:ss');
+                    return \Yii::$app->formatter->asDatetime($data['answer_time'], 'dd/MM/yy HH:mm:ss');
                 },
                 'format'=> 'html',
             ],
