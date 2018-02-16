@@ -219,6 +219,7 @@ class B2bBotController extends \yii\web\Controller
     public function sendMessage(array $options)
     {
         $this->request['answer'] = $options['text'];
+        $this->request['answer_time'] = time();
         $this->request->save();
         $chat_id = $options['chat_id'];
         $urlEncodedText = urlencode($options['text']);
