@@ -88,7 +88,7 @@ class B2bBotController extends \yii\web\Controller
 
         Yii::info([
             'action'=>'$this->request',
-            'this->request'=>$this->request,
+            'request'=>$request,
             '$saveResult'=>$result,
         ], 'b2bBot');
 
