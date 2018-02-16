@@ -72,29 +72,22 @@ class B2bBotController extends \yii\web\Controller
         }
         $this->user = $user;
 
-//        $this->request = new B2bBotRequest;
-//        $this->request['user_id'] = $this->user['id'];
-//        $this->request['update_id'] = $updateId;
-//        $this->request['user_time'] = intval($message['date']);
-//        $this->request['request'] = $message['text'];
-//        $result = $this->request->save();
-
-        $request = new B2bBotRequest;
-        $request['user_id'] = $this->user['id'];
-        $request['update_id'] = strval($updateId);
-        $request['user_time'] = intval($message['date']);
-        $request['request'] = $message['text'];
-        $result = $request->save();
-
-        Yii::info([
-            'action'=>'$this->request',
-//            'request'=>$request,
-            'errors'=>$request->getErrors(),
-            '$saveResult'=>$result,
-        ], 'b2bBot');
+        $this->request = new B2bBotRequest;
+        $this->request['user_id'] = $this->user['id'];
+        $this->request['update_id'] = strval($updateId);
+        $this->request['user_time'] = intval($message['date']);
+        $this->request['request'] = $message['text'];
+        $this->request->save();
 
 
-        
+//        Yii::info([
+//            'action'=>'$this->request',
+////            'request'=>$request,
+//            'errors'=>$this->request->getErrors(),
+//        ], 'b2bBot');
+
+
+
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
             'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL,
@@ -225,6 +218,8 @@ class B2bBotController extends \yii\web\Controller
 
     public function sendMessage(array $options)
     {
+        $this->request['answer'] = $options['text'];
+        $this->request->save();
         $chat_id = $options['chat_id'];
         $urlEncodedText = urlencode($options['text']);
         $jsonResponse = $this->sendToUser("https://api.telegram.org/bot" .
