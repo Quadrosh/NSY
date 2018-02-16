@@ -13,6 +13,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int $user_id
  * @property string $request
  * @property string $answer
+ * @property int $user_time
  * @property int $request_time
  * @property int $answer_time
  */
@@ -43,7 +44,7 @@ class B2bBotRequest extends \yii\db\ActiveRecord
     {
         return [
             [['user_id'], 'required'],
-            [['user_id', 'request_time', 'answer_time'], 'integer'],
+            [['user_id', 'user_time', 'request_time', 'answer_time'], 'integer'],
             [['request', 'answer'], 'string'],
             [['update_id'], 'string', 'max' => 255],
         ];
@@ -60,6 +61,7 @@ class B2bBotRequest extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'request' => 'Request',
             'answer' => 'Answer',
+            'user_time' => 'User Time',
             'request_time' => 'Request Time',
             'answer_time' => 'Answer Time',
         ];

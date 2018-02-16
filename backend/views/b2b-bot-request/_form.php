@@ -20,6 +20,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'answer')->textarea(['rows' => 6]) ?>
 
+    <?= $form->field($model, 'user_time')->textInput() ?>
+
     <?= $form->field($model, 'request_time')->textInput() ?>
 
     <?= $form->field($model, 'answer_time')->textInput() ?>

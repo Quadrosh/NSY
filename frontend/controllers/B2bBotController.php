@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 
+use common\models\B2bBotRequest;
 use common\models\B2bBotUser;
 use yii\filters\ContentNegotiator;
 use yii\helpers\Html;
@@ -14,6 +15,8 @@ use yii\web\Response;
 
 class B2bBotController extends \yii\web\Controller
 {
+    private $user;
+    private $request;
 
     public function behaviors() {
         return [
@@ -59,7 +62,7 @@ class B2bBotController extends \yii\web\Controller
 
         $user = B2bBotUser::find()->where(['telegram_user_id'=>$message['from']['id']])->one();
         if (!$user) {
-            $user = new B2bBotUser;
+            $user = new B2bBotUser();
             $user['telegram_user_id'] = $message['from']['id'];
             $user['first_name'] = $message['from']['first_name'];
             $user['last_name'] = $message['from']['last_name'];
@@ -67,6 +70,13 @@ class B2bBotController extends \yii\web\Controller
             $user['status'] = 'unconfirmed';
             $user->save();
         }
+        $this->user = $user;
+        $this->request = new B2bBotRequest();
+        $this->request['update_id'] = $updateId;
+        $this->request['user_time'] = $message['date'];
+        $this->request['request'] = $message['text'];
+        $this->request->save();
+
 
         $userPhone = Yii::$app->params['b2bTestPhone'];
         $orderId = 'МУЗ006396';
