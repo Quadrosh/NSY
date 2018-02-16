@@ -62,7 +62,7 @@ class B2bBotController extends \yii\web\Controller
 
         $user = B2bBotUser::find()->where(['telegram_user_id'=>$message['from']['id']])->one();
         if (!$user) {
-            $user = new B2bBotUser();
+            $user = new B2bBotUser;
             $user['telegram_user_id'] = $message['from']['id'];
             $user['first_name'] = $message['from']['first_name'];
             $user['last_name'] = $message['from']['last_name'];
@@ -71,7 +71,7 @@ class B2bBotController extends \yii\web\Controller
             $user->save();
         }
         $this->user = $user;
-        $this->request = new B2bBotRequest();
+        $this->request = new B2bBotRequest;
         $this->request['update_id'] = $updateId;
         $this->request['user_time'] = intval($message['date']);
         $this->request['request'] = $message['text'];
