@@ -77,8 +77,18 @@ class B2bBotController extends \yii\web\Controller
         $this->request['update_id'] = $updateId;
         $this->request['user_time'] = intval($message['date']);
         $this->request['request'] = $message['text'];
-        $this->request->save();
-//
+        $result = $this->request->save();
+
+        Yii::info([
+            'action'=>'$this->request',
+            'this->request'=>$this->request,
+            '$saveResult'=>$result,
+        ], 'b2bBot');
+
+        $this->sendMessage([
+            'chat_id' => $message['from']['id'],
+            'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL,
+        ]);
 //        $request = new B2bBotRequest;
 //        $request['update_id'] = $updateId;
 //        $request['user_time'] = intval($message['date']);
@@ -86,38 +96,36 @@ class B2bBotController extends \yii\web\Controller
 //        $request->save();
 
 
+
         $userPhone = Yii::$app->params['b2bTestPhone'];
         $orderId = 'МУЗ006396';
 
-//        if ($message['text']=='dev') {
-//            $orders = $this->orders([
-//                'phone' => Yii::$app->params['b2bTestPhone'],
-//                'orderId' => 'МУЗ006396',
-//            ]);
+
+
+
+
+
+//        $serverResponse = $this->orders([
+//            'phone' => $userPhone,
+//        ]);
+//
+//        Yii::info([
+//            'action'=>'response from Server',
+//            'updateId'=>$updateId,
+//            'serverResponse'=>$serverResponse,
+//        ], 'b2bBot');
+//
+//        $resp = '';
+//        foreach ($serverResponse as $item) {
+//            $resp .= 'Заказ '. $item['orderId'].PHP_EOL;
+//
 //        }
 
 
-        $serverResponse = $this->orders([
-            'phone' => $userPhone,
-        ]);
-
-        Yii::info([
-            'action'=>'response from Server',
-            'updateId'=>$updateId,
-            'serverResponse'=>$serverResponse,
-        ], 'b2bBot');
-
-        $resp = '';
-        foreach ($serverResponse as $item) {
-            $resp .= 'Заказ '. $item['orderId'].PHP_EOL;
-
-        }
-
-
-        $this->sendMessage([
-            'chat_id' => $message['from']['id'],
-            'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL. $resp,
-        ]);
+//        $this->sendMessage([
+//            'chat_id' => $message['from']['id'],
+//            'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL. $resp,
+//        ]);
 
         return [
             'message' => 'ok',
