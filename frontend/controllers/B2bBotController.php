@@ -102,7 +102,10 @@ class B2bBotController extends \yii\web\Controller
                 'phone'=>$phone,
             ], 'b2bBot');
 
-            $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'== 'active'])->one();
+            $alreadyUser = null;
+            if (B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'== 'active'])->one()) {
+                $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'== 'active'])->one();
+            }
 
             Yii::info([
                 'action'=>'$alreadyUser',
@@ -112,20 +115,24 @@ class B2bBotController extends \yii\web\Controller
             ], 'b2bBot');
 
 
-            if ($alreadyUser && $alreadyUser['id']!= $this->user['id']) {
-                $this->sendMessage([
-                    'chat_id' => $message['from']['id'],
-                    'text' => 'Этот телефон уже использовался для доступа.'.PHP_EOL.
-                        'На данный момент может быть только один доступ на аккаунт.'.PHP_EOL.
-                        'Если это Ваш телефон и Вы не оформляли доступ - свяжитесь со своим менеджером в дилерском отделе.',
-                ]);
-                $this->user['phone'] = 'already exist' . $phone;
-                $this->user->save();
-                return [
-                    'message' => 'ok',
-                    'code' => 200,
-                ];
-            }
+//            if ($alreadyUser && $alreadyUser['id']!= $this->user['id']) {
+//                $this->sendMessage([
+//                    'chat_id' => $message['from']['id'],
+//                    'text' => 'Этот телефон уже использовался для доступа.'.PHP_EOL.
+//                        'На данный момент может быть только один доступ на аккаунт.'.PHP_EOL.
+//                        'Если это Ваш телефон и Вы не оформляли доступ - свяжитесь со своим менеджером в дилерском отделе.',
+//                ]);
+//                $this->user['phone'] = 'already exist' . $phone;
+//                $this->user->save();
+//                return [
+//                    'message' => 'ok',
+//                    'code' => 200,
+//                ];
+//            }
+
+
+
+
 // авторизация на сервер
             if (!$alreadyUser) {
                 Yii::info([
