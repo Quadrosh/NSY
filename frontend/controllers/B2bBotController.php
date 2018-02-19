@@ -102,44 +102,28 @@ class B2bBotController extends \yii\web\Controller
                 'phone'=>$phone,
             ], 'b2bBot');
 
-//            $alreadyUser = null;
-//            if (B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'=> 'active'])->one()) {
-                $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'=> 'active'])->one();
-//            }
 
-            Yii::info([
-                'action'=>'alreadyUser',
-                'updateId'=>$updateId,
-                'alreadyUser'=>$alreadyUser,
-                'errors'=>$alreadyUser->errors,
-            ], 'b2bBot');
+            $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'=> 'active'])->one();
 
 
-//            if ($alreadyUser && $alreadyUser['id']!= $this->user['id']) {
-//                $this->sendMessage([
-//                    'chat_id' => $message['from']['id'],
-//                    'text' => 'Этот телефон уже использовался для доступа.'.PHP_EOL.
-//                        'На данный момент может быть только один доступ на аккаунт.'.PHP_EOL.
-//                        'Если это Ваш телефон и Вы не оформляли доступ - свяжитесь со своим менеджером в дилерском отделе.',
-//                ]);
-//                $this->user['phone'] = 'already exist' . $phone;
-//                $this->user->save();
-//                return [
-//                    'message' => 'ok',
-//                    'code' => 200,
-//                ];
-//            }
+            if ($alreadyUser && $alreadyUser['id']!= $this->user['id']) {
+                $this->sendMessage([
+                    'chat_id' => $message['from']['id'],
+                    'text' => 'Этот телефон уже использовался для доступа.'.PHP_EOL.
+                        'На данный момент может быть только один доступ на аккаунт.'.PHP_EOL.
+                        'Если это Ваш телефон и Вы не оформляли доступ - свяжитесь со своим менеджером в дилерском отделе.',
+                ]);
+                $this->user['phone'] = 'already exist' . $phone;
+                $this->user->save();
+                return ['message' => 'ok', 'code' => 200,];
+
+            }
 
 
 
 
 // авторизация на сервер
             if (!$alreadyUser) {
-                Yii::info([
-                    'action'=>'!$alreadyUser',
-                    'updateId'=>$updateId,
-                    'phone'=>$phone,
-                ], 'b2bBot');
 
                 $serverResponse = $this->orders([
                     'phone' => $phone,
@@ -148,20 +132,41 @@ class B2bBotController extends \yii\web\Controller
                 Yii::info([
                     'action'=>'response from Server /проверка телефона/',
                     'updateId'=>$updateId,
+                    'userId'=>$this->user['id'],
                     'serverResponse'=>$serverResponse,
                 ], 'b2bBot');
+                if ($serverResponse['error']) {
+                    if ($serverResponse['message']=='Не указан идентификатор дилера') {
+                        $this->sendMessage([
+                            'chat_id' => $message['from']['id'],
+                            'text' => 'Ошибка - телефон в неверном формате',
+                        ]);
+                        return ['message' => 'ok', 'code' => 200];
+                    }
+                    if ($serverResponse['message']=='Дилер не найден') {
+                        $this->sendMessage([
+                            'chat_id' => $message['from']['id'],
+                            'text' => 'Ошибка - нет такого дилера',
+                        ]);
+                        return ['message' => 'ok', 'code' => 200];
+                    }
 
-                return [
-                    'message' => 'ok',
-                    'code' => 200,
-                ];
+                } else {
+
+                    $this->sendMessage([
+                        'chat_id' => $message['from']['id'],
+                        'text' => 'Вы авторизованы',
+                    ]);
+                    return ['message' => 'ok', 'code' => 200];
+                }
+
+                return ['message' => 'ok', 'code' => 200];
+
             }
 
 
-            return [
-                'message' => 'ok',
-                'code' => 200,
-            ];
+            return ['message' => 'ok', 'code' => 200];
+
         }
 
 //        Yii::info([
