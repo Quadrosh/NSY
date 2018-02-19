@@ -80,6 +80,7 @@ class B2bBotController extends \yii\web\Controller
         $this->request['request'] = $message['text'];
         $this->request->save();
 
+
         if ( $this->user['status'] == 'unconfirmed') {
             $this->sendMessage([
                 'chat_id' => $message['from']['id'],
@@ -135,6 +136,7 @@ class B2bBotController extends \yii\web\Controller
                     'userId'=>$this->user['id'],
                     'serverResponse'=>$serverResponse,
                 ], 'b2bBot');
+
                 if ($serverResponse['error']) {
                     if ($serverResponse['message']=='Не указан идентификатор дилера') {
                         $this->sendMessage([
@@ -143,21 +145,31 @@ class B2bBotController extends \yii\web\Controller
                         ]);
                         return ['message' => 'ok', 'code' => 200];
                     }
-                    if ($serverResponse['message']=='Дилер не найден') {
+                    elseif ($serverResponse['message']=='Дилер не найден') {
                         $this->sendMessage([
                             'chat_id' => $message['from']['id'],
-                            'text' => 'Ошибка - нет такого дилера',
+                            'text' => 'Ошибка - дилер не найден',
+                        ]);
+                        return ['message' => 'ok', 'code' => 200];
+                    }
+                    else {
+                        $this->sendMessage([
+                            'chat_id' => $message['from']['id'],
+                            'text' => 'Ошибка - ' . $serverResponse['message'],
                         ]);
                         return ['message' => 'ok', 'code' => 200];
                     }
 
                 } else {
+                    $this->user['phone'] = $phone;
+                    $this->user['status'] = 'active';
+                    $this->user->save();
 
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
                         'text' => 'Вы авторизованы',
                     ]);
-                    return ['message' => 'ok', 'code' => 200];
+                    
                 }
 
                 return ['message' => 'ok', 'code' => 200];
