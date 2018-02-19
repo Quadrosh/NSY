@@ -95,6 +95,13 @@ class B2bBotController extends \yii\web\Controller
         }
         if ($this->user['status'] == 'phone_requested') {
             $phone = str_replace(' ','', $message['text']);
+
+            Yii::info([
+                'action'=>'phone_requested',
+                'updateId'=>$updateId,
+                'phone'=>$phone,
+            ], 'b2bBot');
+
             $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'== 'active'])->one();
             if ($alreadyUser && $alreadyUser['id']!= $this->user['id']) {
                 $this->sendMessage([
@@ -112,16 +119,22 @@ class B2bBotController extends \yii\web\Controller
             }
 // авторизация на сервер
             if (!$alreadyUser) {
+                Yii::info([
+                    'action'=>'!$alreadyUser',
+                    'updateId'=>$updateId,
+                    'phone'=>$phone,
+                ], 'b2bBot');
 
                 $serverResponse = $this->orders([
                     'phone' => $phone,
                 ]);
 
                 Yii::info([
-                    'action'=>'response from Server',
+                    'action'=>'response from Server /проверка телефона/',
                     'updateId'=>$updateId,
                     'serverResponse'=>$serverResponse,
                 ], 'b2bBot');
+
                 return [
                     'message' => 'ok',
                     'code' => 200,
