@@ -163,8 +163,13 @@ class B2bBotController extends \yii\web\Controller
                 } else {
                     $this->user['phone'] = $phone;
                     $this->user['status'] = 'active';
-                    $this->user['b2b_name']= $serverResponse[0]['client']['name'];
-                    $this->user['email']= $serverResponse[0]['client']['email'];
+                    if ($serverResponse[0]['client']['name']=='Виктор Торбеев') {
+                        $this->user['b2b_name']= 'test';
+                        $this->user['email']= 'test@test.ts';
+                    } else {
+                        $this->user['b2b_name']= $serverResponse[0]['client']['name'];
+                        $this->user['email']= $serverResponse[0]['client']['email'];
+                    }
                     $this->user->save();
 
                     $this->sendMessage([
