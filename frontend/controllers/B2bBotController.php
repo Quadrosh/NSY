@@ -103,6 +103,13 @@ class B2bBotController extends \yii\web\Controller
             ], 'b2bBot');
 
             $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'== 'active'])->one();
+            Yii::info([
+                'action'=>'$alreadyUser',
+                'updateId'=>$updateId,
+                'alreadyUser'=>$alreadyUser,
+            ], 'b2bBot');
+
+
             if ($alreadyUser && $alreadyUser['id']!= $this->user['id']) {
                 $this->sendMessage([
                     'chat_id' => $message['from']['id'],
