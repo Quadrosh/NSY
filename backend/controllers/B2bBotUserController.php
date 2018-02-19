@@ -37,6 +37,14 @@ class B2bBotUserController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => B2bBotUser::find(),
+            'pagination'=> [
+                'pageSize' => 100,
+            ],
+            'sort' =>[
+                'defaultOrder'=> [
+                    'id' => SORT_DESC
+                ]
+            ]
         ]);
 
         return $this->render('index', [
