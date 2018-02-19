@@ -163,13 +163,15 @@ class B2bBotController extends \yii\web\Controller
                 } else {
                     $this->user['phone'] = $phone;
                     $this->user['status'] = 'active';
+                    $this->user['b2b_name']= $serverResponse[0]['client']['name'];
+                    $this->user['email']= $serverResponse[0]['client']['email'];
                     $this->user->save();
 
                     $this->sendMessage([
                         'chat_id' => $message['from']['id'],
                         'text' => 'Вы авторизованы',
                     ]);
-                    
+
                 }
 
                 return ['message' => 'ok', 'code' => 200];
