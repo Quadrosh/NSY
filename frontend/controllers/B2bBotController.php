@@ -95,7 +95,7 @@ class B2bBotController extends \yii\web\Controller
             ];
         }
         if ($this->user['status'] == 'phone_requested') {
-            $phone = str_replace(' ','', $message['text']);
+            $phone = str_replace([' ','(',')','-'],'', $message['text']);
 
             Yii::info([
                 'action'=>'phone_requested',
@@ -141,7 +141,7 @@ class B2bBotController extends \yii\web\Controller
                     if ($serverResponse['message']=='Не указан идентификатор дилера') {
                         $this->sendMessage([
                             'chat_id' => $message['from']['id'],
-                            'text' => 'Ошибка - телефон в неверном формате',
+                            'text' => 'Ошибка - номер телефона в неверном формате',
                         ]);
                         return ['message' => 'ok', 'code' => 200];
                     }
