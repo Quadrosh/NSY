@@ -116,12 +116,16 @@ class B2bBotController extends \yii\web\Controller
                 $serverResponse = $this->orders([
                     'phone' => $phone,
                 ]);
-        
+
                 Yii::info([
                     'action'=>'response from Server',
                     'updateId'=>$updateId,
                     'serverResponse'=>$serverResponse,
                 ], 'b2bBot');
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
             }
         }
 
