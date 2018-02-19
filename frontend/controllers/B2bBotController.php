@@ -102,13 +102,13 @@ class B2bBotController extends \yii\web\Controller
                 'phone'=>$phone,
             ], 'b2bBot');
 
-            $alreadyUser = null;
-            if (B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'== 'active'])->one()) {
-                $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'== 'active'])->one();
-            }
+//            $alreadyUser = null;
+//            if (B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'=> 'active'])->one()) {
+                $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'=> 'active'])->one();
+//            }
 
             Yii::info([
-                'action'=>'$alreadyUser',
+                'action'=>'alreadyUser',
                 'updateId'=>$updateId,
                 'alreadyUser'=>$alreadyUser,
                 'errors'=>$alreadyUser->errors,
