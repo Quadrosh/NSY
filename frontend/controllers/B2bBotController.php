@@ -70,6 +70,7 @@ class B2bBotController extends \yii\web\Controller
             $user['status'] = 'unconfirmed';
             $user->save();
         }
+
         $this->user = $user;
 
         $this->request = new B2bBotRequest;
@@ -79,6 +80,50 @@ class B2bBotController extends \yii\web\Controller
         $this->request['request'] = $message['text'];
         $this->request->save();
 
+        if ( $this->user['status'] == 'unconfirmed') {
+            $this->sendMessage([
+                'chat_id' => $message['from']['id'],
+                'text' => 'Для подтверждения авторизации отправьте номер телефона, указанный в Вашем аккаунте.'.PHP_EOL.
+                    'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
+            ]);
+            $this->user['status'] = 'phone_requested';
+            $this->user->save();
+            return [
+                'message' => 'ok',
+                'code' => 200,
+            ];
+        }
+        if ($this->user['status'] == 'phone_requested') {
+            $phone = str_replace(' ','', $message['text']);
+            $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'== 'active'])->one();
+            if ($alreadyUser && $alreadyUser['id']!= $this->user['id']) {
+                $this->sendMessage([
+                    'chat_id' => $message['from']['id'],
+                    'text' => 'Этот телефон уже использовался для доступа.'.PHP_EOL.
+                        'На данный момент может быть только один доступ на аккаунт.'.PHP_EOL.
+                        'Если это Ваш телефон и Вы не оформляли доступ - свяжитесь со своим менеджером в дилерском отделе.',
+                ]);
+                $this->user['phone'] = 'already exist' . $phone;
+                $this->user->save();
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+            }
+// авторизация на сервер
+            if (!$alreadyUser) {
+
+                $serverResponse = $this->orders([
+                    'phone' => $phone,
+                ]);
+        
+                Yii::info([
+                    'action'=>'response from Server',
+                    'updateId'=>$updateId,
+                    'serverResponse'=>$serverResponse,
+                ], 'b2bBot');
+            }
+        }
 
 //        Yii::info([
 //            'action'=>'$this->request',
