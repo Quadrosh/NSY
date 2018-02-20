@@ -210,7 +210,7 @@ class B2bBotController extends \yii\web\Controller
                         .' '.$item['status']['status']
                         .' '.$item['status']['payment']
                         .' '.$item['status']['delivey']
-                        .PHP_EOL;
+                        .PHP_EOL .'______'.PHP_EOL;
 
                 }
 
