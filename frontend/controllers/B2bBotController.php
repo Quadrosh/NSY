@@ -204,14 +204,14 @@ class B2bBotController extends \yii\web\Controller
                 $resp = '';
                 foreach ($serverResponse as $item) {
                     $resp .= 'Заказ '. $item['orderId'].PHP_EOL;
-            
-                }
 
+                }
 
                 $this->sendMessage([
                     'chat_id' => $message['from']['id'],
                     'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL. $resp,
                 ]);
+                return ['message' => 'ok', 'code' => 200];
             }
 
 
@@ -219,6 +219,7 @@ class B2bBotController extends \yii\web\Controller
                 'chat_id' => $message['from']['id'],
                 'text' => 'нет такой команды',
             ]);
+            return ['message' => 'ok', 'code' => 200];
         }
 
 //        Yii::info([
@@ -243,10 +244,7 @@ class B2bBotController extends \yii\web\Controller
 
 
 
-        return [
-            'message' => 'ok',
-            'code' => 200,
-        ];
+        return ['message' => 'ok', 'code' => 200];
 
 
     }
