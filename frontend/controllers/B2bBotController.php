@@ -193,7 +193,8 @@ class B2bBotController extends \yii\web\Controller
             };
             $this->answerInlineQuery([
                 'inline_query_id' => $inlineQuery['id'],
-                'results'=> json_encode($results)
+                'is_personal' => true,
+                'results'=> Json::encode($results)
             ]);
         }
 
