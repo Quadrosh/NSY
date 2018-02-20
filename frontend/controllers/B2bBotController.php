@@ -190,6 +190,80 @@ class B2bBotController extends \yii\web\Controller
 // активный пользователь
         if ($this->user['status'] == 'active') {
 
+            if ($inlineQuery != null) {
+//                Yii::info($inlineQuery, 'chepuhoBot');
+
+//           список заказов
+                if ($inlineQuery['query'] == 'order_details') {
+                    $serverResponse = $this->orders([
+                        'phone' => $this->user['phone'],
+                    ]);
+
+                    Yii::info([
+                        'action'=>'response from Server for Inline Query',
+                        'updateId'=>$updateId,
+                        '$inlineQueryId'=>$inlineQuery['id'],
+                        'serverResponse'=>$serverResponse,
+                    ], 'b2bBot');
+
+                    $orders = $serverResponse;
+                    $results = [];
+                    foreach ($orders as $order) {
+                        $results[] = [
+                            'type' => 'article',
+                            'id' => $order['orderId'],
+                            'title' => $order['orderId'],
+                            'description' => $order['totalCost'],
+                            'input_message_content'=>[
+                                'message_text'=> 'play/' . $order['orderId'],
+                                'parse_mode'=> 'html',
+                                'disable_web_page_preview'=> true,
+                            ],
+                        ];
+                    };
+                    $this->answerInlineQuery([
+                        'inline_query_id' => $inlineQuery['id'],
+//                    'is_personal' => true,
+                        'results'=> json_encode($results)
+                    ]);
+                }
+
+//           список сцен phrase
+
+//                elseif ($inlineQuery['query'] == 'phrase'){
+//                    $plays = ChBotPhrase::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
+//                    $results = [];
+//                    foreach ($plays as $play) {
+//                        $results[] = [
+//                            'type' => 'article',
+//                            'id' => $play['id'],
+//                            'title' => $play['name'],
+//                            'description' => $play['description'],
+//                            'input_message_content'=>[
+//                                'message_text'=> 'phrase/' . $play['hrurl'],
+//                                'parse_mode'=> 'html',
+//                                'disable_web_page_preview'=> true,
+//                            ],
+//                        ];
+//                    };
+//                    $this->answerInlineQuery([
+//                        'inline_query_id' => $inlineQuery['id'],
+////                    'is_personal' => true,
+//                        'results'=> json_encode($results)
+//                    ]);
+//                }
+
+
+
+
+                return [
+                    'message' => 'ok',
+                    'code' => 200,
+                ];
+            }
+
+
+
             if (str_replace(' ', '', $message['text']) == '/orders' ||
                 str_replace(' ', '', $message['text']) == '/заказы') {
                 $serverResponse = $this->orders([
@@ -340,10 +414,9 @@ class B2bBotController extends \yii\web\Controller
      */
     public function answerInlineQuery(array $options = [])
     {
-//        $optionJs = json_encode($option);
         $jsonResponse = $this->sendToUser("https://api.telegram.org/bot" .
             Yii::$app->params['b2bBotToken'] .
-            "/answerInlineQuery", $options);
+            "/answerInlineQuery", $options, true);
         return json_decode($jsonResponse);
     }
 
