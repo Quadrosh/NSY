@@ -121,8 +121,6 @@ class B2bBotController extends \yii\web\Controller
             }
 
 
-
-
 // авторизация на сервер
             if (!$alreadyUser) {
 
@@ -188,6 +186,16 @@ class B2bBotController extends \yii\web\Controller
 
         }
 
+
+// активный пользователь
+        if ($this->user['status'] == 'active') {
+
+            $this->sendMessage([
+                'chat_id' => $message['from']['id'],
+                'text' => ' активный пользователь '.$user['username'].'; updateId = '.$updateId.PHP_EOL,
+            ]);
+        }
+
 //        Yii::info([
 //            'action'=>'$this->request',
 ////            'request'=>$request,
@@ -196,16 +204,12 @@ class B2bBotController extends \yii\web\Controller
 
 
 
-        $this->sendMessage([
-            'chat_id' => $message['from']['id'],
-            'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL,
-        ]);
 
 
 
 
-        $userPhone = Yii::$app->params['b2bTestPhone'];
-        $orderId = 'МУЗ006396';
+
+
 
 
 

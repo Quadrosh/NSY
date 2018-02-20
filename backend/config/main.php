@@ -41,7 +41,7 @@ return [
 //            ],
         ],
         'assetManager' => [
-            // подключаем symlincs
+            // подключаем symlinks
             'linkAssets' => true,
         ],
         'user' => [
