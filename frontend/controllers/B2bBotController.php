@@ -127,7 +127,7 @@ class B2bBotController extends \yii\web\Controller
                 $this->sendMessage([
                     'chat_id' => $message['from']['id'],
                     'text' => $resp,
-                    'reply_markup' => json_encode([
+                    'reply_markup' => Json::encode([
                         'inline_keyboard'=>[
                             [
                                 ['text'=>"Подробнее о заказе",'switch_inline_query_current_chat'=> 'order_details'],
@@ -368,7 +368,7 @@ class B2bBotController extends \yii\web\Controller
         $jsonResponse = $this->sendToUser("https://api.telegram.org/bot" .
             Yii::$app->params['b2bBotToken'] .
             "/answerCallbackQuery", $options);
-        return json_decode($jsonResponse);
+        return Json::decode($jsonResponse);
     }
     /**
      *   @var array
@@ -384,7 +384,7 @@ class B2bBotController extends \yii\web\Controller
         $jsonResponse = $this->sendToUser("https://api.telegram.org/bot" .
             Yii::$app->params['b2bBotToken'] .
             "/answerInlineQuery", $options, true);
-        return json_decode($jsonResponse);
+        return Json::decode($jsonResponse);
     }
 
     public function sendMessage(array $options, $dataInBody = false)
@@ -398,7 +398,7 @@ class B2bBotController extends \yii\web\Controller
             Yii::$app->params['b2bBotToken'].
             "/sendMessage?chat_id=".$chat_id .
             '&text='.$urlEncodedText, $options, $dataInBody);
-        return json_decode($jsonResponse);
+        return Json::decode($jsonResponse);
     }
 
     private function sendToUser($url, $options = [], $dataInBody = false)
