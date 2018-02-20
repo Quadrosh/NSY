@@ -116,7 +116,7 @@ class B2bBotController extends \yii\web\Controller
             ]);
 
             Yii::info([
-                'action'=>'response from Server',
+                'action'=>'response from Server - orders',
                 'updateId'=>$this->request['update_id'],
                 'serverResponse'=>$serverResponse,
             ], 'b2bBot');
@@ -152,10 +152,22 @@ class B2bBotController extends \yii\web\Controller
             $commandArr = explode('/', $message['text']);
             $orderId = $commandArr[1];
 
+            $serverResponse = $this->order([
+                'phone' => $this->user['phone'],
+                'orderId' => $orderId,
+            ]);
+            Yii::info([
+                'action'=>'response from Server - order',
+                'updateId'=>$this->request['update_id'],
+                'serverResponse'=>$serverResponse,
+            ], 'b2bBot');
+
+
             $this->sendMessage([
                 'chat_id' => $message['from']['id'],
                 'text' => $orderId,
             ]);
+            
             return ['message' => 'ok', 'code' => 200];
         }
 
