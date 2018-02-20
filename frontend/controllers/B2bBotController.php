@@ -178,7 +178,7 @@ class B2bBotController extends \yii\web\Controller
                     'type' => 'article',
                     'id' => $order['orderId'],
                     'title' =>
-                        $order['orderId'].', '.$order['totalItems'].'поз. '.$order['totalCost'],
+                        $order['orderId'].', '.$order['totalItems'].'поз., '.$order['totalCost'].'р.',
                     'description' =>
                         'Доставка - '.$order['deliveryType']
                         .' / '.$order['status']['status']
