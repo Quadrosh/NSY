@@ -204,7 +204,12 @@ class B2bBotController extends \yii\web\Controller
 
                 $resp = '';
                 foreach ($serverResponse as $item) {
-                    $resp .= $item['orderId'].'-'.$item['totalCost'].'-'.$item['status']['status'].PHP_EOL;
+                    $resp .= $item['orderId']
+                        .'-'.$item['totalCost']
+                        .' '.$item['status']['status']
+                        .' '.$item['status']['payment']
+                        .' '.$item['status']['delivey']
+                        .PHP_EOL;
 
                 }
 
