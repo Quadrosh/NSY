@@ -87,14 +87,16 @@ class B2bBotController extends \yii\web\Controller
         $this->request['request'] = $message['text'];
         $this->request->save();
 
-//  проверка авторизации
+        //  проверка авторизации
         if (!$this->checkAuth()) {
             return ['message' => 'ok', 'code' => 200];
         }
 
+
         if ($inlineQuery) {
           return $this->inlineQueryAction($inlineQuery);
         }
+
 
         if ($message) {
             return $this->textMessageAction($message);
@@ -104,8 +106,8 @@ class B2bBotController extends \yii\web\Controller
 
 
     private function textMessageAction($message){
-        if (str_replace(' ', '', $message['text']) == '/orders' ||
-            str_replace(' ', '', $message['text']) == '/заказы') {
+        if (trim(strtolower($message['text'])) == '/orders' ||
+            trim(strtolower($message['text'])) == '/заказы') {
             $serverResponse = $this->orders([
                 'phone' => $this->user['phone'],
             ]);
@@ -148,8 +150,6 @@ class B2bBotController extends \yii\web\Controller
         ]);
         return ['message' => 'ok', 'code' => 200];
     }
-
-
 
 
 
@@ -310,20 +310,22 @@ class B2bBotController extends \yii\web\Controller
         }
     }
 
-    private function order(array $options = [])
+
+
+    private function order($options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdOrder'], $options);
         return Json::decode($jsonResponse);
     }
 
 
-    private function orders(array $options = [])
+    private function orders($options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdLastOrders'], $options);
         return Json::decode($jsonResponse);
     }
 
-    private function sendToServer($url, $options=array())
+    private function sendToServer($url, $options = [])
     {
         $options['apiKey']= Yii::$app->params['b2bServerApiKey'];
         $optQuery = http_build_query($options);
