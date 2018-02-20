@@ -220,11 +220,10 @@ class B2bBotController extends \yii\web\Controller
                     'reply_markup' => json_encode([
                         'inline_keyboard'=>[
                             [
-                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                                ['text'=>"Подробнее о заказе",'switch_inline_query_current_chat'=> 'order_details'],
+                                ['text'=>"Опции",'switch_inline_query_current_chat'=> 'options'],
                             ],
-                            [
-                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
-                            ],
+
                         ]
                     ]),
                 ], true);
