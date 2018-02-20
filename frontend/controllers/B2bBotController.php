@@ -190,9 +190,34 @@ class B2bBotController extends \yii\web\Controller
 // активный пользователь
         if ($this->user['status'] == 'active') {
 
+            if ($message['text'] == '/orders' || $message['text'] == '/заказы') {
+                $serverResponse = $this->orders([
+                    'phone' => $this->user['phone'],
+                ]);
+
+                Yii::info([
+                    'action'=>'response from Server',
+                    'updateId'=>$updateId,
+                    'serverResponse'=>$serverResponse,
+                ], 'b2bBot');
+
+                $resp = '';
+                foreach ($serverResponse as $item) {
+                    $resp .= 'Заказ '. $item['orderId'].PHP_EOL;
+            
+                }
+
+
+                $this->sendMessage([
+                    'chat_id' => $message['from']['id'],
+                    'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL. $resp,
+                ]);
+            }
+
+
             $this->sendMessage([
                 'chat_id' => $message['from']['id'],
-                'text' => ' активный пользователь '.$user['username'].'; updateId = '.$updateId.PHP_EOL,
+                'text' => 'нет такой команды',
             ]);
         }
 
@@ -216,27 +241,7 @@ class B2bBotController extends \yii\web\Controller
 
 
 
-//        $serverResponse = $this->orders([
-//            'phone' => $userPhone,
-//        ]);
-//
-//        Yii::info([
-//            'action'=>'response from Server',
-//            'updateId'=>$updateId,
-//            'serverResponse'=>$serverResponse,
-//        ], 'b2bBot');
-//
-//        $resp = '';
-//        foreach ($serverResponse as $item) {
-//            $resp .= 'Заказ '. $item['orderId'].PHP_EOL;
-//
-//        }
 
-
-//        $this->sendMessage([
-//            'chat_id' => $message['from']['id'],
-//            'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL. $resp,
-//        ]);
 
         return [
             'message' => 'ok',
