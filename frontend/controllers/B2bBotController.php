@@ -90,109 +90,9 @@ class B2bBotController extends \yii\web\Controller
         $this->request->save();
 
 
-        if ( $this->user['status'] == 'unconfirmed') {
-            $this->sendMessage([
-                'chat_id' => $message['from']['id'],
-                'text' => 'Для подтверждения авторизации отправьте номер телефона, указанный в Вашем аккаунте.'.PHP_EOL.
-                    'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
-            ]);
-            $this->user['status'] = 'phone_requested';
-            $this->user->save();
-            return [
-                'message' => 'ok',
-                'code' => 200,
-            ];
-        }
-        if ($this->user['status'] == 'phone_requested') {
-            $phone = str_replace([' ','(',')','-'],'', $message['text']);
 
-            Yii::info([
-                'action'=>'phone_requested',
-                'updateId'=>$updateId,
-                'phone'=>$phone,
-            ], 'b2bBot');
-
-
-            $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'=> 'active'])->one();
-
-
-            if ($alreadyUser && $alreadyUser['id']!= $this->user['id']) {
-                $this->sendMessage([
-                    'chat_id' => $message['from']['id'],
-                    'text' => 'Этот телефон уже использовался для доступа.'.PHP_EOL.
-                        'На данный момент может быть только один доступ на аккаунт.'.PHP_EOL.
-                        'Если это Ваш телефон и Вы не оформляли доступ - свяжитесь со своим менеджером в дилерском отделе.',
-                ]);
-                $this->user['phone'] = 'already exist' . $phone;
-                $this->user->save();
-                return ['message' => 'ok', 'code' => 200,];
-
-            }
-
-
-// авторизация на сервер
-            if (!$alreadyUser) {
-
-                $serverResponse = $this->orders([
-                    'phone' => $phone,
-                ]);
-
-                Yii::info([
-                    'action'=>'response from Server /проверка телефона/',
-                    'updateId'=>$updateId,
-                    'userId'=>$this->user['id'],
-                    'serverResponse'=>$serverResponse,
-                ], 'b2bBot');
-
-                if ($serverResponse['error']) {
-                    if ($serverResponse['message']=='Не указан идентификатор дилера') {
-                        $this->sendMessage([
-                            'chat_id' => $message['from']['id'],
-                            'text' => 'Ошибка - номер телефона в неверном формате',
-                        ]);
-                        return ['message' => 'ok', 'code' => 200];
-                    }
-                    elseif ($serverResponse['message']=='Дилер не найден') {
-                        $this->sendMessage([
-                            'chat_id' => $message['from']['id'],
-                            'text' => 'Ошибка - дилер не найден',
-                        ]);
-                        return ['message' => 'ok', 'code' => 200];
-                    }
-                    else {
-                        $this->sendMessage([
-                            'chat_id' => $message['from']['id'],
-                            'text' => 'Ошибка - ' . $serverResponse['message'],
-                        ]);
-                        return ['message' => 'ok', 'code' => 200];
-                    }
-
-                } else {
-                    $this->user['phone'] = $phone;
-                    $this->user['status'] = 'active';
-                    if ($serverResponse[0]['client']['name']=='Виктор Торбеев') {
-                        $this->user['b2b_name']= 'test';
-                        $this->user['email']= 'test@test.ts';
-                    } else {
-                        $this->user['b2b_name']= $serverResponse[0]['client']['name'];
-                        $this->user['email']= $serverResponse[0]['client']['email'];
-                    }
-                    $this->user->save();
-
-                    $this->sendMessage([
-                        'chat_id' => $message['from']['id'],
-                        'text' => 'Вы авторизованы',
-                    ]);
-
-                }
-
-                return ['message' => 'ok', 'code' => 200];
-
-            }
-
-
+        if (!$this->checkAuth()) {
             return ['message' => 'ok', 'code' => 200];
-
         }
 
         if ($message != null) {
@@ -461,6 +361,113 @@ class B2bBotController extends \yii\web\Controller
         }
         curl_close($ch);
         return $r;
+    }
+
+
+
+    /*
+     * 
+     * Returns True on success.
+     * */
+    private function checkAuth(){
+
+        if ( $this->user['status'] == 'unconfirmed') {
+            $this->sendMessage([
+                'chat_id' => $this->user['telegram_user_id'],
+                'text' => 'Для подтверждения авторизации отправьте номер телефона, указанный в Вашем аккаунте.'.PHP_EOL.
+                    'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
+            ]);
+            $this->user['status'] = 'phone_requested';
+            $this->user->save();
+            return false ;
+        }
+
+        if ($this->user['status'] == 'phone_requested') {
+            $phone = str_replace([' ','(',')','-'],'', $this->request['request']);
+
+            Yii::info([
+                'action'=>'phone_requested',
+                'updateId'=>$this->request['update_id'],
+                'phone'=>$phone,
+            ], 'b2bBot');
+
+
+            $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'=> 'active'])->one();
+
+
+            if ($alreadyUser && $alreadyUser['id']!= $this->user['id']) {
+                $this->sendMessage([
+                    'chat_id' => $this->user['telegram_user_id'],
+                    'text' => 'Этот телефон уже использовался для доступа.'.PHP_EOL.
+                        'На данный момент может быть только один доступ на аккаунт.'.PHP_EOL.
+                        'Если это Ваш телефон и Вы не оформляли доступ - свяжитесь со своим менеджером в дилерском отделе.',
+                ]);
+                $this->user['phone'] = 'already exist' . $phone;
+                $this->user->save();
+                return false;
+            }
+
+            if (!$alreadyUser) { // если телефон не зарегистрирован на другого дилера
+
+                $serverResponse = $this->orders([
+                    'phone' => $phone,
+                ]);
+
+                Yii::info([
+                    'action'=>'response from Server /проверка телефона/',
+                    'updateId'=>$this->request['update_id'],
+                    'userId'=>$this->user['id'],
+                    'serverResponse'=>$serverResponse,
+                ], 'b2bBot');
+
+                if ($serverResponse['error']) {
+                    if ($serverResponse['message']=='Не указан идентификатор дилера') {
+                        $this->sendMessage([
+                            'chat_id' => $this->user['telegram_user_id'],
+                            'text' => 'Ошибка - номер телефона в неверном формате',
+                        ]);
+                        return false;
+                    }
+                    elseif ($serverResponse['message']=='Дилер не найден') {
+                        $this->sendMessage([
+                            'chat_id' => $this->user['telegram_user_id'],
+                            'text' => 'Ошибка - дилер не найден',
+                        ]);
+                        return false;
+                    }
+                    else {
+                        $this->sendMessage([
+                            'chat_id' => $this->user['telegram_user_id'],
+                            'text' => 'Ошибка - ' . $serverResponse['message'],
+                        ]);
+                        return false;
+                    }
+
+                } else {
+                    $this->user['phone'] = $phone;
+                    $this->user['status'] = 'active';
+                    if ($serverResponse[0]['client']['name']=='Виктор Торбеев') {
+                        $this->user['b2b_name']= 'test';
+                        $this->user['email']= 'test@test.ts';
+                    } else {
+                        $this->user['b2b_name']= $serverResponse[0]['client']['name'];
+                        $this->user['email']= $serverResponse[0]['client']['email'];
+                    }
+                    $this->user->save();
+
+                    $this->sendMessage([
+                        'chat_id' => $this->user['telegram_user_id'],
+                        'text' => 'Вы авторизованы',
+                    ]);
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        if ($this->user['status'] == 'active'){
+            return true;
+        }
     }
 
 
