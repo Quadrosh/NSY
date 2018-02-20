@@ -190,7 +190,8 @@ class B2bBotController extends \yii\web\Controller
 // активный пользователь
         if ($this->user['status'] == 'active') {
 
-            if ($message['text'] == '/orders' || $message['text'] == '/заказы') {
+            if (str_replace(' ', '', $message['text']) == '/orders' ||
+                str_replace(' ', '', $message['text']) == '/заказы') {
                 $serverResponse = $this->orders([
                     'phone' => $this->user['phone'],
                 ]);
@@ -209,7 +210,7 @@ class B2bBotController extends \yii\web\Controller
 
                 $this->sendMessage([
                     'chat_id' => $message['from']['id'],
-                    'text' => 'username = '.$user['username'].'; updateId = '.$updateId.PHP_EOL. $resp,
+                    'text' => $resp,
                 ]);
                 return ['message' => 'ok', 'code' => 200];
             }
