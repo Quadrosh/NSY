@@ -348,7 +348,7 @@ class B2bBotController extends \yii\web\Controller
         return json_decode($jsonResponse);
     }
 
-    public function sendMessage(array $options, $optionsInBody = false)
+    public function sendMessage(array $options, $dataInBody = false)
     {
         $this->request['answer'] = $options['text'];
         $this->request['answer_time'] = time();
@@ -358,11 +358,11 @@ class B2bBotController extends \yii\web\Controller
         $jsonResponse = $this->sendToUser("https://api.telegram.org/bot" .
             Yii::$app->params['b2bBotToken'].
             "/sendMessage?chat_id=".$chat_id .
-            '&text='.$urlEncodedText, $options, $optionsInBody);
+            '&text='.$urlEncodedText, $options, $dataInBody);
         return json_decode($jsonResponse);
     }
 
-    private function sendToUser($url, $options = [], $optionsInBody = false)
+    private function sendToUser($url, $options = [], $dataInBody = false)
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -370,8 +370,11 @@ class B2bBotController extends \yii\web\Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         if (count($options)) {
             curl_setopt($ch, CURLOPT_POST, true);
-            if ($optionsInBody) {
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $options);
+            if ($dataInBody) {
+                $bodyOptions = $options;
+                unset($bodyOptions['chat_id']);
+                unset($bodyOptions['text']);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $bodyOptions);
             }
         }
         $r = curl_exec($ch);
@@ -384,7 +387,7 @@ class B2bBotController extends \yii\web\Controller
             $info = [
                     'action'=>'curl to User',
                     'options'=>$options,
-                    'optionsInBody'=>$optionsInBody,
+                    'dataInBody'=>$dataInBody,
                 ] + $info;
             Yii::info($info, 'b2bBot');
         }
