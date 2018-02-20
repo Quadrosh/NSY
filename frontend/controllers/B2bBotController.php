@@ -122,9 +122,14 @@ class B2bBotController extends \yii\web\Controller
                         'type' => 'article',
                         'id' => $order['orderId'],
                         'title' => $order['orderId'],
-                        'description' => $order['totalCost'],
+                        'description' =>
+                            $order['totalCost']
+                            .' Доставка - '.$order['deliveryType']
+                            .' '.$order['status']['status']
+                            .' '.$order['status']['payment']
+                            .' '.$order['status']['delivey'],
                         'input_message_content'=>[
-                            'message_text'=> 'play/' . $order['orderId'],
+                            'message_text'=> 'order/' . $order['orderId'],
                             'parse_mode'=> 'html',
                             'disable_web_page_preview'=> true,
                         ],
@@ -132,13 +137,9 @@ class B2bBotController extends \yii\web\Controller
                 };
                 $this->answerInlineQuery([
                     'inline_query_id' => $inlineQuery['id'],
-//                    'is_personal' => true,
                     'results'=> json_encode($results)
                 ]);
             }
-
-
-
 
             return ['message' => 'ok', 'code' => 200];
         }
@@ -191,7 +192,7 @@ class B2bBotController extends \yii\web\Controller
             return ['message' => 'ok', 'code' => 200];
 
         }
-        
+
     }
 
 
