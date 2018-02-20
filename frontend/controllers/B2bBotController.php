@@ -106,6 +106,9 @@ class B2bBotController extends \yii\web\Controller
 
 
     private function textMessageAction($message){
+//        if (trim(strtolower($message['text'])) == '/start') {
+//
+//        }
         if (trim(strtolower($message['text'])) == '/orders' ||
             trim(strtolower($message['text'])) == '/заказы') {
             $serverResponse = $this->orders([
@@ -143,6 +146,21 @@ class B2bBotController extends \yii\web\Controller
             ], true);
             return ['message' => 'ok', 'code' => 200];
         }
+
+        elseif (substr($message['text'],0,6) == 'order/' ||  substr($message['text'],0,6) == 'заказ/'){
+
+            $commandArr = explode('/', $message['text']);
+            $orderId = $commandArr[1];
+
+            $this->sendMessage([
+                'chat_id' => $message['from']['id'],
+                'text' => $orderId,
+            ]);
+            return ['message' => 'ok', 'code' => 200];
+        }
+
+
+
 
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
