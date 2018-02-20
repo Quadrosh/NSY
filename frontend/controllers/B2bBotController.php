@@ -47,7 +47,6 @@ class B2bBotController extends \yii\web\Controller
 
     public function actionDo()
     {
-
         $input = Yii::$app->request->getRawBody();
         $updateId = Yii::$app->request->post('update_id');
         $message = Yii::$app->request->post('message'); // array
@@ -69,7 +68,6 @@ class B2bBotController extends \yii\web\Controller
             $user = null;
         }
 
-
         if (!$user) {
             $user = new B2bBotUser;
             $user['telegram_user_id'] = $message['from']['id'];
@@ -89,8 +87,7 @@ class B2bBotController extends \yii\web\Controller
         $this->request['request'] = $message['text'];
         $this->request->save();
 
-
-
+//  проверка авторизации
         if (!$this->checkAuth()) {
             return ['message' => 'ok', 'code' => 200];
         }
@@ -98,57 +95,62 @@ class B2bBotController extends \yii\web\Controller
         if ($inlineQuery) {
           return $this->inlineQueryAction($inlineQuery);
         }
-        if ($message != null) {
 
-            if (str_replace(' ', '', $message['text']) == '/orders' ||
-                str_replace(' ', '', $message['text']) == '/заказы') {
-                $serverResponse = $this->orders([
-                    'phone' => $this->user['phone'],
-                ]);
-
-                Yii::info([
-                    'action'=>'response from Server',
-                    'updateId'=>$updateId,
-                    'serverResponse'=>$serverResponse,
-                ], 'b2bBot');
-
-                $resp = '';
-                foreach ($serverResponse as $item) {
-                    $resp .= $item['orderId']
-                        .' '.$item['totalCost']
-                        .PHP_EOL
-                        .' '.$item['status']['status']
-                        .' '.$item['status']['payment']
-                        .' '.$item['status']['delivey']
-                        .PHP_EOL .'-------------------------'.PHP_EOL;
-
-                }
-
-                $this->sendMessage([
-                    'chat_id' => $message['from']['id'],
-                    'text' => $resp,
-                    'reply_markup' => Json::encode([
-                        'inline_keyboard'=>[
-                            [
-                                ['text'=>"Подробнее о заказе",'switch_inline_query_current_chat'=> 'order_details'],
-                                ['text'=>"Опции",'switch_inline_query_current_chat'=> 'options'],
-                            ],
-                        ]
-                    ]),
-                ], true);
-                return ['message' => 'ok', 'code' => 200];
-            }
-
-
-            $this->sendMessage([
-                'chat_id' => $message['from']['id'],
-                'text' => 'нет такой команды',
-            ]);
-            return ['message' => 'ok', 'code' => 200];
-
+        if ($message) {
+            return $this->textMessageAction($message);
         }
 
     }
+
+
+    private function textMessageAction($message){
+        if (str_replace(' ', '', $message['text']) == '/orders' ||
+            str_replace(' ', '', $message['text']) == '/заказы') {
+            $serverResponse = $this->orders([
+                'phone' => $this->user['phone'],
+            ]);
+
+            Yii::info([
+                'action'=>'response from Server',
+                'updateId'=>$this->request['update_id'],
+                'serverResponse'=>$serverResponse,
+            ], 'b2bBot');
+
+            $resp = '';
+            foreach ($serverResponse as $item) {
+                $resp .= $item['orderId']
+                    .' '.$item['totalCost']
+                    .PHP_EOL
+                    .' '.$item['status']['status']
+                    .' '.$item['status']['payment']
+                    .' '.$item['status']['delivey']
+                    .PHP_EOL .'-------------------------'.PHP_EOL;
+            }
+
+            $this->sendMessage([
+                'chat_id' => $message['from']['id'],
+                'text' => $resp,
+                'reply_markup' => Json::encode([
+                    'inline_keyboard'=>[
+                        [
+                            ['text'=>"Подробнее о заказе",'switch_inline_query_current_chat'=> 'order_details'],
+                            ['text'=>"Опции",'switch_inline_query_current_chat'=> 'options'],
+                        ],
+                    ]
+                ]),
+            ], true);
+            return ['message' => 'ok', 'code' => 200];
+        }
+
+        $this->sendMessage([
+            'chat_id' => $message['from']['id'],
+            'text' => 'нет такой команды',
+        ]);
+        return ['message' => 'ok', 'code' => 200];
+    }
+
+
+
 
 
     private function inlineQueryAction($inlineQuery){
