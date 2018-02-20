@@ -191,7 +191,11 @@ class B2bBotController extends \yii\web\Controller
         if ($this->user['status'] == 'active') {
 
             if ($inlineQuery != null) {
-//                Yii::info($inlineQuery, 'chepuhoBot');
+                Yii::info([
+                    'action'=>'request Inline Query',
+                    'updateId'=>$updateId,
+                    'inlineQuery'=>$inlineQuery,
+                ], 'b2bBot');
 
 //           список заказов
                 if ($inlineQuery['query'] == 'order_details') {
