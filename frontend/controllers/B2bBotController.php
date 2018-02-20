@@ -121,13 +121,13 @@ class B2bBotController extends \yii\web\Controller
                     $results[] = [
                         'type' => 'article',
                         'id' => $order['orderId'],
-                        'title' => $order['orderId'],
+                        'title' =>
+                            $order['orderId'].' '.$order['totalItems'].'поз. '.$order['totalCost'],
                         'description' =>
-                            $order['totalCost']
-                            .' Доставка - '.$order['deliveryType']
-                            .' '.$order['status']['status']
-                            .' '.$order['status']['payment']
-                            .' '.$order['status']['delivey'],
+                            'Доставка - '.$order['deliveryType']
+                            .' / '.$order['status']['status']
+                            .' / '.$order['status']['payment']
+                            .' / '.$order['status']['delivey'],
                         'input_message_content'=>[
                             'message_text'=> 'order/' . $order['orderId'],
                             'parse_mode'=> 'html',
