@@ -227,7 +227,7 @@ class B2bBotController extends \yii\web\Controller
                             ],
                         ]
                     ]),
-                ]);
+                ], true);
                 return ['message' => 'ok', 'code' => 200];
             }
 
@@ -348,7 +348,7 @@ class B2bBotController extends \yii\web\Controller
         return json_decode($jsonResponse);
     }
 
-    public function sendMessage(array $options)
+    public function sendMessage(array $options, $optionsInBody = false)
     {
         $this->request['answer'] = $options['text'];
         $this->request['answer_time'] = time();
@@ -358,7 +358,7 @@ class B2bBotController extends \yii\web\Controller
         $jsonResponse = $this->sendToUser("https://api.telegram.org/bot" .
             Yii::$app->params['b2bBotToken'].
             "/sendMessage?chat_id=".$chat_id .
-            '&text='.$urlEncodedText, $options);
+            '&text='.$urlEncodedText, $options, $optionsInBody);
         return json_decode($jsonResponse);
     }
 
