@@ -205,7 +205,8 @@ class B2bBotController extends \yii\web\Controller
                 $resp = '';
                 foreach ($serverResponse as $item) {
                     $resp .= $item['orderId']
-                        .'-'.$item['totalCost']
+                        .' '.$item['totalCost']
+                        .PHP_EOL
                         .' '.$item['status']['status']
                         .' '.$item['status']['payment']
                         .' '.$item['status']['delivey']
@@ -216,6 +217,16 @@ class B2bBotController extends \yii\web\Controller
                 $this->sendMessage([
                     'chat_id' => $message['from']['id'],
                     'text' => $resp,
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Чепусценка",'switch_inline_query_current_chat'=> 'play'],
+                            ],
+                            [
+                                ['text'=>"Чепуфраза",'switch_inline_query_current_chat'=> 'phrase'],
+                            ],
+                        ]
+                    ]),
                 ]);
                 return ['message' => 'ok', 'code' => 200];
             }
