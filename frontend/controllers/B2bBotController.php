@@ -95,144 +95,103 @@ class B2bBotController extends \yii\web\Controller
             return ['message' => 'ok', 'code' => 200];
         }
 
-        if ($message != null) {
-
-
-// активный пользователь
-            if ($this->user['status'] == 'active') {
-
-                if ($inlineQuery != null) {
-                    Yii::info([
-                        'action'=>'request Inline Query',
-                        'updateId'=>$updateId,
-                        'inlineQuery'=>$inlineQuery,
-                    ], 'b2bBot');
+        if ($inlineQuery != null) {
+            Yii::info([
+                'action'=>'request Inline Query',
+                'updateId'=>$updateId,
+                'inlineQuery'=>$inlineQuery,
+            ], 'b2bBot');
 
 //           список заказов
-                    if ($inlineQuery['query'] == 'order_details') {
-                        $serverResponse = $this->orders([
-                            'phone' => $this->user['phone'],
-                        ]);
-
-                        Yii::info([
-                            'action'=>'response from Server for Inline Query',
-                            'updateId'=>$updateId,
-                            '$inlineQueryId'=>$inlineQuery['id'],
-                            'serverResponse'=>$serverResponse,
-                        ], 'b2bBot');
-
-                        $orders = $serverResponse;
-                        $results = [];
-                        foreach ($orders as $order) {
-                            $results[] = [
-                                'type' => 'article',
-                                'id' => $order['orderId'],
-                                'title' => $order['orderId'],
-                                'description' => $order['totalCost'],
-                                'input_message_content'=>[
-                                    'message_text'=> 'play/' . $order['orderId'],
-                                    'parse_mode'=> 'html',
-                                    'disable_web_page_preview'=> true,
-                                ],
-                            ];
-                        };
-                        $this->answerInlineQuery([
-                            'inline_query_id' => $inlineQuery['id'],
-//                    'is_personal' => true,
-                            'results'=> json_encode($results)
-                        ]);
-                    }
-
-//           список сцен phrase
-
-//                elseif ($inlineQuery['query'] == 'phrase'){
-//                    $plays = ChBotPhrase::find()->where('name != :value', ['value' => 'work'])->orderBy('name')->all();
-//                    $results = [];
-//                    foreach ($plays as $play) {
-//                        $results[] = [
-//                            'type' => 'article',
-//                            'id' => $play['id'],
-//                            'title' => $play['name'],
-//                            'description' => $play['description'],
-//                            'input_message_content'=>[
-//                                'message_text'=> 'phrase/' . $play['hrurl'],
-//                                'parse_mode'=> 'html',
-//                                'disable_web_page_preview'=> true,
-//                            ],
-//                        ];
-//                    };
-//                    $this->answerInlineQuery([
-//                        'inline_query_id' => $inlineQuery['id'],
-////                    'is_personal' => true,
-//                        'results'=> json_encode($results)
-//                    ]);
-//                }
-
-
-
-
-                    return [
-                        'message' => 'ok',
-                        'code' => 200,
-                    ];
-                }
-
-
-
-                if (str_replace(' ', '', $message['text']) == '/orders' ||
-                    str_replace(' ', '', $message['text']) == '/заказы') {
-                    $serverResponse = $this->orders([
-                        'phone' => $this->user['phone'],
-                    ]);
-
-                    Yii::info([
-                        'action'=>'response from Server',
-                        'updateId'=>$updateId,
-                        'serverResponse'=>$serverResponse,
-                    ], 'b2bBot');
-
-                    $resp = '';
-                    foreach ($serverResponse as $item) {
-                        $resp .= $item['orderId']
-                            .' '.$item['totalCost']
-                            .PHP_EOL
-                            .' '.$item['status']['status']
-                            .' '.$item['status']['payment']
-                            .' '.$item['status']['delivey']
-                            .PHP_EOL .'-------------------------'.PHP_EOL;
-
-                    }
-
-                    $this->sendMessage([
-                        'chat_id' => $message['from']['id'],
-                        'text' => $resp,
-                        'reply_markup' => json_encode([
-                            'inline_keyboard'=>[
-                                [
-                                    ['text'=>"Подробнее о заказе",'switch_inline_query_current_chat'=> 'order_details'],
-                                    ['text'=>"Опции",'switch_inline_query_current_chat'=> 'options'],
-                                ],
-
-                            ]
-                        ]),
-                    ], true);
-                    return ['message' => 'ok', 'code' => 200];
-                }
-
-
-                $this->sendMessage([
-                    'chat_id' => $message['from']['id'],
-                    'text' => 'нет такой команды',
+            if ($inlineQuery['query'] == 'order_details') {
+                $serverResponse = $this->orders([
+                    'phone' => $this->user['phone'],
                 ]);
-                return ['message' => 'ok', 'code' => 200];
+
+                Yii::info([
+                    'action'=>'response from Server for Inline Query',
+                    'updateId'=>$updateId,
+                    '$inlineQueryId'=>$inlineQuery['id'],
+                    'serverResponse'=>$serverResponse,
+                ], 'b2bBot');
+
+                $orders = $serverResponse;
+                $results = [];
+                foreach ($orders as $order) {
+                    $results[] = [
+                        'type' => 'article',
+                        'id' => $order['orderId'],
+                        'title' => $order['orderId'],
+                        'description' => $order['totalCost'],
+                        'input_message_content'=>[
+                            'message_text'=> 'play/' . $order['orderId'],
+                            'parse_mode'=> 'html',
+                            'disable_web_page_preview'=> true,
+                        ],
+                    ];
+                };
+                $this->answerInlineQuery([
+                    'inline_query_id' => $inlineQuery['id'],
+//                    'is_personal' => true,
+                    'results'=> json_encode($results)
+                ]);
             }
+
+
+
 
             return ['message' => 'ok', 'code' => 200];
         }
+        if ($message != null) {
+
+            if (str_replace(' ', '', $message['text']) == '/orders' ||
+                str_replace(' ', '', $message['text']) == '/заказы') {
+                $serverResponse = $this->orders([
+                    'phone' => $this->user['phone'],
+                ]);
+
+                Yii::info([
+                    'action'=>'response from Server',
+                    'updateId'=>$updateId,
+                    'serverResponse'=>$serverResponse,
+                ], 'b2bBot');
+
+                $resp = '';
+                foreach ($serverResponse as $item) {
+                    $resp .= $item['orderId']
+                        .' '.$item['totalCost']
+                        .PHP_EOL
+                        .' '.$item['status']['status']
+                        .' '.$item['status']['payment']
+                        .' '.$item['status']['delivey']
+                        .PHP_EOL .'-------------------------'.PHP_EOL;
+
+                }
+
+                $this->sendMessage([
+                    'chat_id' => $message['from']['id'],
+                    'text' => $resp,
+                    'reply_markup' => json_encode([
+                        'inline_keyboard'=>[
+                            [
+                                ['text'=>"Подробнее о заказе",'switch_inline_query_current_chat'=> 'order_details'],
+                                ['text'=>"Опции",'switch_inline_query_current_chat'=> 'options'],
+                            ],
+                        ]
+                    ]),
+                ], true);
+                return ['message' => 'ok', 'code' => 200];
+            }
 
 
+            $this->sendMessage([
+                'chat_id' => $message['from']['id'],
+                'text' => 'нет такой команды',
+            ]);
+            return ['message' => 'ok', 'code' => 200];
 
-
+        }
+        
     }
 
 
@@ -366,7 +325,8 @@ class B2bBotController extends \yii\web\Controller
 
 
     /*
-     * 
+     * проверка авторизации
+     *
      * Returns True on success.
      * */
     private function checkAuth(){
