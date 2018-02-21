@@ -176,15 +176,15 @@ class B2bBotController extends \yii\web\Controller
             $commandArr = explode('/', $message['text']);
             $productId = $commandArr[1];
 
-            $serverResponse = $this->product([
-                'phone' => $this->user['phone'],
-                'productCode' => $productId,
-            ]);
-            Yii::info([
-                'action'=>'response from Server - product',
-                'updateId'=>$this->request['update_id'],
-                'serverResponse'=>$serverResponse,
-            ], 'b2bBot');
+//            $serverResponse = $this->product([
+//                'phone' => $this->user['phone'],
+//                'productCode' => $productId,
+//            ]);
+//            Yii::info([
+//                'action'=>'response from Server - product',
+//                'updateId'=>$this->request['update_id'],
+//                'serverResponse'=>$serverResponse,
+//            ], 'b2bBot');
 
 
             $this->sendMessage([
