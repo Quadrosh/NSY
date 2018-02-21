@@ -174,8 +174,7 @@ class B2bBotController extends \yii\web\Controller
         elseif (substr($message['text'],0,8) == 'product/' ||  substr($message['text'],0,6) == 'товар/'){
 
             $commandArr = explode('/', $message['text']);
-            $orderId = $commandArr[1];
-            $productId = $commandArr[2];
+            $productId = $commandArr[1];
 
             $serverResponse = $this->product([
                 'phone' => $this->user['phone'],
