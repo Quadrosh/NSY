@@ -179,7 +179,6 @@ class B2bBotController extends \yii\web\Controller
 
             $serverResponse = $this->product([
                 'phone' => $this->user['phone'],
-                'orderId' => $orderId,
                 'productCode' => $productId,
             ]);
             Yii::info([
