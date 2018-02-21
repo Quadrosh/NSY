@@ -167,7 +167,33 @@ class B2bBotController extends \yii\web\Controller
                 'chat_id' => $message['from']['id'],
                 'text' => $orderId,
             ]);
-            
+
+            return ['message' => 'ok', 'code' => 200];
+        }
+
+        elseif (substr($message['text'],0,8) == 'product/' ||  substr($message['text'],0,6) == 'товар/'){
+
+            $commandArr = explode('/', $message['text']);
+            $orderId = $commandArr[1];
+            $productId = $commandArr[2];
+
+            $serverResponse = $this->product([
+                'phone' => $this->user['phone'],
+                'orderId' => $orderId,
+                'productCode' => $productId,
+            ]);
+            Yii::info([
+                'action'=>'response from Server - product',
+                'updateId'=>$this->request['update_id'],
+                'serverResponse'=>$serverResponse,
+            ], 'b2bBot');
+
+
+            $this->sendMessage([
+                'chat_id' => $message['from']['id'],
+                'text' => $productId,
+            ]);
+
             return ['message' => 'ok', 'code' => 200];
         }
 
@@ -341,6 +367,11 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    private function product($options = [])
+    {
+        $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdOrder'], $options);
+        return Json::decode($jsonResponse);
+    }
 
     private function order($options = [])
     {
