@@ -367,7 +367,13 @@ class B2bBotController extends \yii\web\Controller
 
     private function product($options = [])
     {
-        $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdOrder'], $options);
+        $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdProduct'], $options);
+        return Json::decode($jsonResponse);
+    }
+
+    private function products($options = [])
+    {
+        $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdProducts'], $options);
         return Json::decode($jsonResponse);
     }
 
