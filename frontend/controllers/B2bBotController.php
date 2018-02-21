@@ -195,6 +195,30 @@ class B2bBotController extends \yii\web\Controller
             return ['message' => 'ok', 'code' => 200];
         }
 
+        elseif (substr($message['text'],0,7) == 'search/' ||  substr($message['text'],0,6) == 'поиск/'){
+
+            $commandArr = explode('/', $message['text']);
+            $query = $commandArr[1];
+
+            $serverResponse = $this->search([
+                'phone' => $this->user['phone'],
+                'query' => $query,
+            ]);
+            Yii::info([
+                'action'=>'response from Server - product',
+                'updateId'=>$this->request['update_id'],
+                'serverResponse'=>$serverResponse,
+            ], 'b2bBot');
+
+
+            $this->sendMessage([
+                'chat_id' => $message['from']['id'],
+                'text' => $query,
+            ]);
+
+            return ['message' => 'ok', 'code' => 200];
+        }
+
 
 
 
@@ -371,7 +395,7 @@ class B2bBotController extends \yii\web\Controller
         return Json::decode($jsonResponse);
     }
 
-    private function products($options = [])
+    private function search($options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdProducts'], $options);
         return Json::decode($jsonResponse);
