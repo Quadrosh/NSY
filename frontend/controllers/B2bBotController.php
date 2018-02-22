@@ -173,7 +173,7 @@ class B2bBotController extends \yii\web\Controller
                     .PHP_EOL .'-------------------------'.PHP_EOL;
             }
 
-            $this->sendMessage([
+            $this->sendMessageWithBody([
                 'chat_id' => $message['from']['id'],
                 'text' => $responseToUser,
                 'reply_markup' => json_encode([
