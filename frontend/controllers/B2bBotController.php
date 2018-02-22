@@ -161,29 +161,12 @@ class B2bBotController extends \yii\web\Controller
             return ['message' => 'ok', 'code' => 200];
         }
 
-        elseif (substr($message['text'],0,7) == 'search/'
-            ||  substr($message['text'],0,6) == 'поиск/'){
+        elseif (substr($message['text'],0,7) == 'search/'){
 
             $commandArr = explode('/', $message['text']);
             $query = $commandArr[1];
 
-            $serverResponse = $this->getSearchResultsFromServer([
-                'phone' => $this->user['phone'],
-                'query' => $query,
-            ]);
-            Yii::info([
-                'action'=>'response from Server - product',
-                'updateId'=>$this->request['update_id'],
-                'serverResponse'=>$serverResponse,
-            ], 'b2bBot');
-
-
-            $this->sendMessage([
-                'chat_id' => $message['from']['id'],
-                'text' => $query,
-            ]);
-
-            return ['message' => 'ok', 'code' => 200];
+            return $this->search($query);
         }
 
 
@@ -304,6 +287,39 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
+    private function search($query)
+    {
+        $serverResponseArr = $this->getSearchResultsFromServer([
+            'phone' => $this->user['phone'],
+            'query' => $query,
+        ]);
+        Yii::info([
+            'action'=>'response from Server - search',
+            'updateId'=>$this->request['update_id'],
+            'serverResponse'=>$serverResponseArr,
+        ], 'b2bBot');
+
+        $responseToUser = '';
+        foreach ($serverResponseArr as $item) {
+            $responseToUser .= $item['productCode']
+                .' '.$item['model']
+                .PHP_EOL
+                .'Цена '.$item['personalPrice']
+                .' / '.$item['retailPrice'].', '
+                .'наличие ' .$item['quantity']['stock'].', '
+                .'в пути ' .$item['quantity']['inroute']
+                .PHP_EOL .'-------------------------'.PHP_EOL;
+        }
+
+
+        $this->sendMessage([
+            'chat_id' => $this->user['telegram_user_id'],
+            'text' => $responseToUser,
+        ]);
+
+        return ['message' => 'ok', 'code' => 200];
+    }
+
     private function order($orderId)
     {
         $serverResponse = $this->getOrderFromServer([
@@ -342,8 +358,6 @@ class B2bBotController extends \yii\web\Controller
 
         return ['message' => 'ok', 'code' => 200];
     }
-
-
 
 
     private function orders()
