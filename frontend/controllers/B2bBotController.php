@@ -89,7 +89,7 @@ class B2bBotController extends \yii\web\Controller
         } elseif ($inlineQuery){
             $this->request['request'] = 'inlineQuery '.$inlineQuery['query'];
         } elseif ($callbackQuery){
-            $this->request['request'] = 'callbackQuery '.$callbackQuery['query'];
+            $this->request['request'] = 'callbackQuery '.$callbackQuery['data'];
         }
         $this->request->save();
 
