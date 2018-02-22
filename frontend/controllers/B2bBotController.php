@@ -226,11 +226,20 @@ class B2bBotController extends \yii\web\Controller
 
     private function callbackQueryAction($callbackQuery)
     {
+        $this->answerCallbackQuery([
+            'callback_query_id' => $callbackQuery['id'],
+            'text' => 'В процессе...',
+        ]);
         Yii::info([
             'action'=>'request Callback Query',
             'updateId'=>$this->request['update_id'],
             'callbackQuery'=>$callbackQuery,
         ], 'b2bBot');
+
+        if ($callbackQuery['data'] == '/orders') {
+            return $this->orders();
+        }
+        return ['message' => 'ok', 'code' => 200];
     }
 
     private function inlineQueryAction($inlineQuery)
