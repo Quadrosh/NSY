@@ -176,6 +176,14 @@ class B2bBotController extends \yii\web\Controller
             $this->sendMessage([
                 'chat_id' => $message['from']['id'],
                 'text' => $responseToUser,
+                'reply_markup' => json_encode([
+                    'inline_keyboard'=>[
+                        [
+                            ['text'=>'Заказы', 'callback_data'=> '/orders'],
+                            ['text'=>'Опции', 'callback_data'=> '/options'],
+                        ],
+                    ]
+                ]),
             ]);
 
             return ['message' => 'ok', 'code' => 200];
