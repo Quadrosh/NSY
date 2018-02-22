@@ -84,7 +84,13 @@ class B2bBotController extends \yii\web\Controller
         $this->request['user_id'] = $this->user['id'];
         $this->request['update_id'] = strval($updateId);
         $this->request['user_time'] = intval($message['date']);
-        $this->request['request'] = $message['text'];
+        if ($message) {
+            $this->request['request'] = $message['text'];
+        } elseif ($inlineQuery){
+            $this->request['request'] = 'inlineQuery '.$inlineQuery['query'];
+        } elseif ($callbackQuery){
+            $this->request['request'] = 'callbackQuery '.$callbackQuery['query'];
+        }
         $this->request->save();
 
         //  проверка авторизации
@@ -97,9 +103,12 @@ class B2bBotController extends \yii\web\Controller
           return $this->inlineQueryAction($inlineQuery);
         }
 
-
         if ($message) {
             return $this->textMessageAction($message);
+        }
+
+        if ($callbackQuery) {
+            return $this->callBackQueryAction($callbackQuery);
         }
 
     }
@@ -111,40 +120,7 @@ class B2bBotController extends \yii\web\Controller
 //        }
         if (trim(strtolower($message['text'])) == '/orders' ||
             trim(strtolower($message['text'])) == '/заказы') {
-            $serverResponse = $this->orders([
-                'phone' => $this->user['phone'],
-            ]);
-
-            Yii::info([
-                'action'=>'response from Server - orders',
-                'updateId'=>$this->request['update_id'],
-                'serverResponse'=>$serverResponse,
-            ], 'b2bBot');
-
-            $responseToUser = '';
-            foreach ($serverResponse as $item) {
-                $responseToUser .= $item['orderId']
-                    .' '.$item['totalCost']
-                    .PHP_EOL
-                    .' '.$item['status']['status']
-                    .' '.$item['status']['payment']
-                    .' '.$item['status']['delivey']
-                    .PHP_EOL .'-------------------------'.PHP_EOL;
-            }
-
-            $this->sendMessageWithBody([
-                'chat_id' => $message['from']['id'],
-                'text' => $responseToUser,
-                'reply_markup' => Json::encode([
-                    'inline_keyboard'=>[
-                        [
-                            ['text'=>"Подробнее о заказе",'switch_inline_query_current_chat'=> 'order_details'],
-                            ['text'=>"Опции",'switch_inline_query_current_chat'=> 'options'],
-                        ],
-                    ]
-                ]),
-            ]);
-            return ['message' => 'ok', 'code' => 200];
+            return $this->orders();
         }
 
         elseif (substr($message['text'],0,6) == 'order/' ||  substr($message['text'],0,6) == 'заказ/'){
@@ -152,7 +128,7 @@ class B2bBotController extends \yii\web\Controller
             $commandArr = explode('/', $message['text']);
             $orderId = $commandArr[1];
 
-            $serverResponse = $this->order([
+            $serverResponse = $this->getOrderFromServer([
                 'phone' => $this->user['phone'],
                 'orderId' => $orderId,
             ]);
@@ -176,7 +152,7 @@ class B2bBotController extends \yii\web\Controller
             $this->sendMessageWithBody([
                 'chat_id' => $message['from']['id'],
                 'text' => $responseToUser,
-                'reply_markup' => json_encode([
+                'reply_markup' => Json::encode([
                     'inline_keyboard'=>[
                         [
                             ['text'=>'Заказы', 'callback_data'=> '/orders'],
@@ -194,7 +170,7 @@ class B2bBotController extends \yii\web\Controller
             $commandArr = explode('/', $message['text']);
             $productId = $commandArr[1];
 
-            $serverResponse = $this->product([
+            $serverResponse = $this->getProductFromServer([
                 'phone' => $this->user['phone'],
                 'productCode' => $productId,
             ]);
@@ -218,7 +194,7 @@ class B2bBotController extends \yii\web\Controller
             $commandArr = explode('/', $message['text']);
             $query = $commandArr[1];
 
-            $serverResponse = $this->search([
+            $serverResponse = $this->getSearchResultsFromServer([
                 'phone' => $this->user['phone'],
                 'query' => $query,
             ]);
@@ -248,8 +224,17 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    private function callbackQueryAction($callbackQuery)
+    {
+        Yii::info([
+            'action'=>'request Callback Query',
+            'updateId'=>$this->request['update_id'],
+            'callbackQuery'=>$callbackQuery,
+        ], 'b2bBot');
+    }
 
-    private function inlineQueryAction($inlineQuery){
+    private function inlineQueryAction($inlineQuery)
+    {
         Yii::info([
             'action'=>'request Inline Query',
             'updateId'=>$this->request['update_id'],
@@ -258,7 +243,7 @@ class B2bBotController extends \yii\web\Controller
 
 //           список заказов
         if ($inlineQuery['query'] == 'order_details') {
-            $serverResponse = $this->orders([
+            $serverResponse = $this->getOrdersFromServer([
                 'phone' => $this->user['phone'],
             ]);
 
@@ -300,6 +285,43 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    private function orders()
+    {
+        $serverResponse = $this->getOrdersFromServer([
+            'phone' => $this->user['phone'],
+        ]);
+
+        Yii::info([
+            'action'=>'response from Server - orders',
+            'updateId'=>$this->request['update_id'],
+            'serverResponse'=>$serverResponse,
+        ], 'b2bBot');
+
+        $responseToUser = '';
+        foreach ($serverResponse as $item) {
+            $responseToUser .= $item['orderId']
+                .' '.$item['totalCost']
+                .PHP_EOL
+                .' '.$item['status']['status']
+                .' '.$item['status']['payment']
+                .' '.$item['status']['delivey']
+                .PHP_EOL .'-------------------------'.PHP_EOL;
+        }
+
+        $this->sendMessageWithBody([
+            'chat_id' => $this->user['telegram_user_id'],
+            'text' => $responseToUser,
+            'reply_markup' => Json::encode([
+                'inline_keyboard'=>[
+                    [
+                        ['text'=>"Подробнее о заказе",'switch_inline_query_current_chat'=> 'order_details'],
+                        ['text'=>"Опции",'switch_inline_query_current_chat'=> 'options'],
+                    ],
+                ]
+            ]),
+        ]);
+        return ['message' => 'ok', 'code' => 200];
+    }
     /*
     * проверка авторизации
     *
@@ -345,7 +367,7 @@ class B2bBotController extends \yii\web\Controller
 
             if (!$alreadyUser) { // если телефон не зарегистрирован на другого дилера
 
-                $serverResponse = $this->orders([
+                $serverResponse = $this->getOrdersFromServer([
                     'phone' => $phone,
                 ]);
 
@@ -407,26 +429,26 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
-    private function product($options = [])
+    private function getProductFromServer($options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdProduct'], $options);
         return Json::decode($jsonResponse);
     }
 
-    private function search($options = [])
+    private function getSearchResultsFromServer($options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdProducts'], $options);
         return Json::decode($jsonResponse);
     }
 
-    private function order($options = [])
+    private function getOrderFromServer($options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdOrder'], $options);
         return Json::decode($jsonResponse);
     }
 
 
-    private function orders($options = [])
+    private function getOrdersFromServer($options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdLastOrders'], $options);
         return Json::decode($jsonResponse);
