@@ -262,6 +262,39 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
+    private function options()
+    {
+        $this->sendMessageWithBody([
+            'chat_id' => $this->user['telegram_user_id'],
+            'text' => 'Опции',
+            'reply_markup' => Json::encode([
+                'one_time_keyboard'=> true,
+                'keyboard'=>[
+                    [
+                        ['text'=>'Инфо по артикулу'],
+                        ['text'=>'Поиск товара'],
+                    ],
+                    [
+                        ['text'=>'Мои заказы'],
+//                        ['text'=>'Поиск товара', 'callback_data'=> '/search'],
+                    ],
+                ]
+            ]),
+//            'reply_markup' => Json::encode([
+//                'inline_keyboard'=>[
+//                    [
+//                        ['text'=>'Инфо по артикулу','callback_data'=> '/#'],
+//                        ['text'=>'Поиск товара', 'callback_data'=> '/search'],
+//                    ],
+//                    [
+//                        ['text'=>'Мои заказы','callback_data'=> '/orders'],
+////                        ['text'=>'Поиск товара', 'callback_data'=> '/search'],
+//                    ],
+//                ]
+//            ]),
+        ]);
+        return ['message' => 'ok', 'code' => 200];
+    }
 
     private function order($orderId)
     {
@@ -303,26 +336,7 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
-    private function options()
-    {
-        $this->sendMessageWithBody([
-            'chat_id' => $this->user['telegram_user_id'],
-            'text' => 'Опции',
-            'reply_markup' => Json::encode([
-                'inline_keyboard'=>[
-                    [
-                        ['text'=>'Инфо по артикулу','callback_data'=> '/#'],
-                        ['text'=>'Поиск товара', 'callback_data'=> '/search'],
-                    ],
-                    [
-                        ['text'=>'Мои заказы','callback_data'=> '/orders'],
-//                        ['text'=>'Поиск товара', 'callback_data'=> '/search'],
-                    ],
-                ]
-            ]),
-        ]);
-        return ['message' => 'ok', 'code' => 200];
-    }
+
 
     private function orders()
     {
