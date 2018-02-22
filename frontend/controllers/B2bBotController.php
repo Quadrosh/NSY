@@ -303,11 +303,11 @@ class B2bBotController extends \yii\web\Controller
         foreach ($serverResponseArr as $item) {
             $responseToUser .= $item['productCode']
                 .' '.$item['model']
-                .PHP_EOL
-                .'Цена '.$item['personalPrice']
-                .' / '.$item['retailPrice'].', '
-                .'наличие ' .$item['quantity']['stock'].', '
-                .'в пути ' .$item['quantity']['inroute']
+//                .PHP_EOL
+//                .'Цена '.$item['personalPrice']
+//                .' / '.$item['retailPrice'].', '
+//                .'наличие ' .$item['quantity']['stock'].', '
+//                .'в пути ' .$item['quantity']['inroute']
                 .PHP_EOL .'-------------------------'.PHP_EOL;
         }
 
