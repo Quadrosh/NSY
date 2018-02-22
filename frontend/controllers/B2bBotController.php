@@ -251,7 +251,7 @@ class B2bBotController extends \yii\web\Controller
         ], 'b2bBot');
 
 //           список заказов
-        if ($inlineQuery['query'] == 'order_details') {
+        if ($inlineQuery['query'] == '/order_details') {
             $serverResponse = $this->getOrdersFromServer([
                 'phone' => $this->user['phone'],
             ]);
@@ -323,8 +323,8 @@ class B2bBotController extends \yii\web\Controller
             'reply_markup' => Json::encode([
                 'inline_keyboard'=>[
                     [
-                        ['text'=>"Подробнее о заказе",'switch_inline_query_current_chat'=> 'order_details'],
-                        ['text'=>"Опции",'switch_inline_query_current_chat'=> 'options'],
+                        ['text'=>"Подробнее о заказе",'switch_inline_query_current_chat'=> '/order_details'],
+                        ['text'=>'Опции', 'callback_data'=> '/options'],
                     ],
                 ]
             ]),
