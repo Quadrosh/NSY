@@ -119,18 +119,25 @@ class B2bBotController extends \yii\web\Controller
 //
 //        }
         if (trim(strtolower($message['text'])) == '/orders' ||
+            trim(strtolower($message['text'])) == 'мои заказы' ||
             trim(strtolower($message['text'])) == '/заказы') {
             return $this->orders();
         }
 
-        elseif (substr($message['text'],0,6) == 'order/' ||  substr($message['text'],0,6) == 'заказ/'){
+        elseif (substr($message['text'],0,6) == 'order/' ||
+            substr($message['text'],0,6) == 'заказ/'){
 
             $commandArr = explode('/', $message['text']);
             $orderId = $commandArr[1];
             return $this->order($orderId);
         }
 
-        elseif (substr($message['text'],0,8) == 'product/' ||  substr($message['text'],0,6) == 'товар/'){
+        elseif ($message['text'] == 'Выход из опций'){
+            return ['message' => 'ok', 'code' => 200];
+        }
+
+        elseif (substr($message['text'],0,8) == 'product/' ||
+            substr($message['text'],0,6) == 'товар/'){
 
             $commandArr = explode('/', $message['text']);
             $productId = $commandArr[1];
@@ -154,7 +161,8 @@ class B2bBotController extends \yii\web\Controller
             return ['message' => 'ok', 'code' => 200];
         }
 
-        elseif (substr($message['text'],0,7) == 'search/' ||  substr($message['text'],0,6) == 'поиск/'){
+        elseif (substr($message['text'],0,7) == 'search/'
+            ||  substr($message['text'],0,6) == 'поиск/'){
 
             $commandArr = explode('/', $message['text']);
             $query = $commandArr[1];
@@ -276,7 +284,7 @@ class B2bBotController extends \yii\web\Controller
                     ],
                     [
                         ['text'=>'Мои заказы'],
-//                        ['text'=>'Поиск товара', 'callback_data'=> '/search'],
+                        ['text'=>'Выход из опций'],
                     ],
                 ]
             ]),
