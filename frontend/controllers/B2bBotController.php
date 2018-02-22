@@ -132,7 +132,7 @@ class B2bBotController extends \yii\web\Controller
                     .PHP_EOL .'-------------------------'.PHP_EOL;
             }
 
-            $this->sendMessage([
+            $this->sendMessageWithBody([
                 'chat_id' => $message['from']['id'],
                 'text' => $responseToUser,
                 'reply_markup' => Json::encode([
@@ -143,7 +143,7 @@ class B2bBotController extends \yii\web\Controller
                         ],
                     ]
                 ]),
-            ], true);
+            ]);
             return ['message' => 'ok', 'code' => 200];
         }
 
@@ -498,6 +498,33 @@ class B2bBotController extends \yii\web\Controller
         return Json::decode($jsonResponse);
     }
 
+    /**
+     *   @var array
+     *   аргументы
+     *  массив опций
+     *
+     */
+    public function sendMessageWithBody(array $options)
+    {
+        $this->request['answer'] = $options['text'];
+        $this->request['answer_time'] = time();
+        $this->request->save();
+        $chat_id = $options['chat_id'];
+        $urlEncodedText = urlencode($options['text']);
+        $jsonResponse = $this->sendToUser("https://api.telegram.org/bot" .
+            Yii::$app->params['b2bBotToken'].
+            "/sendMessage?chat_id=".$chat_id .
+            '&text='.$urlEncodedText, $options, true);
+        return Json::decode($jsonResponse);
+    }
+
+    /**
+     *   @var array
+     *   аргументы
+     * 1 массив опций
+     * 2 флаг отправки информации в теле запроса (кнопы )
+     *
+     */
     public function sendMessage(array $options, $dataInBody = false)
     {
         $this->request['answer'] = $options['text'];
