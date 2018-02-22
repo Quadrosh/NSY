@@ -121,9 +121,9 @@ class B2bBotController extends \yii\web\Controller
                 'serverResponse'=>$serverResponse,
             ], 'b2bBot');
 
-            $resp = '';
+            $responseToUser = '';
             foreach ($serverResponse as $item) {
-                $resp .= $item['orderId']
+                $responseToUser .= $item['orderId']
                     .' '.$item['totalCost']
                     .PHP_EOL
                     .' '.$item['status']['status']
@@ -134,7 +134,7 @@ class B2bBotController extends \yii\web\Controller
 
             $this->sendMessage([
                 'chat_id' => $message['from']['id'],
-                'text' => $resp,
+                'text' => $responseToUser,
                 'reply_markup' => Json::encode([
                     'inline_keyboard'=>[
                         [
@@ -161,13 +161,21 @@ class B2bBotController extends \yii\web\Controller
                 'updateId'=>$this->request['update_id'],
                 'serverResponse'=>$serverResponse,
             ], 'b2bBot');
-            
-            $responseToUser = '';
 
+            $responseToUser = '';
+            foreach ($serverResponse['items'] as $item) {
+                $responseToUser .= $item['productCode']
+                    .' '.$item['productName']
+                    .PHP_EOL
+                    .' '.$item['quantity']
+                    .', в резерве '.$item['availability']
+                    .', цена '.$item['price'].'/'.$item['cost']
+                    .PHP_EOL .'-------------------------'.PHP_EOL;
+            }
 
             $this->sendMessage([
                 'chat_id' => $message['from']['id'],
-                'text' => $orderId,
+                'text' => $responseToUser,
             ]);
 
             return ['message' => 'ok', 'code' => 200];
