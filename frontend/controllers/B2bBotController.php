@@ -119,7 +119,7 @@ class B2bBotController extends \yii\web\Controller
 //
 //        }
         if (trim(strtolower($message['text'])) == '/orders' ||
-            trim(strtolower($message['text'])) == 'мои заказы' ||
+            $message['text'] == 'Мои заказы' ||
             trim(strtolower($message['text'])) == '/заказы') {
             return $this->orders();
         }
