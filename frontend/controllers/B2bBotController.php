@@ -162,7 +162,7 @@ class B2bBotController extends \yii\web\Controller
                 'serverResponse'=>$serverResponse,
             ], 'b2bBot');
 
-            $responseToUser = 'Заказ '.$orderId.PHP_EOL;
+            $responseToUser = $orderId.':'.PHP_EOL.'-------------------------'.PHP_EOL;
             foreach ($serverResponse['items'] as $item) {
                 $responseToUser .= $item['productCode']
                     .' '.$item['productName']
