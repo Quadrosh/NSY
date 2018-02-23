@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'b2b_name',
             'email:email',
             'phone',
+            'bot_command',
             'status',
 //            'updated_at',
             [

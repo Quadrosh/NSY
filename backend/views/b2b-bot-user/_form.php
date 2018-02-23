@@ -28,6 +28,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'bot_command')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'updated_at')->textInput() ?>
 
     <?= $form->field($model, 'created_at')->textInput() ?>
