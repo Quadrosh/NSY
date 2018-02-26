@@ -331,6 +331,10 @@ class B2bBotController extends \yii\web\Controller
             'serverResponse'=>$serverResponse,
         ], 'b2bBot');
 
+        if ($serverResponse['code'] = 500) {
+            return $this->sendErrorMessage($serverResponse['errorMessage']);
+        }
+
         $responseToUser = $orderId.':'.PHP_EOL.'-------------------------'.PHP_EOL;
         foreach ($serverResponse['items'] as $item) {
             $responseToUser .= $item['productCode']
@@ -371,10 +375,12 @@ class B2bBotController extends \yii\web\Controller
             'serverResponse'=>$orders,
         ], 'b2bBot');
 
-        $responseToUser = '';
-        if ($orders['code'] = 500 ) {
+        if ($orders['code'] = 500) {
             return $this->sendErrorMessage($orders['errorMessage']);
         }
+
+        $responseToUser = '';
+
         foreach ($orders as $item) {
             $responseToUser .= $item['orderId']
                 .' '.$item['totalCost']
@@ -560,7 +566,8 @@ class B2bBotController extends \yii\web\Controller
             Yii::info($info, 'b2bBot');
             if ($info['http_code'] == 500) {
                 $serverError = [];
-                $serverError['errorMessage'] = 'Извините, на сервере технические проблемы. Запрос не может быть обработан';
+                $serverError['errorMessage'] = 'Извините, на сервере технические проблемы.'
+                    .PHP_EOL .'В данный момент запрос не может быть обработан';
                 $serverError['code'] = 500;
                 curl_close($ch);
                 return Json::encode($serverError);
