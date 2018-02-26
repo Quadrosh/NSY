@@ -224,9 +224,7 @@ class B2bBotController extends \yii\web\Controller
             ], 'b2bBot');
 
             if ($serverResponse['code'] = 500) {
-//                return $this->sendErrorMessage($serverResponse['errorMessage']);
                 return $this->sendErrorInline($serverResponse['errorMessage'],$inlineQuery['id']);
-
             }
 
             $results = [];
@@ -713,8 +711,8 @@ class B2bBotController extends \yii\web\Controller
         $result[] = [
             'type' => 'article',
             'id' => '1',
-            'title' => $error,
-            'description' => '',
+            'title' => 'Ошибка соединения',
+            'description' => $error,
             'input_message_content'=>[
                 'message_text'=> '/options',
                 'parse_mode'=> 'html',
@@ -727,6 +725,7 @@ class B2bBotController extends \yii\web\Controller
             'is_personal' => true,
             'results'=> Json::encode($result)
         ]);
+        return ['message' => 'ok', 'code' => 200];
     }
 
 
