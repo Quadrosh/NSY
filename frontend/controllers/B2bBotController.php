@@ -175,11 +175,7 @@ class B2bBotController extends \yii\web\Controller
         elseif ($this->user['bot_command'] == 'search'){
             $this->user['bot_command'] = null;
             $this->user->save();
-            $this->sendMessage([
-                'chat_id' => $this->user['telegram_user_id'],
-                'text' => 'вот что нашли',
-            ]);
-            return ['message' => 'ok', 'code' => 200];
+            return $this->search($message['text']);
         }
 
 
