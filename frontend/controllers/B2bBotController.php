@@ -211,7 +211,8 @@ class B2bBotController extends \yii\web\Controller
             'chat_id' => $message['from']['id'],
             'text' => 'нет такой команды',
         ]);
-        return ['message' => 'ok', 'code' => 200];
+        return $this->options();
+        
     }
 
 
