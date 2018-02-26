@@ -162,7 +162,7 @@ class B2bBotController extends \yii\web\Controller
             return ['message' => 'ok', 'code' => 200];
         }
 
-        elseif (strtolower($message['text']) == 'поиск товара' ){
+        elseif ($message['text'] == 'Поиск товара' ){
             $this->user['bot_command'] = 'search';
             $this->user->save();
             $this->sendMessage([
@@ -181,7 +181,7 @@ class B2bBotController extends \yii\web\Controller
             ]);
             return ['message' => 'ok', 'code' => 200];
         }
-        
+
 
 
         elseif (substr($message['text'],0,7) == 'search/'){
