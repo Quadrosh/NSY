@@ -373,19 +373,7 @@ class B2bBotController extends \yii\web\Controller
 
         $responseToUser = '';
         if ($orders['code'] = 500 ) {
-            $responseToUser = $orders['message'];
-            $this->sendMessageWithBody([
-                'chat_id' => $this->user['telegram_user_id'],
-                'text' => $responseToUser,
-                'reply_markup' => Json::encode([
-                    'inline_keyboard'=>[
-                        [
-                            ['text'=>'Опции', 'callback_data'=> '/options']
-                        ],
-                    ]
-                ]),
-            ]);
-            return ['message' => 'ok', 'code' => 200];
+            return $this->sendErrorMessage($orders['errorMessage']);
         }
         foreach ($orders as $item) {
             $responseToUser .= $item['orderId']
@@ -572,7 +560,7 @@ class B2bBotController extends \yii\web\Controller
             Yii::info($info, 'b2bBot');
             if ($info['http_code'] == 500) {
                 $serverError = [];
-                $serverError['message'] = 'Извините, на сервере технические проблемы, сейчас запрос не может быть обработан';
+                $serverError['errorMessage'] = 'Извините, на сервере технические проблемы. Запрос не может быть обработан';
                 $serverError['code'] = 500;
                 curl_close($ch);
                 return Json::encode($serverError);
@@ -692,6 +680,21 @@ class B2bBotController extends \yii\web\Controller
         return $r;
     }
 
+    private function sendErrorMessage ($error){
+        $this->sendMessageWithBody([
+            'chat_id' => $this->user['telegram_user_id'],
+            'text' => $error,
+            'reply_markup' => Json::encode([
+                'inline_keyboard'=>[
+                    [
+                        ['text'=>'Подробнее о заказе','switch_inline_query_current_chat'=> '/order_details'],
+                        ['text'=>'Опции', 'callback_data'=> '/options'],
+                    ],
+                ]
+            ]),
+        ]);
+        return ['message' => 'ok', 'code' => 200];
+    }
 
 
 
