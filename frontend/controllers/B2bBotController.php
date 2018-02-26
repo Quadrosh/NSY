@@ -163,10 +163,10 @@ class B2bBotController extends \yii\web\Controller
         }
 
         elseif ($message['text'] == 'Инфо по артикулу' ){
-            return $this->onePoductInit();
+            return $this->oneProductInit();
         }
         elseif ($this->user['bot_command'] == 'oneProductInfo'){
-            return $this->onePoductProcess($message['text']);
+            return $this->oneProductProcess($message['text']);
         }
 
         elseif ($message['text'] == 'Поиск товара' ){
@@ -324,7 +324,7 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
-    private function onePoductInit(){
+    private function oneProductInit(){
 
         $this->user['bot_command'] = 'oneProductInfo';
 
@@ -338,7 +338,7 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
-    private function onePoductProcess($query)
+    private function oneProductProcess($query)
     {
         $this->user['bot_command'] = null;
         $this->user->save();
@@ -391,7 +391,7 @@ class B2bBotController extends \yii\web\Controller
 
         $this->sendMessage([
             'chat_id' => $this->user['telegram_user_id'],
-            'text' => $text.PHP_EOL.'Отправьте поисковый запрос',
+            'text' => $text.PHP_EOL.PHP_EOL.'Отправьте поисковый запрос',
         ]);
         return ['message' => 'ok', 'code' => 200];
     }
