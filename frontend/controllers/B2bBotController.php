@@ -177,9 +177,16 @@ class B2bBotController extends \yii\web\Controller
             return $this->searchProcess($message['text']);
         }
 
-        elseif (substr($this->user['bot_command'],0,7) == 'search-'){
+        elseif (substr($this->user['bot_command'],0,8) == '/search-'){
             $commandArr = explode('-', $this->user['bot_command']);
             $limit = $commandArr[1];
+            if ($limit > 30) {
+                $this->sendMessage([
+                    'chat_id' => $message['from']['id'],
+                    'text' => 'Настройка превышает предельное значение',
+                ]);
+                return ['message' => 'ok', 'code' => 200];
+            }
             return $this->searchProcess($message['text'], $limit);
         }
 
@@ -192,7 +199,7 @@ class B2bBotController extends \yii\web\Controller
 
             return $this->searchProcess($query);
         }
-        
+
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
             'text' => 'нет такой команды',
@@ -319,7 +326,7 @@ class B2bBotController extends \yii\web\Controller
         $this->user->save();
         $this->sendMessage([
             'chat_id' => $this->user['telegram_user_id'],
-            'text' => 'Отправьте поисковый запрос',
+            'text' => 'Поисковый запрос по умолчанию ограничен 10-ю результатами. Изменение настроек - команды /search-20 и /search-30 соответственно'.PHP_EOL.'Отправьте поисковый запрос',
         ]);
         return ['message' => 'ok', 'code' => 200];
     }
