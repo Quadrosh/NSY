@@ -394,6 +394,16 @@ class B2bBotController extends \yii\web\Controller
                 .PHP_EOL .'-------------------------'.PHP_EOL;
         }
 
+        Yii::info([
+            'action'=>'debug',
+            'updateId'=>$this->request['update_id'],
+            '$orders'=>$orders,
+            '$responseToUser'=>$responseToUser,
+        ], 'b2bBot');
+
+
+
+
         $this->sendMessageWithBody([
             'chat_id' => $this->user['telegram_user_id'],
             'text' => $responseToUser,
