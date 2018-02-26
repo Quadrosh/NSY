@@ -362,8 +362,8 @@ class B2bBotController extends \yii\web\Controller
                 .' '.$item['model']
                 .PHP_EOL .' '.$item['description']
                 .PHP_EOL
-                .'Цена '.$item['personalPrice']
-                .' / '.$item['retailPrice'].', '
+                .'Цена '.$item['retailPrice']
+                .' / '.$item['personalPrice'].', '
                 .'наличие ' .$item['quantity']['stock'].', '
                 .'в пути ' .$item['quantity']['inroute']
                 .PHP_EOL .'-------------------------'.PHP_EOL;
@@ -421,8 +421,8 @@ class B2bBotController extends \yii\web\Controller
                 .' '.$item['model']
                 .PHP_EOL .' '.$item['description']
                 .PHP_EOL
-                .'Цена '.$item['personalPrice']
-                .' / '.$item['retailPrice'].', '
+                .'Цена '.$item['retailPrice']
+                .' / '.$item['personalPrice'].', '
                 .'наличие ' .$item['quantity']['stock'].', '
                 .'в пути ' .$item['quantity']['inroute']
                 .PHP_EOL .'-------------------------'.PHP_EOL;
