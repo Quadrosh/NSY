@@ -223,7 +223,7 @@ class B2bBotController extends \yii\web\Controller
                 'serverResponse'=>$serverResponse,
             ], 'b2bBot');
 
-            if ($serverResponse['code'] = 500) {
+            if (isset($serverResponse['errorMessage'])) {
                 return $this->sendErrorInline($serverResponse['errorMessage'],$inlineQuery['id']);
             }
 
@@ -334,7 +334,7 @@ class B2bBotController extends \yii\web\Controller
             'serverResponse'=>$serverResponse,
         ], 'b2bBot');
 
-        if ($serverResponse['code'] = 500) {
+        if (isset($serverResponse['errorMessage'])) {
             return $this->sendErrorMessage($serverResponse['errorMessage']);
         }
 
