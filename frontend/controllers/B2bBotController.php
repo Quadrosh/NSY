@@ -224,9 +224,11 @@ class B2bBotController extends \yii\web\Controller
             ], 'b2bBot');
 
             if ($serverResponse['code'] = 500) {
-                return $this->sendErrorMessage($serverResponse['errorMessage']);
+//                return $this->sendErrorMessage($serverResponse['errorMessage']);
+                return $this->sendErrorInline($serverResponse['errorMessage'],$inlineQuery['id']);
+
             }
-            
+
             $results = [];
             foreach ($serverResponse as $order) {
                 $results[] = [
@@ -703,6 +705,28 @@ class B2bBotController extends \yii\web\Controller
             ]),
         ]);
         return ['message' => 'ok', 'code' => 200];
+    }
+
+    private function sendErrorInline($error, $inlineQueryId){
+        $result = [];
+
+        $result[] = [
+            'type' => 'article',
+            'id' => '1',
+            'title' => $error,
+            'description' => '',
+            'input_message_content'=>[
+                'message_text'=> '/options',
+                'parse_mode'=> 'html',
+                'disable_web_page_preview'=> true,
+            ],
+        ];
+
+        $this->answerInlineQuery([
+            'inline_query_id' => $inlineQueryId,
+            'is_personal' => true,
+            'results'=> Json::encode($result)
+        ]);
     }
 
 
