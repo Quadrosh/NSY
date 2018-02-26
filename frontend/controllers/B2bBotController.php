@@ -325,6 +325,8 @@ class B2bBotController extends \yii\web\Controller
             $responseToUser .= $item['productCode']
                 .' '.$item['model']
                 .PHP_EOL
+                .' '.$item['description']
+                .PHP_EOL
                 .'Цена '.$item['personalPrice']
                 .' / '.$item['retailPrice'].', '
                 .'наличие ' .$item['quantity']['stock'].', '
