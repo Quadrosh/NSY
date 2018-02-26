@@ -223,9 +223,12 @@ class B2bBotController extends \yii\web\Controller
                 'serverResponse'=>$serverResponse,
             ], 'b2bBot');
 
-            $orders = $serverResponse;
+            if ($serverResponse['code'] = 500) {
+                return $this->sendErrorMessage($serverResponse['errorMessage']);
+            }
+            
             $results = [];
-            foreach ($orders as $order) {
+            foreach ($serverResponse as $order) {
                 $results[] = [
                     'type' => 'article',
                     'id' => $order['orderId'],
