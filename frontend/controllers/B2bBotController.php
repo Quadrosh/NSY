@@ -571,11 +571,11 @@ class B2bBotController extends \yii\web\Controller
                 ] + $info;
             Yii::info($info, 'b2bBot');
             if ($info['http_code'] == 500) {
-                $error = [];
-                $error['message'] = 'Извините, на сервере технические проблемы, сейчас запрос не может быть обработан';
-                $error['code'] = 500;
+                $serverError = [];
+                $serverError['message'] = 'Извините, на сервере технические проблемы, сейчас запрос не может быть обработан';
+                $serverError['code'] = 500;
                 curl_close($ch);
-                return Json::encode($error);
+                return Json::encode($serverError);
             }
         }
         curl_close($ch);
