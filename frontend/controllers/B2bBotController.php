@@ -326,7 +326,7 @@ class B2bBotController extends \yii\web\Controller
         $this->user->save();
         $this->sendMessage([
             'chat_id' => $this->user['telegram_user_id'],
-            'text' => 'Поисковый запрос по умолчанию ограничен 10-ю результатами. Изменение настроек - команды /search-20 и /search-30 соответственно'.PHP_EOL.'Отправьте поисковый запрос',
+            'text' => 'Поисковый запрос по умолчанию ограничен 10-ю результатами. Изменение настроек - команды /search_20 и /search_30 соответственно'.PHP_EOL.'Отправьте поисковый запрос',
         ]);
         return ['message' => 'ok', 'code' => 200];
     }
