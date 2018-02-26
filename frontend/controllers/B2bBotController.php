@@ -325,8 +325,7 @@ class B2bBotController extends \yii\web\Controller
         foreach ($serverResponseArr as $item) {
             $responseToUser .= $item['productCode']
                 .' '.$item['model']
-//                .PHP_EOL .' '.substr($item['description'], 0, 200)
-                .PHP_EOL .' '.mb_substr($item['description'], 0, 200)
+                .PHP_EOL .' '.mb_substr($item['description'], 0, 200).'...'
                 .PHP_EOL
                 .'Цена '.$item['personalPrice']
                 .' / '.$item['retailPrice'].', '
