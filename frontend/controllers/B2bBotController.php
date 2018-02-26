@@ -131,10 +131,10 @@ class B2bBotController extends \yii\web\Controller
             $orderId = $commandArr[1];
             return $this->order($orderId);
         }
-
-        elseif ($message['text'] == 'Выход из опций'){
-            return ['message' => 'ok', 'code' => 200];
+        elseif (strtolower($message['text']) == '/options' ){
+            return $this->options();
         }
+
 
         elseif (substr($message['text'],0,8) == 'product/' ||
             substr($message['text'],0,6) == 'товар/'){
@@ -707,7 +707,6 @@ class B2bBotController extends \yii\web\Controller
 
     private function sendErrorInline($error, $inlineQueryId){
         $result = [];
-
         $result[] = [
             'type' => 'article',
             'id' => '1',
