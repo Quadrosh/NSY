@@ -267,7 +267,6 @@ class B2bBotController extends \yii\web\Controller
                     ],
                     [
                         ['text'=>'Мои заказы'],
-                        ['text'=>'Выход из опций'],
                     ],
                 ]
             ]),
