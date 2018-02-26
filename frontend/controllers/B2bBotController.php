@@ -166,10 +166,10 @@ class B2bBotController extends \yii\web\Controller
             return $this->searchInit();
         }
 
-        elseif ($message['text'] == 'search-20' ){
+        elseif ($message['text'] == '/search_20' ){
             return $this->searchInit(20);
         }
-        elseif ($message['text'] == 'search-30' ){
+        elseif ($message['text'] == '/search_30' ){
             return $this->searchInit(30);
         }
 
@@ -177,8 +177,8 @@ class B2bBotController extends \yii\web\Controller
             return $this->searchProcess($message['text']);
         }
 
-        elseif (substr($this->user['bot_command'],0,8) == '/search-'){
-            $commandArr = explode('-', $this->user['bot_command']);
+        elseif (substr($this->user['bot_command'],0,8) == '/search_'){
+            $commandArr = explode('_', $this->user['bot_command']);
             $limit = $commandArr[1];
             if ($limit > 30) {
                 $this->sendMessage([
