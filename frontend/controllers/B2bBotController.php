@@ -177,7 +177,7 @@ class B2bBotController extends \yii\web\Controller
             return $this->searchProcess($message['text']);
         }
 
-        elseif (substr($this->user['bot_command'],0,8) == '/search_'){
+        elseif (substr($this->user['bot_command'],0,8) == 'search_'){
             $commandArr = explode('_', $this->user['bot_command']);
             $limit = $commandArr[1];
             if ($limit > 30) {
@@ -321,7 +321,7 @@ class B2bBotController extends \yii\web\Controller
         $text = 'Поисковый запрос по умолчанию ограничен 10-ю результатами. Изменение настроек - команды /search_20 и /search_30 соответственно';
         if ($limit != 10) {
             $text = 'Поиск '.$limit.' результатов';
-            $this->user['bot_command'] = 'search-'.$limit;
+            $this->user['bot_command'] = 'search_'.$limit;
         } else {
             $this->user['bot_command'] = 'search';
         }
