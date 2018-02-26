@@ -318,15 +318,19 @@ class B2bBotController extends \yii\web\Controller
     }
 
     private function searchInit($limit = 10){
+        $text = 'Поисковый запрос по умолчанию ограничен 10-ю результатами. Изменение настроек - команды /search_20 и /search_30 соответственно';
         if ($limit != 10) {
+            $text = 'Поиск '.$limit.' результатов';
             $this->user['bot_command'] = 'search-'.$limit;
         } else {
             $this->user['bot_command'] = 'search';
         }
         $this->user->save();
+
+
         $this->sendMessage([
             'chat_id' => $this->user['telegram_user_id'],
-            'text' => 'Поисковый запрос по умолчанию ограничен 10-ю результатами. Изменение настроек - команды /search_20 и /search_30 соответственно'.PHP_EOL.'Отправьте поисковый запрос',
+            'text' => $text.PHP_EOL.'Отправьте поисковый запрос',
         ]);
         return ['message' => 'ok', 'code' => 200];
     }
