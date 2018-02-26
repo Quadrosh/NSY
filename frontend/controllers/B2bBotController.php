@@ -131,6 +131,7 @@ class B2bBotController extends \yii\web\Controller
             $orderId = $commandArr[1];
             return $this->order($orderId);
         }
+
         elseif (strtolower($message['text']) == '/options' ){
             return $this->options();
         }
@@ -160,6 +161,28 @@ class B2bBotController extends \yii\web\Controller
 
             return ['message' => 'ok', 'code' => 200];
         }
+
+        elseif (strtolower($message['text']) == 'поиск товара' ){
+            $this->user['bot_command'] = 'search';
+            $this->user->save();
+            $this->sendMessage([
+                'chat_id' => $this->user['telegram_user_id'],
+                'text' => 'Отправьте поисковый запрос',
+            ]);
+            return ['message' => 'ok', 'code' => 200];
+        }
+
+        elseif ($this->user['bot_command'] == 'search'){
+            $this->user['bot_command'] = null;
+            $this->user->save();
+            $this->sendMessage([
+                'chat_id' => $this->user['telegram_user_id'],
+                'text' => 'вот что нашли',
+            ]);
+            return ['message' => 'ok', 'code' => 200];
+        }
+        
+
 
         elseif (substr($message['text'],0,7) == 'search/'){
 
@@ -449,7 +472,7 @@ class B2bBotController extends \yii\web\Controller
 
 
             $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'=> 'active'])->one();
-            if ($alreadyUser['phone'] == '7911111111111') {
+            if ($alreadyUser['phone'] == '7911111111111') { // тест
                 $alreadyUser = null;
             }
 
