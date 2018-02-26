@@ -378,7 +378,7 @@ class B2bBotController extends \yii\web\Controller
             'serverResponse'=>$orders,
         ], 'b2bBot');
 
-        if ($orders['code'] = 500) {
+        if (isset($orders['errorMessage'])) {
             return $this->sendErrorMessage($orders['errorMessage']);
         }
 
