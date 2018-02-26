@@ -573,6 +573,8 @@ class B2bBotController extends \yii\web\Controller
             if ($info['http_code'] == 500) {
                 $r['message'] = 'Извините, на сервере технические проблемы, сейчас запрос не может быть обработан';
                 $r['code'] = 500;
+                curl_close($ch);
+                return $r;
             }
         }
         curl_close($ch);
