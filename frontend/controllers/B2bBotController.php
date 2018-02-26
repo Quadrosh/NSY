@@ -162,6 +162,13 @@ class B2bBotController extends \yii\web\Controller
             return ['message' => 'ok', 'code' => 200];
         }
 
+        elseif ($message['text'] == 'Инфо по артикулу' ){
+            return $this->onePoductInit();
+        }
+        elseif ($this->user['bot_command'] == 'oneProductInfo'){
+            return $this->onePoductProcess($message['text']);
+        }
+
         elseif ($message['text'] == 'Поиск товара' ){
             return $this->searchInit();
         }
@@ -192,13 +199,13 @@ class B2bBotController extends \yii\web\Controller
 
 
 
-        elseif (substr($message['text'],0,7) == 'search/'){
-
-            $commandArr = explode('/', $message['text']);
-            $query = $commandArr[1];
-
-            return $this->searchProcess($query);
-        }
+//        elseif (substr($message['text'],0,7) == 'search/'){
+//
+//            $commandArr = explode('/', $message['text']);
+//         =   $query = $commandArr[1];
+//
+//            return $this->searchProcess($query);
+//        }
 
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
@@ -314,6 +321,60 @@ class B2bBotController extends \yii\web\Controller
 //                ]
 //            ]),
         ]);
+        return ['message' => 'ok', 'code' => 200];
+    }
+
+    private function onePoductInit(){
+
+        $this->user['bot_command'] = 'oneProductInfo';
+
+        $this->user->save();
+
+
+        $this->sendMessage([
+            'chat_id' => $this->user['telegram_user_id'],
+            'text' => 'Информация по товару.'.PHP_EOL.'Отправьте контрольный номер',
+        ]);
+        return ['message' => 'ok', 'code' => 200];
+    }
+
+    private function onePoductProcess($query)
+    {
+        $this->user['bot_command'] = null;
+        $this->user->save();
+        $serverResponseArr = $this->getSearchResultsFromServer([
+            'phone' => $this->user['phone'],
+            'query' => $query
+        ]);
+        Yii::info([
+            'action'=>'response from Server - one product info',
+            'updateId'=>$this->request['update_id'],
+            'serverResponse'=>$serverResponseArr,
+        ], 'b2bBot');
+
+        $responseToUser = '';
+        mb_internal_encoding('utf-8');
+        foreach ($serverResponseArr as $item) {
+            if (mb_strlen($item['description']) > 400) {
+                $item['description'] = mb_substr($item['description'], 0, 400).'...';
+            }
+            $responseToUser .= $item['productCode']
+                .' '.$item['model']
+                .PHP_EOL .' '.$item['description']
+                .PHP_EOL
+                .'Цена '.$item['personalPrice']
+                .' / '.$item['retailPrice'].', '
+                .'наличие ' .$item['quantity']['stock'].', '
+                .'в пути ' .$item['quantity']['inroute']
+                .PHP_EOL .'-------------------------'.PHP_EOL;
+        }
+
+
+        $this->sendMessage([
+            'chat_id' => $this->user['telegram_user_id'],
+            'text' => $responseToUser,
+        ]);
+
         return ['message' => 'ok', 'code' => 200];
     }
 
