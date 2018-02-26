@@ -372,6 +372,21 @@ class B2bBotController extends \yii\web\Controller
         ], 'b2bBot');
 
         $responseToUser = '';
+        if ($orders['code'] = 500 ) {
+            $responseToUser = $orders['message'];
+            $this->sendMessageWithBody([
+                'chat_id' => $this->user['telegram_user_id'],
+                'text' => $responseToUser,
+                'reply_markup' => Json::encode([
+                    'inline_keyboard'=>[
+                        [
+                            ['text'=>'Опции', 'callback_data'=> '/options']
+                        ],
+                    ]
+                ]),
+            ]);
+            return ['message' => 'ok', 'code' => 200];
+        }
         foreach ($orders as $item) {
             $responseToUser .= $item['orderId']
                 .' '.$item['totalCost']
@@ -555,6 +570,10 @@ class B2bBotController extends \yii\web\Controller
                     'options'=>$options,
                 ] + $info;
             Yii::info($info, 'b2bBot');
+            if ($info['http_code'] == 500) {
+                $r['message'] = 'Извините, на сервере технические проблемы, сейчас запрос не может быть обработан';
+                $r['code'] = 500;
+            }
         }
         curl_close($ch);
         return $r;
