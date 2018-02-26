@@ -163,19 +163,24 @@ class B2bBotController extends \yii\web\Controller
         }
 
         elseif ($message['text'] == 'Поиск товара' ){
-            $this->user['bot_command'] = 'search';
-            $this->user->save();
-            $this->sendMessage([
-                'chat_id' => $this->user['telegram_user_id'],
-                'text' => 'Отправьте поисковый запрос',
-            ]);
-            return ['message' => 'ok', 'code' => 200];
+            return $this->searchInit();
+        }
+
+        elseif ($message['text'] == 'search-20' ){
+            return $this->searchInit(20);
+        }
+        elseif ($message['text'] == 'search-30' ){
+            return $this->searchInit(30);
         }
 
         elseif ($this->user['bot_command'] == 'search'){
-            $this->user['bot_command'] = null;
-            $this->user->save();
-            return $this->search($message['text']);
+            return $this->searchProcess($message['text']);
+        }
+
+        elseif (substr($this->user['bot_command'],0,7) == 'search-'){
+            $commandArr = explode('-', $this->user['bot_command']);
+            $limit = $commandArr[1];
+            return $this->searchProcess($message['text'], $limit);
         }
 
 
@@ -185,12 +190,9 @@ class B2bBotController extends \yii\web\Controller
             $commandArr = explode('/', $message['text']);
             $query = $commandArr[1];
 
-            return $this->search($query);
+            return $this->searchProcess($query);
         }
-
-
-
-
+        
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
             'text' => 'нет такой команды',
@@ -308,11 +310,28 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
-    private function search($query)
+    private function searchInit($limit = 10){
+        if ($limit != 10) {
+            $this->user['bot_command'] = 'search-'.$limit;
+        } else {
+            $this->user['bot_command'] = 'search';
+        }
+        $this->user->save();
+        $this->sendMessage([
+            'chat_id' => $this->user['telegram_user_id'],
+            'text' => 'Отправьте поисковый запрос',
+        ]);
+        return ['message' => 'ok', 'code' => 200];
+    }
+
+    private function searchProcess($query, $limit = 10)
     {
+        $this->user['bot_command'] = null;
+        $this->user->save();
         $serverResponseArr = $this->getSearchResultsFromServer([
             'phone' => $this->user['phone'],
             'query' => $query,
+            'limit' => $limit,
         ]);
         Yii::info([
             'action'=>'response from Server - search',
