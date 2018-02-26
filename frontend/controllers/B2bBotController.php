@@ -439,7 +439,9 @@ class B2bBotController extends \yii\web\Controller
 
 
             $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'=> 'active'])->one();
-
+            if ($alreadyUser['phone'] == '7911111111111') {
+                $alreadyUser = null;
+            }
 
             if ($alreadyUser && $alreadyUser['id']!= $this->user['id']) {
                 $this->sendMessage([
