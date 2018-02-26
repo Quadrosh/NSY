@@ -321,11 +321,12 @@ class B2bBotController extends \yii\web\Controller
         ], 'b2bBot');
 
         $responseToUser = '';
+        mb_internal_encoding('utf-8');
         foreach ($serverResponseArr as $item) {
             $responseToUser .= $item['productCode']
                 .' '.$item['model']
-                .PHP_EOL
-//                .' '.substr($item['description'], 0, 200)
+//                .PHP_EOL .' '.substr($item['description'], 0, 200)
+                .PHP_EOL .' '.mb_substr($item['description'], 0, 200)
                 .PHP_EOL
                 .'Цена '.$item['personalPrice']
                 .' / '.$item['retailPrice'].', '
