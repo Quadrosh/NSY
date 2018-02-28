@@ -239,7 +239,7 @@ class B2bBotController extends \yii\web\Controller
 //           список заказов
         if ($inlineQuery['query'] == '/order_details') {
             $serverResponse = $this->getOrdersFromServer([
-                'phone' => $this->user['phone'],
+                'phone' => $this->dealer['phone'],
             ]);
 
             Yii::info([
@@ -337,7 +337,7 @@ class B2bBotController extends \yii\web\Controller
         $this->user['bot_command'] = null;
         $this->user->save();
         $serverResponse = $this->getOneProductFromServer([
-            'phone' => $this->user['phone'],
+            'phone' => $this->dealer['phone'],
             'productCode' => $query
         ]);
         Yii::info([
@@ -399,7 +399,7 @@ class B2bBotController extends \yii\web\Controller
         $this->user['bot_command'] = null;
         $this->user->save();
         $serverResponseArr = $this->getSearchResultsFromServer([
-            'phone' => $this->user['phone'],
+            'phone' => $this->dealer['phone'],
             'query' => $query,
             'limit' => $limit,
         ]);
@@ -442,7 +442,7 @@ class B2bBotController extends \yii\web\Controller
     private function order($orderId)
     {
         $serverResponse = $this->getOrderFromServer([
-            'phone' => $this->user['phone'],
+            'phone' => $this->dealer['phone'],
             'orderId' => $orderId,
         ]);
         Yii::info([
@@ -486,7 +486,7 @@ class B2bBotController extends \yii\web\Controller
     private function orders()
     {
         $orders = $this->getOrdersFromServer([
-            'phone' => $this->user['phone'],
+            'phone' => $this->dealer['phone'],
         ]);
 
         Yii::info([
