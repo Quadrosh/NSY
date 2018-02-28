@@ -271,7 +271,7 @@ class B2bBotController extends \yii\web\Controller
 
 
         elseif (trim(strtolower($message['text'])) == '/email' ||
-            $message['text'] == 'Отправить email') {
+            $message['text'] == 'Сообщение менеджеру') {
             return $this->emailInit();
         }
         elseif ($this->user['bot_command'] == 'sendEmail'){
@@ -422,10 +422,11 @@ class B2bBotController extends \yii\web\Controller
                 'keyboard'=>[
                     [
                         ['text'=>'Инфо по артикулу'],
-                        ['text'=>'Поиск товара'],
+                        ['text'=>'Поиск товара']
                     ],
                     [
-                        ['text'=>'Мои заказы']
+                        ['text'=>'Мои заказы'],
+                        ['text'=>'Сообщение менеджеру']
                     ],
                 ]
             ]),
