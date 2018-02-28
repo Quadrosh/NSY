@@ -671,13 +671,14 @@ class B2bBotController extends \yii\web\Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+        curl_setopt($ch, CURLOPT_ENCODING,'gzip,deflate');
 //        curl_setopt($ch, CURLOPT_ENCODING , "gzip");
 //        curl_setopt($ch, CURLOPT_TIMEOUT,25);
 
         curl_setopt($ch,CURLOPT_HTTPHEADER,[
             "Content-Type: application/json; charset=utf-8",
         ]);
-        
+
 //        curl_setopt ($ch, CURLOPT_HEADER, 1);
 //        curl_setopt ($ch, CURLINFO_HEADER_OUT, 1);
         curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 25);
