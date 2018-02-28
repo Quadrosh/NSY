@@ -669,6 +669,9 @@ class B2bBotController extends \yii\web\Controller
         $optQuery = http_build_query($options);
         $ch = curl_init($url.'?'.$optQuery);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch,CURLOPT_HTTPHEADER,[
+            "Content-Type: application/json; charset=utf-8",
+        ]);
         curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
 //        curl_setopt($ch,CURLOPT_ENCODING , 'gzip'); // gzip
 //        curl_setopt($ch,CURLOPT_ENCODING , ''); // all
