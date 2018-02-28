@@ -353,6 +353,10 @@ class B2bBotController extends \yii\web\Controller
             'serverResponse'=>$serverResponseArr,
         ], 'b2bBot');
 
+        if (isset($serverResponseArr['error'])) {
+            return $this->sendErrorMessage('Ошибка - '.$serverResponseArr['message']);
+        }
+
         $responseToUser = '';
         mb_internal_encoding('utf-8');
         foreach ($serverResponseArr as $item) {
@@ -411,6 +415,9 @@ class B2bBotController extends \yii\web\Controller
             'updateId'=>$this->request['update_id'],
             'serverResponse'=>$serverResponseArr,
         ], 'b2bBot');
+        if (isset($serverResponseArr['error'])) {
+            return $this->sendErrorMessage('Ошибка - '.$serverResponseArr['message']);
+        }
 
         $responseToUser = '';
         mb_internal_encoding('utf-8');
@@ -451,7 +458,7 @@ class B2bBotController extends \yii\web\Controller
         ], 'b2bBot');
 
         if (isset($serverResponse['error'])) {
-            return $this->sendErrorMessage($serverResponse['message']);
+            return $this->sendErrorMessage('Ошибка - '.$serverResponse['message']);
         }
 
         $responseToUser = $orderId.':'.PHP_EOL.'-------------------------'.PHP_EOL;
@@ -495,7 +502,7 @@ class B2bBotController extends \yii\web\Controller
         ], 'b2bBot');
 
         if (isset($orders['error'])) {
-            return $this->sendErrorMessage($orders['message']);
+            return $this->sendErrorMessage('Ошибка - '.$orders['message']);
         }
 
         $responseToUser = '';
