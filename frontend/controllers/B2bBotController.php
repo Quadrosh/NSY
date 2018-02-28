@@ -329,36 +329,34 @@ class B2bBotController extends \yii\web\Controller
     {
         $this->user['bot_command'] = null;
         $this->user->save();
-        $serverResponseArr = $this->getOneProductFromServer([
+        $serverResponse = $this->getOneProductFromServer([
             'phone' => $this->user['phone'],
             'productCode' => $query
         ]);
         Yii::info([
             'action'=>'response from Server - one product info',
             'updateId'=>$this->request['update_id'],
-            'serverResponse'=>$serverResponseArr,
+            'serverResponse'=>$serverResponse,
         ], 'b2bBot');
 
-        if (isset($serverResponseArr['error'])) {
-            return $this->sendErrorMessage('Ошибка - '.$serverResponseArr['message']);
+        if (isset($serverResponse['error'])) {
+            return $this->sendErrorMessage('Ошибка - '.$serverResponse['message']);
         }
 
         $responseToUser = '';
         mb_internal_encoding('utf-8');
-        foreach ($serverResponseArr as $item) {
-            if (mb_strlen($item['description']) > 400) {
-                $item['description'] = mb_substr($item['description'], 0, 400).'...';
-            }
-            $responseToUser .= $item['productCode']
-                .' '.$item['model']
-                .PHP_EOL .' '.$item['description']
-                .PHP_EOL
-                .'Цена '.$item['retailPrice']
-                .' / '.$item['personalPrice'].', '
-                .'наличие ' .$item['quantity']['stock'].', '
-                .'в пути ' .$item['quantity']['inroute']
-                .PHP_EOL .'-------------------------'.PHP_EOL;
+        if (mb_strlen($serverResponse['description']) > 400) {
+            $serverResponse['description'] = mb_substr($serverResponse['description'], 0, 400).'...';
         }
+        $responseToUser .= $serverResponse['productCode']
+            .' '.$serverResponse['model']
+            .PHP_EOL .' '.$serverResponse['description']
+            .PHP_EOL
+            .'Цена '.$serverResponse['retailPrice']
+            .' / '.$serverResponse['personalPrice'].', '
+            .'наличие ' .$serverResponse['quantity']['stock'].', '
+            .'в пути ' .$serverResponse['quantity']['inroute']
+            .PHP_EOL .'-------------------------'.PHP_EOL;
 
 
         $this->sendMessage([
