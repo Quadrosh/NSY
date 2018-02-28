@@ -345,7 +345,7 @@ class B2bBotController extends \yii\web\Controller
         $this->user->save();
         $serverResponseArr = $this->getSearchResultsFromServer([
             'phone' => $this->user['phone'],
-            'query' => $query
+            'productCode' => $query
         ]);
         Yii::info([
             'action'=>'response from Server - one product info',
