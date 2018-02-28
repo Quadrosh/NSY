@@ -207,7 +207,18 @@ class B2bBotController extends \yii\web\Controller
 //                    $this->options();
                     return false;
                 }
+            } else { // дилер есть в базе
+                $this->user['status'] = 'active';
+                $this->user['b2b_dealer_id']= $this->dealer['id'];
+                $this->user->save();
+                $this->sendMessage([
+                    'chat_id' => $this->user['telegram_user_id'],
+                    'text' => 'Вы авторизованы',
+                ]);
+                $this->options();
             }
+
+
             return false;
         }
 
