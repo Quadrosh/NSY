@@ -345,8 +345,8 @@ class B2bBotController extends \yii\web\Controller
 
         $responseToUser = '';
         mb_internal_encoding('utf-8');
-        if (mb_strlen($serverResponse['description']) > 400) {
-            $serverResponse['description'] = mb_substr($serverResponse['description'], 0, 400).'...';
+        if (mb_strlen($serverResponse['description']) >800) {
+            $serverResponse['description'] = mb_substr($serverResponse['description'], 0, 800).'...';
         }
         $responseToUser .= $serverResponse['productCode']
             .' '.$serverResponse['model']
@@ -669,7 +669,7 @@ class B2bBotController extends \yii\web\Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
-//        curl_setopt($ch, CURLOPT_ENCODING,'gzip,deflate');
+        curl_setopt($ch, CURLOPT_ENCODING,'gzip,deflate');
 //        curl_setopt($ch, CURLOPT_ENCODING , "gzip");
 //        curl_setopt($ch, CURLOPT_TIMEOUT,25);
 
