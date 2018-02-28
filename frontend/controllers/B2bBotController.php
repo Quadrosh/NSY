@@ -150,8 +150,8 @@ class B2bBotController extends \yii\web\Controller
             return $this->oneProductInit();
         }
         elseif ($this->user['bot_command'] == 'oneProductInfo'){
-//            return $this->oneProductProcess($message['text']);
-            return gzinflate(substr($this->oneProductProcess($message['text']),10,-8));
+            return $this->oneProductProcess($message['text']);
+//            return gzinflate(substr($this->oneProductProcess($message['text']),10,-8));
         }
 
 
@@ -669,6 +669,7 @@ class B2bBotController extends \yii\web\Controller
         $optQuery = http_build_query($options);
         $ch = curl_init($url.'?'.$optQuery);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
 //        curl_setopt($ch,CURLOPT_ENCODING , 'gzip'); // gzip
 //        curl_setopt($ch,CURLOPT_ENCODING , ''); // all
         curl_setopt($ch, CURLOPT_USERAGENT, 'Bot');
