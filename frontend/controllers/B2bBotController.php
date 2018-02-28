@@ -204,7 +204,8 @@ class B2bBotController extends \yii\web\Controller
                         'chat_id' => $this->user['telegram_user_id'],
                         'text' => 'Вы авторизованы',
                     ]);
-                    return $this->options();
+                    $this->options();
+                    return false;
                 }
             }
             return false;
