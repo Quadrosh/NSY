@@ -148,11 +148,11 @@ class B2bBotController extends \yii\web\Controller
 
 
 
-            $dealer = B2bDealer::find()->where(['phone'=>$phone])->one();
-            $this->dealer = $dealer;
+            $this->dealer = B2bDealer::find()->where(['phone'=>$phone])->one();
 
 
-            if (!$dealer) {
+
+            if (!$this->dealer) {
 
                 $serverResponse = $this->getOrdersFromServer([
                     'phone' => $phone,
@@ -204,25 +204,33 @@ class B2bBotController extends \yii\web\Controller
                         'chat_id' => $this->user['telegram_user_id'],
                         'text' => 'Вы авторизованы',
                     ]);
-//                    $this->options();
-                    return false;
+                    $this->options();
+
                 }
             } else { // дилер есть в базе
-                $this->user['status'] = 'active';
-                $this->user['b2b_dealer_id']= $this->dealer['id'];
-                $this->user->save();
-                $this->sendMessage([
-                    'chat_id' => $this->user['telegram_user_id'],
-                    'text' => 'Вы авторизованы',
-                ]);
-                $this->options();
-            }
+                if ($this->dealer['status'] != 'active') {
+                    $this->sendMessage([
+                        'chat_id' => $this->user['telegram_user_id'],
+                        'text' => 'Ошибка - неактивный статус дилера',
+                    ]);
+                    return false;
+                } else {
+                    $this->user['status'] = 'active';
+                    $this->user['b2b_dealer_id']= $this->dealer['id'];
+                    $this->user->save();
+                    $this->sendMessage([
+                        'chat_id' => $this->user['telegram_user_id'],
+                        'text' => 'Вы авторизованы',
+                    ]);
+                    $this->options();
+                }
 
+            }
 
             return false;
         }
 
-        if ($this->user['status'] == 'active'){
+        if ($this->user['status'] == 'active' ){
             return true;
         }
     }
