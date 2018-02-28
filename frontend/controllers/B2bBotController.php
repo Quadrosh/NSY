@@ -212,7 +212,7 @@ class B2bBotController extends \yii\web\Controller
             'text' => 'нет такой команды',
         ]);
         return $this->options();
-        
+
     }
 
 
@@ -259,8 +259,8 @@ class B2bBotController extends \yii\web\Controller
                 'serverResponse'=>$serverResponse,
             ], 'b2bBot');
 
-            if (isset($serverResponse['errorMessage'])) {
-                return $this->sendErrorInline($serverResponse['errorMessage'],$inlineQuery['id']);
+            if (isset($serverResponse['error'])) {
+                return $this->sendErrorInline($serverResponse['message'],$inlineQuery['id']);
             }
 
             $results = [];
@@ -450,8 +450,8 @@ class B2bBotController extends \yii\web\Controller
             'serverResponse'=>$serverResponse,
         ], 'b2bBot');
 
-        if (isset($serverResponse['errorMessage'])) {
-            return $this->sendErrorMessage($serverResponse['errorMessage']);
+        if (isset($serverResponse['error'])) {
+            return $this->sendErrorMessage($serverResponse['message']);
         }
 
         $responseToUser = $orderId.':'.PHP_EOL.'-------------------------'.PHP_EOL;
@@ -494,8 +494,8 @@ class B2bBotController extends \yii\web\Controller
             'serverResponse'=>$orders,
         ], 'b2bBot');
 
-        if (isset($orders['errorMessage'])) {
-            return $this->sendErrorMessage($orders['errorMessage']);
+        if (isset($orders['error'])) {
+            return $this->sendErrorMessage($orders['message']);
         }
 
         $responseToUser = '';
@@ -697,7 +697,8 @@ class B2bBotController extends \yii\web\Controller
             Yii::info($info, 'b2bBot');
             if ($info['http_code'] == 500) {
                 $serverError = [];
-                $serverError['errorMessage'] = 'Извините, на сервере технические проблемы.'
+                $serverError['error'] = 1;
+                $serverError['message'] = 'Извините, на сервере технические проблемы.'
                     .PHP_EOL .'В данный момент запрос не может быть обработан';
                 $serverError['code'] = 500;
                 curl_close($ch);
