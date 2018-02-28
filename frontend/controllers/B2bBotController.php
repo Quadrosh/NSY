@@ -670,22 +670,40 @@ class B2bBotController extends \yii\web\Controller
         $ch = curl_init($url.'?'.$optQuery);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.3 Safari/533.2');
-        curl_setopt($ch, CURLOPT_ENCODING , "gzip");
-        curl_setopt($ch, CURLOPT_TIMEOUT,15);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+//        curl_setopt($ch, CURLOPT_ENCODING , "gzip");
+//        curl_setopt($ch, CURLOPT_TIMEOUT,25);
 
 //        curl_setopt($ch,CURLOPT_HTTPHEADER,[
 //            "Content-Type: application/json; charset=utf-8",
 //        ]);
+        curl_setopt ($ch, CURLOPT_HEADER, 1);
+        curl_setopt ($ch, CURLINFO_HEADER_OUT, 1);
+        curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 25);
 //        curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
 //        curl_setopt($ch,CURLOPT_ENCODING , 'gzip'); // gzip
 //        curl_setopt($ch,CURLOPT_ENCODING , ''); // all
 //        curl_setopt($ch, CURLOPT_USERAGENT, 'Bot');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+
+
+
         if (count($options)) {
             curl_setopt($ch, CURLOPT_POST, true); // Content-Type: application/x-www-form-urlencoded' header.
         }
         $r = curl_exec($ch);
+
+
+
+        if (strstr($r,"Content-Encoding: gzip"))
+        {
+            $r = preg_replace("/(.*)Content\-Encoding: gzip\s+/isU","",$r);
+            $r = gzinflate(substr($r, 13));
+        }
+        
+
+
         if($r == false){
             $text = 'curl error '.curl_error($ch);
             Yii::info($text, 'b2bBot');
