@@ -118,6 +118,104 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    /*
+    * проверка авторизации
+    *
+    * Returns True on success.
+    * */
+    private function checkAuth()
+    {
+
+        if ( $this->user['status'] == 'unconfirmed') {
+            $this->sendMessage([
+                'chat_id' => $this->user['telegram_user_id'],
+                'text' => 'Для подтверждения авторизации отправьте номер телефона, указанный в дилерском аккаунте.'.PHP_EOL.
+                    'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
+            ]);
+            $this->user['status'] = 'phone_requested';
+            $this->user->save();
+            return false ;
+        }
+
+        if ($this->user['status'] == 'phone_requested') {
+            $phone = str_replace([' ','(',')','-'],'', $this->request['request']);
+
+            Yii::info([
+                'action'=>'phone_requested',
+                'updateId'=>$this->request['update_id'],
+                'phone'=>$phone,
+            ], 'b2bBot');
+
+
+
+            $dealer = B2bDealer::find()->where(['phone'=>$phone])->one();
+            $this->dealer = $dealer;
+
+
+            if (!$dealer) {
+
+                $serverResponse = $this->getOrdersFromServer([
+                    'phone' => $phone,
+                ]);
+
+                Yii::info([
+                    'action'=>'response from Server /проверка телефона/',
+                    'updateId'=>$this->request['update_id'],
+                    'userId'=>$this->user['id'],
+                    'serverResponse'=>$serverResponse,
+                ], 'b2bBot');
+
+                if ($serverResponse['error']) {
+                    if ($serverResponse['message']=='Не указан идентификатор дилера') {
+                        $this->sendMessage([
+                            'chat_id' => $this->user['telegram_user_id'],
+                            'text' => 'Ошибка - номер телефона в неверном формате',
+                        ]);
+                        return false;
+                    }
+                    elseif ($serverResponse['message']=='Дилер не найден') {
+                        $this->sendMessage([
+                            'chat_id' => $this->user['telegram_user_id'],
+                            'text' => 'Ошибка - дилер не найден',
+                        ]);
+                        return false;
+                    }
+                    else {
+                        $this->sendMessage([
+                            'chat_id' => $this->user['telegram_user_id'],
+                            'text' => 'Ошибка - ' . $serverResponse['message'],
+                        ]);
+                        return false;
+                    }
+
+                } else { // валидный ответ сервера со списком заказов
+                    $this->dealer = new B2bDealer();
+                    $this->dealer['phone'] = $phone;
+                    $this->dealer['status'] = 'active';
+                    $this->dealer['name']= $serverResponse[0]['client']['name'];
+                    $this->dealer['email']= $serverResponse[0]['client']['email'];
+                    $this->dealer->save();
+
+                    $this->user['status'] = 'active';
+                    $this->user['b2b_dealer_id']= $this->dealer['id'];
+                    $this->user->save();
+
+                    $this->sendMessage([
+                        'chat_id' => $this->user['telegram_user_id'],
+                        'text' => 'Вы авторизованы',
+                    ]);
+                    return $this->options();
+                }
+            }
+            return false;
+        }
+
+        if ($this->user['status'] == 'active'){
+            return true;
+        }
+    }
+
+
     private function textMessageAction($message){
 //        if (trim(strtolower($message['text'])) == '/start') {
 //
@@ -301,18 +399,7 @@ class B2bBotController extends \yii\web\Controller
                     ],
                 ]
             ]),
-//            'reply_markup' => Json::encode([
-//                'inline_keyboard'=>[
-//                    [
-//                        ['text'=>'Инфо по артикулу','callback_data'=> '/#'],
-//                        ['text'=>'Поиск товара', 'callback_data'=> '/search'],
-//                    ],
-//                    [
-//                        ['text'=>'Мои заказы','callback_data'=> '/orders'],
-////                        ['text'=>'Поиск товара', 'callback_data'=> '/search'],
-//                    ],
-//                ]
-//            ]),
+
         ]);
         return ['message' => 'ok', 'code' => 200];
     }
@@ -537,105 +624,7 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
-    /*
-    * проверка авторизации
-    *
-    * Returns True on success.
-    * */
-    private function checkAuth()
-    {
 
-        if ( $this->user['status'] == 'unconfirmed') {
-            $this->sendMessage([
-                'chat_id' => $this->user['telegram_user_id'],
-                'text' => 'Для подтверждения авторизации отправьте номер телефона, указанный в дилерском аккаунте.'.PHP_EOL.
-                    'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
-            ]);
-            $this->user['status'] = 'phone_requested';
-            $this->user->save();
-            return false ;
-        }
-
-        if ($this->user['status'] == 'phone_requested') {
-            $phone = str_replace([' ','(',')','-'],'', $this->request['request']);
-
-            Yii::info([
-                'action'=>'phone_requested',
-                'updateId'=>$this->request['update_id'],
-                'phone'=>$phone,
-            ], 'b2bBot');
-
-
-
-            $dealer = B2bDealer::find()->where(['phone'=>$phone])->one();
-            $this->dealer = $dealer;
-
-
-            if (!$dealer) {
-
-                $serverResponse = $this->getOrdersFromServer([
-                    'phone' => $phone,
-                ]);
-
-                Yii::info([
-                    'action'=>'response from Server /проверка телефона/',
-                    'updateId'=>$this->request['update_id'],
-                    'userId'=>$this->user['id'],
-                    'serverResponse'=>$serverResponse,
-                ], 'b2bBot');
-
-                if ($serverResponse['error']) {
-                    if ($serverResponse['message']=='Не указан идентификатор дилера') {
-                        $this->sendMessage([
-                            'chat_id' => $this->user['telegram_user_id'],
-                            'text' => 'Ошибка - номер телефона в неверном формате',
-                        ]);
-                        return false;
-                    }
-                    elseif ($serverResponse['message']=='Дилер не найден') {
-                        $this->sendMessage([
-                            'chat_id' => $this->user['telegram_user_id'],
-                            'text' => 'Ошибка - дилер не найден',
-                        ]);
-                        return false;
-                    }
-                    else {
-                        $this->sendMessage([
-                            'chat_id' => $this->user['telegram_user_id'],
-                            'text' => 'Ошибка - ' . $serverResponse['message'],
-                        ]);
-                        return false;
-                    }
-
-                } else { // валидный ответ сервера со списком заказов
-                    $this->dealer = new B2bDealer();
-                    $this->dealer['phone'] = $phone;
-                    $this->dealer['status'] = 'active';
-                    $this->dealer['name']= $serverResponse[0]['client']['name'];
-                    $this->dealer['email']= $serverResponse[0]['client']['email'];
-                    $this->dealer->save();
-
-
-                    $this->user['status'] = 'active';
-
-                    $this->user['b2b_dealer_id']= $this->dealer['id'];
-
-                    $this->user->save();
-
-                    $this->sendMessage([
-                        'chat_id' => $this->user['telegram_user_id'],
-                        'text' => 'Вы авторизованы',
-                    ]);
-                    return false;
-                }
-            }
-            return false;
-        }
-
-        if ($this->user['status'] == 'active'){
-            return true;
-        }
-    }
 
 
     private function getOneProductFromServer($options = [])
