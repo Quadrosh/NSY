@@ -29,11 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'b2b_dealer_id',
             'telegram_user_id',
             'first_name',
             'last_name',
             'username',
-            'b2b_name',
             'email:email',
             'phone',
             'bot_command',

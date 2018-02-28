@@ -616,7 +616,7 @@ class B2bBotController extends \yii\web\Controller
 
 
                     $this->user['status'] = 'active';
-                    
+
                     $this->user['b2b_dealer_id']= $this->dealer['id'];
 
                     $this->user->save();
