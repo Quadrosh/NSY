@@ -5,6 +5,7 @@ namespace frontend\controllers;
 
 use common\models\B2bBotRequest;
 use common\models\B2bBotUser;
+use common\models\B2bDealer;
 use yii\filters\ContentNegotiator;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -16,6 +17,7 @@ use yii\web\Response;
 class B2bBotController extends \yii\web\Controller
 {
     private $user;
+    private $dealer;
     private $request;
 
     public function behaviors() {
@@ -80,6 +82,7 @@ class B2bBotController extends \yii\web\Controller
 
         $this->user = $user;
 
+        // request save
         $this->request = new B2bBotRequest;
         $this->request['user_id'] = $this->user['id'];
         $this->request['update_id'] = strval($updateId);
@@ -224,6 +227,7 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
+
     private function inlineQueryAction($inlineQuery)
     {
         Yii::info([
@@ -278,6 +282,7 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
+
     private function options()
     {
         $this->sendMessageWithBody([
@@ -311,6 +316,7 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
+
     private function oneProductInit(){
 
         $this->user['bot_command'] = 'oneProductInfo';
@@ -324,6 +330,7 @@ class B2bBotController extends \yii\web\Controller
         ]);
         return ['message' => 'ok', 'code' => 200];
     }
+
 
     private function oneProductProcess($query)
     {
@@ -367,6 +374,7 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
+
     private function searchInit($limit = 10){
         $text = 'Поисковый запрос по умолчанию ограничен 10-ю результатами. Изменение настроек - команды /search_20 и /search_30 соответственно';
         if ($limit != 10) {
@@ -384,6 +392,7 @@ class B2bBotController extends \yii\web\Controller
         ]);
         return ['message' => 'ok', 'code' => 200];
     }
+
 
     private function searchProcess($query, $limit = 10)
     {
@@ -428,6 +437,7 @@ class B2bBotController extends \yii\web\Controller
 
         return ['message' => 'ok', 'code' => 200];
     }
+
 
     private function order($orderId)
     {
@@ -537,7 +547,7 @@ class B2bBotController extends \yii\web\Controller
         if ( $this->user['status'] == 'unconfirmed') {
             $this->sendMessage([
                 'chat_id' => $this->user['telegram_user_id'],
-                'text' => 'Для подтверждения авторизации отправьте номер телефона, указанный в Вашем аккаунте.'.PHP_EOL.
+                'text' => 'Для подтверждения авторизации отправьте номер телефона, указанный в дилерском аккаунте.'.PHP_EOL.
                     'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
             ]);
             $this->user['status'] = 'phone_requested';
@@ -555,24 +565,12 @@ class B2bBotController extends \yii\web\Controller
             ], 'b2bBot');
 
 
-            $alreadyUser = B2bBotUser::find()->where(['phone'=>$phone])->andWhere(['status'=> 'active'])->one();
-            if ($alreadyUser['phone'] == '7911111111111') { // тест
-                $alreadyUser = null;
-            }
 
-            if ($alreadyUser && $alreadyUser['id']!= $this->user['id']) {
-                $this->sendMessage([
-                    'chat_id' => $this->user['telegram_user_id'],
-                    'text' => 'Этот телефон уже использовался для доступа.'.PHP_EOL.
-                        'На данный момент может быть только один доступ на аккаунт.'.PHP_EOL.
-                        'Если это Ваш телефон и Вы не оформляли доступ - свяжитесь со своим менеджером в дилерском отделе.',
-                ]);
-                $this->user['phone'] = 'already exist' . $phone;
-                $this->user->save();
-                return false;
-            }
+            $dealer = B2bDealer::find()->where(['phone'=>$phone])->one();
+            $this->dealer = $dealer;
 
-            if (!$alreadyUser) { // если телефон не зарегистрирован на другого дилера
+
+            if (!$dealer) {
 
                 $serverResponse = $this->getOrdersFromServer([
                     'phone' => $phone,
@@ -608,16 +606,19 @@ class B2bBotController extends \yii\web\Controller
                         return false;
                     }
 
-                } else {
-                    $this->user['phone'] = $phone;
+                } else { // валидный ответ сервера со списком заказов
+                    $this->dealer = new B2bDealer();
+                    $this->dealer['phone'] = $phone;
+                    $this->dealer['status'] = 'active';
+                    $this->dealer['name']= $serverResponse[0]['client']['name'];
+                    $this->dealer['email']= $serverResponse[0]['client']['email'];
+                    $this->dealer->save();
+
+
                     $this->user['status'] = 'active';
-                    if ($serverResponse[0]['client']['name']=='Виктор Торбеев') {
-                        $this->user['b2b_name']= 'test';
-                        $this->user['email']= 'test@test.ts';
-                    } else {
-                        $this->user['b2b_name']= $serverResponse[0]['client']['name'];
-                        $this->user['email']= $serverResponse[0]['client']['email'];
-                    }
+                    
+                    $this->user['b2b_dealer_id']= $this->dealer['id'];
+
                     $this->user->save();
 
                     $this->sendMessage([
@@ -642,11 +643,13 @@ class B2bBotController extends \yii\web\Controller
         return Json::decode($jsonResponse);
     }
 
+
     private function getSearchResultsFromServer($options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdProducts'], $options);
         return Json::decode($jsonResponse);
     }
+
 
     private function getOrderFromServer($options = [])
     {
@@ -660,6 +663,7 @@ class B2bBotController extends \yii\web\Controller
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdLastOrders'], $options);
         return Json::decode($jsonResponse);
     }
+
 
     private function sendToServer($url, $options = [])
     {

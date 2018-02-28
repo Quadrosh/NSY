@@ -97,6 +97,7 @@ AppAsset::register($this);
                 [
                     'label' => 'Development',
                     'items' => [
+                        ['label' => 'b2bDealer', 'url' => ['/b2b-dealer']],
                         ['label' => 'b2bBotUser', 'url' => ['/b2b-bot-user']],
                         ['label' => 'b2bBotRequest', 'url' => ['/b2b-bot-request']],
                     ],

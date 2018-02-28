@@ -47,17 +47,25 @@ class B2bBotUser extends \yii\db\ActiveRecord
     {
         return [
             [['telegram_user_id'], 'required'],
-            [['telegram_user_id', 'updated_at', 'created_at'], 'integer'],
-            [[
+            [
+                [
+                'b2b_dealer_id',
+                'telegram_user_id',
+                'updated_at',
+                'created_at'
+                ], 'integer'
+            ],
+            [
+                [
                 'bot_command',
                 'first_name',
                 'last_name',
                 'username',
-                'b2b_name',
                 'email',
                 'phone',
                 'status'
-            ], 'string', 'max' => 255],
+                ], 'string', 'max' => 255
+            ],
         ];
     }
 
@@ -73,7 +81,7 @@ class B2bBotUser extends \yii\db\ActiveRecord
             'first_name' => 'First Name',
             'last_name' => 'Last Name',
             'username' => 'Username',
-            'b2b_name' => 'B2b Name',
+            'b2b_dealer_id' => 'B2b Dealer ID',
             'email' => 'Email',
             'phone' => 'Phone',
             'status' => 'Status',

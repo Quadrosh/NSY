@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'first_name',
             'last_name',
             'username',
-            'b2b_name',
+            'b2b_dealer_id',
             'email:email',
             'phone',
             'bot_command',
