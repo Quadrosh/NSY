@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'charset'=>'utf-8',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
         'cache' => [
