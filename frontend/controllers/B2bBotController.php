@@ -672,7 +672,7 @@ class B2bBotController extends \yii\web\Controller
 
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.3 Safari/533.2');
         curl_setopt($ch, CURLOPT_ENCODING , "gzip");
-        curl_setopt($ch, CURLOPT_TIMEOUT,5);
+        curl_setopt($ch, CURLOPT_TIMEOUT,15);
 
 //        curl_setopt($ch,CURLOPT_HTTPHEADER,[
 //            "Content-Type: application/json; charset=utf-8",
@@ -710,8 +710,8 @@ class B2bBotController extends \yii\web\Controller
             }
         }
         curl_close($ch);
-//        return $r;
-        return gzinflate(substr($r, 10));
+        return $r;
+//        return gzinflate(substr($r, 10));
     }
 
 
