@@ -669,13 +669,18 @@ class B2bBotController extends \yii\web\Controller
         $optQuery = http_build_query($options);
         $ch = curl_init($url.'?'.$optQuery);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch,CURLOPT_HTTPHEADER,[
-            "Content-Type: application/json; charset=utf-8",
-        ]);
-        curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
+
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.3 Safari/533.2');
+        curl_setopt($ch, CURLOPT_ENCODING , "gzip");
+        curl_setopt($ch, CURLOPT_TIMEOUT,5);
+
+//        curl_setopt($ch,CURLOPT_HTTPHEADER,[
+//            "Content-Type: application/json; charset=utf-8",
+//        ]);
+//        curl_setopt($ch, CURLOPT_ENCODING, 'gzip,deflate');
 //        curl_setopt($ch,CURLOPT_ENCODING , 'gzip'); // gzip
 //        curl_setopt($ch,CURLOPT_ENCODING , ''); // all
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Bot');
+//        curl_setopt($ch, CURLOPT_USERAGENT, 'Bot');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         if (count($options)) {
             curl_setopt($ch, CURLOPT_POST, true); // Content-Type: application/x-www-form-urlencoded' header.
@@ -705,7 +710,8 @@ class B2bBotController extends \yii\web\Controller
             }
         }
         curl_close($ch);
-        return $r;
+//        return $r;
+        return gzinflate(substr($r, 10));
     }
 
 
