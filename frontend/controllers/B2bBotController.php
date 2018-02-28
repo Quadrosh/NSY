@@ -142,24 +142,8 @@ class B2bBotController extends \yii\web\Controller
 
             $commandArr = explode('/', $message['text']);
             $productId = $commandArr[1];
-
-            $serverResponse = $this->getProductFromServer([
-                'phone' => $this->user['phone'],
-                'productCode' => $productId,
-            ]);
-            Yii::info([
-                'action'=>'response from Server - product',
-                'updateId'=>$this->request['update_id'],
-                'serverResponse'=>$serverResponse,
-            ], 'b2bBot');
-
-
-            $this->sendMessage([
-                'chat_id' => $message['from']['id'],
-                'text' => $productId,
-            ]);
-
-            return ['message' => 'ok', 'code' => 200];
+            
+            return $this->oneProductProcess($productId);
         }
 
         elseif ($message['text'] == 'Инфо по артикулу' ){
@@ -168,6 +152,7 @@ class B2bBotController extends \yii\web\Controller
         elseif ($this->user['bot_command'] == 'oneProductInfo'){
             return $this->oneProductProcess($message['text']);
         }
+
 
         elseif ($message['text'] == 'Поиск товара' ){
             return $this->searchInit();
@@ -343,7 +328,7 @@ class B2bBotController extends \yii\web\Controller
     {
         $this->user['bot_command'] = null;
         $this->user->save();
-        $serverResponseArr = $this->getSearchResultsFromServer([
+        $serverResponseArr = $this->getOneProductFromServer([
             'phone' => $this->user['phone'],
             'productCode' => $query
         ]);
@@ -652,7 +637,7 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
-    private function getProductFromServer($options = [])
+    private function getOneProductFromServer($options = [])
     {
         $jsonResponse = $this->sendToServer(Yii::$app->params['b2bServerPathProdProduct'], $options);
         return Json::decode($jsonResponse);
