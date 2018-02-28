@@ -81,6 +81,7 @@ class B2bBotController extends \yii\web\Controller
         }
 
         $this->user = $user;
+        $this->dealer = $user->dealer;
 
         // request save
         $this->request = new B2bBotRequest;

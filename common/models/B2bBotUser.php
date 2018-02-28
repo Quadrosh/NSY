@@ -89,4 +89,9 @@ class B2bBotUser extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
         ];
     }
+
+    public function getDealer()
+    {
+        return $this->hasOne(B2bDealer::className(), ['id'=>'b2b_dealer_id']);
+    }
 }
