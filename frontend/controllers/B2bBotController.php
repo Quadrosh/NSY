@@ -345,8 +345,8 @@ class B2bBotController extends \yii\web\Controller
 
         $responseToUser = '';
         mb_internal_encoding('utf-8');
-        if (mb_strlen($serverResponse['description']) >800) {
-            $serverResponse['description'] = mb_substr($serverResponse['description'], 0, 800).'...';
+        if (mb_strlen($serverResponse['description']) >3000) {
+            $serverResponse['description'] = mb_substr($serverResponse['description'], 0, 3000).'...';
         }
         $responseToUser .= $serverResponse['productCode']
             .' '.$serverResponse['model']
