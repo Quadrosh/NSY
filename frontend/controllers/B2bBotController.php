@@ -246,6 +246,7 @@ class B2bBotController extends \yii\web\Controller
             return $this->orders();
         }
 
+
         elseif (substr($message['text'],0,6) == 'order/' ||
             substr($message['text'],0,6) == 'заказ/'){
 
@@ -268,12 +269,21 @@ class B2bBotController extends \yii\web\Controller
             return $this->oneProductProcess($productId);
         }
 
+
+        elseif (trim(strtolower($message['text'])) == '/email' ||
+            $message['text'] == 'Отправить email') {
+            return $this->emailInit();
+        }
+        elseif ($this->user['bot_command'] == 'sendEmail'){
+            return $this->emailProcess($message['text']);
+        }
+
+
         elseif ($message['text'] == 'Инфо по артикулу' ){
             return $this->oneProductInit();
         }
         elseif ($this->user['bot_command'] == 'oneProductInfo'){
             return $this->oneProductProcess($message['text']);
-//            return gzinflate(substr($this->oneProductProcess($message['text']),10,-8));
         }
 
 
@@ -425,12 +435,46 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    private function emailInit(){
+
+        $this->user['bot_command'] = 'sendEmail';
+        $this->user->save();
+
+        $this->sendMessage([
+            'chat_id' => $this->user['telegram_user_id'],
+            'text' => 'Отправка сообщения менеджеру.'.PHP_EOL.'Введите текст',
+        ]);
+        return ['message' => 'ok', 'code' => 200];
+    }
+
+
+    private function emailProcess($text){
+        $this->user['bot_command'] = null;
+        $this->user->save();
+
+        if ($this->dealer->sendEmail($text)) {
+            $this->sendMessage([
+                'chat_id' => $this->user['telegram_user_id'],
+                'text' => 'Сообщение отправлено.',
+            ]);
+            return ['message' => 'ok', 'code' => 200];
+        } else {
+            $this->sendMessage([
+                'chat_id' => $this->user['telegram_user_id'],
+                'text' => 'Не удалось отправить сообщение. Повторите попытку позже.',
+            ]);
+            return ['message' => 'ok', 'code' => 200];
+        }
+
+
+
+    }
+
+
     private function oneProductInit(){
 
         $this->user['bot_command'] = 'oneProductInfo';
-
         $this->user->save();
-
 
         $this->sendMessage([
             'chat_id' => $this->user['telegram_user_id'],
@@ -864,6 +908,7 @@ class B2bBotController extends \yii\web\Controller
         ]);
         return ['message' => 'ok', 'code' => 200];
     }
+
 
 
 

@@ -51,4 +51,23 @@ class B2bDealer extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
         ];
     }
+
+    /**
+     * Sends an email to the specified email address using the information collected by this model.
+     *
+     * @param string $email the target email address
+     * @return bool whether the email was sent
+     */
+    public function sendEmail($subject)
+    {
+        return Yii::$app->mailer->compose()
+            ->setTo(Yii::$app->params['b2bMainInputEmail'])
+            ->setFrom(Yii::$app->params['b2bFromEmail'])
+            ->setSubject($this->phone)
+            ->setTextBody($subject)
+            ->setHtmlBody(
+                nl2br($subject)
+            )
+            ->send();
+    }
 }
