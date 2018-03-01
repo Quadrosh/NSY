@@ -248,15 +248,25 @@ class B2bBotController extends \yii\web\Controller
                     $this->dealer['email']= $serverResponse[0]['client']['email'];
                     $this->dealer->save();
 
-                    $this->user['status'] = 'active';
-                    $this->user['b2b_dealer_id']= $this->dealer['id'];
-                    $this->user->save();
+                    if($this->dealer['phone'] == $this->user['phone']){ // это основной телефон дилера
+                        $this->user['status'] = 'active';
+                        $this->user['b2b_dealer_id']= $this->dealer['id'];
+                        $this->user->save();
 
-                    $this->sendMessage([
-                        'chat_id' => $this->user['telegram_user_id'],
-                        'text' => 'Вы авторизованы',
-                    ]);
-                    $this->options();
+                        $this->sendMessage([
+                            'chat_id' => $this->user['telegram_user_id'],
+                            'text' => 'Вы авторизованы',
+                        ]);
+                        $this->options();
+                        return true;
+                    } else { // на дилера нет доступов и телефон не является основным
+                        $this->sendMessage([
+                            'chat_id' => $this->user['telegram_user_id'],
+                            'text' => 'Нет запроса на доступ от дилера.',
+                        ]);
+                        return false;
+                    }
+
 
                 }
             } else { // дилер есть в базе бота
@@ -282,10 +292,7 @@ class B2bBotController extends \yii\web\Controller
                             'chat_id' => $this->user['telegram_user_id'],
                             'text' => 'У дилера не найдено доступа на Ваш телефон',
                         ]);
-                        return false;
                     }
-
-
                 }
 
             }
@@ -355,7 +362,9 @@ class B2bBotController extends \yii\web\Controller
 
         // сообщение менеджеру - инициализация
         elseif (trim(strtolower($message['text'])) == '/email' ||
-            $message['text'] == 'Сообщение менеджеру') {
+            $message['text'] == 'Сообщение менеджеру' ||
+            $this->user['bot_command'] == 'first_name_request' ||
+            $this->user['bot_command'] == 'last_name_request') {
             return $this->emailInit();
         }
         // сообщение менеджеру - обработка запроса
@@ -495,7 +504,7 @@ class B2bBotController extends \yii\web\Controller
     {
         $this->sendMessageWithBody([
             'chat_id' => $this->user['telegram_user_id'],
-            'text' => 'Опции',
+            'text' => 'Опции:',
             'reply_markup' => Json::encode([
                 'one_time_keyboard'=> true,
                 'keyboard'=>[
@@ -520,7 +529,7 @@ class B2bBotController extends \yii\web\Controller
 
     private function help(){
         $text =
-            'Доступные команды'.PHP_EOL.
+            'Доступные команды:'.PHP_EOL.
             '/orders - оформленные накладные'.PHP_EOL.
             'order/МУЗ0000001 - информация по заказу'.PHP_EOL.
             '/search - поиск товара в базе, ответ ограничен 10-ю результатами'.PHP_EOL.
@@ -561,6 +570,29 @@ class B2bBotController extends \yii\web\Controller
 
 
     private function emailInit(){
+        if (!$this->user['real_first_name']) {
+            $this->user['bot_command'] = 'first_name_request';
+            $this->user->save();
+            $this->sendMessage([
+                'chat_id' => $this->user['telegram_user_id'],
+                'text' => 'Пожалуйста, уточните Ваше Имя.'.PHP_EOL.'Отправьте его ответным сообщением',
+            ]);
+            return ['message' => 'ok', 'code' => 200];
+        }
+        if ($this->user['bot_command'] == 'first_name_request') {
+            $this->user['real_first_name'] = $this->request['request'];
+            $this->user['bot_command'] = 'last_name_request';
+            $this->user->save();
+            $this->sendMessage([
+                'chat_id' => $this->user['telegram_user_id'],
+                'text' => 'Пожалуйста, уточните Вашу Фамилию.'.PHP_EOL.'Отправьте ответным сообщением',
+            ]);
+            return ['message' => 'ok', 'code' => 200];
+        }
+        if ($this->user['bot_command'] == 'last_name_request') {
+            $this->user['real_last_name'] = $this->request['request'];
+            $this->user->save();
+        }
 
         $this->user['bot_command'] = 'sendEmail';
         $this->user->save();

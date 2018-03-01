@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "b2b_dealer".
@@ -25,6 +26,15 @@ class B2bDealer extends \yii\db\ActiveRecord
         return 'b2b_dealer';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+//                'updatedAtAttribute' => false,
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      */
