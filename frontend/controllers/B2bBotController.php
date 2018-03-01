@@ -613,7 +613,7 @@ class B2bBotController extends \yii\web\Controller
         $this->user['bot_command'] = null;
         $this->user->save();
 
-        if ($this->dealer->sendEmail($text)) {
+        if ($this->dealer->sendEmail($text, $this->user['real_first_name'].' '.$this->user['real_last_name'])) {
             $this->sendMessage([
                 'chat_id' => $this->user['telegram_user_id'],
                 'text' => 'Сообщение отправлено.',
