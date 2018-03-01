@@ -323,7 +323,8 @@ class B2bBotController extends \yii\web\Controller
         }
 
 
-        elseif (strtolower($message['text']) == '/options' ){
+        elseif (strtolower($message['text']) == '/options' ||
+            $message['text'] == 'Опции'){
             return $this->options();
         }
 
