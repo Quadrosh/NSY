@@ -70,15 +70,15 @@ class B2bDealer extends \yii\db\ActiveRecord
      * @param string $email the target email address
      * @return bool whether the email was sent
      */
-    public function sendEmail($subject,$from)
+    public function sendEmail($text,$from)
     {
         return Yii::$app->mailer->compose()
             ->setTo(Yii::$app->params['b2bMainInputEmail'])
             ->setFrom(Yii::$app->params['b2bFromEmail'])
-            ->setSubject($this->phone)
-            ->setTextBody($subject.'-'.$from)
+            ->setSubject($this->phone.'-'.$from)
+            ->setTextBody($text)
             ->setHtmlBody(
-                nl2br($subject)
+                nl2br($text)
             )
             ->send();
     }
