@@ -270,7 +270,7 @@ class B2bBotController extends \yii\web\Controller
             return $this->help();
         }
 
-        
+
         // отмена авторизации
         elseif (trim(strtolower($message['text'])) == '/отменитьавторизацию' ){
             return $this->unAuthorise();
@@ -439,7 +439,7 @@ class B2bBotController extends \yii\web\Controller
                     ],
                     [
                         ['text'=>'Сообщение менеджеру'],
-                        ['text'=>'Помошь'],
+                        ['text'=>'Помощь'],
                     ],
                     [
                         ['text'=>'Мои заказы'],
@@ -478,7 +478,7 @@ class B2bBotController extends \yii\web\Controller
                     ],
                     [
                         ['text'=>'Сообщение менеджеру'],
-                        ['text'=>'Помошь'],
+                        ['text'=>'Помощь'],
                     ],
                     [
                         ['text'=>'Мои заказы'],
