@@ -82,6 +82,10 @@ class B2bBotController extends \yii\web\Controller
 
         $this->user = $user;
         $this->dealer = $user->dealer;
+        if(!$user->dealer){
+            $user['status'] = 'unconfirmed';
+            $user->save();
+        }
 
         // request save
         $this->request = new B2bBotRequest;
@@ -126,10 +130,37 @@ class B2bBotController extends \yii\web\Controller
     private function checkAuth()
     {
 
-        if ( $this->user['status'] == 'unconfirmed') {
+        if ( $this->user['status'] == 'unconfirmed' ) {
             $this->sendMessage([
                 'chat_id' => $this->user['telegram_user_id'],
-                'text' => 'Для подтверждения авторизации отправьте номер телефона, указанный в дилерском аккаунте.'.PHP_EOL.
+                'text' => 'Для начала процесса авторизации уточните номер телефона, на который зарегистрирован Ваш аккаунт Телеграм.',
+                'reply_markup' => Json::encode([
+                    'one_time_keyboard'=> true,
+                    'keyboard'=>[
+                        [
+                            ['text'=>'Отправить номер телефона', 'request_contact'=> true],
+                        ],
+
+                    ]
+                ])
+            ]);
+            $this->user['status'] = 'user_phone_request';
+            $this->user->save();
+            return false ;
+        }
+
+        if ( $this->user['status'] == 'user_phone_request') {
+            $this->user['phone'] = $this->request['request'];
+            Yii::info([
+                'action'=>'user_phone_request',
+                'updateId'=>$this->request['update_id'],
+                'user phone'=>$this->request['request'],
+            ], 'b2bBot');
+
+            $this->sendMessage([
+                'chat_id' => $this->user['telegram_user_id'],
+                'text' => 'Для подтверждения авторизации отправьте номер телефона, указанный в дилерском аккаунте.'
+                    .PHP_EOL.
                     'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
             ]);
             $this->user['status'] = 'phone_requested';
@@ -469,7 +500,6 @@ class B2bBotController extends \yii\web\Controller
             'chat_id' => $this->user['telegram_user_id'],
             'text' => $text,
             'reply_markup' => Json::encode([
-                'one_time_keyboard'=> true,
                 'inline_keyboard'=>[
                     [
                         ['text'=>'Опции', 'callback_data'=> '/options'],
