@@ -471,18 +471,11 @@ class B2bBotController extends \yii\web\Controller
             'text' => $text,
             'reply_markup' => Json::encode([
                 'one_time_keyboard'=> true,
-                'keyboard'=>[
+                'inline_keyboard'=>[
                     [
-                        ['text'=>'Инфо по артикулу'],
-                        ['text'=>'Поиск товара']
+                        ['text'=>'Опции', 'callback_data'=> '/options'],
                     ],
-                    [
-                        ['text'=>'Сообщение менеджеру'],
-                        ['text'=>'Помощь'],
-                    ],
-                    [
-                        ['text'=>'Мои заказы'],
-                    ],
+
                 ]
             ]),
 
