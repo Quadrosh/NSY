@@ -240,17 +240,15 @@ class B2bBotController extends \yii\web\Controller
     }
 
     private function textMessageAction($message){
-//        if (trim(strtolower($message['text'])) == '/start') {
-//
-//        }
+        if (trim(strtolower($message['text'])) == '/start') {
+            return $this->helloMessage();
+        }
         if (trim(strtolower($message['text'])) == '/orders' ||
-            $message['text'] == 'Мои заказы' ||
-            trim(strtolower($message['text'])) == '/заказы') {
+            $message['text'] == 'Мои заказы') {
             return $this->orders();
         }
 
-        elseif (substr($message['text'],0,6) == 'order/' ||
-            substr($message['text'],0,6) == 'заказ/'){
+        elseif (substr($message['text'],0,6) == 'order/' ){
 
             $commandArr = explode('/', $message['text']);
             $orderId = $commandArr[1];
@@ -272,7 +270,7 @@ class B2bBotController extends \yii\web\Controller
 
 
         // отмена авторизации
-        elseif (trim(strtolower($message['text'])) == '/отменитьавторизацию' ){
+        elseif (trim(strtolower($message['text'])) == '/unauthorize' ){
             return $this->unAuthorise();
         }
 
@@ -288,7 +286,7 @@ class B2bBotController extends \yii\web\Controller
 
 
         // сообщение менеджеру - инициализация
-        elseif (trim(strtolower($message['text'])) == '/сообщение' ||
+        elseif (trim(strtolower($message['text'])) == '/email' ||
             $message['text'] == 'Сообщение менеджеру') {
             return $this->emailInit();
         }
@@ -298,7 +296,7 @@ class B2bBotController extends \yii\web\Controller
         }
 
         // Инфо по артикулу - инициализация
-        elseif (trim(strtolower($message['text'])) == '/артикул' || $message['text'] == 'Инфо по артикулу' ){
+        elseif (trim(strtolower($message['text'])) == '/product' || $message['text'] == 'Инфо по артикулу' ){
             return $this->oneProductInit();
         }
         // Инфо по артикулу - обработка запроса
@@ -307,13 +305,13 @@ class B2bBotController extends \yii\web\Controller
         }
 
         // поиск - инициализация
-        elseif (trim(strtolower($message['text'])) == '/поиск' || $message['text'] == 'Поиск товара' ){
+        elseif (trim(strtolower($message['text'])) == '/search' || $message['text'] == 'Поиск товара' ){
             return $this->searchInit();
         }
-        elseif ($message['text'] == '/search_20' || $message['text'] == '/поиск_20'){
+        elseif ($message['text'] == '/search_20'){
             return $this->searchInit(20);
         }
-        elseif ($message['text'] == '/search_30' || $message['text'] == '/поиск_30' ){
+        elseif ($message['text'] == '/search_30'){
             return $this->searchInit(30);
         }
         // поиск - обработка запроса
@@ -455,15 +453,15 @@ class B2bBotController extends \yii\web\Controller
     private function help(){
         $text =
             'Доступные команды'.PHP_EOL.
-            '/заказы - оформленные накладные'.PHP_EOL.
-            'заказ/МУ0000001 - информация по заказу'.PHP_EOL.
-            '/поиск - поиск товара в базе, ответ ограничен 10-ю результатами'.PHP_EOL.
-            '/поиск_20 - поиск товара в базе, ответ ограничен 20-ю результатами'.PHP_EOL.
-            '/поиск_30 - поиск товара в базе, ответ ограничен 30-ю результатами'.PHP_EOL.
-            '/артикул - информация по артикулу'.PHP_EOL.
-            'товар/a000001 - информация по артикулу в один клик'.PHP_EOL.
-            '/сообщение - отправить сообщение менеджеру'.PHP_EOL.
-            '/отменитьавторизацию - отменить авторизацию и удалить привязку к дилеру'.PHP_EOL.
+            '/orders - оформленные накладные'.PHP_EOL.
+            'order/МУЗ0000001 - информация по заказу'.PHP_EOL.
+            '/search - поиск товара в базе, ответ ограничен 10-ю результатами'.PHP_EOL.
+            '/search_20 - поиск товара в базе, ответ ограничен 20-ю результатами'.PHP_EOL.
+            '/search_30 - поиск товара в базе, ответ ограничен 30-ю результатами'.PHP_EOL.
+            '/product - информация по артикулу'.PHP_EOL.
+            'product/a000001 - информация по артикулу в один клик'.PHP_EOL.
+            '/email - отправить сообщение менеджеру'.PHP_EOL.
+            '/unauthorize - отменить авторизацию и удалить привязку к дилеру'.PHP_EOL.
             PHP_EOL
         ;
         $this->sendMessageWithBody([
@@ -481,6 +479,16 @@ class B2bBotController extends \yii\web\Controller
 
         ]);
         return ['message' => 'ok', 'code' => 200];
+    }
+
+
+    private function helloMessage(){
+
+        $this->sendMessage([
+            'chat_id' => $this->user['telegram_user_id'],
+            'text' => 'Привет, я ATtrade_bot. Сначала Вам необходимо пройти авторизацию.',
+        ]);
+        return $this->checkAuth();
     }
 
 
