@@ -135,10 +135,10 @@ class B2bBotController extends \yii\web\Controller
                 'chat_id' => $this->user['telegram_user_id'],
                 'text' => 'Для начала процесса авторизации уточните номер телефона, на который зарегистрирован Ваш аккаунт Телеграм.',
                 'reply_markup' => Json::encode([
-                    'one_time_keyboard'=> true,
+//                    'one_time_keyboard'=> true,
                     'keyboard'=>[
                         [
-                            ['text'=>'Отправить номер телефона', 'request_contact'=> true],
+                            ['text'=>'Отправить номер', 'request_contact'=> true],
                         ],
 
                     ]
