@@ -26,6 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'telegram_user_id',
             'first_name',
             'last_name',
+            'real_first_name',
+            'real_last_name',
             'username',
             'b2b_dealer_id',
             'email:email',

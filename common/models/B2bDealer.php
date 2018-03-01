@@ -33,6 +33,7 @@ class B2bDealer extends \yii\db\ActiveRecord
         return [
             [['updated_at', 'created_at'], 'integer'],
             [['name', 'email', 'phone', 'status'], 'string', 'max' => 255],
+            [['entry_phones'], 'string'],
         ];
     }
 
@@ -46,6 +47,7 @@ class B2bDealer extends \yii\db\ActiveRecord
             'name' => 'Name',
             'email' => 'Email',
             'phone' => 'Phone',
+            'entry_phones' => 'Entry Phones',
             'status' => 'Status',
             'updated_at' => 'Updated At',
             'created_at' => 'Created At',
