@@ -96,7 +96,7 @@ class B2bBotController extends \yii\web\Controller
             if ($message['text']) {
                 $this->request['request'] = $message['text'];
             } elseif ($message['contact']){
-                $this->request['request'] = $message['contact']['phone_number'];
+                $this->request['request'] = 'phone/'.$message['contact']['phone_number'];
             } else {
                 $this->request['request'] = 'no text';
             }
@@ -150,29 +150,48 @@ class B2bBotController extends \yii\web\Controller
                     ]
                 ]),
             ]);
-            $this->user['status'] = 'user_phone_request';
+            $this->user['status'] = 'user_phone_requested';
             $this->user->save();
             return false ;
         }
 
-        if ( $this->user['status'] == 'user_phone_request') {
-            $this->user['phone'] = $this->request['request'];
-            Yii::info([
-                'action'=>'user_phone_request',
-                'updateId'=>$this->request['update_id'],
-                'user phone'=>$this->request['request'],
-            ], 'b2bBot');
+        if ( $this->user['status'] == 'user_phone_requested') {
 
-            $this->sendMessage([
-                'chat_id' => $this->user['telegram_user_id'],
-                'text' => 'Для подтверждения авторизации отправьте номер телефона, указанный в дилерском аккаунте.'
-                    .PHP_EOL.
-                    'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
-            ]);
-            $this->user['status'] = 'dealer_phone_request';
-            $this->user->save();
-            return false ;
+            if (substr($this->request['request'],0,6) == 'phone/' ){
+                $commandArr = explode('/', $this->request['request']);
+                $phone = $commandArr[1];
+                $this->user['phone'] = $phone;
+                Yii::info([
+                    'action'=>'user_phone_saved',
+                    'updateId'=>$this->request['update_id'],
+                    'user phone'=>$this->request['request'],
+                ], 'b2bBot');
+                $this->sendMessage([
+                    'chat_id' => $this->user['telegram_user_id'],
+                    'text' => 'Для подтверждения авторизации отправьте номер телефона, указанный в дилерском аккаунте.'
+                        .PHP_EOL.
+                        'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
+                ]);
+                $this->user['status'] = 'dealer_phone_request';
+                $this->user->save();
+                return false ;
+
+            } else {
+                $this->sendMessageWithBody([
+                    'chat_id' => $this->user['telegram_user_id'],
+                    'text' => 'Неверный формат, отправьте телефон нажатием на кнопку',
+                    'reply_markup' => Json::encode([
+                        'one_time_keyboard'=> true,
+                        'keyboard'=>[
+                            [
+                                ['text'=>'Отправить номер', 'request_contact'=> true],
+                            ],
+                        ]
+                    ]),
+                ]);
+            }
         }
+
 
         if ($this->user['status'] == 'dealer_phone_request') {
             $phone = str_replace([' ','(',')','-'],'', $this->request['request']);
