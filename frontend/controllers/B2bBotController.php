@@ -137,16 +137,16 @@ class B2bBotController extends \yii\web\Controller
                 'reply_markup' => Json::encode([
                     'one_time_keyboard'=> true,
                     'keyboard'=>[
-                        [
-                            ['request_contact'=> true],
-                        ],
-                        [
-                            ['text'=>'Сообщение менеджеру'],
-                            ['text'=>'Помощь'],
-                        ],
+//                        [
+//                            ['request_contact'=> true],
+//                        ],
+//                        [
+//                            ['text'=>'Сообщение менеджеру'],
+//                            ['text'=>'Помощь'],
+//                        ],
                         [
                             ['text'=>'Отправить номер', 'request_contact'=> true],
-                            ['text'=>'Отправить место', 'request_location'=> true],
+//                            ['text'=>'Отправить место', 'request_location'=> true],
                         ],
                     ]
                 ]),
