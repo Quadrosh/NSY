@@ -146,11 +146,7 @@ class B2bBotController extends \yii\web\Controller
                 'phone'=>$phone,
             ], 'b2bBot');
 
-
-
             $this->dealer = B2bDealer::find()->where(['phone'=>$phone])->one();
-
-
 
             if (!$this->dealer) {
 
@@ -236,6 +232,13 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    private function unAuthorise(){
+        $this->user['status'] = 'unconfirmed';
+        $this->user['b2b_dealer_id'] = null;
+        $this->user->save();
+        return ['message' => 'ok', 'code' => 200];
+    }
+
     private function textMessageAction($message){
 //        if (trim(strtolower($message['text'])) == '/start') {
 //
@@ -246,7 +249,6 @@ class B2bBotController extends \yii\web\Controller
             return $this->orders();
         }
 
-
         elseif (substr($message['text'],0,6) == 'order/' ||
             substr($message['text'],0,6) == 'заказ/'){
 
@@ -255,11 +257,26 @@ class B2bBotController extends \yii\web\Controller
             return $this->order($orderId);
         }
 
+
         elseif (strtolower($message['text']) == '/options' ){
             return $this->options();
         }
 
 
+
+
+        elseif (trim(strtolower($message['text'])) == '/help' ||
+            $message['text'] == 'Помощь') {
+            return $this->help();
+        }
+
+        
+        // отмена авторизации
+        elseif (trim(strtolower($message['text'])) == '/отменитьавторизацию' ){
+            return $this->unAuthorise();
+        }
+
+        // инфо по товару в один запрос
         elseif (substr($message['text'],0,8) == 'product/' ||
             substr($message['text'],0,6) == 'товар/'){
 
@@ -270,38 +287,42 @@ class B2bBotController extends \yii\web\Controller
         }
 
 
-        elseif (trim(strtolower($message['text'])) == '/email' ||
+        // сообщение менеджеру - инициализация
+        elseif (trim(strtolower($message['text'])) == '/сообщение' ||
             $message['text'] == 'Сообщение менеджеру') {
             return $this->emailInit();
         }
+        // сообщение менеджеру - обработка запроса
         elseif ($this->user['bot_command'] == 'sendEmail'){
             return $this->emailProcess($message['text']);
         }
 
-
-        elseif ($message['text'] == 'Инфо по артикулу' ){
+        // Инфо по артикулу - инициализация
+        elseif (trim(strtolower($message['text'])) == '/артикул' || $message['text'] == 'Инфо по артикулу' ){
             return $this->oneProductInit();
         }
+        // Инфо по артикулу - обработка запроса
         elseif ($this->user['bot_command'] == 'oneProductInfo'){
             return $this->oneProductProcess($message['text']);
         }
 
-
-        elseif ($message['text'] == 'Поиск товара' ){
+        // поиск - инициализация
+        elseif (trim(strtolower($message['text'])) == '/поиск' || $message['text'] == 'Поиск товара' ){
             return $this->searchInit();
         }
-
-        elseif ($message['text'] == '/search_20' ){
+        elseif ($message['text'] == '/search_20' || $message['text'] == '/поиск_20'){
             return $this->searchInit(20);
         }
-        elseif ($message['text'] == '/search_30' ){
+        elseif ($message['text'] == '/search_30' || $message['text'] == '/поиск_30' ){
             return $this->searchInit(30);
         }
-
+        // поиск - обработка запроса
         elseif ($this->user['bot_command'] == 'search'){
             return $this->searchProcess($message['text']);
         }
 
+
+        // обработка запроса недоступных значений лимита поиска
         elseif (substr($this->user['bot_command'],0,7) == 'search_'){
             $commandArr = explode('_', $this->user['bot_command']);
             $limit = $commandArr[1];
@@ -316,14 +337,6 @@ class B2bBotController extends \yii\web\Controller
         }
 
 
-
-//        elseif (substr($message['text'],0,7) == 'search/'){
-//
-//            $commandArr = explode('/', $message['text']);
-//         =   $query = $commandArr[1];
-//
-//            return $this->searchProcess($query);
-//        }
 
         $this->sendMessage([
             'chat_id' => $message['from']['id'],
@@ -425,8 +438,50 @@ class B2bBotController extends \yii\web\Controller
                         ['text'=>'Поиск товара']
                     ],
                     [
+                        ['text'=>'Сообщение менеджеру'],
+                        ['text'=>'Помошь'],
+                    ],
+                    [
                         ['text'=>'Мои заказы'],
-                        ['text'=>'Сообщение менеджеру']
+                    ],
+                ]
+            ]),
+
+        ]);
+        return ['message' => 'ok', 'code' => 200];
+    }
+
+
+    private function help(){
+        $text =
+            'Доступные команды'.PHP_EOL.
+            '/заказы - оформленные накладные'.PHP_EOL.
+            'заказ/МУ0000001 - информация по заказу'.PHP_EOL.
+            '/поиск - поиск товара в базе, ответ ограничен 10-ю результатами'.PHP_EOL.
+            '/поиск_20 - поиск товара в базе, ответ ограничен 20-ю результатами'.PHP_EOL.
+            '/поиск_30 - поиск товара в базе, ответ ограничен 30-ю результатами'.PHP_EOL.
+            '/артикул - информация по артикулу'.PHP_EOL.
+            'товар/a000001 - информация по артикулу в один клик'.PHP_EOL.
+            '/сообщение - отправить сообщение менеджеру'.PHP_EOL.
+            '/отменитьавторизацию - отменить авторизацию и удалить привязку к дилеру'.PHP_EOL.
+            PHP_EOL
+        ;
+        $this->sendMessageWithBody([
+            'chat_id' => $this->user['telegram_user_id'],
+            'text' => $text,
+            'reply_markup' => Json::encode([
+                'one_time_keyboard'=> true,
+                'keyboard'=>[
+                    [
+                        ['text'=>'Инфо по артикулу'],
+                        ['text'=>'Поиск товара']
+                    ],
+                    [
+                        ['text'=>'Сообщение менеджеру'],
+                        ['text'=>'Помошь'],
+                    ],
+                    [
+                        ['text'=>'Мои заказы'],
                     ],
                 ]
             ]),
