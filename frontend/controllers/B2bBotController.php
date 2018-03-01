@@ -131,7 +131,7 @@ class B2bBotController extends \yii\web\Controller
     {
 
         if ( $this->user['status'] == 'unconfirmed' ) {
-            $this->sendMessage([
+            $this->sendMessageWithBody([
                 'chat_id' => $this->user['telegram_user_id'],
                 'text' => 'Для начала процесса авторизации уточните номер телефона, на который зарегистрирован Ваш аккаунт Телеграм.',
                 'reply_markup' => Json::encode([
