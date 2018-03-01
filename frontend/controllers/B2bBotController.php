@@ -462,6 +462,7 @@ class B2bBotController extends \yii\web\Controller
             'product/a000001 - информация по артикулу в один клик'.PHP_EOL.
             '/email - отправить сообщение менеджеру'.PHP_EOL.
             '/unauthorize - отменить авторизацию и удалить привязку к дилеру'.PHP_EOL.
+            '/help - памятка помощи'.PHP_EOL.
             PHP_EOL
         ;
         $this->sendMessageWithBody([
