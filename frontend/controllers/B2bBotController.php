@@ -82,10 +82,7 @@ class B2bBotController extends \yii\web\Controller
 
         $this->user = $user;
         $this->dealer = $user->dealer;
-//        if(!$user->dealer){
-//            $user['status'] = 'unconfirmed';
-//            $user->save();
-//        }
+
 
         // request save
         $this->request = new B2bBotRequest;
@@ -569,26 +566,33 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+
+
+
     private function emailInit(){
+
+        // если пустые поля Имя Фамилия (real_first_name / last_name_request)
         if (!$this->user['real_first_name']) {
-            $this->user['bot_command'] = 'first_name_request';
-            $this->user->save();
-            $this->sendMessage([
-                'chat_id' => $this->user['telegram_user_id'],
-                'text' => 'Пожалуйста, уточните Ваше Имя.'.PHP_EOL.'Отправьте его ответным сообщением',
-            ]);
-            return ['message' => 'ok', 'code' => 200];
+            if ($this->user['bot_command'] == 'first_name_request') {
+                $this->user['real_first_name'] = $this->request['request'];
+                $this->user['bot_command'] = 'last_name_request';
+                $this->user->save();
+                $this->sendMessage([
+                    'chat_id' => $this->user['telegram_user_id'],
+                    'text' => 'Пожалуйста, уточните Вашу Фамилию.'.PHP_EOL.'Отправьте ответным сообщением',
+                ]);
+                return ['message' => 'ok', 'code' => 200];
+            } else {
+                $this->user['bot_command'] = 'first_name_request';
+                $this->user->save();
+                $this->sendMessage([
+                    'chat_id' => $this->user['telegram_user_id'],
+                    'text' => 'Пожалуйста, уточните Ваше Имя.'.PHP_EOL.'Отправьте его ответным сообщением',
+                ]);
+                return ['message' => 'ok', 'code' => 200];
+            }
         }
-        if ($this->user['bot_command'] == 'first_name_request') {
-            $this->user['real_first_name'] = $this->request['request'];
-            $this->user['bot_command'] = 'last_name_request';
-            $this->user->save();
-            $this->sendMessage([
-                'chat_id' => $this->user['telegram_user_id'],
-                'text' => 'Пожалуйста, уточните Вашу Фамилию.'.PHP_EOL.'Отправьте ответным сообщением',
-            ]);
-            return ['message' => 'ok', 'code' => 200];
-        }
+
         if ($this->user['bot_command'] == 'last_name_request') {
             $this->user['real_last_name'] = $this->request['request'];
             $this->user->save();
