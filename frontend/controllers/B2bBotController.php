@@ -197,7 +197,7 @@ class B2bBotController extends \yii\web\Controller
             $phone = str_replace([' ','(',')','-'],'', $this->request['request']);
 
             Yii::info([
-                'action'=>'phone_requested',
+                'action'=>'answer to dealer phone request',
                 'updateId'=>$this->request['update_id'],
                 'phone'=>$phone,
             ], 'b2bBot');
@@ -259,22 +259,33 @@ class B2bBotController extends \yii\web\Controller
                     $this->options();
 
                 }
-            } else { // дилер есть в базе
-                if ($this->dealer['status'] != 'active') {
+            } else { // дилер есть в базе бота
+                if ($this->dealer['status'] != 'active') { // неактивный дилер
                     $this->sendMessage([
                         'chat_id' => $this->user['telegram_user_id'],
                         'text' => 'Ошибка - неактивный статус дилера',
                     ]);
                     return false;
-                } else {
-                    $this->user['status'] = 'active';
-                    $this->user['b2b_dealer_id']= $this->dealer['id'];
-                    $this->user->save();
-                    $this->sendMessage([
-                        'chat_id' => $this->user['telegram_user_id'],
-                        'text' => 'Вы авторизованы',
-                    ]);
-                    $this->options();
+                } else { // дилер с активным статусом
+                    if(strpos($this->dealer['entry_phones'],$this->user['phone']) !== false){
+                        $this->user['status'] = 'active';
+                        $this->user['b2b_dealer_id']= $this->dealer['id'];
+                        $this->user->save();
+                        $this->sendMessage([
+                            'chat_id' => $this->user['telegram_user_id'],
+                            'text' => 'Вы авторизованы',
+                        ]);
+                        $this->options();
+                        return true;
+                    } else { // у дилера нет такого телефона среди доступов
+                        $this->sendMessage([
+                            'chat_id' => $this->user['telegram_user_id'],
+                            'text' => 'У дилера не найдено доступа на Ваш телефон',
+                        ]);
+                        return false;
+                    }
+
+
                 }
 
             }
