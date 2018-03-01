@@ -82,10 +82,10 @@ class B2bBotController extends \yii\web\Controller
 
         $this->user = $user;
         $this->dealer = $user->dealer;
-        if(!$user->dealer){
-            $user['status'] = 'unconfirmed';
-            $user->save();
-        }
+//        if(!$user->dealer){
+//            $user['status'] = 'unconfirmed';
+//            $user->save();
+//        }
 
         // request save
         $this->request = new B2bBotRequest;
@@ -93,7 +93,14 @@ class B2bBotController extends \yii\web\Controller
         $this->request['update_id'] = strval($updateId);
         $this->request['user_time'] = intval($message['date']);
         if ($message) {
-            $this->request['request'] = $message['text'];
+            if ($message['text']) {
+                $this->request['request'] = $message['text'];
+            } elseif ($message['contact']){
+                $this->request['request'] = $message['contact']['phone_number'];
+            } else {
+                $this->request['request'] = 'no text';
+            }
+
         } elseif ($inlineQuery){
             $this->request['request'] = 'inlineQuery '.$inlineQuery['query'];
         } elseif ($callbackQuery){
@@ -137,28 +144,11 @@ class B2bBotController extends \yii\web\Controller
                 'reply_markup' => Json::encode([
                     'one_time_keyboard'=> true,
                     'keyboard'=>[
-//                        [
-//                            ['request_contact'=> true],
-//                        ],
-//                        [
-//                            ['text'=>'Сообщение менеджеру'],
-//                            ['text'=>'Помощь'],
-//                        ],
                         [
                             ['text'=>'Отправить номер', 'request_contact'=> true],
-//                            ['text'=>'Отправить место', 'request_location'=> true],
                         ],
                     ]
                 ]),
-//                'reply_markup' => Json::encode([
-////                    'one_time_keyboard'=> true,
-//                    'keyboard'=>[
-//                        [
-//                            ['text'=>'Отправить номер', 'request_contact'=> true],
-//                        ],
-//
-//                    ]
-//                ])
             ]);
             $this->user['status'] = 'user_phone_request';
             $this->user->save();
@@ -179,12 +169,12 @@ class B2bBotController extends \yii\web\Controller
                     .PHP_EOL.
                     'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
             ]);
-            $this->user['status'] = 'phone_requested';
+            $this->user['status'] = 'dealer_phone_request';
             $this->user->save();
             return false ;
         }
 
-        if ($this->user['status'] == 'phone_requested') {
+        if ($this->user['status'] == 'dealer_phone_request') {
             $phone = str_replace([' ','(',')','-'],'', $this->request['request']);
 
             Yii::info([
