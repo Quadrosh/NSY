@@ -784,10 +784,11 @@ class B2bBotController extends \yii\web\Controller
         }
 
         $responseToUser = $orderId.' - '
-            .$serverResponse['totalCost'].'р. - '
-            .$serverResponse['status']['status'].' - '
-            .$serverResponse['status']['payment'].' - '
-            .$serverResponse['status']['delivey'].' : '
+            .$serverResponse['totalCost'].'р.'
+            .PHP_EOL
+            .$serverResponse['status']['status'].' | '
+            .$serverResponse['status']['payment'].' | '
+            .$serverResponse['status']['delivey'].'  '
             .PHP_EOL.'-------------------------'.PHP_EOL;
         foreach ($serverResponse['items'] as $item) {
             $responseToUser .= $item['productCode']
