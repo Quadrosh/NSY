@@ -321,6 +321,7 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
+
     private function textMessageAction($message){
         if (trim(strtolower($message['text'])) == '/start') {
             return $this->helloMessage();
@@ -577,9 +578,6 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
-
-
-
     private function emailInit(){
 
         // если пустые поля Имя Фамилия (real_first_name / last_name_request)
@@ -781,8 +779,16 @@ class B2bBotController extends \yii\web\Controller
         if (isset($serverResponse['error'])) {
             return $this->sendErrorMessage('Ошибка - '.$serverResponse['message']);
         }
+        if ($serverResponse == []) {
+            return $this->sendErrorMessage('Поиск не увенчался успехом');
+        }
 
-        $responseToUser = $orderId.':'.PHP_EOL.'-------------------------'.PHP_EOL;
+        $responseToUser = $orderId.' - '
+            .$serverResponse['totalCost'].'р. - '
+            .$serverResponse['status']['status'].' - '
+            .$serverResponse['status']['payment'].' - '
+            .$serverResponse['status']['delivey'].' : '
+            .PHP_EOL.'-------------------------'.PHP_EOL;
         foreach ($serverResponse['items'] as $item) {
             $responseToUser .= $item['productCode']
                 .' '.$item['productName']
