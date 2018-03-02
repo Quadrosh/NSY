@@ -13,12 +13,17 @@ use yii\behaviors\TimestampBehavior;
  * @property string $first_name
  * @property string $last_name
  * @property string $username
- * @property string $b2b_name
+ * @property string $real_first_name
+ * @property string $real_last_name
+ * @property int $b2b_dealer_id
  * @property string $email
  * @property string $phone
  * @property string $status
+ * @property string $bot_command
  * @property int $updated_at
  * @property int $created_at
+ *
+ * @property B2bDealer $dealer
  */
 class B2bBotUser extends \yii\db\ActiveRecord
 {

@@ -58,6 +58,12 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    /*
+     * Основной метод, принимает запросы от пользователя.
+     *
+     * @return array Массив с кодом 200 (индикация успешной обработки запроса)
+     *    ['message' => 'ok', 'code' => 200]
+     * */
     public function actionDo()
     {
         $input = Yii::$app->request->getRawBody();
@@ -138,10 +144,13 @@ class B2bBotController extends \yii\web\Controller
 
 
     /*
-    * проверка авторизации
-    *
-    * Returns True on success.
-    * */
+     * проверка авторизации
+     * при первом обращении пользователя проходит многоступенчатый
+     * процесс уточнения контактных данных и валидности пользователя
+     *
+     *
+     * @return bool Возвращает true при успешной авторизации
+     * */
     private function checkAuth()
     {
 
@@ -314,6 +323,11 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    /*
+     * Отмена авторизации и привязки пользователя к дилеру
+     *
+     * @return array Массив с кодом 200 (индикация успешной обработки запроса)
+     * */
     private function unAuthorise(){
         $this->user['status'] = 'unconfirmed';
         $this->user['b2b_dealer_id'] = null;
@@ -322,6 +336,12 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    /*
+     * Обработка входящего текстового сообщения
+     *
+     * @var array $message
+     * @return array Массив с кодом 200 (индикация успешной обработки запроса)
+     * */
     private function textMessageAction($message){
         if (trim(strtolower($message['text'])) == '/start') {
             return $this->helloMessage();
@@ -431,6 +451,15 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    /*
+     * Обработка входящего сообщения типа Callback Query
+     * при старте обработки отправляет сообщение типа answerCallbackQuery
+     * (индикация что запрос принят и обрабатывается)
+     * обрабатывает поле 'data'
+     *
+     * @var array $callbackQuery
+     * @return array Массив с кодом 200 (индикация успешной обработки запроса)
+     * */
     private function callbackQueryAction($callbackQuery)
     {
         $this->answerCallbackQuery([
@@ -454,6 +483,16 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    /*
+     * Обработка входящего сообщения типа Inline Query
+     *
+     * Отправляет пользователю массив результатов
+     * пользователь получает результаты в виде всплывающего списка и выбирает один из них.
+     * Боту отправляется текстовое сообщение поля input_message_content -> message_text
+     *
+     * @var array $inlineQuery
+     * @return array Массив с кодом 200 (индикация успешной обработки запроса)
+     * */
     private function inlineQueryAction($inlineQuery)
     {
         Yii::info([
@@ -509,6 +548,11 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    /*
+     * Отправка пользователю опций
+     *
+     * @return array Массив с кодом 200 (индикация успешной обработки запроса)
+     * */
     private function options()
     {
         $this->sendMessageWithBody([
@@ -536,6 +580,11 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    /*
+     * Отправка пользователю памятки помощи
+     *
+     * @return array Массив с кодом 200 (индикация успешной обработки запроса)
+     * */
     private function help(){
         $text =
             'Доступные команды:'.PHP_EOL.
@@ -568,6 +617,11 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    /*
+     * Отправка пользователю приветственного сообщения
+     *
+     * @return boolean $this->checkAuth()
+     * */
     private function helloMessage(){
 
         $this->sendMessage([
@@ -578,6 +632,13 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    /*
+     * Инициализация отправки сообщения менеджеру
+     * изменяет поле 'bot_command' пользователя
+     * при незаполненнх полях 'real_first_name' и 'real_last_name' запрашивает у пользователя имя/фамилию и сохраняет
+     *
+     * @return array Массив с кодом 200 (индикация успешной обработки запроса)
+     * */
     private function emailInit(){
 
         // если пустые поля Имя Фамилия (real_first_name / last_name_request)
@@ -618,6 +679,12 @@ class B2bBotController extends \yii\web\Controller
     }
 
 
+    /*
+     * отправка сообщения в b2b отдел
+     *
+     * @var string $text
+     * @return array Массив с кодом 200 (индикация успешной обработки запроса)
+     * */
     private function emailProcess($text){
         $this->user['bot_command'] = null;
         $this->user->save();
@@ -635,12 +702,15 @@ class B2bBotController extends \yii\web\Controller
             ]);
             return ['message' => 'ok', 'code' => 200];
         }
-
-
-
     }
 
-
+    /*
+     * Инициализация запроса в базе по одному артикулу
+     * изменяет поле 'bot_command' пользователя
+     * отправляет пользователю запрос на ввод артикула
+     *
+     * @return array Массив с кодом 200 (индикация успешной обработки запроса)
+     * */
     private function oneProductInit(){
 
         $this->user['bot_command'] = 'oneProductInfo';
@@ -653,7 +723,14 @@ class B2bBotController extends \yii\web\Controller
         return ['message' => 'ok', 'code' => 200];
     }
 
-
+    /*
+     * обработка запроса по одному артикулу
+     * запрашивает у сервера информацию
+     * отправляет результат пользователю
+     *
+     * @var string $query  Артикул
+     * @return array Массив с кодом 200 (индикация успешной обработки запроса)
+     * */
     private function oneProductProcess($query)
     {
         $this->user['bot_command'] = null;
