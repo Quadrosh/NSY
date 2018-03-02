@@ -839,9 +839,9 @@ class B2bBotController extends \yii\web\Controller
             $responseToUser .= $item['orderId']
                 .' '.$item['totalCost']
                 .PHP_EOL
-                .' '.$item['status']['status']
-                .' '.$item['status']['payment']
-                .' '.$item['status']['delivey']
+                .$item['status']['status'].' | '
+                .$item['status']['payment'].' | '
+                .$item['status']['delivey']
                 .PHP_EOL .'-------------------------'.PHP_EOL;
         }
 
