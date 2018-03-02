@@ -789,7 +789,9 @@ class B2bBotController extends \yii\web\Controller
             .$serverResponse['status']['status'].' | '
             .$serverResponse['status']['payment'].' | '
             .$serverResponse['status']['delivey'].'  '
-            .PHP_EOL.'-------------------------'.PHP_EOL;
+            .PHP_EOL
+//            .'-------------------------'
+            .PHP_EOL;
         foreach ($serverResponse['items'] as $item) {
             $responseToUser .= $item['productCode']
                 .' '.$item['productName']
