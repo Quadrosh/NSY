@@ -736,7 +736,7 @@ class B2bBotController extends \yii\web\Controller
             return $this->sendErrorMessage('Ошибка - '.$serverResponseArr['message']);
         }
         if ($serverResponseArr == []) {
-            return $this->sendErrorMessage('Поиск возвратил 0 результов');
+            return $this->sendErrorMessage('Поиск не дал результов');
         }
 
         $responseToUser = '';
