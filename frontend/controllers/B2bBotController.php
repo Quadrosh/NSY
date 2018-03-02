@@ -16,8 +16,19 @@ use yii\web\Response;
 
 class B2bBotController extends \yii\web\Controller
 {
+    /**
+     * @var B2bBotUser
+     */
     private $user;
+
+    /**
+     * @var B2bDealer
+     */
     private $dealer;
+
+    /**
+     * @var B2bBotRequest
+     */
     private $request;
 
     public function behaviors() {
@@ -723,6 +734,9 @@ class B2bBotController extends \yii\web\Controller
         ], 'b2bBot');
         if (isset($serverResponseArr['error'])) {
             return $this->sendErrorMessage('Ошибка - '.$serverResponseArr['message']);
+        }
+        if ($serverResponseArr == []) {
+            return $this->sendErrorMessage('Поиск возвратил 0 результов');
         }
 
         $responseToUser = '';
