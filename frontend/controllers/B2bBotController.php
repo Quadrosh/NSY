@@ -837,7 +837,7 @@ class B2bBotController extends \yii\web\Controller
 
         foreach ($orders as $item) {
             $responseToUser .= $item['orderId']
-                .' '.$item['totalCost']
+                .' - '.$item['totalCost'].'р.'
                 .PHP_EOL
                 .$item['status']['status'].' | '
                 .$item['status']['payment'].' | '
