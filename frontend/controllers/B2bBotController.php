@@ -831,7 +831,7 @@ class B2bBotController extends \yii\web\Controller
                 .'в пути ' .$item['quantity']['inroute']
                 .PHP_EOL .'-------------------------'.PHP_EOL;
             $iter++;
-            if (count($serverResponseArr)>10 || $iter == 10) {
+            if (count($serverResponseArr)>10 && $iter == 10) {
                 $this->sendMessage([
                     'chat_id' => $this->user['telegram_user_id'],
                     'text' => $responseToUser,
