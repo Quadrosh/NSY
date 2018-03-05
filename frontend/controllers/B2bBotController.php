@@ -816,6 +816,7 @@ class B2bBotController extends \yii\web\Controller
 
         $responseToUser = '';
         mb_internal_encoding('utf-8');
+        $iter = 0;
         foreach ($serverResponseArr as $item) {
             if (mb_strlen($item['description']) > 200) {
                 $item['description'] = mb_substr($item['description'], 0, 200).'...';
@@ -829,6 +830,16 @@ class B2bBotController extends \yii\web\Controller
                 .'наличие ' .$item['quantity']['stock'].', '
                 .'в пути ' .$item['quantity']['inroute']
                 .PHP_EOL .'-------------------------'.PHP_EOL;
+            $iter++;
+            if (count($serverResponseArr)>10 || $iter = 10) {
+                $this->sendMessage([
+                    'chat_id' => $this->user['telegram_user_id'],
+                    'text' => $responseToUser,
+                ]);
+                $responseToUser='';
+                $iter = 0;
+            }
+
         }
 
 
