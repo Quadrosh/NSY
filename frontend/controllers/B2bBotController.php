@@ -153,6 +153,9 @@ class B2bBotController extends \yii\web\Controller
      * */
     private function checkAuth()
     {
+        if ($this->user['status'] == 'active' ){
+            return true;
+        }
 
         if ( $this->user['status'] == 'unconfirmed' ) {
             $this->sendMessageWithBody([
@@ -241,117 +244,8 @@ class B2bBotController extends \yii\web\Controller
             }
         }
 
-//
-//        if ($this->user['status'] == 'dealer_phone_request') {
-//            $phone = str_replace([' ','(',')','-'],'', $this->request['request']);
-//
-//            Yii::info([
-//                'action'=>'answer to dealer phone request',
-//                'updateId'=>$this->request['update_id'],
-//                'phone'=>$phone,
-//            ], 'b2bBot');
-//
-//            $this->dealer = B2bDealer::find()->where(['phone'=>$phone])->one();
-//
-//            if (!$this->dealer) {
-//
-//                $serverResponse = $this->getOrdersFromServer([
-//                    'phone' => $phone,
-//                ]);
-//
-//                Yii::info([
-//                    'action'=>'response from Server /проверка телефона/',
-//                    'updateId'=>$this->request['update_id'],
-//                    'userId'=>$this->user['id'],
-//                    'serverResponse'=>$serverResponse,
-//                ], 'b2bBot');
-//
-//                if ($serverResponse['error']) {
-//                    if ($serverResponse['message']=='Не указан идентификатор дилера') {
-//                        $this->sendMessage([
-//                            'chat_id' => $this->user['telegram_user_id'],
-//                            'text' => 'Ошибка - номер телефона в неверном формате',
-//                        ]);
-//                        return false;
-//                    }
-//                    elseif ($serverResponse['message']=='Дилер не найден') {
-//                        $this->sendMessage([
-//                            'chat_id' => $this->user['telegram_user_id'],
-//                            'text' => 'Ошибка - дилер не найден',
-//                        ]);
-//                        return false;
-//                    }
-//                    else {
-//                        $this->sendMessage([
-//                            'chat_id' => $this->user['telegram_user_id'],
-//                            'text' => 'Ошибка - ' . $serverResponse['message'],
-//                        ]);
-//                        return false;
-//                    }
-//
-//                } else { // валидный ответ сервера со списком заказов
-//                    $this->dealer = new B2bDealer();
-//                    $this->dealer['phone'] = $phone;
-//                    $this->dealer['status'] = 'active';
-//                    $this->dealer['name']= $serverResponse[0]['client']['name'];
-//                    $this->dealer['email']= $serverResponse[0]['client']['email'];
-//                    $this->dealer->save();
-//
-//                    if($this->dealer['phone'] == $this->user['phone']){ // это основной телефон дилера
-//                        $this->user['status'] = 'active';
-//                        $this->user['b2b_dealer_id']= $this->dealer['id'];
-//                        $this->user->save();
-//
-//                        $this->sendMessage([
-//                            'chat_id' => $this->user['telegram_user_id'],
-//                            'text' => 'Вы авторизованы',
-//                        ]);
-//                        $this->options();
-//                        return true;
-//                    } else { // на дилера нет доступов и телефон не является основным
-//                        $this->sendMessage([
-//                            'chat_id' => $this->user['telegram_user_id'],
-//                            'text' => 'Нет запроса на доступ от дилера.',
-//                        ]);
-//                        return false;
-//                    }
-//
-//
-//                }
-//            } else { // дилер есть в базе бота
-//                if ($this->dealer['status'] != 'active') { // неактивный дилер
-//                    $this->sendMessage([
-//                        'chat_id' => $this->user['telegram_user_id'],
-//                        'text' => 'Ошибка - неактивный статус дилера',
-//                    ]);
-//                    return false;
-//                } else { // дилер с активным статусом
-//                    if(strpos($this->dealer['entry_phones'],$this->user['phone']) !== false){
-//                        $this->user['status'] = 'active';
-//                        $this->user['b2b_dealer_id']= $this->dealer['id'];
-//                        $this->user->save();
-//                        $this->sendMessage([
-//                            'chat_id' => $this->user['telegram_user_id'],
-//                            'text' => 'Вы авторизованы',
-//                        ]);
-//                        $this->options();
-//                        return true;
-//                    } else { // у дилера нет такого телефона среди доступов
-//                        $this->sendMessage([
-//                            'chat_id' => $this->user['telegram_user_id'],
-//                            'text' => 'У дилера не найдено доступа на Ваш телефон',
-//                        ]);
-//                    }
-//                }
-//
-//            }
-//
-//            return false;
-//        }
 
-        if ($this->user['status'] == 'active' ){
-            return true;
-        }
+
     }
 
 
