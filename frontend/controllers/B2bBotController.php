@@ -175,7 +175,7 @@ class B2bBotController extends \yii\web\Controller
             return false ;
         }
 
-        if ( $this->user['status'] == 'user_phone_requested') {
+        if ( $this->user['status'] == 'user_phone_requested' || $this->user['status'] == 'doubled_entry') {
 
             if (substr($this->request['request'],0,6) == 'phone/' ){
                 $commandArr = explode('/', $this->request['request']);
@@ -198,9 +198,12 @@ class B2bBotController extends \yii\web\Controller
                             'dealers'=>B2bDealer::find()->where(['like', 'entry_phones', $this->user['phone']])->all(),
                             'phone'=>$this->user['phone'],
                         ], 'b2bBot');
+                        $this->user['status'] = 'doubled_entry';
+                        $this->user['b2b_dealer_id']= $this->dealer['id'];
+                        $this->user->save();
                         $this->sendMessage([
                             'chat_id' => $this->user['telegram_user_id'],
-                            'text' => 'Ошибка - на этот номер оформлено более одного доступа, свяжитесь со своим руководством для удаления ненужных доступов',
+                            'text' => 'Ошибка - на этот номер оформлено более одного доступа, свяжитесь с руководством для удаления ненужных доступов',
                         ]);
                         return false;
                     }
