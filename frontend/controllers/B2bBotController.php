@@ -191,6 +191,19 @@ class B2bBotController extends \yii\web\Controller
                 $dealer = B2bDealer::find()->where(['like', 'entry_phones', $this->user['phone']])->one();
 
                 if ($dealer != null) { // есть дилер у кого есть этот номер в доступах
+                    if (count(B2bDealer::find()->where(['like', 'entry_phones', $this->user['phone']])->all())>1) {
+                        Yii::info([
+                            'action'=>'founded more than 1 dealer with user phone in entry_phones',
+                            'updateId'=>$this->request['update_id'],
+                            'dealers'=>B2bDealer::find()->where(['like', 'entry_phones', $this->user['phone']])->all(),
+                            'phone'=>$this->user['phone'],
+                        ], 'b2bBot');
+                        $this->sendMessage([
+                            'chat_id' => $this->user['telegram_user_id'],
+                            'text' => 'Ошибка - на этот номер оформлено более одного доступа, свяжитесь со своим руководством для удаления ненужных доступов',
+                        ]);
+                        return false;
+                    }
 
                     Yii::info([
                         'action'=>'founded dealer with user phone in entry_phones',
