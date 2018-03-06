@@ -213,7 +213,7 @@ class B2bBotController extends \yii\web\Controller
                             'text' => 'Вы авторизованы',
                         ]);
                         $this->options();
-                        return true;
+                        return false;
                     }
 
                 } else {  // нет дилера у кого этот номер в доступах
