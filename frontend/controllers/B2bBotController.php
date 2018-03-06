@@ -186,7 +186,7 @@ class B2bBotController extends \yii\web\Controller
                 ], 'b2bBot');
 
 
-                $dealer = B2bDealer::find()->where(['like', 'entry_phones', '%'.$this->user['phone'].'%'])->one();
+                $dealer = B2bDealer::find()->where(['like', 'entry_phones', $this->user['phone']])->one();
 
 
                 if ($dealer != null) { // есть дилер у кого есть этот номер в доступах
