@@ -145,7 +145,7 @@ class B2bBotController extends \yii\web\Controller
 
     /*
      * проверка авторизации
-     * при первом обращении пользователя проходит многоступенчатый
+     * при первом обращении пользователя проходит
      * процесс уточнения контактных данных и валидности пользователя
      *
      *
@@ -483,7 +483,7 @@ class B2bBotController extends \yii\web\Controller
     {
         $this->sendMessageWithBody([
             'chat_id' => $this->user['telegram_user_id'],
-            'text' => 'Опции:',
+            'text' => 'Список достуаных опций показан ниже на клавиатуре:',
             'reply_markup' => Json::encode([
                 'one_time_keyboard'=> true,
                 'keyboard'=>[
