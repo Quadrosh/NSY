@@ -178,20 +178,37 @@ class B2bBotController extends \yii\web\Controller
                 $commandArr = explode('/', $this->request['request']);
                 $phone = $commandArr[1];
                 $this->user['phone'] = $phone;
+                $this->user->save();
                 Yii::info([
                     'action'=>'user_phone_saved',
                     'updateId'=>$this->request['update_id'],
                     'user phone'=>$this->request['request'],
                 ], 'b2bBot');
-                $this->sendMessage([
-                    'chat_id' => $this->user['telegram_user_id'],
-                    'text' => 'Для продолжения авторизации, отправьте номер телефона, указанный в дилерском аккаунте.'
-                        .PHP_EOL.
-                        'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
-                ]);
-                $this->user['status'] = 'dealer_phone_request';
-                $this->user->save();
-                return false ;
+
+
+                $dealer = B2bDealer::find()->where(['like', 'entry_phones', '%'.$this->user['phone'].'%'])->one();
+
+
+                if ($dealer != null) { // есть дилер у кого есть этот номер в доступах
+                    $this->sendMessage([
+                        'chat_id' => $this->user['telegram_user_id'],
+                        'text' => $dealer['name'],
+                    ]);
+//                    $this->user['status'] = 'dealer_phone_request';
+//                    $this->user->save();
+                    return false ;
+                } else {  // нет дилера у кого этот номер в доступах
+                    $this->sendMessage([
+                        'chat_id' => $this->user['telegram_user_id'],
+                        'text' => 'Для продолжения авторизации, отправьте номер телефона, указанный в дилерском аккаунте.'
+                            .PHP_EOL.
+                            'Ответом на это сообщение отправьте телефон в формате 7 985 000 0000',
+                    ]);
+                    $this->user['status'] = 'dealer_phone_request';
+                    $this->user->save();
+                    return false ;
+                }
+
 
             } else {
                 $this->sendMessageWithBody([
