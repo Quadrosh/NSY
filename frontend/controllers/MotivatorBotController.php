@@ -592,16 +592,16 @@ class MotivatorBotController extends \yii\web\Controller
 
 
     public function sendMessage(array $option){
-        $chat_id = $option['chat_id'];
-        $text = urlencode($option['text']);
-        unset($option['chat_id']);
-        unset($option['text']);
+//        $chat_id = $option['chat_id'];
+//        $text = urlencode($option['text']);
+//        unset($option['chat_id']);
+//        unset($option['text']);
 
-        $jsonResponse = $this->curlCall(Yii::$app->params['totUrl'].'?tourl='.
+        $jsonResponse = $this->curlCall(
+            Yii::$app->params['totUrl'].'?tourl='.
             Yii::$app->params['patch'] .
             Yii::$app->params['motivBotToken'].
-            "/sendMessage?chat_id=".$chat_id .
-            '&text='.$text, $option);
+            "/sendMessage", $option);
 
         // before Blokada
 //        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
@@ -609,77 +609,107 @@ class MotivatorBotController extends \yii\web\Controller
 //            "/sendMessage?chat_id=".$chat_id .
 //            '&text='.$text, $option);
 
-        return json_decode($jsonResponse);
+        return $jsonResponse;
     }
 
 
 
 
-    private function curlCall($url, $option=array(), $headers=array())
-    {
-        $attachments = ['photo', 'sticker', 'audio', 'document', 'video'];
+//    private function curlCall($url, $option=array(), $headers=array())
+//    {
+//
+//        $ch = curl_init($url);
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//        curl_setopt($ch, CURLOPT_USERAGENT, "Telebot");
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        if (count($option)) {
+//            curl_setopt($ch, CURLOPT_POST, true);
+//            curl_setopt($ch, CURLOPT_POSTFIELDS, $option);
+//        }
+//        $r = curl_exec($ch);
+//        if($r == false){
+//            $text = 'error '.curl_error($ch);
+//            $myfile = fopen("error_telegram.log", "w") or die("Unable to open file!");
+//            fwrite($myfile, $text);
+//            fclose($myfile);
+//        }
+//        curl_close($ch);
+//        return $r;
+//    }
 
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_USERAGENT, "Telebot");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        if (count($option)) {
-            curl_setopt($ch, CURLOPT_POST, true);
-            foreach($attachments as $attachment){
-                if(isset($option[$attachment])){
-                    $option[$attachment] = $this->curlFile($option[$attachment]);
-                    break;
-                }
-            }
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $option);
-        }
-        $r = curl_exec($ch);
-        if($r == false){
-            $text = 'error '.curl_error($ch);
-            $myfile = fopen("error_telegram.log", "w") or die("Unable to open file!");
-            fwrite($myfile, $text);
-            fclose($myfile);
-        }
-        curl_close($ch);
-        return $r;
-    }
 
-    private function curlFile($path)
-    {
-        if (is_array($path))
-            return $path['file_id'];
-        $realPath = realpath($path);
-        if (class_exists('CURLFile'))
-            return new \CURLFile($realPath);
-        return '@' . $realPath;
-    }
 
-    /**
-     *   @var array
-     *   $this->answerCallbackQuery([
-     *       'callback_query_id' => '3343545121', //require
-     *       'text' => 'text', //Optional
-     *       'show_alert' => 'my alert',  //Optional
-     *       'url' => 'http://sample.com', //Optional
-     *       'cache_time' => 123231,  //Optional
-     *   ]);
-     *   The answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
-     *  On success, True is returned.
-     */
     public function answerCallbackQuery(array $option = [])
     {
-        $jsonResponse = $this->curlCall(Yii::$app->params['totUrl'].'?tourl='.
+        $jsonResponse = $this->curlCall(
+            Yii::$app->params['totUrl'].'?tourl='.
             Yii::$app->params['patch'] .
             Yii::$app->params['motivBotToken'] .
             "/answerCallbackQuery", $option);
-
 
 //        before blokada
 //        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
 //            Yii::$app->params['motivBotToken'] .
 //            "/answerCallbackQuery", $option);
 
-        return json_decode($jsonResponse);
+        return $jsonResponse;
+    }
+
+    public function curlCall($url, $options = [])
+    {
+
+        $optQuery = http_build_query($options);
+        $urlToInit = $url.'?'.$optQuery;
+
+        $ch = curl_init($urlToInit);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0');
+        curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 27);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $optQuery);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);  // return string
+        curl_setopt($ch, CURLOPT_POST, true); // use http post
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // no check sert by remote
+
+
+
+        $r = curl_exec($ch);
+
+        if($r == false){
+
+            Yii::info([
+                'action'=>'curl to HLL error',
+                'curl_error($ch)'=>curl_error($ch),
+            ], 'motivatorBot');
+
+            return 'error, look in logs';
+        } else {
+            $info = curl_getinfo($ch);
+            $info = [
+                    'action'=>'curl to HLL',
+                    'options'=>$options,
+                    'curl_version'=>curl_version(),
+                ] + $info;
+            Yii::info($info, 'motivatorBot');
+            if ($info['http_code'] == 500) {
+                $serverError = [];
+                $serverError['error'] = 1;
+                $serverError['message'] = 'Извините, на сервере технические проблемы.'
+                    .PHP_EOL .'В данный момент запрос не может быть обработан';
+                $serverError['code'] = 500;
+                curl_close($ch);
+                return Json::encode($serverError);
+            }
+            if ($info['http_code'] == 400) {
+                $serverError = [];
+                $serverError['error'] = 1;
+                $serverError['message'] = 'Извините, у нас проблемы со связью.'
+                    .PHP_EOL .'В данный момент запрос не может быть обработан.';
+                $serverError['code'] = 400;
+                curl_close($ch);
+                return Json::encode($serverError);
+            }
+        }
+        curl_close($ch);
+        return $r;
     }
 
 }
