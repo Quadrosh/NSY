@@ -692,31 +692,15 @@ class MotivatorBotController extends \yii\web\Controller
 
             return 'error, look in logs';
         } else {
-            $info = curl_getinfo($ch);
-            $info = [
-                    'action'=>'curl to HLL success',
-                    'options'=>$options,
-                    'curl_version'=>curl_version(),
-                ] + $info;
-            Yii::info($info, 'motivatorBot');
-            if ($info['http_code'] == 500) {
-                $serverError = [];
-                $serverError['error'] = 1;
-                $serverError['message'] = 'Извините, на сервере технические проблемы.'
-                    .PHP_EOL .'В данный момент запрос не может быть обработан';
-                $serverError['code'] = 500;
-                curl_close($ch);
-                return Json::encode($serverError);
-            }
-            if ($info['http_code'] == 400) {
-                $serverError = [];
-                $serverError['error'] = 1;
-                $serverError['message'] = 'Извините, у нас проблемы со связью.'
-                    .PHP_EOL .'В данный момент запрос не может быть обработан.';
-                $serverError['code'] = 400;
-                curl_close($ch);
-                return Json::encode($serverError);
-            }
+//            $info = curl_getinfo($ch);
+//            $info = [
+//                    'action'=>'curl to HLL success',
+//                    'options'=>$options,
+//                    'curl_version'=>curl_version(),
+//                ] + $info;
+//            Yii::info($info, 'motivatorBot');
+
+
         }
         curl_close($ch);
         return $r;
