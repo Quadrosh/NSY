@@ -101,6 +101,7 @@ class B2bBotController extends \yii\web\Controller
      * */
     public function actionDo()
     {
+        return 'debug';
         $input = Yii::$app->request->getRawBody();
         $updateId = Yii::$app->request->post('update_id');
         $message = Yii::$app->request->post('message'); // array
