@@ -609,6 +609,11 @@ class MotivatorBotController extends \yii\web\Controller
 //            "/sendMessage?chat_id=".$chat_id .
 //            '&text='.$text, $option);
 
+        Yii::info([
+            'action'=>'sendMessage',
+            '$jsonResponse'=>$jsonResponse,
+        ], 'motivatorBot');
+
         return $jsonResponse;
     }
 
@@ -652,6 +657,11 @@ class MotivatorBotController extends \yii\web\Controller
 //            Yii::$app->params['motivBotToken'] .
 //            "/answerCallbackQuery", $option);
 
+        Yii::info([
+            'action'=>'answerCallbackQuery',
+            '$jsonResponse'=>$jsonResponse,
+        ], 'motivatorBot');
+
         return $jsonResponse;
     }
 
@@ -684,7 +694,7 @@ class MotivatorBotController extends \yii\web\Controller
         } else {
             $info = curl_getinfo($ch);
             $info = [
-                    'action'=>'curl to HLL',
+                    'action'=>'curl to HLL success',
                     'options'=>$options,
                     'curl_version'=>curl_version(),
                 ] + $info;
