@@ -51,13 +51,48 @@ class B2bBotController extends \yii\web\Controller
 
     public function beforeAction($action)
     {
-        if (in_array($action->id, ['do'])) {
+        if (in_array($action->id, ['do','forward'])) {
             $this->enableCsrfValidation = false;
         }
         return parent::beforeAction($action);
     }
 
 
+    public function actionForward()
+    {
+        $input = Yii::$app->request->getRawBody();
+
+        Yii::info([
+            'action' => 'Forward',
+            'input' => Json::decode($input),
+        ], 'b2bBot');
+
+
+        $url='http://deepclouds.local/502409441AAH0lu_unjmWQE0hMDgJgVQcNwVDfq2_iZM';
+        $body = $input;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Telebot');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+
+        $r = curl_exec($ch);
+        if($r == false){
+            $text = 'curl error '.curl_error($ch);
+//            Yii::info($text, 'b2bBot');
+        } else {
+//            $info = curl_getinfo($ch);
+//            $info = [
+//                    'action'=>'curl to RS',
+//                    '$input'=>$input,
+//                ] + $info;
+//            Yii::info($info, 'b2bBot');
+        }
+        curl_close($ch);
+        return $r;
+
+    }
     /*
      * Основной метод, принимает запросы от пользователя.
      *

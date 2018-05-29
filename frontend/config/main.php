@@ -100,6 +100,15 @@ return [
                     'maxFileSize' => 1024 * 2,
                     'maxLogFiles' => 20,
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['motivatorBot'],
+                    'logFile' => '@runtime/logs/motivatorBot.log',
+                    'logVars' => [],   // $_GET, $_POST, $_FILES, $_COOKIE, $_SESSION, $_SERVER
+                    'maxFileSize' => 1024 * 2,
+                    'maxLogFiles' => 20,
+                ],
 
             ],
         ],
@@ -112,6 +121,7 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                'forward-json'=>'b2b-bot/forward',
                 $params['b2bBotPath']=>'b2b-bot/do',
                 $params['motivBotPath']=>'motivator-bot/dialog',
                 $params['chepuBotPath']=>'chepuha-bot/dialog',

@@ -56,19 +56,34 @@ class MotivatorBotController extends \yii\web\Controller
         $inlineQuery = Yii::$app->request->post('inline_query'); // array
 
 
-        $messageId = $message['message_id'];
-        $from = $message['from'];  // array
-        $fromId = $from['id'];
-        $fromIsBot = $from['is_bot'];
-        $fromFirstName = $from['first_name'];
-        $fromLastName = $from['last_name'];
-        $fromUserName = $from['username'];
-        $fromLanguageCode = $from['language_code'];
-        $chat = $message['chat'];
-        $chatId = $chat['id'];
-        $chatType = $chat['type'];
-        $date = $message['date'];
-        $text = $message['text'];
+//        $messageId = $message['message_id'];
+//        $from = $message['from'];  // array
+//        $fromId = $from['id'];
+//        $fromIsBot = $from['is_bot'];
+//        $fromFirstName = $from['first_name'];
+//        $fromLastName = $from['last_name'];
+//        $fromUserName = $from['username'];
+//        $fromLanguageCode = $from['language_code'];
+//        $chat = $message['chat'];
+//        $chatId = $chat['id'];
+//        $chatType = $chat['type'];
+//        $date = $message['date'];
+//        $text = $message['text'];
+
+
+
+        $cleanInput = Json::decode($input);
+        $updateId = isset($cleanInput['update_id'])?$cleanInput['update_id']:null;
+        $message = isset($cleanInput['message'])?$cleanInput['message']:null;
+        $callbackQuery = isset($cleanInput['callback_query'])?$cleanInput['callback_query']:null;
+        $inlineQuery = isset($cleanInput['inline_query'])?$cleanInput['inline_query']:null;
+
+        $from = isset($message['from'])?$message['from']:null;    // array
+        $fromFirstName = isset($from['first_name'])?$from['first_name']:null;
+        $chat = isset($message['chat'])?$message['chat']:null;
+        $chatId = isset($chat['id'])?$chat['id']:null;
+        $date = isset($message['date'])?$message['date']:null;
+        $text = isset($message['text'])?$message['text']:null;
 
 
 
@@ -78,8 +93,16 @@ class MotivatorBotController extends \yii\web\Controller
             //
             //
 
+
             if ($message['text'] == '/start') {
-                $this->sendMessage([
+//                Yii::info([
+//                    'action'=>'$message->text == start',
+////                'input'=>Json::decode($input),
+////                    '$message'=>$message,
+//                    '$message->text'=>$message['text'],
+//                ], 'motivatorBot');
+
+                return  $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'text' => 'Привет, я бот Мотиватор, ниже список опций',
                     'reply_markup' => json_encode([
@@ -101,12 +124,13 @@ class MotivatorBotController extends \yii\web\Controller
                     ]),
                 ]);
 
+
             }
 
             //  Опции текст
 
             elseif ($message['text'] == '/options') {
-                $this->sendMessage([
+                return $this->sendMessage([
                     'chat_id' => $message['chat']['id'],  // $message['from']['id']
                     'text' => 'Список опций',
                     'reply_markup' => json_encode([
@@ -572,12 +596,24 @@ class MotivatorBotController extends \yii\web\Controller
         $text = urlencode($option['text']);
         unset($option['chat_id']);
         unset($option['text']);
-        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+
+        $jsonResponse = $this->curlCall(Yii::$app->params['totUrl'].'?tourl='.
+            Yii::$app->params['patch'] .
             Yii::$app->params['motivBotToken'].
             "/sendMessage?chat_id=".$chat_id .
             '&text='.$text, $option);
+
+        // before Blokada
+//        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+//            Yii::$app->params['motivBotToken'].
+//            "/sendMessage?chat_id=".$chat_id .
+//            '&text='.$text, $option);
+
         return json_decode($jsonResponse);
     }
+
+
+
 
     private function curlCall($url, $option=array(), $headers=array())
     {
@@ -632,9 +668,17 @@ class MotivatorBotController extends \yii\web\Controller
      */
     public function answerCallbackQuery(array $option = [])
     {
-        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+        $jsonResponse = $this->curlCall(Yii::$app->params['totUrl'].'?tourl='.
+            Yii::$app->params['patch'] .
             Yii::$app->params['motivBotToken'] .
             "/answerCallbackQuery", $option);
+
+
+//        before blokada
+//        $jsonResponse = $this->curlCall("https://api.telegram.org/bot" .
+//            Yii::$app->params['motivBotToken'] .
+//            "/answerCallbackQuery", $option);
+
         return json_decode($jsonResponse);
     }
 
