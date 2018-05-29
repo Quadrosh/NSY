@@ -47,7 +47,7 @@ class ChepuhaBotController extends \yii\web\Controller
 
     public function beforeAction($action)
     {
-        if (in_array($action->id, ['dialog'])) {
+        if (in_array($action->id, ['dialog','dialog-dev'])) {
             $this->enableCsrfValidation = false;
         }
         return parent::beforeAction($action);
@@ -131,8 +131,8 @@ class ChepuhaBotController extends \yii\web\Controller
                 };
                 $this->answerInlineQuery([
                     'inline_query_id' => $inlineQuery['id'],
-//                    'is_personal' => true,
-                    'results'=> json_encode($results)
+                    'is_personal' => true,
+                    'results'=> Json::encode($results)
                 ]);
             }
 
@@ -155,8 +155,8 @@ class ChepuhaBotController extends \yii\web\Controller
                 };
                 $this->answerInlineQuery([
                     'inline_query_id' => $inlineQuery['id'],
-//                    'is_personal' => true,
-                    'results'=> json_encode($results)
+                    'is_personal' => true,
+                    'results'=> Json::encode($results)
                 ]);
             }
 
@@ -184,7 +184,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 $this->answerInlineQuery([
                     'inline_query_id' => $inlineQuery['id'],
                     'is_personal' => true,
-                    'results'=> json_encode($results)
+                    'results'=> Json::encode($results)
                 ]);
             }
 
@@ -208,7 +208,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 $this->answerInlineQuery([
                     'inline_query_id' => $inlineQuery['id'],
                     'is_personal' => true,
-                    'results'=> json_encode($results)
+                    'results'=> Json::encode($results)
                 ]);
             }
 
@@ -252,7 +252,7 @@ class ChepuhaBotController extends \yii\web\Controller
                 $this->answerInlineQuery([
                     'inline_query_id' => $inlineQuery['id'],
                     'is_personal' => true,
-                    'results'=> json_encode($results)
+                    'results'=> Json::encode($results)
                 ]);
             }
 
@@ -840,24 +840,24 @@ class ChepuhaBotController extends \yii\web\Controller
     }
 
 
-    public function answerCallbackQuery(array $option = [])
+    public function answerCallbackQuery(array $options = [])
     {
         $jsonResponse = $this->curlCall(
             Yii::$app->params['totUrl'].'?tourl='.
             Yii::$app->params['patch'] .
             Yii::$app->params['chepuBotToken'] .
-            "/answerCallbackQuery", $option);
+            "/answerCallbackQuery", $options);
         return $jsonResponse;
     }
 
 
-    public function answerInlineQuery(array $option = [])
+    public function answerInlineQuery(array $options = [])
     {
         $jsonResponse = $this->curlCall(
             Yii::$app->params['totUrl'].'?tourl='.
             Yii::$app->params['patch'] .
             Yii::$app->params['chepuBotToken'] .
-            "/answerInlineQuery", $option);
+            "/answerInlineQuery", $options);
         return $jsonResponse;
     }
 
