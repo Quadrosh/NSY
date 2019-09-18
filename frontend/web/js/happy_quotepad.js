@@ -52,18 +52,40 @@ window.onload = function() {
 
     if (document.getElementById('run')) {
         var carrot_tl = new TimelineMax({repeat:-1})
-        .fromTo("#carrot", 2, {rotation:"0", x: "-=50%", transformOrigin:"80% 7%"}, {x: "50%", rotation:"-=75", ease: Linear.easeNone}, "carrotstep1")
-            .fromTo("#rope", 2, {rotation:"+=20", x: "-=20%", transformOrigin:"0% 0%"}, { rotation:"-=47", ease: Linear.easeNone}, "carrotstep1")
-            .fromTo("#carrot_x5F_green", 2, {rotation:"-=10", x: "-=35",  transformOrigin:"60% 40%"}, { rotation:"-=75", x: "+=40", ease: Linear.easeNone}, "carrotstep1")
-            .to("#carrot", 1, {rotation:"+=35", x: "-=20%", ease:Linear.easeNone}, "carrotstep2")
-            .to("#rope", 1, {rotation:"+=5",  ease:Linear.easeNone}, "carrotstep2")
-            .to("#carrot_x5F_green", 1, {rotation:"+=35",  ease:Linear.easeNone}, "carrotstep2")
-            .to("#carrot", 1, {rotation:"-=20", x: "-=30%", ease:Linear.easeNone}, "carrotstep3")
-            .to("#rope", 1, {rotation:"+=15",  ease:Linear.easeNone}, "carrotstep3")
-            .to("#carrot_x5F_green", 1, {rotation:"-=20", x: "-=20", ease:Linear.easeNone}, "carrotstep3")
-            .to("#carrot", 1, {rotation:"0", x: "-=50%", ease:Linear.easeNone}, "carrotstep4")
-            .to("#rope", 1, {rotation:"+=29",  ease:Linear.easeNone}, "carrotstep4")
-            .to("#carrot_x5F_green", 1, {rotation:"0", x: "-=20", ease:Linear.easeNone}, "carrotstep4")
+
+            // .fromTo("#carrot", 2, {rotation:"0", x: "-=50", transformOrigin:"80% 7%"}, {x: "50%", rotation:"-=75", ease: Linear.easeNone}, "carrotstep1")
+            // .fromTo("#rope", 2, {rotation:"+=20", x: "-=20", transformOrigin:"0% 0%"}, { rotation:"-=47", ease: Linear.easeNone}, "carrotstep1")
+            // .fromTo("#carrot_x5F_green", 2, {rotation:"-=10", x: "-=35",  transformOrigin:"60% 40%"}, { rotation:"-=75", x: "+=40", ease: Linear.easeNone}, "carrotstep1")
+
+// left
+            .set("#carrot", {css:{rotation:0, y: 0, x: "-=30", transformOrigin:"80% 7%"}})
+            .set("#rope", {css:{rotation:"+=20", y: 0, x: 0, transformOrigin:"0% 0%"}})
+            .set("#carrot_x5F_green", {css:{rotation:"0", y: 0, x: "-=35", transformOrigin:"60% 40%"}})
+
+// center
+            .to("#carrot", 1, {rotation:"-=50", y: 8, x: 0, ease:Linear.easeNone}, "cMiddle1")
+            .to("#rope", 1, {rotation:"-=23",  ease:Linear.easeNone}, "cMiddle1")
+            .to("#carrot_x5F_green", 1, {rotation:"-=33", y: 3, x: "+=20", ease:Linear.easeNone}, "cMiddle1")
+
+// right
+            .to("#carrot", 1, {rotation:"-=45", y: 5, x: "45", ease:Linear.easeNone}, "cRight")
+            .to("#rope", 1, {rotation:"-=24", ease:Linear.easeNone}, "cRight")
+            .to("#carrot_x5F_green", 1, {rotation:"-=32", y: 0, x: "+=30", ease:Linear.easeNone}, "cRight")
+
+// middle to left 1
+            .to("#carrot", 1, {rotation:"+=40", y: 8, x: "-=25", ease:Linear.easeNone}, "cMiddleToLeft1")
+            .to("#rope", 1, {rotation:"+=5",  ease:Linear.easeNone}, "cMiddleToLeft1")
+            .to("#carrot_x5F_green", 1, {rotation:"+=35",  y: 2,  x: "-=10",  ease:Linear.easeNone}, "cMiddleToLeft1")
+
+// middle to left 2
+            .to("#carrot", 1, {rotation:"-=20", y: 8,  x: "-=15", ease:Linear.easeNone}, "cMiddleToLeft2")
+            .to("#rope", 1, {rotation:"+=15",  ease:Linear.easeNone}, "cMiddleToLeft2")
+            .to("#carrot_x5F_green", 1, {rotation:"-=20",  y: 3, x: "-=20", ease:Linear.easeNone}, "cMiddleToLeft2")
+
+// fin left
+            .to("#carrot", 1, {rotation:0, y: 0, x: "-=35", ease:Linear.easeNone}, "finLeft")
+            .to("#rope", 1, {rotation:"+=29",  ease:Linear.easeNone}, "finLeft")
+            .to("#carrot_x5F_green", 1, {rotation:"0",  y: 0, x: "-=20", ease:Linear.easeNone}, "finLeft")
             ;
 
 
