@@ -18,9 +18,15 @@ use Yii;
  * @property string $sendtopage
  * @property string $promolink
  * @property string $promoname
+ * @property string $status
  */
 class Masters extends \yii\db\ActiveRecord
 {
+
+    const STATUS_ACTIVE = 'active';
+    const STATUS_DRAFT = 'draft';
+
+
     /**
      * @inheritdoc
      */
@@ -48,6 +54,8 @@ class Masters extends \yii\db\ActiveRecord
             [['lead_text', 'description','page_description','keywords'], 'string'],
             [['hrurl'],'unique'],
             [['name', 'email', 'hrurl','title','last_name', 'image', 'imagelink', 'imagelink_alt', 'sendtopage', 'promolink', 'promoname'], 'string', 'max' => 255],
+            [['status'], 'string', 'max' => 255],
+
         ];
     }
 

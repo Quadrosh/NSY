@@ -12,6 +12,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <div class="row">
+        <div class="col-sm-4">
+            <?= $form->field($model, 'status')->dropDownList([
+                \common\models\Masters::STATUS_ACTIVE=>'active',
+                \common\models\Masters::STATUS_DRAFT=>'draft',
+            ]) ?>
+        </div>
+    </div>
+
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
@@ -41,6 +50,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'promolink')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'promoname')->textInput(['maxlength' => true]) ?>
+
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

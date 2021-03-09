@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'email',
             'lead_text:ntext',
             'image',
-            // 'description:ntext',
+             'status',
             // 'imagelink',
             // 'imagelink_alt',
             // 'sendtopage',
