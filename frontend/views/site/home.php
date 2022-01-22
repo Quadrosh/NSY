@@ -26,7 +26,7 @@
 </nav>
 <div class="container">
     <div class="pop_wrap">
-        <h2>Популярные материалы</h2>
+        <h2 class="noSelect">Популярные материалы</h2>
 
         <div class="popularItems">
             <?php foreach ($pages as $page) : ?>
