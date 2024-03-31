@@ -1,13 +1,11 @@
 version: '3.9'
-#x-var: &APP_PORT
-#  '8080'
 
 services:
   db:
+    container_name: nsy_db
     build: database
-    ports:
-     - 33060:3306
-    # command: --default-authentication-plugin=caching_sha2_password
+    #ports:
+    # - 33060:3306
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
@@ -21,19 +19,16 @@ services:
       timeout: 3s
       retries: 10
     #volumes:
-    #    - "db/volyme:/var/lib/mysql"
+    #  - "./db/volume:/var/lib/mysql"
     networks:
       - nsy_net
 
-
   yapp:
-    container_name: nsy-yapp-1
+    container_name: nsy_yapp-1
     build: .
     networks:
       - nsy_net
     ports:
-    #  - "3306:3306" 
-    #  - "8080:80"
       - "${APP_PORT}:80"
     depends_on: 
       db:
@@ -46,9 +41,11 @@ services:
   ok:
     image: busybox
     env_file: .env
-    command: "sh -c 'sleep 10 && echo \"To run the application, open http://localhost:${APP_PORT}\nTo join the yapp container, execute in separate console: \ndocker exec -it nsy-yapp-1 bash\"'"
+    command: "sh -c 'sleep 10 && echo \"To run the application, open http://localhost:${APP_PORT}\nTo join the yapp container, execute in separate console: \ndocker exec -it nsy_yapp-1 bash \ndocker exec -it nsy_db bash\"'"
     depends_on:
       - yapp
+
 networks:
   nsy_net:
     driver: bridge
+ 
